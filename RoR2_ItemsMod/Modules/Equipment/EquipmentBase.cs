@@ -1,10 +1,7 @@
 ﻿using RoR2;
 using R2API;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using System.Linq;
 using BepInEx.Configuration;
 
 namespace ExtradimensionalItems.Modules.Equipment
@@ -108,7 +105,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected abstract bool ActivateEquipment(EquipmentSlot slot);
 
-        public virtual void Hooks() { }
+        protected virtual void Hooks() { }
 
         //#region Targeting Setup
         ////Targeting Support

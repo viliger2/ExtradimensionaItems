@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Linq;
 using RoR2;
 using static ExtradimensionalItems.Modules.ExtradimensionalItemsPlugin;
+using static ExtradimensionalItems.Modules.Equipment.RespawnFlagEquipment;
 
 namespace ExtradimensionalItems.Modules.Interactables
 {
@@ -52,6 +53,7 @@ namespace ExtradimensionalItems.Modules.Interactables
             {
                 genericInteraction.onActivation.AddListener(OnActivation);
                 On.RoR2.CharacterMaster.OnBodyDeath += OnBodyDeath;
+                
             }
 
             public void OnBodyDeath(On.RoR2.CharacterMaster.orig_OnBodyDeath orig, CharacterMaster self, CharacterBody body)
@@ -59,14 +61,18 @@ namespace ExtradimensionalItems.Modules.Interactables
                 orig(self, body);
                 if (NetworkServer.active)
                 {
-                    if (this.gameObject && body.isPlayerControlled && body == owner)
+                    // we are checking for owner here instead of On.RoR2.GenericInteraction.RoR2_IInteractable_GetInteractability
+                    // because it doesn't work, most likely something wrong with game's code since MMMHOOK is generated on launch
+                    // TODO: write IL hook that might or might not work
+                    if (gameObject && body.isPlayerControlled && body == owner)
                     {
-                        body.master.Respawn(this.gameObject.transform.position, body.master.transform.rotation);
+                        MyLogger.LogMessage(string.Format("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
+                        body.master.Respawn(gameObject.transform.position, body.master.transform.rotation);
 
                         GameObject spawnEffect = Resources.Load<GameObject>("Prefabs/Effects/HippoRezEffect");
                         EffectManager.SpawnEffect(spawnEffect, new EffectData
                         {
-                            origin = this.gameObject.transform.position,
+                            origin = gameObject.transform.position,
                             rotation = body.master.gameObject.transform.rotation
                         }, true);
 
@@ -76,7 +82,9 @@ namespace ExtradimensionalItems.Modules.Interactables
                             baseToken = $"INTERACTABLE_{langToken}_INTERACT"
                         });
 
-                        UnityEngine.Object.Destroy(this.gameObject);
+                        ListOfExistingFlags.Remove(gameObject);
+
+                        Destroy(gameObject);
                     }
                 }
             }
@@ -92,16 +100,20 @@ namespace ExtradimensionalItems.Modules.Interactables
             {
                 if (!NetworkServer.active)
                 {
-                    MyLogger.LogWarning("[Server] function 'ExtradimensionalItems.Modules.Interactables.RespawnFlagInteractable::OnActivation(RoR2.Interactor)' called on cliend.");
+                    MyLogger.LogWarning("[Server] function 'ExtradimensionalItems.Modules.Interactables.RespawnFlagInteractable::OnActivation(RoR2.Interactor)' called on client.");
                     return;
                 }
 
-                var charBody = interactor.GetComponent<CharacterBody>();
-                if (charBody && charBody == owner)
+                var body = interactor.GetComponent<CharacterBody>();
+                if (body && body == owner)
                 {
-                    var pickupIndex = PickupCatalog.FindPickupIndex(flagEquipmentIndex);
+                    MyLogger.LogMessage(string.Format("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
+
+                    PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(flagEquipmentIndex);
                     PickupDropletController.CreatePickupDroplet(pickupIndex, transform.position, Vector3.up * 5 + transform.forward * 3);
-                    UnityEngine.Object.Destroy(this.gameObject);
+
+                    ListOfExistingFlags.Remove(gameObject);
+                    Destroy(gameObject);
                 }
             }
         }

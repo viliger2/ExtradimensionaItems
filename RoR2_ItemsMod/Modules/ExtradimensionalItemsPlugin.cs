@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Linq;
 using BepInEx;
 using R2API;
@@ -22,7 +21,7 @@ namespace ExtradimensionalItems.Modules
 
         private void Awake()
         {
-            MyLogger = this.Logger;
+            MyLogger = Logger;
             PInfo = Info;
 
             #if DEBUG == true
