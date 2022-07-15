@@ -1,0 +1,73 @@
+﻿using System;
+using System.Reflection;
+using System.Linq;
+using BepInEx;
+using R2API;
+using R2API.Utils;
+using R2API.Networking;
+using ExtradimensionalItems.Modules.Items;
+using ExtradimensionalItems.Modules.Equipment;
+
+namespace ExtradimensionalItems.Modules
+{
+    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "1.0")]
+    [BepInDependency(R2API.R2API.PluginGUID)]
+    [R2APISubmoduleDependency(nameof(LanguageAPI), nameof(PrefabAPI), nameof(NetworkingAPI), nameof(DirectorAPI), nameof(ItemAPI))]
+    public class ExtradimensionalItemsPlugin : BaseUnityPlugin
+    {
+
+        public static BepInEx.Logging.ManualLogSource MyLogger;
+
+        public static BepInEx.PluginInfo PInfo;
+
+        private void Awake()
+        {
+            MyLogger = this.Logger;
+            PInfo = Info;
+
+            #if DEBUG == true
+            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+            #endif
+
+            //new ExtradimensionalItemsLanguages().Init(PInfo);
+
+            var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(ItemBase)));
+            foreach (var itemType in ItemTypes)
+            {
+                ItemBase item = (ItemBase)System.Activator.CreateInstance(itemType);
+                if (ValidateItem(item))
+                {
+                    item.Init(Config);
+                    MyLogger.LogInfo($"Item: {item.ItemLangTokenName} loaded.");
+                }
+            }
+
+            var EquipmentTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(EquipmentBase)));
+            foreach (var equipmentType in EquipmentTypes)
+            {
+                EquipmentBase equipment = (EquipmentBase)System.Activator.CreateInstance(equipmentType);
+                if (ValidateEquipment(equipment))
+                {
+                    equipment.Init(Config);
+                    MyLogger.LogInfo($"Equipment: {equipment.EquipmentLangTokenName} loaded.");
+                }
+            }
+        }
+
+        public bool ValidateEquipment(EquipmentBase equipment)
+        {
+            var enabled = Config.Bind("Equipment: " + equipment.EquipmentName, "Enable Equipment?", true, "Should this equipment appear in runs?").Value;
+
+            return enabled;
+
+        }
+
+        public bool ValidateItem(ItemBase item)
+        {
+            var enabled = Config.Bind("Item: " + item.ItemName, "Enable item?", true, "Should this item appear in runs?").Value;
+
+            return enabled;
+        }
+    }
+
+}
