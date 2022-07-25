@@ -31,10 +31,16 @@ namespace ExtradimensionalItems.Modules.Items
         public abstract ItemTier Tier { get; }
         public virtual ItemTag[] ItemTags { get; set; } = new ItemTag[] { };
 
+        public abstract string BundleName { get; }
+
+        public const string BundleFolder = "Assets";
+
         public abstract GameObject ItemModel { get; }
         public abstract Sprite ItemIcon { get; }
 
         public ItemDef ItemDef;
+        
+        public AssetBundle AssetBundle;
 
         public virtual bool CanRemove { get; } = true;
 
@@ -53,6 +59,11 @@ namespace ExtradimensionalItems.Modules.Items
         public abstract void Init(ConfigFile config);
 
         public virtual void CreateConfig(ConfigFile config) { }
+
+        protected void LoadAssetBundle()
+        {
+            AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), BundleFolder, BundleName));
+        }
 
         public abstract ItemDisplayRuleDict CreateItemDisplayRules();
         protected void CreateItem()
@@ -79,7 +90,7 @@ namespace ExtradimensionalItems.Modules.Items
             ItemAPI.Add(new CustomItem(ItemDef, CreateItemDisplayRules()));
         }
 
-        public virtual void Hooks() { }
+        protected virtual void Hooks() { }
 
         //Based on ThinkInvis' methods
         public int GetCount(CharacterBody body)
