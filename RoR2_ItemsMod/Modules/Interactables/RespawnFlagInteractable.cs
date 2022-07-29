@@ -24,7 +24,7 @@ namespace ExtradimensionalItems.Modules.Interactables
             var modelLocator = interactableModel.AddComponent<ModelLocator>();
             modelLocator.modelTransform = interactableModel.transform.Find("mdlFlagInteractable");
             modelLocator.modelBaseTransform = interactableModel.transform.Find("mdlFlagInteractable");
-            modelLocator.dontDetatchFromParent = true;
+            modelLocator.dontDetatchFromParent = false;
             modelLocator.autoUpdateModelTransform = true;
 
             var entityLocator = interactableModel.GetComponentInChildren<MeshCollider>().gameObject.AddComponent<EntityLocator>();
@@ -39,6 +39,8 @@ namespace ExtradimensionalItems.Modules.Interactables
             highlightController.strength = 1;
             highlightController.highlightColor = Highlight.HighlightColor.interactive;
 
+            interactableModel.tag = "Respawn";
+
             return interactableModel;
         }
 
@@ -47,7 +49,6 @@ namespace ExtradimensionalItems.Modules.Interactables
             public GenericInteraction genericInteraction;
             public CharacterBody owner;
             public string langToken;
-            public EquipmentIndex flagEquipmentIndex;
 
             public void Start()
             {
@@ -82,8 +83,6 @@ namespace ExtradimensionalItems.Modules.Interactables
                             baseToken = $"INTERACTABLE_{langToken}_INTERACT"
                         });
 
-                        ListOfExistingFlags.Remove(gameObject);
-
                         Destroy(gameObject);
                     }
                 }
@@ -109,10 +108,9 @@ namespace ExtradimensionalItems.Modules.Interactables
                 {
                     MyLogger.LogMessage(string.Format("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
 
-                    PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(flagEquipmentIndex);
+                    PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(ExtradimensionalItems.Modules.Equipment.RespawnFlagEquipment.EquipmentDef.equipmentIndex);
                     PickupDropletController.CreatePickupDroplet(pickupIndex, transform.position, Vector3.up * 5 + transform.forward * 3);
 
-                    ListOfExistingFlags.Remove(gameObject);
                     Destroy(gameObject);
                 }
             }

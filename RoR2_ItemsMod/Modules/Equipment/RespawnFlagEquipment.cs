@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using ExtradimensionalItems.Modules.Interactables;
 using static ExtradimensionalItems.Modules.ExtradimensionalItemsPlugin;
+using System.Linq;
 
 namespace ExtradimensionalItems.Modules.Equipment
 {
@@ -31,14 +32,11 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         private static GameObject flagInteractablePrefab;
 
-        public static List<GameObject> ListOfExistingFlags = new List<GameObject>();
-
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
             LoadInteractable();
             CreateEquipment();
-            Hooks();
         }
 
         private void LoadInteractable()
@@ -55,24 +53,23 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             MyLogger.LogMessage(string.Format("Player {0}({1}) used equipment {2}.", body.GetUserName(), body.name, EquipmentLangTokenName));
 
-            GameObject gameObject = Object.Instantiate(flagInteractablePrefab, body.transform.position, Quaternion.identity);
-            RespawnFlagInteractable.RespawnFlagInteractableManager flagManager = gameObject.GetComponent<RespawnFlagInteractable.RespawnFlagInteractableManager>();
-            flagManager.owner = body;
-            flagManager.flagEquipmentIndex = EquipmentDef.equipmentIndex;
+            var objects = GameObject.FindGameObjectsWithTag("Respawn");
 
-            GameObject existingGameObject = ListOfExistingFlags.Find(x => {
-                                        var flagManager2 = x.GetComponent<RespawnFlagInteractable.RespawnFlagInteractableManager>();
-                                        return flagManager2.owner == body;
-                                        });
+            GameObject existingGameObject = objects.ToList().Find(x => {
+                return x.GetComponent<RespawnFlagInteractable.RespawnFlagInteractableManager>().owner == body; 
+            });
+
             if (existingGameObject)
             {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2}, destroying it and removing it the list.", body.GetUserName(), body.name, EquipmentLangTokenName));
-                ListOfExistingFlags.Remove(existingGameObject);
                 Object.Destroy(existingGameObject);
             }
 
+            GameObject gameObject = Object.Instantiate(flagInteractablePrefab, body.transform.position, Quaternion.identity);
+            RespawnFlagInteractable.RespawnFlagInteractableManager flagManager = gameObject.GetComponent<RespawnFlagInteractable.RespawnFlagInteractableManager>();
+            flagManager.owner = body;
+
             NetworkServer.Spawn(gameObject);
-            ListOfExistingFlags.Add(gameObject);
 
             // thanks ThinkInvisible
             body.inventory.SetEquipment(new EquipmentState(EquipmentIndex.None, Run.FixedTimeStamp.now + Cooldown, 0), (uint)slot.characterBody.inventory.activeEquipmentSlot);
@@ -80,17 +77,6 @@ namespace ExtradimensionalItems.Modules.Equipment
             return true;
         }
 
-        protected override void Hooks()
-        {
-            On.RoR2.Run.BeginStage += Run_BeginStage;
-        }
-
-        private void Run_BeginStage(On.RoR2.Run.orig_BeginStage orig, Run self)
-        {
-            orig(self);
-            MyLogger.LogMessage($"Clearing list of existing INTERACTABLE_{EquipmentLangTokenName}.");
-            ListOfExistingFlags.Clear();
-        }
     }
 
 }

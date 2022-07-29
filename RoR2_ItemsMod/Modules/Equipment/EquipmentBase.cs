@@ -44,7 +44,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public virtual bool IsLunar { get; } = false;
 
-        public EquipmentDef EquipmentDef;
+        public static EquipmentDef EquipmentDef;
 
         public AssetBundle AssetBundle;
 
