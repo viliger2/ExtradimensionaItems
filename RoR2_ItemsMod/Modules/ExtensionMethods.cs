@@ -1,9 +1,6 @@
 ﻿using RoR2;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine.Networking;
-using static ExtradimensionalItems.Modules.ExtradimensionalItemsPlugin;
 using static RoR2.CharacterBody;
 
 namespace ExtradimensionalItems.Modules
@@ -26,7 +23,7 @@ namespace ExtradimensionalItems.Modules
         {
             if (!NetworkServer.active)
             {
-                MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffDef)' called on cliend");
+                MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffDef)' called on client");
             } else
             {
                 body.RemoveTimedBuff(buff.buffIndex);
@@ -37,29 +34,60 @@ namespace ExtradimensionalItems.Modules
         {
             if (!NetworkServer.active)
             {
-                MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffIndex)' called on cliend");
+                MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffIndex)' called on client");
                 return;
             }
 
-            // finding TimedBuff with lowest duration
-            TimedBuff lowest = null;
-
-            foreach (TimedBuff timedBuff in body.timedBuffs)
-            {
-                if(timedBuff.buffIndex == buff) 
-                {
-                    if(lowest == null || lowest?.timer > timedBuff.timer)
-                    {
-                        lowest = timedBuff;
-                    }
-                }
-            }
+            TimedBuff lowest = body.GetTimedBuff(buff, true); 
 
             if (lowest != null)
             {
                 body.timedBuffs.Remove(lowest);
                 body.RemoveBuff(lowest.buffIndex);
             }
+        }
+
+        public static TimedBuff GetTimedBuff(this CharacterBody body, BuffDef buff, bool getLowest = false)
+        {
+            if (!NetworkServer.active)
+            {
+                MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::GetTimedBuff(RoR2.BuffDef, bool)' called on client");
+                return null;
+            }
+            else
+            {
+                return body.GetTimedBuff(buff.buffIndex, getLowest);
+            }
+        }
+
+        public static TimedBuff GetTimedBuff(this CharacterBody body, BuffIndex buff, bool getLowest = false)
+        {
+            if (!NetworkServer.active)
+            {
+                MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::GetTimedBuff(RoR2.BuffIndex, bool)' called on client");
+                return null;
+            }
+
+            TimedBuff lowest = null;
+
+            foreach (TimedBuff timedBuff in body.timedBuffs)
+            {
+                if (timedBuff.buffIndex == buff)
+                {
+                    if (getLowest)
+                    {
+                        if (lowest == null || lowest?.timer > timedBuff.timer)
+                        {
+                            lowest = timedBuff;
+                        }
+                    } else
+                    {
+                        return timedBuff;
+                    }
+                }
+            }
+
+            return lowest;
         }
 
     }

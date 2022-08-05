@@ -66,7 +66,8 @@ namespace ExtradimensionalItems.Modules.Items
         }
 
         public abstract ItemDisplayRuleDict CreateItemDisplayRules();
-        protected void CreateItem()
+
+        protected void CreateItem(ref ItemDef staticItemDef)
         {
             if (AIBlacklisted)
             {
@@ -83,11 +84,13 @@ namespace ExtradimensionalItems.Modules.Items
             ItemDef.pickupIconSprite = ItemIcon;
             ItemDef.hidden = false;
             ItemDef.canRemove = CanRemove;
-            ItemDef.deprecatedTier = Tier;
+            //ItemDef.deprecatedTier = Tier;
 
             if (ItemTags.Length > 0) { ItemDef.tags = ItemTags; }
 
             ItemAPI.Add(new CustomItem(ItemDef, CreateItemDisplayRules()));
+
+            staticItemDef = ItemDef;
         }
 
         protected virtual void Hooks() { }

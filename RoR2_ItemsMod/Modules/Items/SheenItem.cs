@@ -1,13 +1,9 @@
 ﻿using BepInEx.Configuration;
+using ExtradimensionalItems.Modules.Buffs;
 using R2API;
 using RoR2;
-using System.Diagnostics;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using static ExtradimensionalItems.Modules.ExtradimensionalItemsPlugin;
-using static RoR2.CharacterBody;
 using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -18,8 +14,6 @@ namespace ExtradimensionalItems.Modules.Items
         public static ConfigEntry<bool> CanStack;
         public static ConfigEntry<float> BuffDuration;
         public static ConfigEntry<int> MaxBuffStacks;
-
-        public static BuffDef SheenBuff;
 
         public override string ItemName => "Sheen";
 
@@ -33,11 +27,11 @@ namespace ExtradimensionalItems.Modules.Items
         private static Dictionary<CharacterBody, bool> CharacterUsedPrimary = new Dictionary<CharacterBody, bool>();
 
         // TODO: replace these
-        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("FlagItem.prefab");
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("SheenItem");
 
-        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texSheenItemIcon");
 
-        public override string BundleName => "respawnflag";
+        public override string BundleName => "sheen";
         // end TODO
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
@@ -50,21 +44,9 @@ namespace ExtradimensionalItems.Modules.Items
         {
             CreateConfig(config);
             LoadAssetBundle();
-            CreateBuff();
-            CreateItem();
+            SheenBuffs.CreateBuffs(AssetBundle, CanStack.Value);
+            CreateItem(ref Content.Items.Sheen);
             Hooks();
-        }
-
-        private void CreateBuff()
-        {
-            SheenBuff = ScriptableObject.CreateInstance<BuffDef>();
-            SheenBuff.name = "Sheen Damage Bonus";
-            SheenBuff.buffColor = Color.white;
-            SheenBuff.canStack = CanStack.Value;
-            SheenBuff.isDebuff = false;
-            SheenBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO: replace
-
-            ContentAddition.AddBuffDef(SheenBuff);
         }
 
         protected override void Hooks()
@@ -89,7 +71,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             if (!damageInfo.rejected || damageInfo == null)
             {
-                if (body.isPlayerControlled && body.HasBuff(SheenBuff) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
+                if (body.isPlayerControlled && body.HasBuff(SheenBuffs.SheenBuff) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
                 {
                     if (CharacterUsedPrimary.TryGetValue(body, out bool bodyUsedPrimary))
                     {
@@ -105,11 +87,11 @@ namespace ExtradimensionalItems.Modules.Items
                             damageInfo2.damageColorIndex = DamageColorIndex.Item;
                             damageInfo2.damageType = DamageType.Generic;
 
-                            MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, SheenBuff.name, damageInfo2.damage, victim.name));
+                            MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, SheenBuffs.SheenBuff.name, damageInfo2.damage, victim.name));
 
                             victimBody.healthComponent.TakeDamage(damageInfo2);
 
-                            body.RemoveTimedBuff(SheenBuff);
+                            body.RemoveTimedBuff(SheenBuffs.SheenBuff);
                             CharacterUsedPrimary[body] = false;
                         }
                     }
@@ -126,12 +108,12 @@ namespace ExtradimensionalItems.Modules.Items
                 if (GetCount(self) > 0)
                 {
                     var skillLocator = self.GetComponent<SkillLocator>();
-                    if (skillLocator?.primary != skill && self.GetBuffCount(SheenBuff) < MaxBuffStacks.Value)
+                    if (skillLocator?.primary != skill && self.GetBuffCount(SheenBuffs.SheenBuff) < MaxBuffStacks.Value)
                     {
-                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, SheenBuff.name));
-                        self.AddTimedBuff(SheenBuff, BuffDuration.Value);
+                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, SheenBuffs.SheenBuff.name));
+                        self.AddTimedBuff(SheenBuffs.SheenBuff, BuffDuration.Value);
                     }
-                    else if (skillLocator?.primary == skill && self.HasBuff(SheenBuff))
+                    else if (skillLocator?.primary == skill && self.HasBuff(SheenBuffs.SheenBuff))
                     {
                         CharacterUsedPrimary.AddOrReplace(self, true);
                     }
@@ -142,7 +124,7 @@ namespace ExtradimensionalItems.Modules.Items
         public override void CreateConfig(ConfigFile config)
         {
             CanStack        = config.Bind("Item: " + ItemName, "Can Buff Stack",        true, "Determines whether the buff that indicates damage bonus can stack or not.");
-            DamageModifier  = config.Bind("Item: " + ItemName, "Damage Modifier",       3f,   "What damage modifier (per stack) the item should use.");
+            DamageModifier  = config.Bind("Item: " + ItemName, "Damage Modifier",       2.5f, "What damage modifier (per stack) the item should use.");
             BuffDuration    = config.Bind("Item: " + ItemName, "Buff Duration",         10f,  "How long the buff should remain active after using non-primary ability.");
             MaxBuffStacks   = config.Bind("Item: " + ItemName, "Maximum Buff Stacks",   8,    "How many times the buff can stack.");
         }

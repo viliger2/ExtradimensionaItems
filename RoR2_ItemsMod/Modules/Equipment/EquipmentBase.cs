@@ -1,8 +1,8 @@
-﻿using RoR2;
+﻿using BepInEx.Configuration;
 using R2API;
+using RoR2;
 using System;
 using UnityEngine;
-using BepInEx.Configuration;
 
 namespace ExtradimensionalItems.Modules.Equipment
 {
@@ -44,7 +44,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public virtual bool IsLunar { get; } = false;
 
-        public static EquipmentDef EquipmentDef;
+        public EquipmentDef EquipmentDef;
 
         public AssetBundle AssetBundle;
 
@@ -69,7 +69,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected virtual void CreateConfig(ConfigFile config){}
 
-        protected void CreateEquipment()
+        protected void CreateEquipment(ref EquipmentDef staticEquipmentDef)
         {
             EquipmentDef = ScriptableObject.CreateInstance<EquipmentDef>();
             EquipmentDef.name = "EQUIPMENT_" + EquipmentLangTokenName;
@@ -88,6 +88,8 @@ namespace ExtradimensionalItems.Modules.Equipment
             EquipmentDef.isLunar = IsLunar;
 
             ItemAPI.Add(new CustomEquipment(EquipmentDef, CreateItemDisplayRules()));
+            staticEquipmentDef = EquipmentDef;
+
             On.RoR2.EquipmentSlot.PerformEquipmentAction += PerformEquipmentAction;
         }
 

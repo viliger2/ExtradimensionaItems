@@ -1,11 +1,12 @@
-﻿using System.Reflection;
-using System.Linq;
-using BepInEx;
-using R2API;
-using R2API.Utils;
-using R2API.Networking;
-using ExtradimensionalItems.Modules.Items;
+﻿using BepInEx;
+using BepInEx.Configuration;
 using ExtradimensionalItems.Modules.Equipment;
+using ExtradimensionalItems.Modules.Items;
+using R2API;
+using R2API.Networking;
+using R2API.Utils;
+using System.Linq;
+using System.Reflection;
 
 namespace ExtradimensionalItems.Modules
 {
@@ -15,13 +16,18 @@ namespace ExtradimensionalItems.Modules
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
 
-        public static BepInEx.Logging.ManualLogSource MyLogger;
+        //public static BepInEx.Logging.ManualLogSource MyLogger;
+
+        public static ConfigEntry<bool> ExtensiveLogging;
 
         public static BepInEx.PluginInfo PInfo;
 
         private void Awake()
         {
-            MyLogger = Logger;
+            ExtensiveLogging = Config.Bind("Logging", "Enable extensive logging?", true, "Enables extensive logging, logs evert major event related to new content.");
+
+            MyLogger.Init(Logger);
+            //MyLogger = Logger;
             PInfo = Info;
 
             #if DEBUG == true

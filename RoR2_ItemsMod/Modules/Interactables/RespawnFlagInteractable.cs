@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.Networking;
+﻿using RoR2;
 using System.Linq;
-using RoR2;
-using static ExtradimensionalItems.Modules.ExtradimensionalItemsPlugin;
-using static ExtradimensionalItems.Modules.Equipment.RespawnFlagEquipment;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.Interactables
 {
@@ -108,7 +106,7 @@ namespace ExtradimensionalItems.Modules.Interactables
                 {
                     MyLogger.LogMessage(string.Format("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
 
-                    PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(ExtradimensionalItems.Modules.Equipment.RespawnFlagEquipment.EquipmentDef.equipmentIndex);
+                    PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(Content.Equipment.RespawnFlag.equipmentIndex);
                     PickupDropletController.CreatePickupDroplet(pickupIndex, transform.position, Vector3.up * 5 + transform.forward * 3);
 
                     Destroy(gameObject);

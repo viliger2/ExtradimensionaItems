@@ -1,12 +1,10 @@
 ﻿using BepInEx.Configuration;
+using ExtradimensionalItems.Modules.Interactables;
 using R2API;
 using RoR2;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
-using ExtradimensionalItems.Modules.Interactables;
-using static ExtradimensionalItems.Modules.ExtradimensionalItemsPlugin;
-using System.Linq;
 
 namespace ExtradimensionalItems.Modules.Equipment
 {
@@ -18,9 +16,9 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string BundleName => "respawnflag";
 
-        public override GameObject EquipmentModel => AssetBundle.LoadAsset<GameObject>("FlagItem.prefab");
+        public override GameObject EquipmentModel => AssetBundle.LoadAsset<GameObject>("FlagItem");
 
-        public override Sprite EquipmentIcon => AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+        public override Sprite EquipmentIcon => AssetBundle.LoadAsset<Sprite>("texFlagItemIcon");
 
         public override float Cooldown => 0.1f;
 
@@ -36,7 +34,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             LoadAssetBundle();
             LoadInteractable();
-            CreateEquipment();
+            CreateEquipment(ref Content.Equipment.RespawnFlag);
         }
 
         private void LoadInteractable()
