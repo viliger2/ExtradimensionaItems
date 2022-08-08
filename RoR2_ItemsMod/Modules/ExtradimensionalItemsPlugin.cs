@@ -34,7 +34,7 @@ namespace ExtradimensionalItems.Modules
             On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
             #endif
 
-            //new ExtradimensionalItemsLanguages().Init(PInfo);
+            new ExtradimensionalItemsLanguages().Init(PInfo);
 
             var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(ItemBase)));
             foreach (var itemType in ItemTypes)

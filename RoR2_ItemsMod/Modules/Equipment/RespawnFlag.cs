@@ -8,8 +8,10 @@ using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.Equipment
 {
-    internal class RespawnFlagEquipment : EquipmentBase<RespawnFlagEquipment>
+    internal class RespawnFlag : EquipmentBase<RespawnFlag>
     {
+        // TODO: implement spending of batteries on death instead of destroying the flag (as option) 
+
         public override string EquipmentName => "Checkpoint";
 
         public override string EquipmentLangTokenName => "RESPAWN_FLAG";
@@ -35,12 +37,33 @@ namespace ExtradimensionalItems.Modules.Equipment
             LoadAssetBundle();
             LoadInteractable();
             CreateEquipment(ref Content.Equipment.RespawnFlag);
+            Hooks();
         }
 
         private void LoadInteractable()
         {
             var flagInteractablePrefab2 = RespawnFlagInteractable.GetInteractable(AssetBundle.LoadAsset<GameObject>("FlagInteractable"), EquipmentLangTokenName);
             flagInteractablePrefab = PrefabAPI.InstantiateClone(flagInteractablePrefab2, "RespawnFlagInteractable"); // always use PrefabAPI, it will network it
+        }
+
+        protected override void Hooks()
+        {
+            On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
+        }
+
+        private void CharacterBody_OnEquipmentGained(On.RoR2.CharacterBody.orig_OnEquipmentGained orig, CharacterBody self, EquipmentDef equipmentDef)
+        {
+            orig(self, equipmentDef);
+            if(equipmentDef != Content.Equipment.RespawnFlag)
+            {
+                var result = DestroyExistingFlag(self, out Vector3 position);
+                if (result)
+                {
+                    MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2} and picked up new equipment, destroying it and spawning equipment at its place.", self.GetUserName(), self.name, EquipmentLangTokenName));
+                    PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(Content.Equipment.RespawnFlag.equipmentIndex);
+                    PickupDropletController.CreatePickupDroplet(pickupIndex, position, Vector3.up * 5);
+                }
+            }
         }
 
         protected override bool ActivateEquipment(EquipmentSlot slot)
@@ -51,16 +74,10 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             MyLogger.LogMessage(string.Format("Player {0}({1}) used equipment {2}.", body.GetUserName(), body.name, EquipmentLangTokenName));
 
-            var objects = GameObject.FindGameObjectsWithTag("Respawn");
-
-            GameObject existingGameObject = objects.ToList().Find(x => {
-                return x.GetComponent<RespawnFlagInteractable.RespawnFlagInteractableManager>().owner == body; 
-            });
-
-            if (existingGameObject)
+            var result = DestroyExistingFlag(body, out _);
+            if (result)
             {
-                MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2}, destroying it and removing it the list.", body.GetUserName(), body.name, EquipmentLangTokenName));
-                Object.Destroy(existingGameObject);
+                MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2}, destroying it.", body.GetUserName(), body.name, EquipmentLangTokenName));
             }
 
             GameObject gameObject = Object.Instantiate(flagInteractablePrefab, body.transform.position, Quaternion.identity);
@@ -75,6 +92,26 @@ namespace ExtradimensionalItems.Modules.Equipment
             return true;
         }
 
+        private bool DestroyExistingFlag(CharacterBody body, out Vector3 position)
+        {
+            position = new Vector3();
+
+            var objects = GameObject.FindGameObjectsWithTag("Respawn");
+
+            GameObject existingGameObject = objects.ToList().Find(x =>
+            {
+                return x.GetComponent<RespawnFlagInteractable.RespawnFlagInteractableManager>()?.owner == body;
+            });
+
+            if (existingGameObject)
+            {
+                position = existingGameObject.transform.position;
+                Object.Destroy(existingGameObject);
+                return true;
+            }
+
+            return false;
+        }
     }
 
 }

@@ -180,5 +180,10 @@ namespace ExtradimensionalItems.Modules.Items
             return BaseDuration.Value + (PerStackDuration.Value * (body.inventory.GetItemCount(Content.Items.RoyalGuard) - 1));
         }
 
+        public override string GetFormatedDiscription(string pickupString)
+        {
+            //throw new System.NotImplementedException();
+            return pickupString;
+        }
     }
 }

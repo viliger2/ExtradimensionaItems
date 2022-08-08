@@ -1,4 +1,5 @@
 ﻿using R2API;
+using RoR2;
 using System.IO;
 
 namespace ExtradimensionalItems.Modules
@@ -10,8 +11,7 @@ namespace ExtradimensionalItems.Modules
 
         public void Init(BepInEx.PluginInfo info)
         {
-            LanguageAPI.AddPath(Path.Combine(Path.GetDirectoryName(info.Location), LanguageFileFolder, LanguageFileName));
+            LanguageAPI.AddPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(info.Location), LanguageFileFolder, LanguageFileName));
         }
-
     }
 }

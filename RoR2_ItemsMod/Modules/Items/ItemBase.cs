@@ -93,7 +93,23 @@ namespace ExtradimensionalItems.Modules.Items
             staticItemDef = ItemDef;
         }
 
-        protected virtual void Hooks() { }
+        protected virtual void Hooks() {
+            // I don't like it at all, maybe I should just manually read language file into dictionary 
+            // and then replace text after item is done initializing
+            On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
+        }
+
+        private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
+        {
+            if(token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION"))
+            {
+                return GetFormatedDiscription(orig(self, token));
+            } 
+            return orig(self, token);
+        }
+
+
+        public abstract string GetFormatedDiscription(string pickupString);
 
         //Based on ThinkInvis' methods
         public int GetCount(CharacterBody body)

@@ -23,7 +23,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
             if (!characterBody.HasBuff(RoyalGuardBuffs.RoyalGuardDamageBuff))
             {
                 outer.SetNextStateToMain();
-                MyLogger.LogMessage(string.Format("Player {0}({1}) has left parry state because they don't have parry state buff after using Release.", characterBody.GetUserName(), characterBody.name));
+                MyLogger.LogMessage(string.Format("Player {0}({1}) has left parry state because they don't have damage buff after using Release.", characterBody.GetUserName(), characterBody.name));
             }
         }
 
