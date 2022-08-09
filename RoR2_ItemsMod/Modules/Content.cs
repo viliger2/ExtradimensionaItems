@@ -8,7 +8,6 @@ namespace ExtradimensionalItems.Modules.Content
         public static EquipmentDef RespawnFlag;
 
         public static EquipmentDef SkullOfDoom;
-
     }
 
     public static class Items
@@ -24,4 +23,18 @@ namespace ExtradimensionalItems.Modules.Content
 
         public static SkillDef Explode;
     }
+    
+    public static class Buffs
+    {
+        public static BuffDef RoyalGuardParryStateBuff;
+
+        public static BuffDef RoyalGuardDamageBuff;
+
+        public static BuffDef RoyalGuardGraceBuff;
+
+        public static BuffDef SheenBuff;
+
+        public static BuffDef SkullOfDoomBuff;
+    }
+
 }

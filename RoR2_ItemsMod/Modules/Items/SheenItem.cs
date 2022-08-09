@@ -1,5 +1,4 @@
 ﻿using BepInEx.Configuration;
-using ExtradimensionalItems.Modules.Buffs;
 using R2API;
 using RoR2;
 using System.Collections.Generic;
@@ -44,7 +43,7 @@ namespace ExtradimensionalItems.Modules.Items
         {
             CreateConfig(config);
             LoadAssetBundle();
-            SheenBuffs.CreateBuffs(AssetBundle, CanStack.Value);
+            CreateBuffs(AssetBundle, CanStack.Value);
             CreateItem(ref Content.Items.Sheen);
             Hooks();
         }
@@ -72,7 +71,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             if (!damageInfo.rejected || damageInfo == null)
             {
-                if (body.isPlayerControlled && body.HasBuff(SheenBuffs.SheenBuff) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
+                if (body.isPlayerControlled && body.HasBuff(Content.Buffs.SheenBuff) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
                 {
                     if (CharacterUsedPrimary.TryGetValue(body, out bool bodyUsedPrimary))
                     {
@@ -88,11 +87,11 @@ namespace ExtradimensionalItems.Modules.Items
                             damageInfo2.damageColorIndex = DamageColorIndex.Item;
                             damageInfo2.damageType = DamageType.Generic;
 
-                            MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, SheenBuffs.SheenBuff.name, damageInfo2.damage, victim.name));
+                            MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, Content.Buffs.SheenBuff.name, damageInfo2.damage, victim.name));
 
                             victimBody.healthComponent.TakeDamage(damageInfo2);
 
-                            body.RemoveTimedBuff(SheenBuffs.SheenBuff);
+                            body.RemoveTimedBuff(Content.Buffs.SheenBuff);
                             CharacterUsedPrimary[body] = false;
                         }
                     }
@@ -109,12 +108,12 @@ namespace ExtradimensionalItems.Modules.Items
                 if (GetCount(self) > 0)
                 {
                     var skillLocator = self.GetComponent<SkillLocator>();
-                    if (skillLocator?.primary != skill && self.GetBuffCount(SheenBuffs.SheenBuff) < MaxBuffStacks.Value)
+                    if (skillLocator?.primary != skill && self.GetBuffCount(Content.Buffs.SheenBuff) < MaxBuffStacks.Value)
                     {
-                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, SheenBuffs.SheenBuff.name));
-                        self.AddTimedBuff(SheenBuffs.SheenBuff, BuffDuration.Value);
+                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, Content.Buffs.SheenBuff.name));
+                        self.AddTimedBuff(Content.Buffs.SheenBuff, BuffDuration.Value);
                     }
-                    else if (skillLocator?.primary == skill && self.HasBuff(SheenBuffs.SheenBuff))
+                    else if (skillLocator?.primary == skill && self.HasBuff(Content.Buffs.SheenBuff))
                     {
                         CharacterUsedPrimary.AddOrReplace(self, true);
                     }
@@ -125,6 +124,20 @@ namespace ExtradimensionalItems.Modules.Items
         public override string GetFormatedDiscription(string pickupString)
         {
             return string.Format(pickupString, DamageModifier.Value.ToString("###%"), CanStack.Value ? MaxBuffStacks.Value : 1);
+        }
+
+        public static void CreateBuffs(AssetBundle assetBundle, bool canStack)
+        {
+            var SheenBuff = ScriptableObject.CreateInstance<BuffDef>();
+            SheenBuff.name = "Sheen Damage Bonus";
+            SheenBuff.buffColor = Color.blue;
+            SheenBuff.canStack = canStack;
+            SheenBuff.isDebuff = false;
+            SheenBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO: replace
+
+            ContentAddition.AddBuffDef(SheenBuff);
+
+            Content.Buffs.SheenBuff = SheenBuff;
         }
 
         public override void CreateConfig(ConfigFile config)

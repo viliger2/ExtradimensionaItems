@@ -1,5 +1,4 @@
 ﻿using EntityStates;
-using ExtradimensionalItems.Modules.Buffs;
 using RoR2;
 using UnityEngine.Networking;
 
@@ -20,7 +19,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (!characterBody.HasBuff(RoyalGuardBuffs.RoyalGuardDamageBuff))
+            if (!characterBody.HasBuff(Content.Buffs.RoyalGuardDamageBuff))
             {
                 outer.SetNextStateToMain();
                 MyLogger.LogMessage(string.Format("Player {0}({1}) has left parry state because they don't have damage buff after using Release.", characterBody.GetUserName(), characterBody.name));
@@ -29,7 +28,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
 
         private void ExplodeNow()
         {
-            if (characterBody.HasBuff(RoyalGuardBuffs.RoyalGuardDamageBuff))
+            if (characterBody.HasBuff(Content.Buffs.RoyalGuardDamageBuff))
             {
                 BlastAttack blastAttack = new BlastAttack
                 {
@@ -38,7 +37,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
                     position = base.characterBody.corePosition,
                     attacker = base.characterBody.gameObject,
                     crit = RollCrit(),
-                    baseDamage = base.characterBody.baseDamage * characterBody.GetBuffCount(RoyalGuardBuffs.RoyalGuardDamageBuff) * Items.RoyalGuardItem.DamageModifier.Value,
+                    baseDamage = base.characterBody.baseDamage * characterBody.GetBuffCount(Content.Buffs.RoyalGuardDamageBuff) * Items.RoyalGuardItem.DamageModifier.Value,
                     falloffModel = BlastAttack.FalloffModel.SweetSpot,
                     baseForce = 1f,
                     teamIndex = TeamComponent.GetObjectTeam(base.characterBody.gameObject),
@@ -47,10 +46,10 @@ namespace ExtradimensionalItems.Modules.SkillStates
                 };
                 blastAttack.Fire();
 
-                characterBody.SetBuffCount(RoyalGuardBuffs.RoyalGuardDamageBuff.buffIndex, 0);
-                if (characterBody.HasBuff(RoyalGuardBuffs.RoyalGuardParryStateBuff))
+                characterBody.SetBuffCount(Content.Buffs.RoyalGuardDamageBuff.buffIndex, 0);
+                if (characterBody.HasBuff(Content.Buffs.RoyalGuardParryStateBuff))
                 {
-                    characterBody.RemoveTimedBuff(RoyalGuardBuffs.RoyalGuardParryStateBuff);
+                    characterBody.RemoveTimedBuff(Content.Buffs.RoyalGuardParryStateBuff);
                 }
 
                 MyLogger.LogMessage(string.Format("Player {0}({1}) used Release, dealing to everyone around {2} damage.", characterBody.GetUserName(), characterBody.name, blastAttack.baseDamage));

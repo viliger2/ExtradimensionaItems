@@ -1,6 +1,5 @@
 ﻿using BepInEx.Configuration;
 using EntityStates;
-using ExtradimensionalItems.Modules.Buffs;
 using ExtradimensionalItems.Modules.SkillStates;
 using R2API;
 using RoR2;
@@ -50,7 +49,7 @@ namespace ExtradimensionalItems.Modules.Items
             LoadAssetBundle();
             CreateConfig(config);
             CreateSkill();
-            RoyalGuardBuffs.CreateBuffs(AssetBundle);
+            CreateBuffs(AssetBundle);
             CreateItem(ref Content.Items.RoyalGuard);
             Hooks();
         }
@@ -64,9 +63,9 @@ namespace ExtradimensionalItems.Modules.Items
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
             var body = self.body;
-            if (body.HasBuff(RoyalGuardBuffs.RoyalGuardParryStateBuff))
+            if (body.HasBuff(Content.Buffs.RoyalGuardParryStateBuff))
             {
-                var timedBuff = body.GetTimedBuff(RoyalGuardBuffs.RoyalGuardParryStateBuff);
+                var timedBuff = body.GetTimedBuff(Content.Buffs.RoyalGuardParryStateBuff);
                 var parryStateDuration = GetParryStateDuration(body);
                 int numberOfBuffs;
                 if ((parryStateDuration - timedBuff.timer) <= (parryStateDuration / BEST_PARRY_COEF))
@@ -81,19 +80,19 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     numberOfBuffs = 1;
                 }
-                if(body.GetBuffCount(RoyalGuardBuffs.RoyalGuardParryStateBuff) + numberOfBuffs > MaxBuffStacks.Value)
+                if(body.GetBuffCount(Content.Buffs.RoyalGuardParryStateBuff) + numberOfBuffs > MaxBuffStacks.Value)
                 {
-                    numberOfBuffs = MaxBuffStacks.Value - body.GetBuffCount(RoyalGuardBuffs.RoyalGuardParryStateBuff);
+                    numberOfBuffs = MaxBuffStacks.Value - body.GetBuffCount(Content.Buffs.RoyalGuardParryStateBuff);
                 }
                 for (int i = 0; i < numberOfBuffs; i++)
                 {
-                    body.AddBuff(RoyalGuardBuffs.RoyalGuardDamageBuff);
+                    body.AddBuff(Content.Buffs.RoyalGuardDamageBuff);
                 }
                 MyLogger.LogMessage(string.Format("Player {0}({1}) got damaged in {2} after entering parry state. Adding {3} damage buff(s), adding grace buff and removing parry state buff.", body.GetUserName(), body.name, parryStateDuration - timedBuff.timer, numberOfBuffs));
-                body.AddTimedBuff(RoyalGuardBuffs.RoyalGuardGraceBuff, 0.0167f);
-                body.RemoveTimedBuff(RoyalGuardBuffs.RoyalGuardParryStateBuff);
+                body.AddTimedBuff(Content.Buffs.RoyalGuardGraceBuff, 0.0167f);
+                body.RemoveTimedBuff(Content.Buffs.RoyalGuardParryStateBuff);
                 damageInfo.rejected = true;
-            } else if (body.HasBuff(RoyalGuardBuffs.RoyalGuardGraceBuff))
+            } else if (body.HasBuff(Content.Buffs.RoyalGuardGraceBuff))
             {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) got damaged while having grace buff, rejecting received damage.", body.GetUserName(), body.name));
                 damageInfo.rejected = true;
@@ -176,6 +175,43 @@ namespace ExtradimensionalItems.Modules.Items
         {
             //throw new System.NotImplementedException();
             return pickupString;
+        }
+
+        public static void CreateBuffs(AssetBundle assetBundle)
+        {
+            var RoyalGuardParryStateBuff = ScriptableObject.CreateInstance<BuffDef>();
+            RoyalGuardParryStateBuff.name = "Royal Guard Parry State";
+            RoyalGuardParryStateBuff.buffColor = Color.red;
+            RoyalGuardParryStateBuff.canStack = false;
+            RoyalGuardParryStateBuff.isDebuff = false;
+            RoyalGuardParryStateBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+
+            ContentAddition.AddBuffDef(RoyalGuardParryStateBuff);
+
+            Content.Buffs.RoyalGuardParryStateBuff = RoyalGuardParryStateBuff;
+
+            var RoyalGuardDamageBuff = ScriptableObject.CreateInstance<BuffDef>();
+            RoyalGuardDamageBuff.name = "Royal Guard Damage Buff";
+            RoyalGuardDamageBuff.buffColor = Color.magenta;
+            RoyalGuardDamageBuff.canStack = true;
+            RoyalGuardDamageBuff.isDebuff = false;
+            RoyalGuardDamageBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+
+            ContentAddition.AddBuffDef(RoyalGuardDamageBuff);
+
+            Content.Buffs.RoyalGuardDamageBuff = RoyalGuardDamageBuff;
+
+            var RoyalGuardGraceBuff = ScriptableObject.CreateInstance<BuffDef>();
+            RoyalGuardGraceBuff.name = "Royal Guard Grace State";
+            RoyalGuardGraceBuff.buffColor = Color.green;
+            RoyalGuardGraceBuff.canStack = false;
+            RoyalGuardGraceBuff.isDebuff = false;
+            RoyalGuardGraceBuff.isHidden = true;
+            RoyalGuardGraceBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+
+            ContentAddition.AddBuffDef(RoyalGuardGraceBuff);
+
+            Content.Buffs.RoyalGuardGraceBuff = RoyalGuardGraceBuff;
         }
 
         public override void CreateConfig(ConfigFile config)

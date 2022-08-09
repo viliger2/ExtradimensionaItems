@@ -26,7 +26,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 }
 
                 stopwatch += Time.fixedDeltaTime;
-                if(stopwatch > damageTimer && body.HasBuff(Buffs.SkullOfDoomBuffs.SkullOfDoomBuff))
+                if(stopwatch > damageTimer && body.HasBuff(Content.Buffs.SkullOfDoomBuff))
                 {
                     stopwatch -= damageTimer;
                     DealDamage(body);
@@ -64,7 +64,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             LoadAssetBundle();
             CreateConfig(config);
-            Buffs.SkullOfDoomBuffs.CreateBuffs(AssetBundle);
+            CreateBuffs(AssetBundle);
             CreateEquipment(ref Content.Equipment.SkullOfDoom);
             Hooks();
         }
@@ -81,10 +81,10 @@ namespace ExtradimensionalItems.Modules.Equipment
             orig(body, equipmentDef);
             if(equipmentDef != Content.Equipment.SkullOfDoom)
             {
-                if (body.HasBuff(Buffs.SkullOfDoomBuffs.SkullOfDoomBuff))
+                if (body.HasBuff(Content.Buffs.SkullOfDoomBuff))
                 {
-                    MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing it.", body.GetUserName(), body.name, Buffs.SkullOfDoomBuffs.SkullOfDoomBuff.name));
-                    body.RemoveBuff(Buffs.SkullOfDoomBuffs.SkullOfDoomBuff);
+                    MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing it.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoomBuff.name));
+                    body.RemoveBuff(Content.Buffs.SkullOfDoomBuff);
                     body.AddItemBehavior<SkullOfDoomBehavior>(0);
                 }
             }
@@ -97,7 +97,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             {
                 if(body.inventory.currentEquipmentIndex == Content.Equipment.SkullOfDoom.equipmentIndex)
                 {
-                    if (body.HasBuff(Buffs.SkullOfDoomBuffs.SkullOfDoomBuff))
+                    if (body.HasBuff(Content.Buffs.SkullOfDoomBuff))
                     {
                         args.moveSpeedMultAdd += SpeedBuff.Value + (FuelCellSpeedBuff.Value * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine));
                     }
@@ -111,16 +111,16 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             if (!body || !body.teamComponent) return false;
 
-            if (body.HasBuff(Buffs.SkullOfDoomBuffs.SkullOfDoomBuff)){
+            if (body.HasBuff(Content.Buffs.SkullOfDoomBuff)){
                 MyLogger.LogMessage(string.Format("Player {0}({1}) used {2}, removing damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName));
-                body.RemoveBuff(Buffs.SkullOfDoomBuffs.SkullOfDoomBuff);
+                body.RemoveBuff(Content.Buffs.SkullOfDoomBuff);
                 body.AddItemBehavior<SkullOfDoomBehavior>(0);
             }
             else
             {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) used {2}, applying damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName));
                 DealDamage(body);
-                body.AddBuff(Buffs.SkullOfDoomBuffs.SkullOfDoomBuff);
+                body.AddBuff(Content.Buffs.SkullOfDoomBuff);
                 body.AddItemBehavior<SkullOfDoomBehavior>(1);
             }
             return true;
@@ -137,6 +137,20 @@ namespace ExtradimensionalItems.Modules.Equipment
             damageInfo.damageType = DamageType.BypassArmor;
 
             body.healthComponent.TakeDamage(damageInfo);
+        }
+
+        public static void CreateBuffs(AssetBundle assetBundle)
+        {
+            var SkullOfDoomBuff = ScriptableObject.CreateInstance<BuffDef>();
+            SkullOfDoomBuff.name = "Skull of Impending Doom";
+            SkullOfDoomBuff.buffColor = Color.yellow;
+            SkullOfDoomBuff.canStack = false;
+            SkullOfDoomBuff.isDebuff = false;
+            SkullOfDoomBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO: replace
+
+            ContentAddition.AddBuffDef(SkullOfDoomBuff);
+
+            Content.Buffs.SkullOfDoomBuff = SkullOfDoomBuff;
         }
 
         protected override void CreateConfig(ConfigFile config)
