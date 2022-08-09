@@ -75,7 +75,7 @@ namespace ExtradimensionalItems.Modules.Items
             }
 
             ItemDef = ScriptableObject.CreateInstance<ItemDef>();
-            ItemDef.name = "ITEM_" + ItemLangTokenName;
+            ItemDef.name = ItemName;
             ItemDef.nameToken = "ITEM_" + ItemLangTokenName + "_NAME";
             ItemDef.pickupToken = "ITEM_" + ItemLangTokenName + "_PICKUP";
             ItemDef.descriptionToken = "ITEM_" + ItemLangTokenName + "_DESCRIPTION";

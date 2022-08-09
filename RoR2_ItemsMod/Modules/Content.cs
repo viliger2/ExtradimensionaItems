@@ -15,6 +15,9 @@ namespace ExtradimensionalItems.Modules.Content
         public static ItemDef Sheen;
 
         public static ItemDef RoyalGuard;
+
+        public static ItemDef FuelCellDepleted;
+
     }
 
     public static class Skills
@@ -26,15 +29,15 @@ namespace ExtradimensionalItems.Modules.Content
     
     public static class Buffs
     {
-        public static BuffDef RoyalGuardParryStateBuff;
+        public static BuffDef RoyalGuardParryState;
 
-        public static BuffDef RoyalGuardDamageBuff;
+        public static BuffDef RoyalGuardDamage;
 
-        public static BuffDef RoyalGuardGraceBuff;
+        public static BuffDef RoyalGuardGrace;
 
-        public static BuffDef SheenBuff;
+        public static BuffDef Sheen;
 
-        public static BuffDef SkullOfDoomBuff;
+        public static BuffDef SkullOfDoom;
     }
 
 }

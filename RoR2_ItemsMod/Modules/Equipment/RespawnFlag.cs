@@ -8,11 +8,13 @@ using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.Equipment
 {
-    internal class RespawnFlag : EquipmentBase<RespawnFlag>
+    public class RespawnFlag : EquipmentBase<RespawnFlag>
     {
         // TODO: implement spending of batteries on death instead of destroying the flag (as option) 
 
-        public override string EquipmentName => "Checkpoint";
+        public static ConfigEntry<bool> EnableFuelCellInteraction;
+
+        public override string EquipmentName => "RespawnFlag";
 
         public override string EquipmentLangTokenName => "RESPAWN_FLAG";
 
@@ -36,6 +38,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             LoadAssetBundle();
             LoadInteractable();
+            CreateConfig(config);
             CreateEquipment(ref Content.Equipment.RespawnFlag);
             Hooks();
         }
@@ -111,6 +114,11 @@ namespace ExtradimensionalItems.Modules.Equipment
             }
 
             return false;
+        }
+
+        protected override void CreateConfig(ConfigFile config)
+        {
+            EnableFuelCellInteraction = config.Bind("Equipment: " + EquipmentName, "Enable Fuel Cell Interaction", true, "Enables Fuel Cell interaction, using Fuel Cells to revive instead of destroying checkpoint.");
         }
     }
 

@@ -8,9 +8,8 @@ using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
 {
-    internal class RoyalGuardItem : ItemBase<RoyalGuardItem>
+    public class RoyalGuard : ItemBase<RoyalGuard>
     {
-
         // these are used to determine windows for how many stacks of damage buff player gets on parry
         // from the base duration of parry stance 0.5 seconds:
         //   0.1 seconds for best parry or 0.5/5
@@ -63,9 +62,9 @@ namespace ExtradimensionalItems.Modules.Items
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
             var body = self.body;
-            if (body.HasBuff(Content.Buffs.RoyalGuardParryStateBuff))
+            if (body.HasBuff(Content.Buffs.RoyalGuardParryState))
             {
-                var timedBuff = body.GetTimedBuff(Content.Buffs.RoyalGuardParryStateBuff);
+                var timedBuff = body.GetTimedBuff(Content.Buffs.RoyalGuardParryState);
                 var parryStateDuration = GetParryStateDuration(body);
                 int numberOfBuffs;
                 if ((parryStateDuration - timedBuff.timer) <= (parryStateDuration / BEST_PARRY_COEF))
@@ -80,19 +79,19 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     numberOfBuffs = 1;
                 }
-                if(body.GetBuffCount(Content.Buffs.RoyalGuardParryStateBuff) + numberOfBuffs > MaxBuffStacks.Value)
+                if(body.GetBuffCount(Content.Buffs.RoyalGuardParryState) + numberOfBuffs > MaxBuffStacks.Value)
                 {
-                    numberOfBuffs = MaxBuffStacks.Value - body.GetBuffCount(Content.Buffs.RoyalGuardParryStateBuff);
+                    numberOfBuffs = MaxBuffStacks.Value - body.GetBuffCount(Content.Buffs.RoyalGuardParryState);
                 }
                 for (int i = 0; i < numberOfBuffs; i++)
                 {
-                    body.AddBuff(Content.Buffs.RoyalGuardDamageBuff);
+                    body.AddBuff(Content.Buffs.RoyalGuardDamage);
                 }
                 MyLogger.LogMessage(string.Format("Player {0}({1}) got damaged in {2} after entering parry state. Adding {3} damage buff(s), adding grace buff and removing parry state buff.", body.GetUserName(), body.name, parryStateDuration - timedBuff.timer, numberOfBuffs));
-                body.AddTimedBuff(Content.Buffs.RoyalGuardGraceBuff, 0.0167f);
-                body.RemoveTimedBuff(Content.Buffs.RoyalGuardParryStateBuff);
+                body.AddTimedBuff(Content.Buffs.RoyalGuardGrace, 0.0167f);
+                body.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
                 damageInfo.rejected = true;
-            } else if (body.HasBuff(Content.Buffs.RoyalGuardGraceBuff))
+            } else if (body.HasBuff(Content.Buffs.RoyalGuardGrace))
             {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) got damaged while having grace buff, rejecting received damage.", body.GetUserName(), body.name));
                 damageInfo.rejected = true;
@@ -188,7 +187,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             ContentAddition.AddBuffDef(RoyalGuardParryStateBuff);
 
-            Content.Buffs.RoyalGuardParryStateBuff = RoyalGuardParryStateBuff;
+            Content.Buffs.RoyalGuardParryState = RoyalGuardParryStateBuff;
 
             var RoyalGuardDamageBuff = ScriptableObject.CreateInstance<BuffDef>();
             RoyalGuardDamageBuff.name = "Royal Guard Damage Buff";
@@ -199,7 +198,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             ContentAddition.AddBuffDef(RoyalGuardDamageBuff);
 
-            Content.Buffs.RoyalGuardDamageBuff = RoyalGuardDamageBuff;
+            Content.Buffs.RoyalGuardDamage = RoyalGuardDamageBuff;
 
             var RoyalGuardGraceBuff = ScriptableObject.CreateInstance<BuffDef>();
             RoyalGuardGraceBuff.name = "Royal Guard Grace State";
@@ -211,7 +210,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             ContentAddition.AddBuffDef(RoyalGuardGraceBuff);
 
-            Content.Buffs.RoyalGuardGraceBuff = RoyalGuardGraceBuff;
+            Content.Buffs.RoyalGuardGrace = RoyalGuardGraceBuff;
         }
 
         public override void CreateConfig(ConfigFile config)

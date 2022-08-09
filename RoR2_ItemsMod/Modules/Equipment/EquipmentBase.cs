@@ -72,7 +72,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         protected void CreateEquipment(ref EquipmentDef staticEquipmentDef)
         {
             EquipmentDef = ScriptableObject.CreateInstance<EquipmentDef>();
-            EquipmentDef.name = "EQUIPMENT_" + EquipmentLangTokenName;
+            EquipmentDef.name = EquipmentName;
             EquipmentDef.nameToken = "EQUIPMENT_" + EquipmentLangTokenName + "_NAME";
             EquipmentDef.pickupToken = "EQUIPMENT_" + EquipmentLangTokenName + "_PICKUP";
             EquipmentDef.descriptionToken = "EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION";

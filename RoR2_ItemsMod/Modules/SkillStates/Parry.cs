@@ -13,16 +13,16 @@ namespace ExtradimensionalItems.Modules.SkillStates
         {
             base.OnEnter();
 
-            duration = Items.RoyalGuardItem.GetParryStateDuration(characterBody);
+            duration = Items.RoyalGuard.GetParryStateDuration(characterBody);
             if (NetworkServer.active)
             {
-                characterBody.AddTimedBuff(Content.Buffs.RoyalGuardParryStateBuff, duration);
+                characterBody.AddTimedBuff(Content.Buffs.RoyalGuardParryState, duration);
                 MyLogger.LogMessage(string.Format("Player {0}({1}) entered parry state for {2} seconds.", base.characterBody.GetUserName(), base.characterBody.name, duration));
 
             }
             if (isAuthority)
             {
-                if (characterBody.skillLocator && characterBody.HasBuff(Content.Buffs.RoyalGuardDamageBuff))
+                if (characterBody.skillLocator && characterBody.HasBuff(Content.Buffs.RoyalGuardDamage))
                 {
                     characterBody.skillLocator.primary.SetSkillOverride(characterBody, Content.Skills.Explode, GenericSkill.SkillOverridePriority.Replacement);
                 }
@@ -33,9 +33,9 @@ namespace ExtradimensionalItems.Modules.SkillStates
         {
             if (NetworkServer.active)
             {
-                if (characterBody.HasBuff(Content.Buffs.RoyalGuardParryStateBuff))
+                if (characterBody.HasBuff(Content.Buffs.RoyalGuardParryState))
                 {
-                    characterBody.RemoveTimedBuff(Content.Buffs.RoyalGuardParryStateBuff);
+                    characterBody.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
                 }
             }
             if (isAuthority)
@@ -51,7 +51,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (characterBody.HasBuff(Content.Buffs.RoyalGuardParryStateBuff))
+            if (characterBody.HasBuff(Content.Buffs.RoyalGuardParryState))
             {
                 buffAdded = true;
             }
@@ -60,7 +60,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
                 outer.SetNextStateToMain();
                 MyLogger.LogMessage(string.Format("Player {0}({1}) has left parry state due to timeout without being damaged.", characterBody.GetUserName(), characterBody.name));
             }
-            if (buffAdded && !characterBody.HasBuff(Content.Buffs.RoyalGuardParryStateBuff) && isAuthority)
+            if (buffAdded && !characterBody.HasBuff(Content.Buffs.RoyalGuardParryState) && isAuthority)
             {
                 outer.SetNextStateToMain();
                 MyLogger.LogMessage(string.Format("Player {0}({1}) has left parry state because they don't have parry state buff after being damaged.", characterBody.GetUserName(), characterBody.name));
@@ -70,7 +70,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
         public override void Update()
         {
             base.Update();
-            if (isAuthority && inputBank && characterBody.HasBuff(Content.Buffs.RoyalGuardDamageBuff))
+            if (isAuthority && inputBank && characterBody.HasBuff(Content.Buffs.RoyalGuardDamage))
             {
                 if (inputBank.skill1.justPressed)
                 {

@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.Items
 {
-    internal class SheenItem : ItemBase<SheenItem>
+    public class Sheen : ItemBase<Sheen>
     {
         public static ConfigEntry<float> DamageModifier;
         public static ConfigEntry<bool> CanStack;
@@ -71,7 +71,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             if (!damageInfo.rejected || damageInfo == null)
             {
-                if (body.isPlayerControlled && body.HasBuff(Content.Buffs.SheenBuff) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
+                if (body.isPlayerControlled && body.HasBuff(Content.Buffs.Sheen) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
                 {
                     if (CharacterUsedPrimary.TryGetValue(body, out bool bodyUsedPrimary))
                     {
@@ -87,11 +87,11 @@ namespace ExtradimensionalItems.Modules.Items
                             damageInfo2.damageColorIndex = DamageColorIndex.Item;
                             damageInfo2.damageType = DamageType.Generic;
 
-                            MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, Content.Buffs.SheenBuff.name, damageInfo2.damage, victim.name));
+                            MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
 
                             victimBody.healthComponent.TakeDamage(damageInfo2);
 
-                            body.RemoveTimedBuff(Content.Buffs.SheenBuff);
+                            body.RemoveTimedBuff(Content.Buffs.Sheen);
                             CharacterUsedPrimary[body] = false;
                         }
                     }
@@ -108,12 +108,12 @@ namespace ExtradimensionalItems.Modules.Items
                 if (GetCount(self) > 0)
                 {
                     var skillLocator = self.GetComponent<SkillLocator>();
-                    if (skillLocator?.primary != skill && self.GetBuffCount(Content.Buffs.SheenBuff) < MaxBuffStacks.Value)
+                    if (skillLocator?.primary != skill && self.GetBuffCount(Content.Buffs.Sheen) < MaxBuffStacks.Value)
                     {
-                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, Content.Buffs.SheenBuff.name));
-                        self.AddTimedBuff(Content.Buffs.SheenBuff, BuffDuration.Value);
+                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, Content.Buffs.Sheen.name));
+                        self.AddTimedBuff(Content.Buffs.Sheen, BuffDuration.Value);
                     }
-                    else if (skillLocator?.primary == skill && self.HasBuff(Content.Buffs.SheenBuff))
+                    else if (skillLocator?.primary == skill && self.HasBuff(Content.Buffs.Sheen))
                     {
                         CharacterUsedPrimary.AddOrReplace(self, true);
                     }
@@ -137,7 +137,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             ContentAddition.AddBuffDef(SheenBuff);
 
-            Content.Buffs.SheenBuff = SheenBuff;
+            Content.Buffs.Sheen = SheenBuff;
         }
 
         public override void CreateConfig(ConfigFile config)

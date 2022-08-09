@@ -10,7 +10,7 @@ using static RoR2.CharacterBody;
 
 namespace ExtradimensionalItems.Modules.Equipment
 {
-    internal class SkullOfDoom : EquipmentBase<SkullOfDoom>
+    public class SkullOfDoom : EquipmentBase<SkullOfDoom>
     {
         public class SkullOfDoomBehavior : ItemBehavior
         {
@@ -26,7 +26,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 }
 
                 stopwatch += Time.fixedDeltaTime;
-                if(stopwatch > damageTimer && body.HasBuff(Content.Buffs.SkullOfDoomBuff))
+                if(stopwatch > damageTimer && body.HasBuff(Content.Buffs.SkullOfDoom))
                 {
                     stopwatch -= damageTimer;
                     DealDamage(body);
@@ -81,10 +81,10 @@ namespace ExtradimensionalItems.Modules.Equipment
             orig(body, equipmentDef);
             if(equipmentDef != Content.Equipment.SkullOfDoom)
             {
-                if (body.HasBuff(Content.Buffs.SkullOfDoomBuff))
+                if (body.HasBuff(Content.Buffs.SkullOfDoom))
                 {
-                    MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing it.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoomBuff.name));
-                    body.RemoveBuff(Content.Buffs.SkullOfDoomBuff);
+                    MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing it.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name));
+                    body.RemoveBuff(Content.Buffs.SkullOfDoom);
                     body.AddItemBehavior<SkullOfDoomBehavior>(0);
                 }
             }
@@ -97,7 +97,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             {
                 if(body.inventory.currentEquipmentIndex == Content.Equipment.SkullOfDoom.equipmentIndex)
                 {
-                    if (body.HasBuff(Content.Buffs.SkullOfDoomBuff))
+                    if (body.HasBuff(Content.Buffs.SkullOfDoom))
                     {
                         args.moveSpeedMultAdd += SpeedBuff.Value + (FuelCellSpeedBuff.Value * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine));
                     }
@@ -111,16 +111,16 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             if (!body || !body.teamComponent) return false;
 
-            if (body.HasBuff(Content.Buffs.SkullOfDoomBuff)){
+            if (body.HasBuff(Content.Buffs.SkullOfDoom)){
                 MyLogger.LogMessage(string.Format("Player {0}({1}) used {2}, removing damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName));
-                body.RemoveBuff(Content.Buffs.SkullOfDoomBuff);
+                body.RemoveBuff(Content.Buffs.SkullOfDoom);
                 body.AddItemBehavior<SkullOfDoomBehavior>(0);
             }
             else
             {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) used {2}, applying damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName));
                 DealDamage(body);
-                body.AddBuff(Content.Buffs.SkullOfDoomBuff);
+                body.AddBuff(Content.Buffs.SkullOfDoom);
                 body.AddItemBehavior<SkullOfDoomBehavior>(1);
             }
             return true;
@@ -150,7 +150,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             ContentAddition.AddBuffDef(SkullOfDoomBuff);
 
-            Content.Buffs.SkullOfDoomBuff = SkullOfDoomBuff;
+            Content.Buffs.SkullOfDoom = SkullOfDoomBuff;
         }
 
         protected override void CreateConfig(ConfigFile config)

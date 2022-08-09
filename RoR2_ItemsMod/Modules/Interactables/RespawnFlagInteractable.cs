@@ -62,8 +62,7 @@ namespace ExtradimensionalItems.Modules.Interactables
                 {
                     if (gameObject && body.isPlayerControlled && body == owner)
                     {
-                        MyLogger.LogMessage(string.Format("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
-                        body.master.Respawn(gameObject.transform.position, body.master.transform.rotation);
+                        var newbody = body.master.Respawn(gameObject.transform.position, body.master.transform.rotation);
 
                         GameObject spawnEffect = Resources.Load<GameObject>("Prefabs/Effects/HippoRezEffect");
                         EffectManager.SpawnEffect(spawnEffect, new EffectData
@@ -78,7 +77,19 @@ namespace ExtradimensionalItems.Modules.Interactables
                             baseToken = $"INTERACTABLE_{langToken}_INTERACT"
                         });
 
-                        Destroy(gameObject);
+                        if (Equipment.RespawnFlag.EnableFuelCellInteraction.Value && body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) > 0)
+                        {
+                            MyLogger.LogMessage(string.Format("Player {0}({1}) has died, has {2} up and has {3} in their inventory, respawning them and replacing {3} with {4}.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}", RoR2Content.Items.EquipmentMagazine.name, Content.Items.FuelCellDepleted.name));
+                            body.inventory.RemoveItem(RoR2Content.Items.EquipmentMagazine);
+                            body.inventory.GiveItem(Content.Items.FuelCellDepleted);
+                            CharacterMasterNotificationQueue.SendTransformNotification(body.master, RoR2Content.Items.EquipmentMagazine.itemIndex, Content.Items.FuelCellDepleted.itemIndex, CharacterMasterNotificationQueue.TransformationType.Default);
+                            owner = newbody;
+                        }
+                        else
+                        {
+                            MyLogger.LogMessage(string.Format("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
+                            Destroy(gameObject);
+                        }
                     }
                 }
             }
