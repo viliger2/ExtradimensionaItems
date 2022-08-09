@@ -60,9 +60,6 @@ namespace ExtradimensionalItems.Modules.Interactables
                 orig(self, body);
                 if (NetworkServer.active)
                 {
-                    // we are checking for owner here instead of On.RoR2.GenericInteraction.RoR2_IInteractable_GetInteractability
-                    // because it doesn't work, most likely something wrong with game's code since MMMHOOK is generated on launch
-                    // TODO: write IL hook that might or might not work
                     if (gameObject && body.isPlayerControlled && body == owner)
                     {
                         MyLogger.LogMessage(string.Format("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
@@ -102,6 +99,9 @@ namespace ExtradimensionalItems.Modules.Interactables
                 }
 
                 var body = interactor.GetComponent<CharacterBody>();
+                // we are checking for owner here instead of On.RoR2.GenericInteraction.RoR2_IInteractable_GetInteractability
+                // because it doesn't work, most likely something wrong with game's code since MMMHOOK is generated on launch
+                // TODO: write IL hook that might or might not work
                 if (body && body == owner)
                 {
                     MyLogger.LogMessage(string.Format("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));

@@ -122,18 +122,17 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        public override void CreateConfig(ConfigFile config)
-        {
-            CanStack        = config.Bind("Item: " + ItemName, "Can Buff Stack",        true, "Determines whether the buff that indicates damage bonus can stack or not.");
-            DamageModifier  = config.Bind("Item: " + ItemName, "Damage Modifier",       2.5f, "What damage modifier (per stack) the item should use.");
-            BuffDuration    = config.Bind("Item: " + ItemName, "Buff Duration",         10f,  "How long the buff should remain active after using non-primary ability.");
-            MaxBuffStacks   = config.Bind("Item: " + ItemName, "Maximum Buff Stacks",   8,    "How many times the buff can stack.");
-        }
-
         public override string GetFormatedDiscription(string pickupString)
         {
             return string.Format(pickupString, DamageModifier.Value.ToString("###%"), CanStack.Value ? MaxBuffStacks.Value : 1);
         }
 
+        public override void CreateConfig(ConfigFile config)
+        {
+            CanStack = config.Bind("Item: " + ItemName, "Can Buff Stack", true, "Determines whether the buff that indicates damage bonus can stack or not.");
+            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 2.5f, "What damage modifier (per stack) the item should use.");
+            BuffDuration = config.Bind("Item: " + ItemName, "Buff Duration", 10f, "How long the buff should remain active after using non-primary ability.");
+            MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
+        }
     }
 }

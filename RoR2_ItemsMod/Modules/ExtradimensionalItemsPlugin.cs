@@ -12,7 +12,8 @@ namespace ExtradimensionalItems.Modules
 {
     [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "1.0")]
     [BepInDependency(R2API.R2API.PluginGUID)]
-    [R2APISubmoduleDependency(nameof(LanguageAPI), nameof(PrefabAPI), nameof(NetworkingAPI), nameof(DirectorAPI), nameof(ItemAPI))]
+    //[R2APISubmoduleDependency(nameof(LanguageAPI), nameof(PrefabAPI), nameof(NetworkingAPI), nameof(DirectorAPI), nameof(ItemAPI), nameof(RecalculateStatsAPI)]
+    [R2APISubmoduleDependency(nameof(ItemAPI), nameof(RecalculateStatsAPI), nameof(NetworkingAPI))]
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
 

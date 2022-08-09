@@ -167,14 +167,6 @@ namespace ExtradimensionalItems.Modules.Items
             Content.Skills.Explode = RoyalGuardSkillExplodeDef;
         }
 
-        public override void CreateConfig(ConfigFile config)
-        {
-            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 10f, "What damage modifier (per stack) the item should use.");
-            MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
-            BaseDuration = config.Bind("Item: " + ItemName, "Base Parry State Duration", 0.5f, "How long is base Parry skill duration.");
-            PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much each start (after first one) of item adds to Parry skill duration.");
-        }
-
         public static float GetParryStateDuration(CharacterBody body)
         {
             return BaseDuration.Value + (PerStackDuration.Value * (body.inventory.GetItemCount(Content.Items.RoyalGuard) - 1));
@@ -184,6 +176,14 @@ namespace ExtradimensionalItems.Modules.Items
         {
             //throw new System.NotImplementedException();
             return pickupString;
+        }
+
+        public override void CreateConfig(ConfigFile config)
+        {
+            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 10f, "What damage modifier (per stack) the item should use.");
+            MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
+            BaseDuration = config.Bind("Item: " + ItemName, "Base Parry State Duration", 0.5f, "How long is base Parry skill duration.");
+            PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much each start (after first one) of item adds to Parry skill duration.");
         }
     }
 }
