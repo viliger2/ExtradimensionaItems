@@ -107,7 +107,20 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected abstract bool ActivateEquipment(EquipmentSlot slot);
 
-        protected virtual void Hooks() { }
+        protected virtual void Hooks() {
+            On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
+        }
+
+        private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
+        {
+            if (token.Equals($"EQUIPMENT_{EquipmentLangTokenName}_DESCRIPTION"))
+            {
+                return GetFormatedDiscription(orig(self, token));
+            }
+            return orig(self, token);
+        }
+
+        public abstract string GetFormatedDiscription(string pickupString);
 
         //#region Targeting Setup
         ////Targeting Support

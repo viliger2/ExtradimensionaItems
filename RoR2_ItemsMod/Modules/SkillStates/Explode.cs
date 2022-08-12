@@ -32,7 +32,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
             {
                 BlastAttack blastAttack = new BlastAttack
                 {
-                    radius = 8f,
+                    radius = Items.RoyalGuard.DamageRadius.Value,
                     procCoefficient = 1f,
                     position = base.characterBody.corePosition,
                     attacker = base.characterBody.gameObject,

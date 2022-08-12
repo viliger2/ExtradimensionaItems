@@ -73,7 +73,7 @@ namespace ExtradimensionalItems.Modules.Interactables
                         Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
                         {
                             subjectAsCharacterBody = body,
-                            baseToken = $"INTERACTABLE_{langToken}_INTERACT"
+                            baseToken = $"INTERACTABLE_{langToken}_RESPAWN"
                         });
 
                         if (Equipment.RespawnFlag.EnableFuelCellInteraction.Value && body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) > 0)

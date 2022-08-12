@@ -14,13 +14,17 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string ItemLangTokenName => "FUEL_CELL_DEPLETED";
 
-        public override ItemTier Tier => ItemTier.Tier2;
+        public override ItemTier Tier => ItemTier.NoTier;
 
         public override string BundleName => "fuelcelldepleted";
 
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("FuelCellDepleted");
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texFuelCellDepletedIcon");
+
+        public override bool AIBlacklisted => true;
+
+        public override bool CanRemove => false;
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {

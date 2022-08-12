@@ -1,0 +1,41 @@
+{
+	"strings":{
+		"ITEM_SHEEN_NAME": "Sheen",
+		"ITEM_SHEEN_PICKUP": "Go get 'em champ",
+		"ITEM_SHEEN_DESCRIPTION": "After using <style=cIsUtility>non-primary ability</style> gain one stack of <style=cIsDamage>buff</style>. Dealing <style=cIsDamage>damage</style> with <style=cIsUtility>primary ability</style> while having said buff will cause target take additional <style=cIsDamage>{0} base damage</style> <style=cStack>(+{0} per stack)</style> and consume one stack of buff. Buff can be stacked up to <style=cIsUtility>{1}</style> times.",
+		"ITEM_SHEEN_LORE": "haha funni",
+		
+		"EQUIPMENT_RESPAWN_FLAG_NAME": "Checkpoint",
+		"EQUIPMENT_RESPAWN_FLAG_PICKUP": "It keeps you safe.",
+		"EQUIPMENT_RESPAWN_FLAG_DESCRIPTION": "Place a <style=cIsUtility>checkpoint</style> on the ground. <style=cIsUtility>Upon death</style> <style=cIsHealing>respawn</style> at checkpoint's location, <style=cIsUtility>destroying it</style> in the process. Unused checkpoint can be <style=cIsUtility>picked back up</style>. Only <style=cIsUtility>one</style> checkpoint can exist <style=cIsUtility>per player</style> at a time. Picking up <style=cIsDamage>different equipment</style> results in <style=cIsUtility>checkpoint being disabled and transformed back into equipment</style>.\r\nIf <style=cIsHealing>Fuel Cells</style> are present, one will be <style=cIsUtility>consumed</style> in place of <style=cIsUtility>checkpoint</style>.",
+		"EQUIPMENT_RESPAWN_FLAG_LORE": "Go play Super Cloudbuilt you fucks.",	
+		"INTERACTABLE_RESPAWN_FLAG_CONTEXT": "Pick up Checkpoint?",
+		"INTERACTABLE_RESPAWN_FLAG_NAME": "Checkpoint",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN": "{0} got saved by his trusty flag.",
+		
+		"EQUIPMENT_SKULL_OF_DOOM_NAME": "Skull of Impending Doom",
+		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Tonight at 11... DOOOOOOOOOOOOOOM",
+		"EQUIPMENT_SKULL_OF_DOOM_DESCRIPTION": "Gain <style=cIsUtility>{0}</style> movement speed, while taking <style=cIsHealth>{1} max health</style> as damage every <style=cIsUtility>{2} seconds</style>. Use again to disable the effect.\r\nIf <style=cIsHealing>Fuel Cells</style> are present, gain additional <style=cStack>{3} movement speed</style> and <style=cStack>reduce damage by {4}</style> per stack.",
+		"EQUIPMENT_SKULL_OF_DOOM_LORE": "It's a WoW item, the best I can do is either <style=cIsVoid>corruption</style> or <style=cShrine>retcons</style>. Which one do you want?",
+		
+		"ITEM_FUEL_CELL_DEPLETED_NAME": "Fuel Cell (Depleted)",
+		"ITEM_FUEL_CELL_DEPLETED_PICKUP": "It saved your life, be grateful.",
+		"ITEM_FUEL_CELL_DEPLETED_DESCRIPTION": "Fuel Cell that got depleted of its power.",
+		"ITEM_FUEL_CELL_DEPLETED_LORE": "You know how I made fun of Hopoo for making breakable items? Yeah. Also how do you disable lore lmao",
+		
+		"ITEM_ROYAL_GUARD_NAME": "Royal Guard",
+		"ITEM_ROYAL_GUARD_PICKUP": "This party is getting crazy, let's rock!",
+		"ITEM_ROYAL_GUARD_DESCRIPTION": "Replace your <style=cIsUtility>Utility Skill</style> with <style=cIsUtility>Block</style>.\r\nEnter a defensive stance for <style=cIsUtility>{0}</style> <style=cStack>(+{1} per stack)</style> seconds, deflecting first non-periodic hit. <style=cIsUtility>Depending for how long you were in the stance</style> gain <style=cIsDamage>3 to 1</style> damage buff(s). If you have <style=cIsDamage>damage buffs</style> when using <style=cIsUtility>Block</style>, your <style=cIsUtility>Primary Skill</style> gets replaced with <style=cIsUtility>Release</style>.\r\nUsing <style=cIsUtility>Release</style> will <style=cIsDamage>consume all damage buffs</style> and deal <style=cIsDamage>{2}</style> <style=cStack>(+{2} per stack)</style> base damage per buff stack to everyone in <style=cIsDamage>{3}m</style> radius. You can have up to <style=cIsDamage>{4} stacks of damage buff</style>.",
+		"ITEM_ROYAL_GUARD_LORE": "Agnus: It was my assumption that those demons would prove far inferior... In the face of your tactics.\r\nDante: You summon and kill... Summon and kill... I fail to see the logic here. Is sanity the price to pay for power!?\r\nAgnus: Humans... They are but stubborn and foolish. It takes a journey to Hell for them to accept and praise their God. A fact that tickle's irony's judgment.\r\nDante: And your judgments interests me not. For I'm here... To reclaim... What is rightfully mine.\r\nAgnus: Yamato! That is what you seek. And that is why I wait in your path!\r\nDante: You will fumble in your opposition of my quest.\r\nDante: Though I encourage! For an opportunity to battle a being of such grand delusions as you, is a sweet fortune!",
+		"SKILL_ROYAL_GUARD_PARRY_NAME": "Block",
+		"SKILL_ROYAL_GUARD_PARRY_DESC": "Enter a defensive stance for <style=cIsUtility>{0}</style> <style=cStack>(+{1} per stack)</style> seconds, deflecting first non-periodic hit. <style=cIsUtility>Depending for how long you were in the stance</style> gain <style=cIsDamage>3 to 1</style> damage buff(s). If you have <style=cIsDamage>damage buffs</style> when using <style=cIsUtility>Block</style>, your <style=cIsUtility>Primary Skill</style> gets replaced with <style=cIsUtility>Release</style>. You can have up to <style=cIsDamage>{2} stacks of damage buff</style>.",
+		"SKILL_ROYAL_GUARD_RELEASE_NAME": "Release",
+		"SKILL_ROYAL_GUARD_RELEASE_DESC": "<style=cIsDamage>Consume all damage buffs</style> and deal <style=cIsDamage>{0}</style> <style=cStack>(+{0} per stack)</style> base damage per buff stack to everyone in <style=cIsDamage>{1}m</style> radius.\r\n\r\nWow you are fast."
+	},
+	"RU": {
+		"ITEM_SHEEN_NAME": "Сияние",
+		"ITEM_SHEEN_PICKUP": "Тонны тунельного урона",
+		"ITEM_SHEEN_DESCRIPTION": "После использования <style=cIsUtility>не основной способности</style> накладывает один стак <style=cIsDamage>эффекта</style>. Нанесение <style=cIsDamage>урона</style> <style=cIsUtility>основной способностью</style> находясь под этим эффектом нанесет дополнительные <style=cIsDamage>{0} базового урона</style> <style=cStack>(+{0} за штуку)</style> цели и съест один стак эффекта. Эффект можно состакать до <style=cIsUtility>{1}</style> раз.",
+		"ITEM_SHEEN_LORE": "haha funni"
+	}
+}

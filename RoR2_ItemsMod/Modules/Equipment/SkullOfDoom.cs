@@ -69,6 +69,11 @@ namespace ExtradimensionalItems.Modules.Equipment
             Hooks();
         }
 
+        public override string GetFormatedDiscription(string pickupString)
+        {
+            return string.Format(pickupString, SpeedBuff.Value.ToString("###%"), DamageOverTime.Value.ToString("###%"), DamageFrequency.Value, FuelCellSpeedBuff.Value.ToString("###%"), FuelCellDamageOverTime.Value.ToString("###%"));
+        }
+
         protected override void Hooks()
         {
             base.Hooks();

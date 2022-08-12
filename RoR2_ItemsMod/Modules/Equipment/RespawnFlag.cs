@@ -49,8 +49,14 @@ namespace ExtradimensionalItems.Modules.Equipment
             flagInteractablePrefab = PrefabAPI.InstantiateClone(flagInteractablePrefab2, "RespawnFlagInteractable"); // always use PrefabAPI, it will network it
         }
 
+        public override string GetFormatedDiscription(string pickupString)
+        {
+            return pickupString;
+        }
+
         protected override void Hooks()
         {
+            base.Hooks();
             On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
         }
 

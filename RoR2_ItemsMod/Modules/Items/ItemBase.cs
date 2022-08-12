@@ -84,7 +84,8 @@ namespace ExtradimensionalItems.Modules.Items
             ItemDef.pickupIconSprite = ItemIcon;
             ItemDef.hidden = false;
             ItemDef.canRemove = CanRemove;
-            //ItemDef.deprecatedTier = Tier;
+            ItemDef.tier = Tier;
+            ItemDef.deprecatedTier = Tier;
 
             if (ItemTags.Length > 0) { ItemDef.tags = ItemTags; }
 

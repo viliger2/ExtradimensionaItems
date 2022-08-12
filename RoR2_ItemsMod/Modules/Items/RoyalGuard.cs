@@ -22,6 +22,7 @@ namespace ExtradimensionalItems.Modules.Items
         public static ConfigEntry<float> DamageModifier;
         public static ConfigEntry<float> BaseDuration;
         public static ConfigEntry<float> PerStackDuration;
+        public static ConfigEntry<float> DamageRadius;
 
         public override string ItemName => "RoyalGuard";
 
@@ -57,6 +58,29 @@ namespace ExtradimensionalItems.Modules.Items
         {
             On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+            // implementing our own replacements instead of using base.Hooks()
+            // since we also need to format skills
+            On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
+        }
+
+        private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
+        {
+            if (token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION"))
+            {
+                return GetFormatedDiscription(orig(self, token));
+            } else if (token.Equals($"SKILL_{ItemLangTokenName}_PARRY_DESC"))
+            {
+                MyLogger.LogMessage(token);
+                MyLogger.LogMessage(orig(self, token));
+                return string.Format(orig(self, token), BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value);
+            } else if (token.Equals($"SKILL_{ItemLangTokenName}_RELEASE_DESC"))
+            {
+                MyLogger.LogMessage(token);
+                MyLogger.LogMessage(orig(self, token));
+                return string.Format(orig(self, token), DamageModifier.Value.ToString("###%"), DamageRadius.Value);
+            }
+
+            return orig(self, token);
         }
 
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -128,9 +152,9 @@ namespace ExtradimensionalItems.Modules.Items
             RoyalGuardSkillParryDef.stockToConsume = 1;
 
             RoyalGuardSkillParryDef.icon = AssetBundle.LoadAsset<Sprite>("texRoyalGuardSkill");
-            RoyalGuardSkillParryDef.skillDescriptionToken = "WACKY_WAHOO_PIZZA_MAN_DESCRIPTION";
+            RoyalGuardSkillParryDef.skillDescriptionToken = "SKILL_ROYAL_GUARD_PARRY_DESC";
             RoyalGuardSkillParryDef.skillName = "RoyalGuardParry";
-            RoyalGuardSkillParryDef.skillNameToken = "WACKY_WAHOO_PIZZA_MAN_NAME";
+            RoyalGuardSkillParryDef.skillNameToken = "SKILL_ROYAL_GUARD_PARRY_NAME";
 
             ContentAddition.AddSkillDef(RoyalGuardSkillParryDef);
             ContentAddition.AddEntityState<Parry>(out bool _);
@@ -155,9 +179,9 @@ namespace ExtradimensionalItems.Modules.Items
             RoyalGuardSkillExplodeDef.stockToConsume = 1;
 
             RoyalGuardSkillExplodeDef.icon = AssetBundle.LoadAsset<Sprite>("texRoyalGuardSkill");
-            RoyalGuardSkillExplodeDef.skillDescriptionToken = "WACKY_WAHOO_PIZZA_MAN_DESCRIPTION";
+            RoyalGuardSkillExplodeDef.skillDescriptionToken = "SKILL_ROYAL_GUARD_RELEASE_DESC";
             RoyalGuardSkillExplodeDef.skillName = "RoyalGuardRelease";
-            RoyalGuardSkillExplodeDef.skillNameToken = "WACKY_WAHOO_PIZZA_MAN_NAME";
+            RoyalGuardSkillExplodeDef.skillNameToken = "SKILL_ROYAL_GUARD_RELEASE_NAME";
 
             ContentAddition.AddSkillDef(RoyalGuardSkillExplodeDef);
             ContentAddition.AddEntityState<Explode>(out bool _);
@@ -172,8 +196,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            //throw new System.NotImplementedException();
-            return pickupString;
+            return string.Format(pickupString, BaseDuration.Value, PerStackDuration.Value, DamageModifier.Value.ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value);
         }
 
         public void CreateBuffs(AssetBundle assetBundle)
@@ -218,7 +241,8 @@ namespace ExtradimensionalItems.Modules.Items
             DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 10f, "What damage modifier (per stack) the item should use.");
             MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
             BaseDuration = config.Bind("Item: " + ItemName, "Base Parry State Duration", 0.5f, "How long is base Parry skill duration.");
-            PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much each start (after first one) of item adds to Parry skill duration.");
+            PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much each stack (after first one) of item adds to Parry skill duration.");
+            DamageRadius = config.Bind("Item: " + ItemName, "Release Damage Radius", 15f, "What is the damage radius of Release skill.");
         }
     }
 }
