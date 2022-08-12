@@ -7,7 +7,6 @@ namespace ExtradimensionalItems.Modules.Interactables
 {
     internal class RespawnFlagInteractable
     {
-
         public static GameObject GetInteractable(GameObject interactableModel, string langToken)
         {
             interactableModel.AddComponent<NetworkIdentity>();

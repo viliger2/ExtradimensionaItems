@@ -21,17 +21,15 @@ namespace ExtradimensionalItems.Modules.Items
         public override ItemTier Tier => ItemTier.Tier2;
 
         // I am not happy with this implementation but since there is no way to check which skill did the damage
-        // we are just gonna put a flag on pirmary use and hope that the next non-periodic damage instance was 
+        // we are just gonna put a flag on primary use and hope that the next non-periodic damage instance was 
         // a hit from the primary
         private static Dictionary<CharacterBody, bool> CharacterUsedPrimary = new Dictionary<CharacterBody, bool>();
 
-        // TODO: replace these
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("SheenItem");
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texSheenItemIcon");
 
         public override string BundleName => "sheen";
-        // end TODO
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
@@ -126,7 +124,7 @@ namespace ExtradimensionalItems.Modules.Items
             return string.Format(pickupString, DamageModifier.Value.ToString("###%"), CanStack.Value ? MaxBuffStacks.Value : 1);
         }
 
-        public static void CreateBuffs(AssetBundle assetBundle, bool canStack)
+        public void CreateBuffs(AssetBundle assetBundle, bool canStack)
         {
             var SheenBuff = ScriptableObject.CreateInstance<BuffDef>();
             SheenBuff.name = "Sheen Damage Bonus";

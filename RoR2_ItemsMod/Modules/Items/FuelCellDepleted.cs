@@ -42,12 +42,13 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        public static void AddFuelCellDepletedToRepairList(ref Dictionary<ItemIndex, ItemIndex> dic)
+        public static void AddFuelCellDepletedToRepairList(ref List<ShrineOfRepair.Modules.ModExtension.RepairableItems> list)
         {
-            if (!dic.ContainsKey(Content.Items.FuelCellDepleted.itemIndex))
+            list.Add(new ShrineOfRepair.Modules.ModExtension.RepairableItems
             {
-                dic.Add(Content.Items.FuelCellDepleted.itemIndex, RoR2Content.Items.EquipmentMagazine.itemIndex);
-            }
+                brokenItem = Content.Items.FuelCellDepleted.itemIndex,
+                repairedItem = RoR2Content.Items.EquipmentMagazine.itemIndex
+            });
         }
 
     }

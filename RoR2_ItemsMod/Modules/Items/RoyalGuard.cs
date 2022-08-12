@@ -47,7 +47,7 @@ namespace ExtradimensionalItems.Modules.Items
         {
             LoadAssetBundle();
             CreateConfig(config);
-            CreateSkill();
+            CreateSkills();
             CreateBuffs(AssetBundle);
             CreateItem(ref Content.Items.RoyalGuard);
             Hooks();
@@ -108,7 +108,7 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        private void CreateSkill()
+        private void CreateSkills()
         {
             var RoyalGuardSkillParryDef = ScriptableObject.CreateInstance<SkillDef>();
 
@@ -176,7 +176,7 @@ namespace ExtradimensionalItems.Modules.Items
             return pickupString;
         }
 
-        public static void CreateBuffs(AssetBundle assetBundle)
+        public void CreateBuffs(AssetBundle assetBundle)
         {
             var RoyalGuardParryStateBuff = ScriptableObject.CreateInstance<BuffDef>();
             RoyalGuardParryStateBuff.name = "Royal Guard Parry State";

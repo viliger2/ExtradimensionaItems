@@ -16,7 +16,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             private float stopwatch;
 
-            public static float damageTimer = DamageFrequency.Value;
+            public float damageTimer = DamageFrequency.Value;
 
             public void FixedUpdate()
             {
@@ -139,7 +139,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             body.healthComponent.TakeDamage(damageInfo);
         }
 
-        public static void CreateBuffs(AssetBundle assetBundle)
+        public void CreateBuffs(AssetBundle assetBundle)
         {
             var SkullOfDoomBuff = ScriptableObject.CreateInstance<BuffDef>();
             SkullOfDoomBuff.name = "Skull of Impending Doom";
