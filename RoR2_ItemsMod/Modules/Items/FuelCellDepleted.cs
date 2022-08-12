@@ -36,6 +36,19 @@ namespace ExtradimensionalItems.Modules.Items
         {
             LoadAssetBundle();
             CreateItem(ref Content.Items.FuelCellDepleted);
+            if (ShrineOfRepairCompat.enabled)
+            {
+                ShrineOfRepairCompat.AddListenerToFillDictionary(AddFuelCellDepletedToRepairList);
+            }
         }
+
+        public static void AddFuelCellDepletedToRepairList(ref Dictionary<ItemIndex, ItemIndex> dic)
+        {
+            if (!dic.ContainsKey(Content.Items.FuelCellDepleted.itemIndex))
+            {
+                dic.Add(Content.Items.FuelCellDepleted.itemIndex, RoR2Content.Items.EquipmentMagazine.itemIndex);
+            }
+        }
+
     }
 }

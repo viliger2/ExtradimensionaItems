@@ -28,7 +28,5 @@ namespace ExtradimensionalItems.Modules
                 logger.LogMessage(data);
             }
         }
-
-
     }
 }

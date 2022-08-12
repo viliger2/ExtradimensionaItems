@@ -12,20 +12,17 @@ namespace ExtradimensionalItems.Modules
 {
     [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "1.0")]
     [BepInDependency(R2API.R2API.PluginGUID)]
-    //[R2APISubmoduleDependency(nameof(LanguageAPI), nameof(PrefabAPI), nameof(NetworkingAPI), nameof(DirectorAPI), nameof(ItemAPI), nameof(RecalculateStatsAPI)]
+    [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
     [R2APISubmoduleDependency(nameof(ItemAPI), nameof(RecalculateStatsAPI), nameof(NetworkingAPI))]
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
-
-        //public static BepInEx.Logging.ManualLogSource MyLogger;
-
         public static ConfigEntry<bool> ExtensiveLogging;
 
         public static BepInEx.PluginInfo PInfo;
 
         private void Awake()
         {
-            ExtensiveLogging = Config.Bind("Logging", "Enable extensive logging?", true, "Enables extensive logging, logs evert major event related to new content.");
+            ExtensiveLogging = Config.Bind("Logging", "Enable extensive logging?", true, "Enables extensive logging, logs every major event related to new content.");
 
             MyLogger.Init(Logger);
             //MyLogger = Logger;

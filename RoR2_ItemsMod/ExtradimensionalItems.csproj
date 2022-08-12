@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
@@ -19,4 +19,10 @@
 		</PackageReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Reference Include="ShrineOfRepair">
+	    <HintPath>lib\ShrineOfRepair.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 </Project>
+

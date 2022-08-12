@@ -129,7 +129,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             RoyalGuardSkillParryDef.icon = AssetBundle.LoadAsset<Sprite>("texRoyalGuardSkill");
             RoyalGuardSkillParryDef.skillDescriptionToken = "WACKY_WAHOO_PIZZA_MAN_DESCRIPTION";
-            RoyalGuardSkillParryDef.skillName = "WACKY_WAHOO_PIZZA_MAN_NAME";
+            RoyalGuardSkillParryDef.skillName = "RoyalGuardParry";
             RoyalGuardSkillParryDef.skillNameToken = "WACKY_WAHOO_PIZZA_MAN_NAME";
 
             ContentAddition.AddSkillDef(RoyalGuardSkillParryDef);
@@ -156,7 +156,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             RoyalGuardSkillExplodeDef.icon = AssetBundle.LoadAsset<Sprite>("texRoyalGuardSkill");
             RoyalGuardSkillExplodeDef.skillDescriptionToken = "WACKY_WAHOO_PIZZA_MAN_DESCRIPTION";
-            RoyalGuardSkillExplodeDef.skillName = "WACKY_WAHOO_PIZZA_MAN_NAME";
+            RoyalGuardSkillExplodeDef.skillName = "RoyalGuardRelease";
             RoyalGuardSkillExplodeDef.skillNameToken = "WACKY_WAHOO_PIZZA_MAN_NAME";
 
             ContentAddition.AddSkillDef(RoyalGuardSkillExplodeDef);
