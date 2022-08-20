@@ -64,33 +64,35 @@ namespace ExtradimensionalItems.Modules.Items
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
-            var attacker = damageInfo.attacker;
-            var body = attacker.GetComponent<CharacterBody>();
-
             if (!damageInfo.rejected || damageInfo == null)
             {
-                if (body.isPlayerControlled && body.HasBuff(Content.Buffs.Sheen) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
+                var attacker = damageInfo.attacker;
+                if (attacker)
                 {
-                    if (CharacterUsedPrimary.TryGetValue(body, out bool bodyUsedPrimary))
+                    var body = attacker.GetComponent<CharacterBody>();
+                    if (body.isPlayerControlled && body.HasBuff(Content.Buffs.Sheen) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
                     {
-                        if (bodyUsedPrimary)
+                        if (CharacterUsedPrimary.TryGetValue(body, out bool bodyUsedPrimary))
                         {
-                            var victimBody = victim.GetComponent<CharacterBody>();
+                            if (bodyUsedPrimary)
+                            {
+                                var victimBody = victim.GetComponent<CharacterBody>();
 
-                            DamageInfo damageInfo2 = new DamageInfo();
-                            damageInfo2.damage = body.damage * GetCount(body) * DamageModifier.Value;
-                            damageInfo2.attacker = attacker;
-                            damageInfo2.crit = false;
-                            damageInfo2.position = damageInfo.position;
-                            damageInfo2.damageColorIndex = DamageColorIndex.Item;
-                            damageInfo2.damageType = DamageType.Generic;
+                                DamageInfo damageInfo2 = new DamageInfo();
+                                damageInfo2.damage = body.damage * GetCount(body) * DamageModifier.Value;
+                                damageInfo2.attacker = attacker;
+                                damageInfo2.crit = false;
+                                damageInfo2.position = damageInfo.position;
+                                damageInfo2.damageColorIndex = DamageColorIndex.Item;
+                                damageInfo2.damageType = DamageType.Generic;
 
-                            MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
+                                MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
 
-                            victimBody.healthComponent.TakeDamage(damageInfo2);
+                                victimBody.healthComponent.TakeDamage(damageInfo2);
 
-                            body.RemoveTimedBuff(Content.Buffs.Sheen);
-                            CharacterUsedPrimary[body] = false;
+                                body.RemoveTimedBuff(Content.Buffs.Sheen);
+                                CharacterUsedPrimary[body] = false;
+                            }
                         }
                     }
                 }
