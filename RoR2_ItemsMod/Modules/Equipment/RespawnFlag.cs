@@ -63,8 +63,17 @@ namespace ExtradimensionalItems.Modules.Equipment
         private void CharacterBody_OnEquipmentGained(On.RoR2.CharacterBody.orig_OnEquipmentGained orig, CharacterBody self, EquipmentDef equipmentDef)
         {
             orig(self, equipmentDef);
-            if(equipmentDef != Content.Equipment.RespawnFlag)
+
+            if (equipmentDef != Content.Equipment.RespawnFlag)
             {
+                for(uint i = 0; i< self.inventory.GetEquipmentSlotCount(); i++)
+                {
+                    var equipmentState = self.inventory.GetEquipment(i);
+                    if(equipmentState.equipmentIndex == EquipmentIndex.None)
+                    {
+                        return;
+                    }
+                }
                 var result = DestroyExistingFlag(self, out Vector3 position);
                 if (result)
                 {
