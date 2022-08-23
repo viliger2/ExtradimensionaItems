@@ -18,6 +18,8 @@ namespace ExtradimensionalItems.Modules.Content
 
         public static ItemDef FuelCellDepleted;
 
+        public static ItemDef VoidCooldownReduction;
+
     }
 
     public static class Skills
