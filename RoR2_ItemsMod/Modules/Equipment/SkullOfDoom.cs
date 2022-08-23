@@ -104,7 +104,14 @@ namespace ExtradimensionalItems.Modules.Equipment
                 {
                     if (body.HasBuff(Content.Buffs.SkullOfDoom))
                     {
-                        args.moveSpeedMultAdd += (SpeedBuff.Value / 100) + ((FuelCellSpeedBuff.Value / 100) * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine));
+                        if (EnableFuelCellInteraction.Value)
+                        {
+                            args.moveSpeedMultAdd += (SpeedBuff.Value / 100) + ((FuelCellSpeedBuff.Value / 100) * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine));
+                        }
+                        else
+                        {
+                            args.moveSpeedMultAdd += (SpeedBuff.Value / 100);
+                        }
                     }
                 }
             }
@@ -134,12 +141,21 @@ namespace ExtradimensionalItems.Modules.Equipment
         private static void DealDamage(CharacterBody body)
         {
             DamageInfo damageInfo = new DamageInfo();
-            damageInfo.damage = Math.Max(body.maxHealth * 0.01f, (body.maxHealth * (DamageOverTime.Value / 100)) * Mathf.Pow(1 - (FuelCellDamageOverTime.Value / 100), body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine)));
             damageInfo.attacker = null; // if you put self as attacker then friendly fire damage reduction is applied
             damageInfo.crit = false;
             damageInfo.position = body.transform.position;
             damageInfo.damageColorIndex = DamageColorIndex.Item;
             damageInfo.damageType = DamageType.BypassArmor;
+
+            if (EnableFuelCellInteraction.Value)
+            {
+                damageInfo.damage = Math.Max(body.maxHealth * 0.01f, 
+                    body.maxHealth * (DamageOverTime.Value / 100) / ( 1 + (FuelCellDamageOverTime.Value * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) / 100)));
+            }
+            else
+            {
+                damageInfo.damage = Math.Max(body.maxHealth * 0.01f, body.maxHealth * (DamageOverTime.Value / 100));
+            }
 
             body.healthComponent.TakeDamage(damageInfo);
         }

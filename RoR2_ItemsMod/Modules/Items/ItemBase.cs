@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
+using RoR2.ExpansionManagement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,7 +45,9 @@ namespace ExtradimensionalItems.Modules.Items
 
         public virtual bool CanRemove { get; } = true;
 
-        public virtual bool AIBlacklisted { get; set; } = false;
+        public virtual bool AIBlacklisted { get; } = false;
+
+        public virtual ExpansionDef Expansion { get; } = null;
 
         /// <summary>
         /// This method structures your code execution of this class. An example implementation inside of it would be:
@@ -86,6 +89,7 @@ namespace ExtradimensionalItems.Modules.Items
             ItemDef.canRemove = CanRemove;
             ItemDef.tier = Tier;
             ItemDef.deprecatedTier = Tier;
+            ItemDef.requiredExpansion = Expansion;
 
             if (ItemTags.Length > 0) { ItemDef.tags = ItemTags; }
 

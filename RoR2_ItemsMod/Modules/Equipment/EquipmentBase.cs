@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
+using RoR2.ExpansionManagement;
 using System;
 using UnityEngine;
 
@@ -44,6 +45,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public virtual bool IsLunar { get; } = false;
 
+        public virtual ExpansionDef Expansion { get; } = null;
+
         public EquipmentDef EquipmentDef;
 
         public AssetBundle AssetBundle;
@@ -86,6 +89,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             EquipmentDef.enigmaCompatible = EnigmaCompatible;
             EquipmentDef.isBoss = IsBoss;
             EquipmentDef.isLunar = IsLunar;
+            EquipmentDef.requiredExpansion = Expansion;
 
             ItemAPI.Add(new CustomEquipment(EquipmentDef, CreateItemDisplayRules()));
             staticEquipmentDef = EquipmentDef;
