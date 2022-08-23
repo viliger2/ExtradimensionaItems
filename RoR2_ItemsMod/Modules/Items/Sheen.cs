@@ -79,7 +79,7 @@ namespace ExtradimensionalItems.Modules.Items
                                 var victimBody = victim.GetComponent<CharacterBody>();
 
                                 DamageInfo damageInfo2 = new DamageInfo();
-                                damageInfo2.damage = body.damage * GetCount(body) * DamageModifier.Value;
+                                damageInfo2.damage = body.damage * GetCount(body) * (DamageModifier.Value / 100);
                                 damageInfo2.attacker = attacker;
                                 damageInfo2.crit = false;
                                 damageInfo2.position = damageInfo.position;
@@ -123,7 +123,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return string.Format(pickupString, DamageModifier.Value.ToString("###%"), CanStack.Value ? MaxBuffStacks.Value : 1);
+            return string.Format(pickupString, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? MaxBuffStacks.Value : 1);
         }
 
         public void CreateBuffs(AssetBundle assetBundle, bool canStack)
@@ -143,7 +143,7 @@ namespace ExtradimensionalItems.Modules.Items
         public override void CreateConfig(ConfigFile config)
         {
             CanStack = config.Bind("Item: " + ItemName, "Can Buff Stack", true, "Determines whether the buff that indicates damage bonus can stack or not.");
-            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 2.5f, "What damage modifier (per stack) the item should use.");
+            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 250f, "What damage modifier (per stack) the item should use.");
             BuffDuration = config.Bind("Item: " + ItemName, "Buff Duration", 10f, "How long the buff should remain active after using non-primary ability.");
             MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
         }

@@ -37,7 +37,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
                     position = base.characterBody.corePosition,
                     attacker = base.characterBody.gameObject,
                     crit = RollCrit(),
-                    baseDamage = base.characterBody.baseDamage * characterBody.GetBuffCount(Content.Buffs.RoyalGuardDamage) * Items.RoyalGuard.DamageModifier.Value,
+                    baseDamage = base.characterBody.baseDamage * characterBody.GetBuffCount(Content.Buffs.RoyalGuardDamage) * (Items.RoyalGuard.DamageModifier.Value / 100),
                     falloffModel = BlastAttack.FalloffModel.SweetSpot,
                     baseForce = 1f,
                     teamIndex = TeamComponent.GetObjectTeam(base.characterBody.gameObject),

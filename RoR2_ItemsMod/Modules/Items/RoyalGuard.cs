@@ -38,6 +38,11 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override bool AIBlacklisted => true;
 
+        // adding language checks because we can't check if token has been added to the OverlayDict for some reason
+        private bool isDescAdded = false;
+        private bool isParryDescAdded = false;
+        private bool isReleaseDescAdded = false;
+
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             // TODO: maybe someday but not today
@@ -65,19 +70,23 @@ namespace ExtradimensionalItems.Modules.Items
 
         private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
         {
-            if (token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION"))
+            if (token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION") && !isDescAdded)
             {
-                return GetFormatedDiscription(orig(self, token));
-            } else if (token.Equals($"SKILL_{ItemLangTokenName}_PARRY_DESC"))
+                LanguageAPI.AddOverlay(token, GetFormatedDiscription(orig(self, token)), self.name);
+                isDescAdded = true;
+            } else if (token.Equals($"SKILL_{ItemLangTokenName}_PARRY_DESC") && !isParryDescAdded)
             {
-                MyLogger.LogMessage(token);
-                MyLogger.LogMessage(orig(self, token));
-                return string.Format(orig(self, token), BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value);
-            } else if (token.Equals($"SKILL_{ItemLangTokenName}_RELEASE_DESC"))
+                LanguageAPI.AddOverlay(token, string.Format(orig(self, token), BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value), self.name);
+                isParryDescAdded = true;
+            } else if (token.Equals($"SKILL_{ItemLangTokenName}_RELEASE_DESC") && !isReleaseDescAdded)
             {
-                MyLogger.LogMessage(token);
-                MyLogger.LogMessage(orig(self, token));
-                return string.Format(orig(self, token), DamageModifier.Value.ToString("###%"), DamageRadius.Value);
+                LanguageAPI.AddOverlay(token, string.Format(orig(self, token), (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value), self.name);
+                isReleaseDescAdded = true;
+            }
+
+            if(isDescAdded && isParryDescAdded && isReleaseDescAdded)
+            {
+                On.RoR2.Language.GetLocalizedStringByToken -= Language_GetLocalizedStringByToken;
             }
 
             return orig(self, token);
@@ -103,9 +112,9 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     numberOfBuffs = 1;
                 }
-                if(body.GetBuffCount(Content.Buffs.RoyalGuardParryState) + numberOfBuffs > MaxBuffStacks.Value)
+                if(body.GetBuffCount(Content.Buffs.RoyalGuardDamage) + numberOfBuffs > MaxBuffStacks.Value)
                 {
-                    numberOfBuffs = MaxBuffStacks.Value - body.GetBuffCount(Content.Buffs.RoyalGuardParryState);
+                    numberOfBuffs = Mathf.Max(0, MaxBuffStacks.Value - body.GetBuffCount(Content.Buffs.RoyalGuardDamage));
                 }
                 for (int i = 0; i < numberOfBuffs; i++)
                 {
@@ -196,7 +205,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return string.Format(pickupString, BaseDuration.Value, PerStackDuration.Value, DamageModifier.Value.ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value);
+            return string.Format(pickupString, BaseDuration.Value, PerStackDuration.Value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value);
         }
 
         public void CreateBuffs(AssetBundle assetBundle)
@@ -238,11 +247,11 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override void CreateConfig(ConfigFile config)
         {
-            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 10f, "What damage modifier (per stack) the item should use.");
+            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 1000f, "What base damage modifier (per stack) the item should use, in percentage.");
             MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
-            BaseDuration = config.Bind("Item: " + ItemName, "Base Parry State Duration", 0.5f, "How long is base Parry skill duration.");
-            PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much each stack (after first one) of item adds to Parry skill duration.");
-            DamageRadius = config.Bind("Item: " + ItemName, "Release Damage Radius", 15f, "What is the damage radius of Release skill.");
+            BaseDuration = config.Bind("Item: " + ItemName, "Base Parry State Duration", 0.5f, "How long, in seconds, is base Parry skill duration.");
+            PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much, in seconds, each stack (after first one) of item adds to Parry skill duration.");
+            DamageRadius = config.Bind("Item: " + ItemName, "Release Damage Radius", 15f, "What is the damage radius of Release skill, in meters.");
         }
     }
 }

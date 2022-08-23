@@ -71,7 +71,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return string.Format(pickupString, SpeedBuff.Value.ToString("###%"), DamageOverTime.Value.ToString("###%"), DamageFrequency.Value, FuelCellSpeedBuff.Value.ToString("###%"), FuelCellDamageOverTime.Value.ToString("###%"));
+            return string.Format(pickupString, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value, (FuelCellSpeedBuff.Value / 100).ToString("###%"), (FuelCellDamageOverTime.Value / 100).ToString("###%"));
         }
 
         protected override void Hooks()
@@ -104,7 +104,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 {
                     if (body.HasBuff(Content.Buffs.SkullOfDoom))
                     {
-                        args.moveSpeedMultAdd += SpeedBuff.Value + (FuelCellSpeedBuff.Value * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine));
+                        args.moveSpeedMultAdd += (SpeedBuff.Value / 100) + ((FuelCellSpeedBuff.Value / 100) * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine));
                     }
                 }
             }
@@ -134,7 +134,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         private static void DealDamage(CharacterBody body)
         {
             DamageInfo damageInfo = new DamageInfo();
-            damageInfo.damage = Math.Max(1f, (body.maxHealth * DamageOverTime.Value) * Mathf.Pow(1 - FuelCellDamageOverTime.Value, body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine)));
+            damageInfo.damage = Math.Max(body.maxHealth * 0.01f, (body.maxHealth * (DamageOverTime.Value / 100)) * Mathf.Pow(1 - (FuelCellDamageOverTime.Value / 100), body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine)));
             damageInfo.attacker = null; // if you put self as attacker then friendly fire damage reduction is applied
             damageInfo.crit = false;
             damageInfo.position = body.transform.position;
@@ -160,12 +160,12 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected override void CreateConfig(ConfigFile config)
         {
-            SpeedBuff                 = config.Bind("Equipment: " + EquipmentName, "Speed Buff",                           1f,    "How much speed buff provides.");
-            DamageOverTime            = config.Bind("Equipment: " + EquipmentName, "Damage Over Time",                     0.1f,  "How much percentage damage from max health DoT deals.");
+            SpeedBuff                 = config.Bind("Equipment: " + EquipmentName, "Speed Buff",                           100f,  "How much movement speed, in percentage, buff provides.");
+            DamageOverTime            = config.Bind("Equipment: " + EquipmentName, "Damage Over Time",                     10f,   "How much percentage damage from max health DoT deals.");
             DamageFrequency           = config.Bind("Equipment: " + EquipmentName, "Damage Over Time Frequency",           3f,    "How frequently, in seconds, damage is applied.");
             EnableFuelCellInteraction = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Interaction",                true,  "Enables interaction with Fuel Cells.");
-            FuelCellSpeedBuff         = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Speed Buff",                 0.15f, "How much additional speed each Fuel Cell provides, linearly.");
-            FuelCellDamageOverTime    = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Damage Over Time Reduction", 0.15f, "By how much each Fuel Cell reduces DoT damage, exponentially.");
+            FuelCellSpeedBuff         = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Speed Buff",                 15f,   "How much additional movement speed each Fuel Cell provides, linearly.");
+            FuelCellDamageOverTime    = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Damage Over Time Reduction", 15f,   "By how much each Fuel Cell reduces DoT damage, exponentially.");
         }
 
     }

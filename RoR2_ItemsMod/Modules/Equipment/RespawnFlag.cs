@@ -10,8 +10,6 @@ namespace ExtradimensionalItems.Modules.Equipment
 {
     public class RespawnFlag : EquipmentBase<RespawnFlag>
     {
-        // TODO: implement spending of batteries on death instead of destroying the flag (as option) 
-
         public static ConfigEntry<bool> EnableFuelCellInteraction;
 
         public override string EquipmentName => "RespawnFlag";

@@ -89,6 +89,5 @@ namespace ExtradimensionalItems.Modules
 
             return lowest;
         }
-
     }
 }

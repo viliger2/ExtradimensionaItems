@@ -104,8 +104,9 @@ namespace ExtradimensionalItems.Modules.Items
         {
             if(token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION"))
             {
-                return GetFormatedDiscription(orig(self, token));
-            } 
+                LanguageAPI.AddOverlay(token, GetFormatedDiscription(orig(self, token)), self.name);
+                On.RoR2.Language.GetLocalizedStringByToken -= Language_GetLocalizedStringByToken;
+            }
             return orig(self, token);
         }
 
