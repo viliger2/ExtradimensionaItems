@@ -54,7 +54,7 @@ namespace ExtradimensionalItems.Modules.Items
             LoadAssetBundle();
             CreateConfig(config);
             CreateSkills();
-            CreateBuffs(AssetBundle);
+            CreateBuffs();
             CreateItem(ref Content.Items.RoyalGuard);
             Hooks();
         }
@@ -74,17 +74,19 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 LanguageAPI.AddOverlay(token, GetFormatedDiscription(orig(self, token)), self.name);
                 isDescAdded = true;
-            } else if (token.Equals($"SKILL_{ItemLangTokenName}_PARRY_DESC") && !isParryDescAdded)
+            }
+            else if (token.Equals($"SKILL_{ItemLangTokenName}_PARRY_DESC") && !isParryDescAdded)
             {
                 LanguageAPI.AddOverlay(token, string.Format(orig(self, token), BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value), self.name);
                 isParryDescAdded = true;
-            } else if (token.Equals($"SKILL_{ItemLangTokenName}_RELEASE_DESC") && !isReleaseDescAdded)
+            }
+            else if (token.Equals($"SKILL_{ItemLangTokenName}_RELEASE_DESC") && !isReleaseDescAdded)
             {
                 LanguageAPI.AddOverlay(token, string.Format(orig(self, token), (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value), self.name);
                 isReleaseDescAdded = true;
             }
 
-            if(isDescAdded && isParryDescAdded && isReleaseDescAdded)
+            if (isDescAdded && isParryDescAdded && isReleaseDescAdded)
             {
                 On.RoR2.Language.GetLocalizedStringByToken -= Language_GetLocalizedStringByToken;
             }
@@ -112,7 +114,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     numberOfBuffs = 1;
                 }
-                if(body.GetBuffCount(Content.Buffs.RoyalGuardDamage) + numberOfBuffs > MaxBuffStacks.Value)
+                if (body.GetBuffCount(Content.Buffs.RoyalGuardDamage) + numberOfBuffs > MaxBuffStacks.Value)
                 {
                     numberOfBuffs = Mathf.Max(0, MaxBuffStacks.Value - body.GetBuffCount(Content.Buffs.RoyalGuardDamage));
                 }
@@ -124,7 +126,8 @@ namespace ExtradimensionalItems.Modules.Items
                 body.AddTimedBuff(Content.Buffs.RoyalGuardGrace, 0.0167f);
                 body.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
                 damageInfo.rejected = true;
-            } else if (body.HasBuff(Content.Buffs.RoyalGuardGrace))
+            }
+            else if (body.HasBuff(Content.Buffs.RoyalGuardGrace))
             {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) got damaged while having grace buff, rejecting received damage.", body.GetUserName(), body.name));
                 damageInfo.rejected = true;
@@ -208,14 +211,14 @@ namespace ExtradimensionalItems.Modules.Items
             return string.Format(pickupString, BaseDuration.Value, PerStackDuration.Value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value);
         }
 
-        public void CreateBuffs(AssetBundle assetBundle)
+        public void CreateBuffs()
         {
             var RoyalGuardParryStateBuff = ScriptableObject.CreateInstance<BuffDef>();
             RoyalGuardParryStateBuff.name = "Royal Guard Parry State";
             RoyalGuardParryStateBuff.buffColor = Color.red;
             RoyalGuardParryStateBuff.canStack = false;
             RoyalGuardParryStateBuff.isDebuff = false;
-            RoyalGuardParryStateBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+            RoyalGuardParryStateBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
 
             ContentAddition.AddBuffDef(RoyalGuardParryStateBuff);
 
@@ -226,7 +229,7 @@ namespace ExtradimensionalItems.Modules.Items
             RoyalGuardDamageBuff.buffColor = Color.magenta;
             RoyalGuardDamageBuff.canStack = true;
             RoyalGuardDamageBuff.isDebuff = false;
-            RoyalGuardDamageBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+            RoyalGuardDamageBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
 
             ContentAddition.AddBuffDef(RoyalGuardDamageBuff);
 
@@ -238,7 +241,7 @@ namespace ExtradimensionalItems.Modules.Items
             RoyalGuardGraceBuff.canStack = false;
             RoyalGuardGraceBuff.isDebuff = false;
             RoyalGuardGraceBuff.isHidden = true;
-            RoyalGuardGraceBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+            RoyalGuardGraceBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
 
             ContentAddition.AddBuffDef(RoyalGuardGraceBuff);
 

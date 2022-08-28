@@ -24,7 +24,8 @@ namespace ExtradimensionalItems.Modules
             if (!NetworkServer.active)
             {
                 MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffDef)' called on client");
-            } else
+            }
+            else
             {
                 body.RemoveTimedBuff(buff.buffIndex);
             }
@@ -38,7 +39,7 @@ namespace ExtradimensionalItems.Modules
                 return;
             }
 
-            TimedBuff lowest = body.GetTimedBuff(buff, true); 
+            TimedBuff lowest = body.GetTimedBuff(buff, true);
 
             if (lowest != null)
             {
@@ -80,7 +81,8 @@ namespace ExtradimensionalItems.Modules
                         {
                             lowest = timedBuff;
                         }
-                    } else
+                    }
+                    else
                     {
                         return timedBuff;
                     }

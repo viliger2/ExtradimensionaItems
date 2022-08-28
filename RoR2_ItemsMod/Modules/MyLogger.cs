@@ -5,7 +5,7 @@ namespace ExtradimensionalItems.Modules
     public static class MyLogger
     {
         private static BepInEx.Logging.ManualLogSource logger;
-        
+
         public static void Init(BepInEx.Logging.ManualLogSource log)
         {
             logger = log;

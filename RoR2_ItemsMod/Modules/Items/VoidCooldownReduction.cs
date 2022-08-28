@@ -3,10 +3,7 @@ using HarmonyLib;
 using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -15,9 +12,9 @@ namespace ExtradimensionalItems.Modules.Items
     {
         public static ConfigEntry<float> CooldownReduction;
 
-        public override string ItemName => "CooldownReduction";
+        public override string ItemName => "CooldownReductionVoid";
 
-        public override string ItemLangTokenName => "COOLDOWN_REDUCTION";
+        public override string ItemLangTokenName => "COOLDOWN_REDUCTION_VOID";
 
         public override ItemTier Tier => ItemTier.VoidTier1;
 
@@ -36,14 +33,14 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return pickupString;         
+            return string.Format(pickupString, CooldownReduction.Value.ToString("###%"));
         }
 
         public override void Init(ConfigFile config)
         {
+            CreateConfig(config);
             //LoadAssetBundle();
             CreateItem(ref Content.Items.VoidCooldownReduction);
-            CreateConfig(config);
             Hooks();
         }
 
@@ -72,7 +69,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override void CreateConfig(ConfigFile config)
         {
-            CooldownReduction = config.Bind("Item: " + ItemName, "Cooldown Reduction", 15f, "How much cooldown reduction, per stack, in percentage, you get. Stacks exponentially.");
+            CooldownReduction = config.Bind("Item: " + ItemName, "Cooldown Reduction", 10f, "How much cooldown reduction, per stack, in percentage, you get. Stacks hyperbolically, like Haste in WoW or Ability Haste in LoL, as in 100% will reduce cooldown by half, 200% by 3/4, etc.");
         }
     }
 }

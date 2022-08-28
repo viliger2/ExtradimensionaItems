@@ -64,10 +64,10 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             if (equipmentDef != Content.Equipment.RespawnFlag)
             {
-                for(uint i = 0; i< self.inventory.GetEquipmentSlotCount(); i++)
+                for (uint i = 0; i < self.inventory.GetEquipmentSlotCount(); i++)
                 {
                     var equipmentState = self.inventory.GetEquipment(i);
-                    if(equipmentState.equipmentIndex == EquipmentIndex.None)
+                    if (equipmentState.equipmentIndex == EquipmentIndex.None)
                     {
                         return;
                     }

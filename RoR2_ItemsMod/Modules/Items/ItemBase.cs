@@ -40,7 +40,7 @@ namespace ExtradimensionalItems.Modules.Items
         public abstract Sprite ItemIcon { get; }
 
         public ItemDef ItemDef;
-        
+
         public AssetBundle AssetBundle;
 
         public virtual bool CanRemove { get; } = true;
@@ -98,15 +98,14 @@ namespace ExtradimensionalItems.Modules.Items
             staticItemDef = ItemDef;
         }
 
-        protected virtual void Hooks() {
-            // I don't like it at all, maybe I should just manually read language file into dictionary 
-            // and then replace text after item is done initializing
+        protected virtual void Hooks()
+        {
             On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
         }
 
         private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
         {
-            if(token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION"))
+            if (token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION"))
             {
                 LanguageAPI.AddOverlay(token, GetFormatedDiscription(orig(self, token)), self.name);
                 On.RoR2.Language.GetLocalizedStringByToken -= Language_GetLocalizedStringByToken;

@@ -24,7 +24,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         public abstract string EquipmentLangTokenName { get; }
 
         public abstract GameObject EquipmentModel { get; }
-        
+
         public abstract Sprite EquipmentIcon { get; }
 
         public abstract string BundleName { get; }
@@ -70,7 +70,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), BundleFolder, BundleName));
         }
 
-        protected virtual void CreateConfig(ConfigFile config){}
+        protected virtual void CreateConfig(ConfigFile config) { }
 
         protected void CreateEquipment(ref EquipmentDef staticEquipmentDef)
         {
@@ -111,7 +111,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected abstract bool ActivateEquipment(EquipmentSlot slot);
 
-        protected virtual void Hooks() {
+        protected virtual void Hooks()
+        {
             On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
         }
 

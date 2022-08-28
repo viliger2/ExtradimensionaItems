@@ -11,7 +11,8 @@
 		"EQUIPMENT_RESPAWN_FLAG_LORE": "Go play Super Cloudbuilt you fucks.",
 		"INTERACTABLE_RESPAWN_FLAG_CONTEXT": "Pick up Checkpoint?",
 		"INTERACTABLE_RESPAWN_FLAG_NAME": "Checkpoint",
-		"INTERACTABLE_RESPAWN_FLAG_RESPAWN": "{0} got saved by his trusty flag.",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN": "{0} got saved by their trusty flag.",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN_2": "You got saved by your trusty flag.",
 
 		"EQUIPMENT_SKULL_OF_DOOM_NAME": "Skull of Impending Doom",
 		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Tonight at 11... DOOOOOOOOOOOOOOM",
@@ -26,16 +27,21 @@
 		"ITEM_ROYAL_GUARD_NAME": "Royal Guard",
 		"ITEM_ROYAL_GUARD_PICKUP": "This party is getting crazy, let's rock!",
 		"ITEM_ROYAL_GUARD_DESCRIPTION": "Replace your <style=cIsUtility>Utility Skill</style> with <style=cIsUtility>Block</style>.\r\nEnter a defensive stance for <style=cIsUtility>{0}</style> <style=cStack>(+{1} per stack)</style> seconds, deflecting first non-periodic hit. <style=cIsUtility>Depending for how long you were in the stance</style> gain <style=cIsDamage>3 to 1</style> damage buff(s). If you have <style=cIsDamage>damage buffs</style> when using <style=cIsUtility>Block</style>, your <style=cIsUtility>Primary Skill</style> gets replaced with <style=cIsUtility>Release</style>.\r\nUsing <style=cIsUtility>Release</style> will <style=cIsDamage>consume all damage buffs</style> and deal <style=cIsDamage>{2}</style> <style=cStack>(+{2} per stack)</style> base damage per buff stack to everyone in <style=cIsDamage>{3}m</style> radius. You can have up to <style=cIsDamage>{4} stacks of damage buff</style>.",
-		"ITEM_ROYAL_GUARD_LORE": "Mitrix: It was my assumption that those chimeras would prove far inferior... In the face of your tactics.\r\nCommando: You construct and kill... Construct and kill... I fail to see the logic here. Is sanity the price to pay for power!?\r\nMitrix: Lemurians... They are but stubborn and foolish. It takes a journey to Petrichor V for them to accept and praise their God. A fact that tickles irony's judgment.\r\nCommando: And your judgments interests me not. For I'm here... To reclaim... What is rightfully mine.\r\nMitrix: Ukulele! That is what you seek. And that is why I wait in your path!\r\nCommando: You will fumble in your opposition of my quest. Though I encourage! For an opportunity to battle a being of such grand delusions as you, is a sweet fortune!",
+		"ITEM_ROYAL_GUARD_LORE": "Mitrix: It was my assumption that those chimeras would prove far inferior... In the face of your tactics.\r\nCommando: You construct and kill... Construct and kill... I fail to see the logic here. Is sanity the price to pay for power!?\r\nMitrix: Lemurians... They are but stubborn and foolish. It takes a journey to Petrichor V for them to accept and praise Providence. A fact that tickles irony's judgment.\r\nCommando: And your judgments interests me not. For I'm here... To reclaim... What is rightfully mine.\r\nMitrix: Ukulele! That is what you seek. And that is why I wait in your path!\r\nCommando: You will fumble in your opposition of my quest. Though I encourage! For an opportunity to battle a being of such grand delusions as you, is a sweet fortune!",
 		"SKILL_ROYAL_GUARD_PARRY_NAME": "Block",
 		"SKILL_ROYAL_GUARD_PARRY_DESC": "Enter a defensive stance for <style=cIsUtility>{0}</style> <style=cStack>(+{1} per stack)</style> seconds, deflecting first non-periodic hit. <style=cIsUtility>Depending for how long you were in the stance</style> gain <style=cIsDamage>3 to 1</style> damage buff(s). If you have <style=cIsDamage>damage buffs</style> when using <style=cIsUtility>Block</style>, your <style=cIsUtility>Primary Skill</style> gets replaced with <style=cIsUtility>Release</style>. You can have up to <style=cIsDamage>{2} stacks of damage buff</style>.",
 		"SKILL_ROYAL_GUARD_RELEASE_NAME": "Release",
 		"SKILL_ROYAL_GUARD_RELEASE_DESC": "<style=cIsDamage>Consume all damage buffs</style> and deal <style=cIsDamage>{0}</style> <style=cStack>(+{0} per stack)</style> base damage per buff stack to everyone in <style=cIsDamage>{1}m</style> radius.\r\n\r\nWow you are fast.",
 
-		"ITEM_COOLDOWN_REDUCTION_NAME": "Sorcerer's Pills",
-		"ITEM_COOLDOWN_REDUCTION_PICKUP": "Grabbin' pills",
-		"ITEM_COOLDOWN_REDUCTION_DESCRIPTION": "Gain <style=cIsUtility>{0} <style=cStack>(+{0} per stack)</style> cooldown reduction</style>. <style=cIsVoid>Corrupts all Soldier's Syringes.</style>",
-		"ITEM_COOLDOWN_REDUCTION_LORE": "\"I don’t like those syringes\"\r\n\r\n\"Why?\"\r\n\r\n\"They contain yellow liquid, they glow in the dark and I am afraid of shots.\"\r\n\r\n\"So what do you want me to do about it?\"\r\n\r\n\"Can I have something else?\"\r\n\r\n\"We have these pills...\"\r\n\r\n\"I’ll take them!\"\r\n\r\n\"You are not even gonna ask about them?\"\r\n\r\n\"Should I?\"\r\n\r\n\"They are purple, also glow in the dark and...\"\r\n\r\n\"But you don’t have to inject them, right?\"\r\n\r\n\"...Yes.\""
+		"ITEM_COOLDOWN_REDUCTION_VOID_NAME": "Sorcerer's Pills",
+		"ITEM_COOLDOWN_REDUCTION_VOID_PICKUP": "Grabbin' pills",
+		"ITEM_COOLDOWN_REDUCTION_VOID_DESCRIPTION": "Gain <style=cIsUtility>{0} <style=cStack>(+{0} per stack)</style> cooldown reduction</style>. Stacks <style=cIsUtility>hyperbolically</style>. <style=cIsVoid>Corrupts all Soldier's Syringes.</style>",
+		"ITEM_COOLDOWN_REDUCTION_VOID_LORE": "\"I don’t like those syringes.\"\r\n\r\n\"Why?\"\r\n\r\n\"They contain yellow liquid, they glow in the dark and I am afraid of shots.\"\r\n\r\n\"So what do you want me to do about it?\"\r\n\r\n\"Can I have something else?\"\r\n\r\n\"We have these pills...\"\r\n\r\n\"I’ll take them!\"\r\n\r\n\"You are not even gonna ask about them?\"\r\n\r\n\"Should I?\"\r\n\r\n\"They are purple, also glow in the dark and...\"\r\n\r\n\"But you don’t have to inject them, right?\"\r\n\r\n\"...Yes.\"",
+
+		"ITEM_DAMAGE_ON_COOLDOWNS_NAME": "Fueling Bellows",
+		"ITEM_DAMAGE_ON_COOLDOWNS_PICKUP": "It is a firestarter.",
+		"ITEM_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "For each <style=cIsUtility>ability and equipment</style> on cooldown gain <style=cIsDamage>{0}<style=cStack>(+{1} per stack)</style> bonus damage.</style>",
+		"ITEM_DAMAGE_ON_COOLDOWNS_LORE": "lore"
 	},
 	"RU": {
 		"ITEM_SHEEN_NAME": "Сияние",

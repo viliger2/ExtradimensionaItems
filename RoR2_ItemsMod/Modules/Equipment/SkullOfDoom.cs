@@ -2,8 +2,6 @@
 using R2API;
 using RoR2;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using static RoR2.CharacterBody;
@@ -26,7 +24,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 }
 
                 stopwatch += Time.fixedDeltaTime;
-                if(stopwatch > damageTimer && body.HasBuff(Content.Buffs.SkullOfDoom))
+                if (stopwatch > damageTimer && body.HasBuff(Content.Buffs.SkullOfDoom))
                 {
                     stopwatch -= damageTimer;
                     DealDamage(body);
@@ -64,7 +62,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             LoadAssetBundle();
             CreateConfig(config);
-            CreateBuffs(AssetBundle);
+            CreateBuffs();
             CreateEquipment(ref Content.Equipment.SkullOfDoom);
             Hooks();
         }
@@ -78,13 +76,13 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             base.Hooks();
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
-            On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained; ;
+            On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
         }
 
         private void CharacterBody_OnEquipmentGained(On.RoR2.CharacterBody.orig_OnEquipmentGained orig, CharacterBody body, EquipmentDef equipmentDef)
         {
             orig(body, equipmentDef);
-            if(equipmentDef != Content.Equipment.SkullOfDoom)
+            if (equipmentDef != Content.Equipment.SkullOfDoom)
             {
                 if (body.HasBuff(Content.Buffs.SkullOfDoom))
                 {
@@ -100,7 +98,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             if (body.inventory)
             {
-                if(body.inventory.currentEquipmentIndex == Content.Equipment.SkullOfDoom.equipmentIndex)
+                if (body.inventory.currentEquipmentIndex == Content.Equipment.SkullOfDoom.equipmentIndex)
                 {
                     if (body.HasBuff(Content.Buffs.SkullOfDoom))
                     {
@@ -123,7 +121,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             if (!body || !body.teamComponent) return false;
 
-            if (body.HasBuff(Content.Buffs.SkullOfDoom)){
+            if (body.HasBuff(Content.Buffs.SkullOfDoom))
+            {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) used {2}, removing damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName));
                 body.RemoveBuff(Content.Buffs.SkullOfDoom);
                 body.AddItemBehavior<SkullOfDoomBehavior>(0);
@@ -149,8 +148,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             if (EnableFuelCellInteraction.Value)
             {
-                damageInfo.damage = Math.Max(body.maxHealth * 0.01f, 
-                    body.maxHealth * (DamageOverTime.Value / 100) / ( 1 + (FuelCellDamageOverTime.Value * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) / 100)));
+                damageInfo.damage = Math.Max(body.maxHealth * 0.01f,
+                    body.maxHealth * (DamageOverTime.Value / 100) / (1 + (FuelCellDamageOverTime.Value * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) / 100)));
             }
             else
             {
@@ -160,14 +159,14 @@ namespace ExtradimensionalItems.Modules.Equipment
             body.healthComponent.TakeDamage(damageInfo);
         }
 
-        public void CreateBuffs(AssetBundle assetBundle)
+        public void CreateBuffs()
         {
             var SkullOfDoomBuff = ScriptableObject.CreateInstance<BuffDef>();
             SkullOfDoomBuff.name = "Skull of Impending Doom";
             SkullOfDoomBuff.buffColor = Color.yellow;
             SkullOfDoomBuff.canStack = false;
             SkullOfDoomBuff.isDebuff = false;
-            SkullOfDoomBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO: replace
+            SkullOfDoomBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO: replace
 
             ContentAddition.AddBuffDef(SkullOfDoomBuff);
 
@@ -176,12 +175,12 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected override void CreateConfig(ConfigFile config)
         {
-            SpeedBuff                 = config.Bind("Equipment: " + EquipmentName, "Speed Buff",                           100f,  "How much movement speed, in percentage, buff provides.");
-            DamageOverTime            = config.Bind("Equipment: " + EquipmentName, "Damage Over Time",                     10f,   "How much percentage damage from max health DoT deals.");
-            DamageFrequency           = config.Bind("Equipment: " + EquipmentName, "Damage Over Time Frequency",           3f,    "How frequently, in seconds, damage is applied.");
-            EnableFuelCellInteraction = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Interaction",                true,  "Enables interaction with Fuel Cells.");
-            FuelCellSpeedBuff         = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Speed Buff",                 15f,   "How much additional movement speed each Fuel Cell provides, linearly.");
-            FuelCellDamageOverTime    = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Damage Over Time Reduction", 15f,   "By how much each Fuel Cell reduces DoT damage, exponentially.");
+            SpeedBuff = config.Bind("Equipment: " + EquipmentName, "Speed Buff", 100f, "How much movement speed, in percentage, buff provides.");
+            DamageOverTime = config.Bind("Equipment: " + EquipmentName, "Damage Over Time", 10f, "How much percentage damage from max health DoT deals.");
+            DamageFrequency = config.Bind("Equipment: " + EquipmentName, "Damage Over Time Frequency", 3f, "How frequently, in seconds, damage is applied.");
+            EnableFuelCellInteraction = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Interaction", true, "Enables interaction with Fuel Cells.");
+            FuelCellSpeedBuff = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Speed Buff", 15f, "How much additional movement speed each Fuel Cell provides, linearly.");
+            FuelCellDamageOverTime = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Damage Over Time Reduction", 15f, "By how much each Fuel Cell reduces DoT damage, exponentially.");
         }
 
     }

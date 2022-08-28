@@ -1,8 +1,4 @@
-﻿using RoR2;
-using System.Collections.Generic;
-using UnityEngine.Events;
-
-namespace ExtradimensionalItems.Modules
+﻿namespace ExtradimensionalItems.Modules
 {
     public static class ShrineOfRepairCompat
     {
@@ -12,9 +8,9 @@ namespace ExtradimensionalItems.Modules
         {
             get
             {
-                if(_enabled == null )
+                if (_enabled == null)
                 {
-                    _enabled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Viliger.ShrineOfRepair");       
+                    _enabled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Viliger.ShrineOfRepair");
                 }
                 return (bool)_enabled;
             }

@@ -1,6 +1,4 @@
 ﻿using R2API;
-using RoR2;
-using System.IO;
 
 namespace ExtradimensionalItems.Modules
 {

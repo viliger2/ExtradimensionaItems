@@ -20,6 +20,7 @@ namespace ExtradimensionalItems.Modules.Content
 
         public static ItemDef VoidCooldownReduction;
 
+        public static ItemDef DamageOnCooldowns;
     }
 
     public static class Skills
@@ -28,7 +29,7 @@ namespace ExtradimensionalItems.Modules.Content
 
         public static SkillDef Explode;
     }
-    
+
     public static class Buffs
     {
         public static BuffDef RoyalGuardParryState;
@@ -40,6 +41,8 @@ namespace ExtradimensionalItems.Modules.Content
         public static BuffDef Sheen;
 
         public static BuffDef SkullOfDoom;
+
+        public static BuffDef DamageOnCooldowns;
     }
 
 }

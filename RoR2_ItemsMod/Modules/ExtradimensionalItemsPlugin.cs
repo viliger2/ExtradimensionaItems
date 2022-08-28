@@ -28,9 +28,9 @@ namespace ExtradimensionalItems.Modules
             //MyLogger = Logger;
             PInfo = Info;
 
-            #if DEBUG == true
+#if DEBUG == true
             On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
-            #endif
+#endif
 
             new ExtradimensionalItemsLanguages().Init(PInfo);
 

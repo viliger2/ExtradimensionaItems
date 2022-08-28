@@ -41,7 +41,7 @@ namespace ExtradimensionalItems.Modules.Items
         {
             CreateConfig(config);
             LoadAssetBundle();
-            CreateBuffs(AssetBundle, CanStack.Value);
+            CreateBuffs();
             CreateItem(ref Content.Items.Sheen);
             Hooks();
         }
@@ -126,14 +126,14 @@ namespace ExtradimensionalItems.Modules.Items
             return string.Format(pickupString, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? MaxBuffStacks.Value : 1);
         }
 
-        public void CreateBuffs(AssetBundle assetBundle, bool canStack)
+        public void CreateBuffs()
         {
             var SheenBuff = ScriptableObject.CreateInstance<BuffDef>();
             SheenBuff.name = "Sheen Damage Bonus";
             SheenBuff.buffColor = Color.blue;
-            SheenBuff.canStack = canStack;
+            SheenBuff.canStack = CanStack.Value;
             SheenBuff.isDebuff = false;
-            SheenBuff.iconSprite = assetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO: replace
+            SheenBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO: replace
 
             ContentAddition.AddBuffDef(SheenBuff);
 

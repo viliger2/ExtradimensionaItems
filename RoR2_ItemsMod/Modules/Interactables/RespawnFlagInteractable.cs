@@ -51,7 +51,7 @@ namespace ExtradimensionalItems.Modules.Interactables
             {
                 genericInteraction.onActivation.AddListener(OnActivation);
                 On.RoR2.CharacterMaster.OnBodyDeath += OnBodyDeath;
-                
+
             }
 
             public void OnBodyDeath(On.RoR2.CharacterMaster.orig_OnBodyDeath orig, CharacterMaster self, CharacterBody body)

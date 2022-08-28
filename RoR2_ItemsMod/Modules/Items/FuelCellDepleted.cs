@@ -1,9 +1,7 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
