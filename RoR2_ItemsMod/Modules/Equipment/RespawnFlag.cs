@@ -10,6 +10,11 @@ namespace ExtradimensionalItems.Modules.Equipment
 {
     public class RespawnFlag : EquipmentBase<RespawnFlag>
     {
+        public class RespawnFlagBehavior : CharacterBody.ItemBehavior
+        {
+            public GameObject flag;
+        }
+
         public static ConfigEntry<bool> EnableFuelCellInteraction;
 
         public override string EquipmentName => "RespawnFlag";
@@ -58,26 +63,34 @@ namespace ExtradimensionalItems.Modules.Equipment
             On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
         }
 
-        private void CharacterBody_OnEquipmentGained(On.RoR2.CharacterBody.orig_OnEquipmentGained orig, CharacterBody self, EquipmentDef equipmentDef)
+        private void CharacterBody_OnEquipmentGained(On.RoR2.CharacterBody.orig_OnEquipmentGained orig, CharacterBody body, EquipmentDef equipmentDef)
         {
-            orig(self, equipmentDef);
+            orig(body, equipmentDef);
 
             if (equipmentDef != Content.Equipment.RespawnFlag)
             {
-                for (uint i = 0; i < self.inventory.GetEquipmentSlotCount(); i++)
+                for (uint i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
                 {
-                    var equipmentState = self.inventory.GetEquipment(i);
+                    var equipmentState = body.inventory.GetEquipment(i);
                     if (equipmentState.equipmentIndex == EquipmentIndex.None)
                     {
                         return;
                     }
                 }
-                var result = DestroyExistingFlag(self, out Vector3 position);
+                RespawnFlagBehavior behavior = body.GetComponent<RespawnFlagBehavior>();
+                var result = DestroyExistingFlag(behavior, out Vector3 position);
                 if (result)
                 {
-                    MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2} and picked up new equipment, destroying it and spawning equipment at its place.", self.GetUserName(), self.name, EquipmentLangTokenName));
+                    MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2} and picked up new equipment, destroying it and spawning equipment at its place.", body.GetUserName(), body.name, EquipmentLangTokenName));
                     PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(Content.Equipment.RespawnFlag.equipmentIndex);
                     PickupDropletController.CreatePickupDroplet(pickupIndex, position, Vector3.up * 5);
+                    Object.Destroy(behavior);
+                }
+            } else if(equipmentDef == Content.Equipment.RespawnFlag)
+            {
+                if(!body.TryGetComponent(out RespawnFlagBehavior behavior))
+                {
+                    body.AddItemBehavior<RespawnFlagBehavior>(1);
                 }
             }
         }
@@ -90,7 +103,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             MyLogger.LogMessage(string.Format("Player {0}({1}) used equipment {2}.", body.GetUserName(), body.name, EquipmentLangTokenName));
 
-            var result = DestroyExistingFlag(body, out _);
+            RespawnFlagBehavior behavior = body.GetComponent<RespawnFlagBehavior>();
+            var result = DestroyExistingFlag(behavior, out _);
             if (result)
             {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2}, destroying it.", body.GetUserName(), body.name, EquipmentLangTokenName));
@@ -102,28 +116,27 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             NetworkServer.Spawn(gameObject);
 
+            behavior.flag = gameObject;
+
             // thanks ThinkInvisible
             body.inventory.SetEquipment(new EquipmentState(EquipmentIndex.None, Run.FixedTimeStamp.now + Cooldown, 0), (uint)slot.characterBody.inventory.activeEquipmentSlot);
 
             return true;
         }
 
-        private bool DestroyExistingFlag(CharacterBody body, out Vector3 position)
+        private bool DestroyExistingFlag(RespawnFlagBehavior behavior, out Vector3 position)
         {
             position = new Vector3();
 
-            var objects = GameObject.FindGameObjectsWithTag("Respawn");
-
-            GameObject existingGameObject = objects.ToList().Find(x =>
+            if(behavior)
             {
-                return x.GetComponent<RespawnFlagInteractable.RespawnFlagInteractableManager>()?.owner == body;
-            });
-
-            if (existingGameObject)
-            {
-                position = existingGameObject.transform.position;
-                Object.Destroy(existingGameObject);
-                return true;
+                GameObject flag = behavior.flag;
+                if (flag)
+                {
+                    position = flag.transform.position;
+                    Object.Destroy(flag);
+                    return true;
+                }
             }
 
             return false;
