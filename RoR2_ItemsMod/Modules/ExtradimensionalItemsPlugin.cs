@@ -7,6 +7,7 @@ using R2API.Networking;
 using R2API.Utils;
 using System.Linq;
 using System.Reflection;
+using static ExtradimensionalItems.Modules.Equipment.Chronoshift;
 
 namespace ExtradimensionalItems.Modules
 {
@@ -55,6 +56,12 @@ namespace ExtradimensionalItems.Modules
                     MyLogger.LogInfo($"Equipment: {equipment.EquipmentLangTokenName} loaded.");
                 }
             }
+
+            #region ChronoshiftMessages
+            NetworkingAPI.RegisterMessageType<ChronoshiftStartMovingOnClient>();
+            NetworkingAPI.RegisterMessageType<ChronoshiftRestoreStateOnServer>();
+            #endregion
+
         }
 
         public bool ValidateEquipment(EquipmentBase equipment)

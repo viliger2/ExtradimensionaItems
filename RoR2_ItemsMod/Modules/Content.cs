@@ -8,6 +8,9 @@ namespace ExtradimensionalItems.Modules.Content
         public static EquipmentDef RespawnFlag;
 
         public static EquipmentDef SkullOfDoom;
+
+        public static EquipmentDef Chronoshift;
+
     }
 
     public static class Items
