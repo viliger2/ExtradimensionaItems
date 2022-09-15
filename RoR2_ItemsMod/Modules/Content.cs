@@ -24,6 +24,8 @@ namespace ExtradimensionalItems.Modules.Content
         public static ItemDef VoidCooldownReduction;
 
         public static ItemDef DamageOnCooldowns;
+
+        public static ItemDef Atma;
     }
 
     public static class Skills

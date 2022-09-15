@@ -46,8 +46,12 @@
 		"EQUIPMENT_CHRONOSHIFT_NAME": "Chronoshift",
 		"EQUIPMENT_CHRONOSHIFT_PICKUP": "Let's do the Time Warp again!",
 		"EQUIPMENT_CHRONOSHIFT_DESCRIPTION": "Move <style=cIsUtility>{0}</style> seconds <style=cIsDamage>back in time</style>. Restores <style=cIsUtility>position, money, items, health, barrier, shield and skill cooldowns</style> to the state they were. Snapshots are taken every <style=cIsUtility>{1}</style> seconds.",
-		"EQUIPMENT_CHRONOSHIFT_LORE": "lore"
+		"EQUIPMENT_CHRONOSHIFT_LORE": "lore",
 
+		"ITEM_ATMAS_IMPALER_NAME": "Atma's Impaler",
+		"ITEM_ATMAS_IMPALER_PICKUP": "Metagolem lives!",
+		"ITEM_ATMAS_IMPALER_DESCRIPTION": "Gain additional <style=cIsDamage>base damage</style> equal to <style=cIsHealth>{0} <style=cStack>(+{1} per stack)</style> maximum health</style>.",
+		"ITEM_ATMAS_IMPALER_LORE": "lore"
 	},
 	"RU": {
 		"ITEM_SHEEN_NAME": "Сияние",

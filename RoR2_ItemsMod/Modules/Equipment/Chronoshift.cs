@@ -401,7 +401,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return string.Format(pickupString, RewindTime.Value, Frequency);
+            return string.Format(pickupString, RewindTime.Value, Frequency.Value);
         }
 
         public override void Init(ConfigFile config)
