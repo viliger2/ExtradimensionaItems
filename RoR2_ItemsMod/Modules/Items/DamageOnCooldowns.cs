@@ -60,9 +60,9 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "damageoncooldowns";
 
-        public override GameObject ItemModel => null;
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("damageoncooldowns");
 
-        public override Sprite ItemIcon => null;
+        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texDamageOnCooldownIcon");
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
@@ -76,7 +76,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override void Init(ConfigFile config)
         {
-            //LoadAssetBundle();
+            LoadAssetBundle();
             CreateConfig(config);
             CreateBuffs();
             CreateItem(ref Content.Items.DamageOnCooldowns);
@@ -90,8 +90,7 @@ namespace ExtradimensionalItems.Modules.Items
             DamageOnCooldownsBuff.buffColor = Color.grey;
             DamageOnCooldownsBuff.canStack = true;
             DamageOnCooldownsBuff.isDebuff = false;
-            //DamageOnCooldownsBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO replace
-            DamageOnCooldownsBuff.iconSprite = null; // TODO replace
+            DamageOnCooldownsBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("texDamageOnCooldownBuffIcon"); 
 
             ContentAddition.AddBuffDef(DamageOnCooldownsBuff);
 
