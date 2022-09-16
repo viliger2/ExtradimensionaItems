@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -36,6 +37,21 @@ namespace ExtradimensionalItems.Modules
             }
 
             return null;
+        }
+
+        // thanks KomradeSpectre
+        public static void ShaderConversion(AssetBundle assets)
+        {
+            var materialAssets = assets.LoadAllAssets<Material>().Where(material => material.shader.name.StartsWith("Stubbed Hopoo Games"));
+
+            foreach (Material material in materialAssets)
+            {
+                var replacementShader = LegacyResourcesAPI.Load<Shader>(ExtradimensionalItemsPlugin.ShaderLookup[material.shader.name]); // TODO this might not be correct
+                if (replacementShader)
+                {
+                    material.shader = replacementShader;
+                }
+            }
         }
     }
 }

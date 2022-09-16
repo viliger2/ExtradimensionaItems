@@ -66,6 +66,7 @@ namespace ExtradimensionalItems.Modules.Items
         protected void LoadAssetBundle()
         {
             AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), BundleFolder, BundleName));
+            Utils.ShaderConversion(AssetBundle);
         }
 
         public abstract ItemDisplayRuleDict CreateItemDisplayRules();

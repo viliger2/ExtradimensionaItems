@@ -5,8 +5,10 @@ using ExtradimensionalItems.Modules.Items;
 using R2API;
 using R2API.Networking;
 using R2API.Utils;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 using static ExtradimensionalItems.Modules.Equipment.Chronoshift;
 
 namespace ExtradimensionalItems.Modules
@@ -20,6 +22,17 @@ namespace ExtradimensionalItems.Modules
         public static ConfigEntry<bool> ExtensiveLogging;
 
         public static BepInEx.PluginInfo PInfo;
+
+        // thanks KomradeSpectre
+        public static Dictionary<string, string> ShaderLookup = new Dictionary<string, string>()
+        {
+            {"Stubbed Hopoo Games/Deferred/Standard", "shaders/deferred/hgstandard"}
+            //{"fake ror/hopoo games/fx/hgcloud intersection remap", "shaders/fx/hgintersectioncloudremap" },
+            //{"fake ror/hopoo games/fx/hgcloud remap", "shaders/fx/hgcloudremap" },
+            //{"fake ror/hopoo games/fx/hgdistortion", "shaders/fx/hgdistortion" },
+            //{"fake ror/hopoo games/deferred/hgsnow topped", "shaders/deferred/hgsnowtopped" },
+            //{"fake ror/hopoo games/fx/hgsolid parallax", "shaders/fx/hgsolidparallax" }
+        };
 
         private void Awake()
         {

@@ -68,6 +68,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         protected void LoadAssetBundle()
         {
             AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), BundleFolder, BundleName));
+            Utils.ShaderConversion(AssetBundle);
         }
 
         protected virtual void CreateConfig(ConfigFile config) { }
