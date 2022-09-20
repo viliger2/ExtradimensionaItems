@@ -25,9 +25,9 @@ namespace ExtradimensionalItems.Modules.Items
         // a hit from the primary
         private static Dictionary<CharacterBody, bool> CharacterUsedPrimary = new Dictionary<CharacterBody, bool>();
 
-        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("SheenItem");
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("sheen");
 
-        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texSheenItemIcon");
+        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texSheenIcon");
 
         public override string BundleName => "sheen";
 
@@ -86,7 +86,7 @@ namespace ExtradimensionalItems.Modules.Items
                                 damageInfo2.damageColorIndex = DamageColorIndex.Item;
                                 damageInfo2.damageType = DamageType.Generic;
 
-                                MyLogger.LogMessage(string.Format("Player {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the player.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
+                                MyLogger.LogMessage(string.Format("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
 
                                 victimBody.healthComponent.TakeDamage(damageInfo2);
 
@@ -133,7 +133,7 @@ namespace ExtradimensionalItems.Modules.Items
             SheenBuff.buffColor = Color.blue;
             SheenBuff.canStack = CanStack.Value;
             SheenBuff.isDebuff = false;
-            SheenBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png"); // TODO: replace
+            SheenBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("texSheenBuffIcon");
 
             ContentAddition.AddBuffDef(SheenBuff);
 

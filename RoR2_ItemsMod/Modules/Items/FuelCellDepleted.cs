@@ -16,7 +16,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "fuelcelldepleted";
 
-        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("FuelCellDepleted");
+        public override GameObject ItemModel => null;
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texFuelCellDepletedIcon");
 
