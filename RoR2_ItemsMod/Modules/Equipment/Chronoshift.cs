@@ -423,7 +423,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             if (equipmentDef == Content.Equipment.Chronoshift)
             {
-                self.AddItemBehavior<ChronoshiftBehavior>(1);
+                self.AddItemBehavior<ChronoshiftBehavior>(0);
             }
             orig(self, equipmentDef);
         }

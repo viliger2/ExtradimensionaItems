@@ -63,7 +63,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public virtual void CreateConfig(ConfigFile config) { }
 
-        protected void LoadAssetBundle()
+        protected virtual void LoadAssetBundle()
         {
             AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), BundleFolder, BundleName));
             Utils.ShaderConversion(AssetBundle);
@@ -120,16 +120,12 @@ namespace ExtradimensionalItems.Modules.Items
         //Based on ThinkInvis' methods
         public int GetCount(CharacterBody body)
         {
-            if (!body || !body.inventory) { return 0; }
-
-            return body.inventory.GetItemCount(ItemDef);
+            return body?.inventory?.GetItemCount(ItemDef) ?? 0;
         }
 
         public int GetCount(CharacterMaster master)
         {
-            if (!master || !master.inventory) { return 0; }
-
-            return master.inventory.GetItemCount(ItemDef);
+            return master?.inventory?.GetItemCount(ItemDef) ?? 0;
         }
 
         public int GetCountSpecific(CharacterBody body, ItemDef itemDef)

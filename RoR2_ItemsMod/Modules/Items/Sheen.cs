@@ -4,11 +4,59 @@ using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using static RoR2.CharacterBody;
 
 namespace ExtradimensionalItems.Modules.Items
 {
     public class Sheen : ItemBase<Sheen>
     {
+        private class SheenBehavior : ItemBehavior
+        {
+            private GameObject RightHandEffectInstance;
+            private GameObject LeftHandEffectInstance;
+
+            public bool usedPrimary;
+
+            public void DestroyEffects()
+            {
+                if (RightHandEffectInstance) { Destroy(RightHandEffectInstance); }
+                if (LeftHandEffectInstance) { Destroy(LeftHandEffectInstance); }
+            }
+
+            public bool HasEffects()
+            {
+                return RightHandEffectInstance || LeftHandEffectInstance;
+            }
+
+            public void ShowEffects()
+            {
+                if(body.modelLocator.modelTransform.TryGetComponent(out ChildLocator childLocator))
+                {
+                    Transform leftHand = childLocator.FindChild("HandL");
+                    Transform rightHand = childLocator.FindChild("HandR");
+                    if (leftHand)
+                    {
+                        // some survivor bodies have lossy scale of 0.2, while majority have 1.0
+                        // so we use this funky formula to upscale the effect for those bodies
+                        // also void fiend doesn't have hands lol
+                        LeftHandEffectInstance = Instantiate(SheenEffectInstance, leftHand.position, Quaternion.identity, leftHand);
+                        LeftHandEffectInstance.transform.localScale = new Vector3(
+                               Mathf.Max(0.5f / leftHand.lossyScale.x, 1.0f),
+                               Mathf.Max(0.5f / leftHand.lossyScale.y, 1.0f),
+                               Mathf.Max(0.5f / leftHand.lossyScale.z, 1.0f));
+                    }
+                    if (rightHand)
+                    {
+                        RightHandEffectInstance = Instantiate(SheenEffectInstance, rightHand.position, Quaternion.identity, rightHand);
+                        LeftHandEffectInstance.transform.localScale = new Vector3(
+                               Mathf.Max(0.5f / rightHand.lossyScale.x, 1.0f),
+                               Mathf.Max(0.5f / rightHand.lossyScale.y, 1.0f),
+                               Mathf.Max(0.5f / rightHand.lossyScale.z, 1.0f));
+                    }
+                }
+            }
+        }
+
         public static ConfigEntry<float> DamageModifier;
         public static ConfigEntry<bool> CanStack;
         public static ConfigEntry<float> BuffDuration;
@@ -20,14 +68,11 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        // I am not happy with this implementation but since there is no way to check which skill did the damage
-        // we are just gonna put a flag on primary use and hope that the next non-periodic damage instance was 
-        // a hit from the primary
-        private static Dictionary<CharacterBody, bool> CharacterUsedPrimary = new Dictionary<CharacterBody, bool>();
-
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("sheen");
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texSheenIcon");
+
+        private static GameObject SheenEffectInstance;
 
         public override string BundleName => "sheen";
 
@@ -46,19 +91,43 @@ namespace ExtradimensionalItems.Modules.Items
             Hooks();
         }
 
+        protected override void LoadAssetBundle()
+        {
+            base.LoadAssetBundle();
+            SheenEffectInstance = AssetBundle.LoadAsset<GameObject>("SheenEffect");
+        }
+
         protected override void Hooks()
         {
             base.Hooks();
-            On.RoR2.Run.BeginStage += Run_BeginStage;
+            On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
             On.RoR2.CharacterBody.OnSkillActivated += CharacterBody_OnSkillActivated;
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
+            On.RoR2.CharacterBody.OnClientBuffsChanged += CharacterBody_OnClientBuffsChanged;
         }
 
-        private void Run_BeginStage(On.RoR2.Run.orig_BeginStage orig, Run self)
+        private void CharacterBody_OnInventoryChanged(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody self)
         {
             orig(self);
-            MyLogger.LogMessage($"Clearing Dictionary<CharacterBody, bool> CharacterUsedPrimary for {ItemLangTokenName}.");
-            CharacterUsedPrimary.Clear();
+            self.AddItemBehavior<SheenBehavior>(GetCount(self));
+        }
+
+        private void CharacterBody_OnClientBuffsChanged(On.RoR2.CharacterBody.orig_OnClientBuffsChanged orig, CharacterBody body)
+        {
+            orig(body);
+            if(!body.TryGetComponent(out SheenBehavior sheenBehavior))
+            {
+                return;
+            }
+            var hasBuff = body.HasBuff(Content.Buffs.Sheen);
+            if (!hasBuff && sheenBehavior.HasEffects())
+            {
+                sheenBehavior.DestroyEffects();
+            }
+            else if (hasBuff && !sheenBehavior.HasEffects())
+            {
+                sheenBehavior.ShowEffects();
+            }
         }
 
         private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
@@ -70,29 +139,26 @@ namespace ExtradimensionalItems.Modules.Items
                 if (attacker)
                 {
                     var body = attacker.GetComponent<CharacterBody>();
-                    if (body.isPlayerControlled && body.HasBuff(Content.Buffs.Sheen) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
+                    if(body.TryGetComponent(out SheenBehavior sheenBehavior))
                     {
-                        if (CharacterUsedPrimary.TryGetValue(body, out bool bodyUsedPrimary))
+                        if(body.HasBuff(Content.Buffs.Sheen) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT && sheenBehavior.usedPrimary)
                         {
-                            if (bodyUsedPrimary)
-                            {
-                                var victimBody = victim.GetComponent<CharacterBody>();
+                            var victimBody = victim.GetComponent<CharacterBody>();
 
-                                DamageInfo damageInfo2 = new DamageInfo();
-                                damageInfo2.damage = body.damage * GetCount(body) * (DamageModifier.Value / 100);
-                                damageInfo2.attacker = attacker;
-                                damageInfo2.crit = false;
-                                damageInfo2.position = damageInfo.position;
-                                damageInfo2.damageColorIndex = DamageColorIndex.Item;
-                                damageInfo2.damageType = DamageType.Generic;
+                            DamageInfo damageInfo2 = new DamageInfo();
+                            damageInfo2.damage = body.damage * GetCount(body) * (DamageModifier.Value / 100);
+                            damageInfo2.attacker = attacker;
+                            damageInfo2.crit = false;
+                            damageInfo2.position = damageInfo.position;
+                            damageInfo2.damageColorIndex = DamageColorIndex.Item;
+                            damageInfo2.damageType = DamageType.Generic;
 
-                                MyLogger.LogMessage(string.Format("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
+                            MyLogger.LogMessage(string.Format("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
 
-                                victimBody.healthComponent.TakeDamage(damageInfo2);
+                            victimBody.healthComponent.TakeDamage(damageInfo2);
 
-                                body.RemoveTimedBuff(Content.Buffs.Sheen);
-                                CharacterUsedPrimary[body] = false;
-                            }
+                            body.RemoveTimedBuff(Content.Buffs.Sheen);
+                           sheenBehavior.usedPrimary = false;
                         }
                     }
                 }
@@ -113,9 +179,9 @@ namespace ExtradimensionalItems.Modules.Items
                         MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, Content.Buffs.Sheen.name));
                         self.AddTimedBuff(Content.Buffs.Sheen, BuffDuration.Value);
                     }
-                    else if (skillLocator?.primary == skill && self.HasBuff(Content.Buffs.Sheen))
+                    else if (skillLocator?.primary == skill && self.HasBuff(Content.Buffs.Sheen) && self.TryGetComponent(out SheenBehavior component))
                     {
-                        CharacterUsedPrimary.AddOrReplace(self, true);
+                        component.usedPrimary = true;
                     }
                 }
             }
