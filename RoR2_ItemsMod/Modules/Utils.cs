@@ -22,7 +22,7 @@ namespace ExtradimensionalItems.Modules
             }
             else
             {
-                MyLogger.LogMessage(string.Format("ChronoshiftStartMovingOnClient: Util.FindNetworkObject found nothing for id {0}, checking all existing players.", netId));
+                MyLogger.LogMessage(string.Format("FindNetworkPlayer: Util.FindNetworkObject found nothing for id {0}, checking all existing players.", netId));
                 foreach (PlayerCharacterMasterController playerCharacterMaster in PlayerCharacterMasterController.instances)
                 {
                     var body = playerCharacterMaster.master.GetBody();

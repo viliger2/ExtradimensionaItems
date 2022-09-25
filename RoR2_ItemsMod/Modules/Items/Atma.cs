@@ -27,6 +27,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
+            // TODO: maybe someday but not today
             return new ItemDisplayRuleDict();
         }
 

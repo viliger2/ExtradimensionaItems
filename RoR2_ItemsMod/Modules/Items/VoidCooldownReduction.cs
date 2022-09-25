@@ -20,26 +20,27 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "cooldownreduction";
 
-        public override GameObject ItemModel => null;
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("pillsbottle");
 
-        public override Sprite ItemIcon => null;
+        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texCooldownReductionIcon");
 
         public override ExpansionDef Expansion => ExpansionCatalog.expansionDefs.FirstOrDefault(def => def.nameToken == "DLC1_NAME");
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
+            // TODO: maybe someday but not today
             return new ItemDisplayRuleDict();
         }
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return string.Format(pickupString, CooldownReduction.Value.ToString("###%"));
+            return string.Format(pickupString, (CooldownReduction.Value / 100).ToString("###%"));
         }
 
         public override void Init(ConfigFile config)
         {
             CreateConfig(config);
-            //LoadAssetBundle();
+            LoadAssetBundle();
             CreateItem(ref Content.Items.VoidCooldownReduction);
             Hooks();
         }

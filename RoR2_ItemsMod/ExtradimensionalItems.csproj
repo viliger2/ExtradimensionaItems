@@ -26,6 +26,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="Assets\cooldownreduction">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Assets\damageoncooldowns">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
