@@ -7,8 +7,9 @@
 
 		"EQUIPMENT_RESPAWN_FLAG_NAME": "Checkpoint",
 		"EQUIPMENT_RESPAWN_FLAG_PICKUP": "It keeps you safe.",
-		"EQUIPMENT_RESPAWN_FLAG_DESCRIPTION": "Place a <style=cIsUtility>checkpoint</style> on the ground. <style=cIsUtility>Upon death</style> <style=cIsHealing>respawn</style> at checkpoint's location, <style=cIsUtility>destroying it</style> in the process. Unused checkpoint can be <style=cIsUtility>picked back up</style>. Only <style=cIsUtility>one</style> checkpoint can exist <style=cIsUtility>per player</style> at a time. Picking up <style=cIsDamage>different equipment</style> results in <style=cIsUtility>checkpoint being disabled and transformed back into equipment</style>.\r\nIf <style=cIsHealing>Fuel Cells</style> are present, one will be <style=cIsUtility>consumed</style> in place of <style=cIsUtility>checkpoint</style>.",
+		"EQUIPMENT_RESPAWN_FLAG_DESCRIPTION": "Place a <style=cIsUtility>checkpoint</style> on the ground. <style=cIsUtility>Upon death</style> <style=cIsHealing>respawn</style> at checkpoint's location, <style=cIsUtility>destroying it</style> in the process. Unused checkpoint can be <style=cIsUtility>picked back up</style>. Only <style=cIsUtility>one</style> checkpoint can exist <style=cIsUtility>per player</style> at a time. Picking up <style=cIsDamage>different equipment</style> results in <style=cIsUtility>checkpoint being disabled and transformed back into equipment</style>.{0}",
 		"EQUIPMENT_RESPAWN_FLAG_LORE": "Go play Super Cloudbuilt you fucks.",
+		"EQUIPMENT_RESPAWN_FLAG_FUEL_CELL": "\r\nIf <style=cIsHealing>Fuel Cells</style> are present, one will be <style=cIsUtility>consumed</style> in place of <style=cIsUtility>checkpoint</style>.",
 		"INTERACTABLE_RESPAWN_FLAG_CONTEXT": "Pick up Checkpoint?",
 		"INTERACTABLE_RESPAWN_FLAG_NAME": "Checkpoint",
 		"INTERACTABLE_RESPAWN_FLAG_RESPAWN": "{0} got saved by their trusty flag.",
@@ -16,7 +17,8 @@
 
 		"EQUIPMENT_SKULL_OF_DOOM_NAME": "Skull of Impending Doom",
 		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Tonight at 11... DOOOOOOOOOOOOOOM",
-		"EQUIPMENT_SKULL_OF_DOOM_DESCRIPTION": "Gain <style=cIsUtility>{0}</style> movement speed, while taking <style=cIsHealth>{1} max health</style> as damage every <style=cIsUtility>{2} seconds</style>. Use again to disable the effect.\r\nIf <style=cIsHealing>Fuel Cells</style> are present, gain additional <style=cStack>{3} movement speed</style> and <style=cStack>reduce damage by {4}</style> per stack.",
+		"EQUIPMENT_SKULL_OF_DOOM_DESCRIPTION": "Gain <style=cIsUtility>{0}</style> movement speed, while taking <style=cIsHealth>{1} max health</style> as damage every <style=cIsUtility>{2} seconds</style>. Use again to disable the effect.{3}",
+		"EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL": "\r\nIf <style=cIsHealing>Fuel Cells</style> are present, gain additional <style=cStack>{0} movement speed</style> and <style=cStack>reduce damage by {1}</style> per stack.",
 		"EQUIPMENT_SKULL_OF_DOOM_LORE": "It's a WoW item, the best I can do is either <style=cIsVoid>corruption</style> or <style=cShrine>retcons</style>. Which one do you want?",
 
 		"ITEM_FUEL_CELL_DEPLETED_NAME": "Fuel Cell (Depleted)",

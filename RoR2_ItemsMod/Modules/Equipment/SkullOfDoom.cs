@@ -69,7 +69,9 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return string.Format(pickupString, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value, (FuelCellSpeedBuff.Value / 100).ToString("###%"), (FuelCellDamageOverTime.Value / 100).ToString("###%"));
+            // TODO: implement Fuel Cells condition with Language.GetString
+            return string.Format(pickupString, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value, 
+                EnableFuelCellInteraction.Value ? string.Format(Language.GetString("EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL"), (FuelCellSpeedBuff.Value / 100).ToString("###%"), (FuelCellDamageOverTime.Value / 100).ToString("###%")) : "");
         }
 
         protected override void Hooks()
@@ -86,7 +88,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             {
                 if (body.HasBuff(Content.Buffs.SkullOfDoom))
                 {
-                    MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing it.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name));
+                    MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing the buff.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name));
                     body.RemoveBuff(Content.Buffs.SkullOfDoom);
                     body.AddItemBehavior<SkullOfDoomBehavior>(0);
                 }
@@ -102,14 +104,15 @@ namespace ExtradimensionalItems.Modules.Equipment
                 {
                     if (body.HasBuff(Content.Buffs.SkullOfDoom))
                     {
-                        if (EnableFuelCellInteraction.Value)
-                        {
-                            args.moveSpeedMultAdd += (SpeedBuff.Value / 100) + ((FuelCellSpeedBuff.Value / 100) * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine));
-                        }
-                        else
-                        {
-                            args.moveSpeedMultAdd += (SpeedBuff.Value / 100);
-                        }
+                        args.moveSpeedMultAdd += (SpeedBuff.Value / 100) + ((FuelCellSpeedBuff.Value / 100) * (EnableFuelCellInteraction.Value ? body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) : 0));
+                        //if (EnableFuelCellInteraction.Value)
+                        //{
+                        //    args.moveSpeedMultAdd += (SpeedBuff.Value / 100) + ((FuelCellSpeedBuff.Value / 100) * body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine));
+                        //}
+                        //else
+                        //{
+                        //    args.moveSpeedMultAdd += (SpeedBuff.Value / 100);
+                        //}
                     }
                 }
             }

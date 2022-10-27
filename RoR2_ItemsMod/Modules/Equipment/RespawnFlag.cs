@@ -54,7 +54,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return pickupString;
+            // TODO: implement Fuel Cells condition with Language.GetString
+            return string.Format(pickupString, EnableFuelCellInteraction.Value ? Language.GetString("EQUIPMENT_RESPAWN_FLAG_FUEL_CELL") : "");
         }
 
         protected override void Hooks()
