@@ -16,7 +16,7 @@ namespace ExtradimensionalItems.Modules
     [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "1.0")]
     [BepInDependency(R2API.R2API.PluginGUID)]
     [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
-    [R2APISubmoduleDependency(nameof(ItemAPI), nameof(RecalculateStatsAPI), nameof(NetworkingAPI))]
+    [R2APISubmoduleDependency(nameof(ItemAPI), nameof(RecalculateStatsAPI), nameof(NetworkingAPI), nameof(TempVisualEffectAPI))]
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
         public static ConfigEntry<bool> ExtensiveLogging;

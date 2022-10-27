@@ -109,7 +109,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                                 {
                                     MyLogger.LogMessage(string.Format("Player {0}({1}) finished moving back in time, sending message to server to restore state.", body.GetUserName(), body.name));
                                     RestoreSkills();
-                                    new ChronoshiftRestoreStateOnServer(body.netId).Send(R2API.Networking.NetworkDestination.Server);
+                                    new ChronoshiftRestoreStateOnServer(body.GetComponent<NetworkIdentity>().netId).Send(R2API.Networking.NetworkDestination.Server);
                                     ClearStatesAndStartSaving();
                                 }
                                 return;
