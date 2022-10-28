@@ -16,7 +16,7 @@
 		"INTERACTABLE_RESPAWN_FLAG_RESPAWN_2": "You got saved by your trusty flag.",
 
 		"EQUIPMENT_SKULL_OF_DOOM_NAME": "Skull of Impending Doom",
-		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Tonight at 11... DOOOOOOOOOOOOOOM",
+		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Tonight at 11.",
 		"EQUIPMENT_SKULL_OF_DOOM_DESCRIPTION": "Gain <style=cIsUtility>{0}</style> movement speed, while taking <style=cIsHealth>{1} max health</style> as damage every <style=cIsUtility>{2} seconds</style>. Use again to disable the effect.{3}",
 		"EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL": "\r\nIf <style=cIsHealing>Fuel Cells</style> are present, gain additional <style=cStack>{0} movement speed</style> and <style=cStack>reduce damage by {1}</style> per stack.",
 		"EQUIPMENT_SKULL_OF_DOOM_LORE": "It's a WoW item, the best I can do is either <style=cIsVoid>corruption</style> or <style=cShrine>retcons</style>. Which one do you want?",
@@ -26,7 +26,7 @@
 		"ITEM_FUEL_CELL_DEPLETED_DESCRIPTION": "Fuel Cell that got depleted of its power.",
 		"ITEM_FUEL_CELL_DEPLETED_LORE": "You know how I made fun of Hopoo for making breakable items? Yeah. Also how do you disable lore lmao",
 
-		"ITEM_ROYAL_GUARD_NAME": "Royal Guard",
+		"ITEM_ROYAL_GUARD_NAME": "Pizza Box",
 		"ITEM_ROYAL_GUARD_PICKUP": "This party is getting crazy, let's rock!",
 		"ITEM_ROYAL_GUARD_DESCRIPTION": "Replace your <style=cIsUtility>Utility Skill</style> with <style=cIsUtility>Block</style>.\r\nEnter a defensive stance for <style=cIsUtility>{0}</style> <style=cStack>(+{1} per stack)</style> seconds, deflecting first non-periodic hit. <style=cIsUtility>Depending for how long you were in the stance</style> gain <style=cIsDamage>3 to 1</style> damage buff(s). If you have <style=cIsDamage>damage buffs</style> when using <style=cIsUtility>Block</style>, your <style=cIsUtility>Primary Skill</style> gets replaced with <style=cIsUtility>Release</style>.\r\nUsing <style=cIsUtility>Release</style> will <style=cIsDamage>consume all damage buffs</style> and deal <style=cIsDamage>{2}</style> <style=cStack>(+{2} per stack)</style> base damage per buff stack to everyone in <style=cIsDamage>{3}m</style> radius. You can have up to <style=cIsDamage>{4} stacks of damage buff</style>.",
 		"ITEM_ROYAL_GUARD_LORE": "Mitrix: It was my assumption that those chimeras would prove far inferior... In the face of your tactics.\r\nCommando: You construct and kill... Construct and kill... I fail to see the logic here. Is sanity the price to pay for power!?\r\nMitrix: Lemurians... They are but stubborn and foolish. It takes a journey to Petrichor V for them to accept and praise Providence. A fact that tickles irony's judgment.\r\nCommando: And your judgments interests me not. For I'm here... To reclaim... What is rightfully mine.\r\nMitrix: Ukulele! That is what you seek. And that is why I wait in your path!\r\nCommando: You will fumble in your opposition of my quest. Though I encourage! For an opportunity to battle a being of such grand delusions as you, is a sweet fortune!",

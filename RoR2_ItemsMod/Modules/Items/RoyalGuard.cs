@@ -30,9 +30,9 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override ItemTier Tier => ItemTier.Tier3;
 
-        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("RoyalGuardItem");
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("royalguard");
 
-        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texRoyalGuardItemIcon");
+        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texRoyalGuardItemIconGood");
 
         public override string BundleName => "royalguard";
 
@@ -218,7 +218,7 @@ namespace ExtradimensionalItems.Modules.Items
             RoyalGuardParryStateBuff.buffColor = Color.red;
             RoyalGuardParryStateBuff.canStack = false;
             RoyalGuardParryStateBuff.isDebuff = false;
-            RoyalGuardParryStateBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+            RoyalGuardParryStateBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("texRoyalGuardBuffIcon.png");
 
             ContentAddition.AddBuffDef(RoyalGuardParryStateBuff);
 
@@ -226,10 +226,10 @@ namespace ExtradimensionalItems.Modules.Items
 
             var RoyalGuardDamageBuff = ScriptableObject.CreateInstance<BuffDef>();
             RoyalGuardDamageBuff.name = "Royal Guard Damage Buff";
-            RoyalGuardDamageBuff.buffColor = Color.magenta;
+            RoyalGuardDamageBuff.buffColor = Color.yellow;
             RoyalGuardDamageBuff.canStack = true;
             RoyalGuardDamageBuff.isDebuff = false;
-            RoyalGuardDamageBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+            RoyalGuardDamageBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("texRoyalGuardBuffIcon.png");
 
             ContentAddition.AddBuffDef(RoyalGuardDamageBuff);
 
@@ -241,7 +241,7 @@ namespace ExtradimensionalItems.Modules.Items
             RoyalGuardGraceBuff.canStack = false;
             RoyalGuardGraceBuff.isDebuff = false;
             RoyalGuardGraceBuff.isHidden = true;
-            RoyalGuardGraceBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("FlagItemIcon.png");
+            RoyalGuardGraceBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("texRoyalGuardBuffIcon.png");
 
             ContentAddition.AddBuffDef(RoyalGuardGraceBuff);
 
