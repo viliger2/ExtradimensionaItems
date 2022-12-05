@@ -21,7 +21,7 @@ namespace ExtradimensionalItems.Modules.Interactables
 
             var modelLocator = interactableModel.AddComponent<ModelLocator>();
             modelLocator.modelTransform = interactableModel.transform.Find("mdlFlagInteractable");
-            modelLocator.modelBaseTransform = interactableModel.transform.Find("mdlFlagInteractable");
+            modelLocator.modelBaseTransform = interactableModel.transform.Find("Base");
             modelLocator.dontDetatchFromParent = false;
             modelLocator.autoUpdateModelTransform = true;
 
@@ -33,7 +33,7 @@ namespace ExtradimensionalItems.Modules.Interactables
             respawnFlagManager.langToken = langToken;
 
             var highlightController = interactableModel.AddComponent<Highlight>();
-            highlightController.targetRenderer = interactableModel.GetComponentsInChildren<MeshRenderer>().Where(x => x.gameObject.name.Contains("mdlFlagInteractable")).First();
+            highlightController.targetRenderer = interactableModel.GetComponentsInChildren<SkinnedMeshRenderer>().Where(x => x.gameObject.name.Contains("mdlFlagInteractable")).First();
             highlightController.strength = 1;
             highlightController.highlightColor = Highlight.HighlightColor.interactive;
 

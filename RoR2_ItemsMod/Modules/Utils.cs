@@ -42,7 +42,9 @@ namespace ExtradimensionalItems.Modules
         // thanks KomradeSpectre
         public static void ShaderConversion(AssetBundle assets)
         {
-            var materialAssets = assets.LoadAllAssets<Material>().Where(material => material.shader.name.StartsWith("Stubbed Hopoo Games"));
+            var assets2 = assets.LoadAllAssets<Material>();
+
+            var materialAssets = assets.LoadAllAssets<Material>().Where(material => material.shader.name.Contains("Hopoo Games"));
 
             foreach (Material material in materialAssets)
             {

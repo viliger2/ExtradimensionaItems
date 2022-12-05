@@ -104,6 +104,9 @@ namespace ExtradimensionalItems.Modules.Items
             On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
         }
 
+        // using this monstrosity because strings are not loaded on initialization
+        // so if we try to use LanguageAPI.AddOverlay together with Language.GetString via token
+        // all we will get is token itself
         private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
         {
             if (token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION"))
@@ -113,7 +116,6 @@ namespace ExtradimensionalItems.Modules.Items
             }
             return orig(self, token);
         }
-
 
         public abstract string GetFormatedDiscription(string pickupString);
 
@@ -126,13 +128,6 @@ namespace ExtradimensionalItems.Modules.Items
         public int GetCount(CharacterMaster master)
         {
             return master?.inventory?.GetItemCount(ItemDef) ?? 0;
-        }
-
-        public int GetCountSpecific(CharacterBody body, ItemDef itemDef)
-        {
-            if (!body || !body.inventory) { return 0; }
-
-            return body.inventory.GetItemCount(itemDef);
         }
     }
 }

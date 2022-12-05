@@ -26,7 +26,9 @@ namespace ExtradimensionalItems.Modules
         // thanks KomradeSpectre
         public static Dictionary<string, string> ShaderLookup = new Dictionary<string, string>()
         {
-            {"Stubbed Hopoo Games/Deferred/Standard", "shaders/deferred/hgstandard"}
+            {"Stubbed Hopoo Games/Deferred/Standard", "shaders/deferred/hgstandard"},
+            {"Hopoo Games/FX/Cloud Remap", "shaders/fx/hgcloudremap" },
+            {"Stubbed Hopoo Games/FX/Cloud Remap", "shaders/fx/hgcloudremap" }
             //{"fake ror/hopoo games/fx/hgcloud intersection remap", "shaders/fx/hgintersectioncloudremap" },
             //{"fake ror/hopoo games/fx/hgcloud remap", "shaders/fx/hgcloudremap" },
             //{"fake ror/hopoo games/fx/hgdistortion", "shaders/fx/hgdistortion" },

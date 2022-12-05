@@ -9,14 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
-using static RoR2.CharacterBody;
 
 namespace ExtradimensionalItems.Modules.Equipment
 {
     public class Chronoshift : EquipmentBase<Chronoshift>
     {
         // TODO: maybe rewrite this entire shitshow to use EntityStateMachine and NetworkStateMachine
-        private class ChronoshiftBehavior : ItemBehavior
+        private class ChronoshiftBehavior : CharacterBody.ItemBehavior
         {
             private enum ChronoshiftState
             {
@@ -60,9 +59,24 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             private float speed = 0f;
 
+            private TrailRenderer trailRenderer;
+
             public void Awake()
             {
                 currentEquipmentState = ChronoshiftState.Saving;
+                this.enabled = false;
+            }
+
+            public void OnEnable()
+            {
+                if (body)
+                {
+                    trailRenderer = body.gameObject.AddComponent<TrailRenderer>();
+                    trailRenderer.minVertexDistance = 2f;
+                    trailRenderer.time = RewindTime.Value;
+                    trailRenderer.endColor = new Color(1, 1, 1, 0);
+                    trailRenderer.enabled = body.equipmentSlot.stock > 0;
+                }
             }
 
             public void FixedUpdate()
@@ -71,8 +85,12 @@ namespace ExtradimensionalItems.Modules.Equipment
 
                 if (body)
                 {
-                    if(currentEquipmentState == ChronoshiftState.Saving && stopwatch > timer)
+                    if (currentEquipmentState == ChronoshiftState.Saving && stopwatch > timer && body.equipmentSlot.stock > 0)
                     {
+                        if (!trailRenderer.enabled)
+                        {
+                            trailRenderer.enabled = true;
+                        }
                         stopwatch -= timer;
 
                         CharacterState state = SnapshotCurrentCharacterState();
@@ -97,15 +115,18 @@ namespace ExtradimensionalItems.Modules.Equipment
                         if (Vector3.Distance(motor.Rigidbody.position, target) < 0.001f)
                         {
                             currentState++;
-                            if(currentState >= states.Count)
+                            if (currentState >= states.Count)
                             {
                                 currentEquipmentState = ChronoshiftState.Restoring;
+                                trailRenderer.Clear();
+                                trailRenderer.enabled = false;
                                 if (NetworkServer.active)
                                 {
                                     MyLogger.LogMessage(string.Format("Player {0}({1}) finished moving back in time, restoring state.", body.GetUserName(), body.name));
                                     RestoreSkills();
                                     RestoreState();
-                                } else
+                                }
+                                else
                                 {
                                     MyLogger.LogMessage(string.Format("Player {0}({1}) finished moving back in time, sending message to server to restore state.", body.GetUserName(), body.name));
                                     RestoreSkills();
@@ -116,13 +137,14 @@ namespace ExtradimensionalItems.Modules.Equipment
                             }
                             speed = Vector3.Distance(motor.Rigidbody.position, states[currentState].position) / teleportTimer;
                         }
-                    }
+                    }                    
                 }
             }
 
             public void OnDestroy()
             {
                 ClearStatesAndStartSaving();
+                UnityEngine.Object.Destroy(trailRenderer);
             }
 
             private CharacterState SnapshotCurrentCharacterState()
@@ -198,7 +220,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             private CharacterState GetRewindState()
             {
-                return states.Last();
+                return states.Count > 0 ? states.Last() : null;
             }
 
             private void RestoreSkills()
@@ -254,14 +276,14 @@ namespace ExtradimensionalItems.Modules.Equipment
                 //additional loop to clear all permament buffs
                 for (BuffIndex buffIndex = 0; buffIndex < (BuffIndex)BuffCatalog.buffCount; buffIndex++)
                 {
-                    if (buffIndex == DLC1Content.Buffs.VoidSurvivorCorruptMode.buffIndex) continue;
+                    if (buffIndex == DLC1Content.Buffs.VoidSurvivorCorruptMode.buffIndex) continue; // excluding Void Fiend since otherwise he completely breaks
                     if (body.HasBuff(buffIndex))
                     {
                         body.RemoveBuff(buffIndex);
                     }
                 }
 
-                foreach (TimedBuff buff in state.buffs)
+                foreach (CharacterBody.TimedBuff buff in state.buffs)
                 {
                     if (buff.timer == -1) body.AddBuff(buff.buffIndex); else body.AddTimedBuff(buff.buffIndex, buff.timer);
                 }
@@ -295,6 +317,14 @@ namespace ExtradimensionalItems.Modules.Equipment
             {
                 currentEquipmentState = ChronoshiftState.Moving;
                 currentState = 0;
+            }
+       
+            public void SetTrailRendererMaterial(Material material)
+            {
+                if (trailRenderer)
+                {
+                    trailRenderer.material = material;
+                }
             }
         }
 
@@ -381,6 +411,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public static ConfigEntry<float> RewindTime;
         public static ConfigEntry<float> Frequency;
+        public static ConfigEntry<float> CooldownConfig;
 
         public override string EquipmentName => "Chronoshift";
 
@@ -392,7 +423,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string BundleName => "chronoshift";
 
-        public override float Cooldown => 120f;
+        public override float Cooldown => CooldownConfig.Value;
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
@@ -407,7 +438,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override void Init(ConfigFile config)
         {
-            //LoadAssetBundle();
+            LoadAssetBundle();
             CreateConfig(config);
             CreateEquipment(ref Content.Equipment.Chronoshift);
             Hooks();
@@ -416,6 +447,8 @@ namespace ExtradimensionalItems.Modules.Equipment
         protected override void Hooks()
         {
             base.Hooks();
+            // we cannot use CharacterBody.onBodyInventoryChangedGlobal because by the time we get to our method
+            // previous equipment is already overwritten by new equipment so we can't detect changes
             On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
             On.RoR2.CharacterBody.OnEquipmentLost += CharacterBody_OnEquipmentLost;
         }
@@ -433,7 +466,8 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             if (equipmentDef == Content.Equipment.Chronoshift)
             {
-                self.AddItemBehavior<ChronoshiftBehavior>(1);
+                var behaviour = self.AddItemBehavior<ChronoshiftBehavior>(1);
+                behaviour.SetTrailRendererMaterial(AssetBundle.LoadAsset<Material>("matChronoshiftTrail"));
             }
             orig(self, equipmentDef);
         }
@@ -468,6 +502,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             RewindTime = config.Bind("Equipment: " + EquipmentName, "Rewind time", 10f, "How much, in seconds, back in time equipment takes you.");
             Frequency = config.Bind("Equipment: " + EquipmentName, "Frequency", 0.25f, "How frequently, in seconds, your state in snapshotted. Smaller values will result in higher memory consumption.");
+            CooldownConfig = config.Bind("Equipment: " + EquipmentName, "Cooldown", 120f, "What is the cooldown of equipment.");
         }
     }
 }

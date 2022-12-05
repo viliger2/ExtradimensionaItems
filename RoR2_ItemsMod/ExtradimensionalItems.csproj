@@ -6,6 +6,23 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Assets\1edfda9ce6b0f1e8e8aa59b336deb000.bundle" />
+	  <None Remove="Assets\1edfda9ce6b0f1e8e8aa59b336deb000.bundle.manifest" />
+	  <None Remove="Assets\792e0cf58ff60d0309b1deea53922aa4.bundle" />
+	  <None Remove="Assets\792e0cf58ff60d0309b1deea53922aa4.bundle.manifest" />
+	  <None Remove="Assets\Assets" />
+	  <None Remove="Assets\Assets.manifest" />
+	  <None Remove="Assets\b0fb09faafbc8ef5cd6d00de32fc55a5.bundle" />
+	  <None Remove="Assets\b0fb09faafbc8ef5cd6d00de32fc55a5.bundle.manifest" />
+	  <None Remove="Assets\c95e64db9f533fef95bce1c8c4fbaee2.bundle" />
+	  <None Remove="Assets\c95e64db9f533fef95bce1c8c4fbaee2.bundle.manifest" />
+	  <None Remove="Assets\e4f09554996c16288f7d3b84d38eb70a.bundle" />
+	  <None Remove="Assets\e4f09554996c16288f7d3b84d38eb70a.bundle.manifest" />
+	  <None Remove="Assets\e8f7180f308b6994d31332a60b4753e7.bundle" />
+	  <None Remove="Assets\e8f7180f308b6994d31332a60b4753e7.bundle.manifest" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="BepInEx.Analyzers" Version="1.0.8">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,6 +43,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="Assets\atma">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Assets\chronoshift">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Assets\cooldownreduction">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
