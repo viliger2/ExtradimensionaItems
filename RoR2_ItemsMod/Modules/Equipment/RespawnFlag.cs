@@ -23,9 +23,9 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string BundleName => "respawnflag";
 
-        public override GameObject EquipmentModel => AssetBundle.LoadAsset<GameObject>("FlagItem");
+        public override GameObject EquipmentModel => AssetBundle.LoadAsset<GameObject>("RespawnFlagItem");
 
-        public override Sprite EquipmentIcon => AssetBundle.LoadAsset<Sprite>("texFlagItemIcon");
+        public override Sprite EquipmentIcon => AssetBundle.LoadAsset<Sprite>("texRespawnFlagIcon");
 
         public override float Cooldown => 0.1f;
 
@@ -48,7 +48,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         private void LoadInteractable()
         {
-            var flagInteractablePrefab2 = RespawnFlagInteractable.GetInteractable(AssetBundle.LoadAsset<GameObject>("FlagInteractable"), EquipmentLangTokenName);
+            var flagInteractablePrefab2 = RespawnFlagInteractable.GetInteractable(AssetBundle.LoadAsset<GameObject>("RespawnFlagInteractable"), EquipmentLangTokenName);
             flagInteractablePrefab = PrefabAPI.InstantiateClone(flagInteractablePrefab2, "RespawnFlagInteractable"); // always use PrefabAPI, it will network it
         }
 
