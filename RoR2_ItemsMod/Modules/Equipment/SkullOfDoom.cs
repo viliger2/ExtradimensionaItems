@@ -43,7 +43,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string EquipmentLangTokenName => "SKULL_OF_DOOM";
 
-        public override GameObject EquipmentModel => AssetBundle.LoadAsset<GameObject>("SkullOfDoomItem");
+        public override GameObject EquipmentModel => AssetBundle.LoadAsset<GameObject>("SkullOfDoom");
 
         public override Sprite EquipmentIcon => AssetBundle.LoadAsset<Sprite>("texSkullOfDoomIcon");
 

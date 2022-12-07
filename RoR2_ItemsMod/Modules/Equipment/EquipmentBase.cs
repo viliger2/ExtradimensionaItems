@@ -87,6 +87,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             EquipmentDef.appearsInMultiPlayer = AppearsInMultiPlayer;
             EquipmentDef.canDrop = CanDrop;
             EquipmentDef.cooldown = Cooldown;
+            EquipmentDef.colorIndex = IsLunar ? ColorCatalog.ColorIndex.LunarItem : ColorCatalog.ColorIndex.Equipment;
             EquipmentDef.enigmaCompatible = EnigmaCompatible;
             EquipmentDef.isBoss = IsBoss;
             EquipmentDef.isLunar = IsLunar;
