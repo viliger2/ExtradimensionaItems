@@ -417,9 +417,9 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string EquipmentLangTokenName => "CHRONOSHIFT";
 
-        public override GameObject EquipmentModel => null;
+        public override GameObject EquipmentModel => AssetBundle.LoadAsset<GameObject>("Chronoshift");
 
-        public override Sprite EquipmentIcon => null;
+        public override Sprite EquipmentIcon => AssetBundle.LoadAsset<Sprite>("texChronoshiftIcon");
 
         public override string BundleName => "chronoshift";
 
