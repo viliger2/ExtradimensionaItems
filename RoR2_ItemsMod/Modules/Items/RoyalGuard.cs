@@ -1,10 +1,13 @@
 ﻿using BepInEx.Configuration;
 using EntityStates;
 using ExtradimensionalItems.Modules.SkillStates;
+using HG;
 using R2API;
 using RoR2;
 using RoR2.Skills;
+using System.IO;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace ExtradimensionalItems.Modules.Items
 {
@@ -38,6 +41,9 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override bool AIBlacklisted => true;
 
+        private static GameObject RoyalGuardParryEffectInstance;
+        public static GameObject RoyalGuardExplodeEffectInstance;
+
         // adding language checks because we can't check if token has been added to the OverlayDict for some reason
         private bool isDescAdded = false;
         private bool isParryDescAdded = false;
@@ -52,11 +58,42 @@ namespace ExtradimensionalItems.Modules.Items
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
+            LoadSoundBank();
             CreateConfig(config);
             CreateSkills();
             CreateBuffs();
             CreateItem(ref Content.Items.RoyalGuard);
+            CreateVisualEffects();
             Hooks();
+        }
+
+        protected override void LoadAssetBundle()
+        {
+            base.LoadAssetBundle();
+
+            RoyalGuardParryEffectInstance = AssetBundle.LoadAsset<GameObject>("RoyalGuardEffect");
+            var tempEffectComponent = RoyalGuardParryEffectInstance.AddComponent<TemporaryVisualEffect>();
+            tempEffectComponent.visualTransform = RoyalGuardParryEffectInstance.GetComponent<Transform>();
+
+            var destroyOnTimerComponent = RoyalGuardParryEffectInstance.AddComponent<DestroyOnTimer>();
+            destroyOnTimerComponent.duration = 0.1f;
+            MonoBehaviour[] exitComponents = new MonoBehaviour[1];
+            exitComponents[0] = destroyOnTimerComponent;
+
+            tempEffectComponent.exitComponents = exitComponents;
+
+            RoyalGuardExplodeEffectInstance = AssetBundle.LoadAsset<GameObject>("RoyalGuard_ReleaseExplosion");
+
+            var effectComponent = RoyalGuardExplodeEffectInstance.AddComponent<EffectComponent>();
+            effectComponent.applyScale = true;
+            effectComponent.soundName = "EI_RoyalGuard_Release";
+
+            var vfxAttributes = RoyalGuardExplodeEffectInstance.AddComponent<VFXAttributes>();
+            vfxAttributes.vfxPriority = VFXAttributes.VFXPriority.Medium;
+            vfxAttributes.vfxIntensity = VFXAttributes.VFXIntensity.Medium;
+
+            var destroyOnTimer = RoyalGuardExplodeEffectInstance.AddComponent<DestroyOnTimer>();
+            destroyOnTimer.duration = 0.6f;
         }
 
         protected override void Hooks()
@@ -101,6 +138,7 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 var timedBuff = body.GetTimedBuff(Content.Buffs.RoyalGuardParryState);
                 var parryStateDuration = GetParryStateDuration(body);
+                // TODO: there should be a better way to do this
                 int numberOfBuffs;
                 if ((parryStateDuration - timedBuff.timer) <= (parryStateDuration / BEST_PARRY_COEF))
                 {
@@ -114,6 +152,13 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     numberOfBuffs = 1;
                 }
+                if(numberOfBuffs == 3)
+                {
+                    Util.PlaySound("EI_RoyalGuard_JustBlock", body.gameObject);
+                } else
+                {
+                    Util.PlaySound("EI_RoyalGuard_Block", body.gameObject);
+                }
                 if (body.GetBuffCount(Content.Buffs.RoyalGuardDamage) + numberOfBuffs > MaxBuffStacks.Value)
                 {
                     numberOfBuffs = Mathf.Max(0, MaxBuffStacks.Value - body.GetBuffCount(Content.Buffs.RoyalGuardDamage));
@@ -122,6 +167,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     body.AddBuff(Content.Buffs.RoyalGuardDamage);
                 }
+                // end TODO
                 MyLogger.LogMessage(string.Format("Player {0}({1}) got damaged in {2} after entering parry state. Adding {3} damage buff(s), adding grace buff and removing parry state buff.", body.GetUserName(), body.name, parryStateDuration - timedBuff.timer, numberOfBuffs));
                 body.AddTimedBuff(Content.Buffs.RoyalGuardGrace, 0.0167f);
                 body.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
@@ -246,6 +292,13 @@ namespace ExtradimensionalItems.Modules.Items
             ContentAddition.AddBuffDef(RoyalGuardGraceBuff);
 
             Content.Buffs.RoyalGuardGrace = RoyalGuardGraceBuff;
+        }
+
+        private void CreateVisualEffects()
+        {
+            TempVisualEffectAPI.AddTemporaryVisualEffect(RoyalGuardParryEffectInstance.InstantiateClone("RoyalGuardParryEffect", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.RoyalGuardParryState); }, false);
+
+            R2API.ContentAddition.AddEffect(RoyalGuardExplodeEffectInstance);
         }
 
         public override void CreateConfig(ConfigFile config)

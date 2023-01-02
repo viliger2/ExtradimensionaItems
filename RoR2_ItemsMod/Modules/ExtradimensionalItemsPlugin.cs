@@ -23,6 +23,9 @@ namespace ExtradimensionalItems.Modules
 
         public static BepInEx.PluginInfo PInfo;
 
+        public const string BundleFolder = "Assets";
+        public const string SoundBanksFolder = "Soundbanks";
+
         // thanks KomradeSpectre
         public static Dictionary<string, string> ShaderLookup = new Dictionary<string, string>()
         {

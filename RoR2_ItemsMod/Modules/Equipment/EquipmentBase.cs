@@ -29,8 +29,6 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public abstract string BundleName { get; }
 
-        public const string BundleFolder = "Assets";
-
         public virtual bool AppearsInSinglePlayer { get; } = true;
 
         public virtual bool AppearsInMultiPlayer { get; } = true;
@@ -67,7 +65,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected void LoadAssetBundle()
         {
-            AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), BundleFolder, BundleName));
+            AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.BundleFolder, BundleName));
             Utils.ShaderConversion(AssetBundle);
         }
 

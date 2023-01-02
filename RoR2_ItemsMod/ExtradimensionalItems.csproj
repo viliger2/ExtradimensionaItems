@@ -73,6 +73,9 @@
 	  <None Update="Languages\ExtradimensionalItems.language">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Soundbanks\royalguard.bnk">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>
 
