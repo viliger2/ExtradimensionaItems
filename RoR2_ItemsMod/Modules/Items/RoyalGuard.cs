@@ -98,11 +98,23 @@ namespace ExtradimensionalItems.Modules.Items
 
         protected override void Hooks()
         {
-            On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
+            //On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
+            RoR2.CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
+            // we cannot use GlobalEventManager.onServerDamageDealt because by the time we get to our method
+            // damage is already dealt, negating the entire point of blocking
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+            //RoR2.GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
             // implementing our own replacements instead of using base.Hooks()
             // since we also need to format skills
             On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
+        }
+
+        private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
+        {
+            if(body.skillLocator)
+            {
+                body.ReplaceSkillIfItemPresent(body.skillLocator.utility, ItemDef.itemIndex, Content.Skills.Parry);
+            }
         }
 
         private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)

@@ -57,11 +57,6 @@ namespace ExtradimensionalItems.Modules.SkillStates
                 effectData.origin = base.characterBody.footPosition;
                 effectData.scale = 10;
 
-                //Util.PlaySound("EI_RoyalGuard_Release", characterBody.gameObject);
-
-                //Array.Find(EffectCatalog.entries, p => p.prefabName.Contains("royal"));
-
-                //EffectManager.SpawnEffect(LegacyResourcesAPI.Load<UnityEngine.GameObject>("Prefabs/Effects/OmniEffect/OmniExplosionVFX"), effectData, false);
                 EffectManager.SpawnEffect(Items.RoyalGuard.RoyalGuardExplodeEffectInstance, effectData, true);
 
                 MyLogger.LogMessage(string.Format("Player {0}({1}) used Release, dealing to everyone around {2} damage.", characterBody.GetUserName(), characterBody.name, blastAttack.baseDamage));

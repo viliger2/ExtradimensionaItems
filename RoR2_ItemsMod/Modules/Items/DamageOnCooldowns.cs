@@ -1,17 +1,13 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using static RoR2.CharacterBody;
 
 namespace ExtradimensionalItems.Modules.Items
 {
     public class DamageOnCooldowns : ItemBase<DamageOnCooldowns>
     {
-        public class DamageOnCooldownsBehavior : ItemBehavior
+        public class DamageOnCooldownsBehavior : CharacterBody.ItemBehavior
         {
             public void FixedUpdate()
             {
@@ -101,19 +97,21 @@ namespace ExtradimensionalItems.Modules.Items
         protected override void Hooks()
         {
             base.Hooks();
+            CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
-            On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
         }
 
-        private void CharacterBody_OnInventoryChanged(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody body)
+        private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
         {
-            orig(body);
-            body.AddItemBehavior<DamageOnCooldownsBehavior>(GetCount(body));
-            if(body.HasBuff(Content.Buffs.DamageOnCooldowns) && GetCount(body) == 0)
+            if (body)
             {
-                while (body.HasBuff(Content.Buffs.DamageOnCooldowns))
+                body.AddItemBehavior<DamageOnCooldownsBehavior>(GetCount(body));
+                if (body.HasBuff(Content.Buffs.DamageOnCooldowns) && GetCount(body) == 0)
                 {
-                    body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
+                    while (body.HasBuff(Content.Buffs.DamageOnCooldowns))
+                    {
+                        body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
+                    }
                 }
             }
         }

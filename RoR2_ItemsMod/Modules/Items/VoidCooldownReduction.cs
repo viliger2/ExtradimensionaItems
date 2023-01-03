@@ -3,6 +3,7 @@ using HarmonyLib;
 using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -65,7 +66,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            args.cooldownMultAdd += (1 / (1 + (CooldownReduction.Value * GetCount(sender) / 100))) - 1;
+            args.cooldownMultAdd += (float)(1 / Math.Pow(2, (CooldownReduction.Value * GetCount(sender) / 100))) - 1;
         }
 
         public override void CreateConfig(ConfigFile config)

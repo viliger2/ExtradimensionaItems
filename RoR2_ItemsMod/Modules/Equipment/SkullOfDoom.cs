@@ -79,7 +79,21 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             base.Hooks();
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
-            On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
+            RoR2.CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
+            //On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
+        }
+
+        private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
+        {
+            if(EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) != Content.Equipment.SkullOfDoom)
+            {
+                if (body.HasBuff(Content.Buffs.SkullOfDoom))
+                {
+                    MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing the buff.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name));
+                    body.RemoveBuff(Content.Buffs.SkullOfDoom);
+                    body.AddItemBehavior<SkullOfDoomBehavior>(0);
+                }
+            }
         }
 
         private void CharacterBody_OnEquipmentGained(On.RoR2.CharacterBody.orig_OnEquipmentGained orig, CharacterBody body, EquipmentDef equipmentDef)
