@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.ExpansionManagement;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -34,8 +35,6 @@ namespace ExtradimensionalItems.Modules.Items
 
         public abstract string BundleName { get; }
 
-        public const string BundleFolder = "Assets";
-
         public abstract GameObject ItemModel { get; }
         public abstract Sprite ItemIcon { get; }
 
@@ -65,7 +64,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         protected virtual void LoadAssetBundle()
         {
-            AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), BundleFolder, BundleName));
+            AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.BundleFolder, BundleName));
             Utils.ShaderConversion(AssetBundle);
         }
 
@@ -102,6 +101,16 @@ namespace ExtradimensionalItems.Modules.Items
         protected virtual void Hooks()
         {
             On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
+        }
+
+        protected void LoadSoundBank()
+        {
+            using (FileStream fsSource = new FileStream(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.SoundBanksFolder, string.Concat(BundleName, ".bnk")), FileMode.Open, FileAccess.Read))
+            {
+                byte[] bytes = new byte[fsSource.Length];
+                fsSource.Read(bytes, 0, bytes.Length);
+                SoundAPI.SoundBanks.Add(bytes);
+            }
         }
 
         // using this monstrosity because strings are not loaded on initialization

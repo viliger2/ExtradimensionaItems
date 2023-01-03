@@ -61,6 +61,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
+            LoadSoundBank();
             CreateConfig(config);
             CreateBuffs();
             CreateEquipment(ref Content.Equipment.SkullOfDoom);
@@ -136,6 +137,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 DealDamage(body);
                 body.AddBuff(Content.Buffs.SkullOfDoom);
                 body.AddItemBehavior<SkullOfDoomBehavior>(1);
+                Util.PlaySound("EI_SkullOfDoom_Use", body.gameObject);
             }
             return true;
         }

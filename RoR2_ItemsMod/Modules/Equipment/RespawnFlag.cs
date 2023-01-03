@@ -40,6 +40,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
+            LoadSoundBank();
             LoadInteractable();
             CreateConfig(config);
             CreateEquipment(ref Content.Equipment.RespawnFlag);
@@ -118,6 +119,8 @@ namespace ExtradimensionalItems.Modules.Equipment
             NetworkServer.Spawn(gameObject);
 
             behavior.flag = gameObject;
+
+            Util.PlaySound("EI_Checkpoint_Use", gameObject);
 
             // thanks ThinkInvisible
             body.inventory.SetEquipment(new EquipmentState(EquipmentIndex.None, Run.FixedTimeStamp.now + Cooldown, 0), (uint)slot.characterBody.inventory.activeEquipmentSlot);

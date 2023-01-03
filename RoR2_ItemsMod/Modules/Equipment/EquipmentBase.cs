@@ -3,6 +3,7 @@ using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Equipment
@@ -124,6 +125,16 @@ namespace ExtradimensionalItems.Modules.Equipment
                 On.RoR2.Language.GetLocalizedStringByToken -= Language_GetLocalizedStringByToken;
             }
             return orig(self, token);
+        }
+
+        protected void LoadSoundBank()
+        {
+            using (FileStream fsSource = new FileStream(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.SoundBanksFolder, string.Concat(BundleName, ".bnk")), FileMode.Open, FileAccess.Read))
+            {
+                byte[] bytes = new byte[fsSource.Length];
+                fsSource.Read(bytes, 0, bytes.Length);
+                SoundAPI.SoundBanks.Add(bytes);
+            }
         }
 
         public abstract string GetFormatedDiscription(string pickupString);
