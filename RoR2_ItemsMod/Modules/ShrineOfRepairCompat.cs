@@ -1,4 +1,7 @@
-﻿namespace ExtradimensionalItems.Modules
+﻿using RoR2;
+using System.Collections.Generic;
+
+namespace ExtradimensionalItems.Modules
 {
     public static class ShrineOfRepairCompat
     {
@@ -16,9 +19,18 @@
             }
         }
 
-        public static void AddListenerToFillDictionary(ShrineOfRepair.Modules.ModExtension.DictionaryFillDelegate callback)
+        public static void AddListenerToFillDictionary()
         {
-            ShrineOfRepair.Modules.ModExtension.AddListener(callback);
+            ShrineOfRepair.Modules.ModExtension.AddListener(AddFuelCellDepletedToRepairList);
+        }
+
+        public static void AddFuelCellDepletedToRepairList(ref List<ShrineOfRepair.Modules.ModExtension.RepairableItems> list)
+        {
+            list.Add(new ShrineOfRepair.Modules.ModExtension.RepairableItems
+            {
+                brokenItem = Content.Items.FuelCellDepleted.itemIndex,
+                repairedItem = RoR2Content.Items.EquipmentMagazine.itemIndex
+            });
         }
     }
 }

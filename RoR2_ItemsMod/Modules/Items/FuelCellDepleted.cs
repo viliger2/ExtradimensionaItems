@@ -41,18 +41,8 @@ namespace ExtradimensionalItems.Modules.Items
             CreateItem(ref Content.Items.FuelCellDepleted);
             if (ShrineOfRepairCompat.enabled)
             {
-                ShrineOfRepairCompat.AddListenerToFillDictionary(AddFuelCellDepletedToRepairList);
+                ShrineOfRepairCompat.AddListenerToFillDictionary();
             }
         }
-
-        public static void AddFuelCellDepletedToRepairList(ref List<ShrineOfRepair.Modules.ModExtension.RepairableItems> list)
-        {
-            list.Add(new ShrineOfRepair.Modules.ModExtension.RepairableItems
-            {
-                brokenItem = Content.Items.FuelCellDepleted.itemIndex,
-                repairedItem = RoR2Content.Items.EquipmentMagazine.itemIndex
-            });
-        }
-
     }
 }
