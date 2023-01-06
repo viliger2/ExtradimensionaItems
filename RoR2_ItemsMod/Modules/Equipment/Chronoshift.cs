@@ -299,7 +299,9 @@ namespace ExtradimensionalItems.Modules.Equipment
                 // the reality is that it is not worth it and it might break more stuff than it fixes
                 EntityStateMachine.FindByCustomName(body.gameObject, "Body")?.SetNextStateToMain();
                 EntityStateMachine.FindByCustomName(body.gameObject, "Weapon")?.SetNextStateToMain();
-                
+
+                Util.PlaySound("EI_Chronoshift_End", body.gameObject);
+
                 MyLogger.LogMessage(string.Format("Player {0}({1}) finished restoring state, starting proccess of saving states.", body.GetUserName(), body.name));
 
                 ClearStatesAndStartSaving();     
@@ -639,6 +641,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
+            LoadSoundBank();
             CreateConfig(config);
             CreateEquipment(ref Content.Equipment.Chronoshift);
             Hooks();
@@ -688,6 +691,8 @@ namespace ExtradimensionalItems.Modules.Equipment
                 }
 
                 component.StartMoving();
+
+                Util.PlaySound("EI_Chronoshift_Start", body.gameObject);
 
                 if (body != PlayerCharacterMasterController.instances[0].master.GetBody())
                 {

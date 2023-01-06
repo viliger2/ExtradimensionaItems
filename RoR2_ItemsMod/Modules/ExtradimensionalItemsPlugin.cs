@@ -2,21 +2,20 @@
 using BepInEx.Configuration;
 using ExtradimensionalItems.Modules.Equipment;
 using ExtradimensionalItems.Modules.Items;
-using R2API;
 using R2API.Networking;
-using R2API.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 using static ExtradimensionalItems.Modules.Equipment.Chronoshift;
 
 namespace ExtradimensionalItems.Modules
 {
     [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "1.0")]
-    [BepInDependency(R2API.R2API.PluginGUID)]
+    [BepInDependency(R2API.ItemAPI.PluginGUID)]
+    [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
+    [BepInDependency(R2API.Networking.NetworkingAPI.PluginGUID)]
+    [BepInDependency(R2API.TempVisualEffectAPI.PluginGUID)]
     [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
-    [R2APISubmoduleDependency(nameof(ItemAPI), nameof(RecalculateStatsAPI), nameof(NetworkingAPI), nameof(TempVisualEffectAPI))]
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
         public static ConfigEntry<bool> ExtensiveLogging;
