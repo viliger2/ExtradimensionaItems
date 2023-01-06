@@ -17,9 +17,6 @@ namespace ExtradimensionalItems.Modules.SkillStates
             if (NetworkServer.active)
             {
                 characterBody.AddTimedBuff(Content.Buffs.RoyalGuardParryState, duration);
-                #if DEBUG
-                characterBody.AddBuff(Content.Buffs.RoyalGuardDamage);
-                #endif
                 MyLogger.LogMessage(string.Format("Player {0}({1}) entered parry state for {2} seconds.", base.characterBody.GetUserName(), base.characterBody.name, duration));
 
             }
