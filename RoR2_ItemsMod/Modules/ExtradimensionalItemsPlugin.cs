@@ -79,6 +79,10 @@ namespace ExtradimensionalItems.Modules
             NetworkingAPI.RegisterMessageType<ChronoshiftRestoreStateOnServer>();
             #endregion
 
+            #region DamageOnCooldownsMessages
+            NetworkingAPI.RegisterMessageType<DamageOnCooldowns.DamageOnCooldownsSendNumberBuffs>();
+            #endregion
+
         }
 
         public bool ValidateEquipment(EquipmentBase equipment)

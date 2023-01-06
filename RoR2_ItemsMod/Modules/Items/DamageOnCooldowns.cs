@@ -1,7 +1,9 @@
 ﻿using BepInEx.Configuration;
 using R2API;
+using R2API.Networking.Interfaces;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.Items
 {
@@ -9,6 +11,8 @@ namespace ExtradimensionalItems.Modules.Items
     {
         public class DamageOnCooldownsBehavior : CharacterBody.ItemBehavior
         {
+            private int prevNumberOfBuffs;
+
             public void FixedUpdate()
             {
                 var newBuffCount = GetBuffCountFromSkill(body.skillLocator.primary)
@@ -17,16 +21,31 @@ namespace ExtradimensionalItems.Modules.Items
                     + GetBuffCountFromSkill(body.skillLocator.special)
                     + GetBuffCountFromInventory(body.equipmentSlot);
 
+                if(prevNumberOfBuffs != newBuffCount && !NetworkServer.active)
+                {
+                    new DamageOnCooldownsSendNumberBuffs(body.GetComponent<NetworkIdentity>().netId, newBuffCount).Send(R2API.Networking.NetworkDestination.Server);
+                }
+
+                if (NetworkServer.active && body == PlayerCharacterMasterController.instances[0].master.GetBody() && prevNumberOfBuffs != newBuffCount)
+                {
+                    ApplyBuffs(newBuffCount);
+                }
+
+                prevNumberOfBuffs = newBuffCount;
+            }
+
+            public void ApplyBuffs(int count)
+            {
                 var currentBuffCount = body.GetBuffCount(Content.Buffs.DamageOnCooldowns);
-                while (newBuffCount > currentBuffCount)
+                while (count > currentBuffCount)
                 {
                     body.AddBuff(Content.Buffs.DamageOnCooldowns);
                     currentBuffCount++;
                 }
-                while(newBuffCount < currentBuffCount)
+                while (count < currentBuffCount)
                 {
                     body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
-                    newBuffCount++;
+                    count++;
                 }
             }
 
@@ -42,6 +61,49 @@ namespace ExtradimensionalItems.Modules.Items
                     return es.maxStock != es.stock ? 1 : 0;
                 }
                 return 0;
+            }
+        }
+
+        public class DamageOnCooldownsSendNumberBuffs : INetMessage
+        {
+            private NetworkInstanceId netId;
+            private int numberOfBuffsFromClient;
+
+            public DamageOnCooldownsSendNumberBuffs() { }
+            public DamageOnCooldownsSendNumberBuffs(NetworkInstanceId netId, int buffsCount)
+            {
+                this.netId = netId;
+                this.numberOfBuffsFromClient = buffsCount;
+            }
+
+            public void Deserialize(NetworkReader reader)
+            {
+                netId = reader.ReadNetworkId();
+                numberOfBuffsFromClient = reader.ReadInt32();
+            }
+
+            public void OnReceived()
+            {
+                if (!NetworkServer.active)
+                {
+                    MyLogger.LogMessage("Recieved ChronoshiftRestoreStateOnServer message on client, doing nothing...");
+                    return;
+                }
+
+                GameObject gameObject = Utils.FindNetworkPlayer(netId);
+                if (gameObject)
+                {
+                    if(gameObject.TryGetComponent(out DamageOnCooldownsBehavior component))
+                    {
+                        component.ApplyBuffs(numberOfBuffsFromClient);
+                    }
+                }
+            }
+
+            public void Serialize(NetworkWriter writer)
+            {
+                writer.Write(netId);
+                writer.Write(numberOfBuffsFromClient);
             }
         }
 
