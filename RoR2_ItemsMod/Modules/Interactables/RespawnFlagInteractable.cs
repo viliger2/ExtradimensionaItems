@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.Audio;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -50,8 +51,10 @@ namespace ExtradimensionalItems.Modules.Interactables
 
             public void Start()
             {
+                EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Checkpoint_Use", gameObject);
+
                 genericInteraction.onActivation.AddListener(OnActivation);
-                // You are not supposed to use hooks when onBodyDeath is itself a UnityEvent
+                // TODO: You are not supposed to use hooks when onBodyDeath is itself a UnityEvent
                 // however due to how both Dios are made, using event will result in two respawns
                 // consuming both Dio and the flag, to alliviate this issue we use hook
                 // Can probably be fixed with Reflection

@@ -127,7 +127,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             return orig(self, token);
         }
 
-        protected void LoadSoundBank()
+        protected virtual void LoadSoundBank()
         {
             using (FileStream fsSource = new FileStream(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.SoundBanksFolder, string.Concat(BundleName, ".bnk")), FileMode.Open, FileAccess.Read))
             {

@@ -1,8 +1,10 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
+using RoR2.Audio;
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using static RoR2.CharacterBody;
 
@@ -66,6 +68,14 @@ namespace ExtradimensionalItems.Modules.Equipment
             CreateBuffs();
             CreateEquipment(ref Content.Equipment.SkullOfDoom);
             Hooks();
+            // CreateVisualEffects();
+
+        }
+
+        protected override void LoadSoundBank()
+        {
+            base.LoadSoundBank();
+            Utils.RegisterNetworkSound("EI_SkullOfDoom_Use");
         }
 
         public override string GetFormatedDiscription(string pickupString)
@@ -132,7 +142,8 @@ namespace ExtradimensionalItems.Modules.Equipment
                 DealDamage(body);
                 body.AddBuff(Content.Buffs.SkullOfDoom);
                 body.AddItemBehavior<SkullOfDoomBehavior>(1);
-                Util.PlaySound("EI_SkullOfDoom_Use", body.gameObject);
+                //Util.PlaySound("EI_SkullOfDoom_Use", body.gameObject);
+                EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_SkullOfDoom_Use", body.gameObject);
             }
             return true;
         }

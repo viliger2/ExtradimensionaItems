@@ -4,6 +4,7 @@ using KinematicCharacterController;
 using R2API;
 using R2API.Networking.Interfaces;
 using RoR2;
+using RoR2.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -300,7 +301,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 EntityStateMachine.FindByCustomName(body.gameObject, "Body")?.SetNextStateToMain();
                 EntityStateMachine.FindByCustomName(body.gameObject, "Weapon")?.SetNextStateToMain();
 
-                Util.PlaySound("EI_Chronoshift_End", body.gameObject);
+                EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Chronoshift_End", body.gameObject);
 
                 MyLogger.LogMessage(string.Format("Player {0}({1}) finished restoring state, starting proccess of saving states.", body.GetUserName(), body.name));
 
@@ -647,6 +648,13 @@ namespace ExtradimensionalItems.Modules.Equipment
             Hooks();
         }
 
+        protected override void LoadSoundBank()
+        {
+            base.LoadSoundBank();
+            Utils.RegisterNetworkSound("EI_Chronoshift_Start");
+            Utils.RegisterNetworkSound("EI_Chronoshift_End");
+        }
+
         protected override void Hooks()
         {
             base.Hooks();
@@ -698,7 +706,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
                 component.StartMoving();
 
-                Util.PlaySound("EI_Chronoshift_Start", body.gameObject);
+                EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Chronoshift_Start", body.gameObject);
 
                 if (body != PlayerCharacterMasterController.instances[0].master.GetBody())
                 {

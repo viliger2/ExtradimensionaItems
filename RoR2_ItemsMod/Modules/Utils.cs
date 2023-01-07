@@ -10,6 +10,14 @@ namespace ExtradimensionalItems.Modules
 {
     public static class Utils
     {
+        public static bool RegisterNetworkSound(string eventName)
+        {
+            RoR2.NetworkSoundEventDef networkSoundEventDef = ScriptableObject.CreateInstance<RoR2.NetworkSoundEventDef>();
+            networkSoundEventDef.eventName = eventName;
+
+            return R2API.ContentAddition.AddNetworkSoundEventDef(networkSoundEventDef);
+        }
+
         // thanks KomradeSpectre
         public static void ShaderConversion(AssetBundle assets)
         {

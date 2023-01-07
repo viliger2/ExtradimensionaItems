@@ -4,6 +4,7 @@ using ExtradimensionalItems.Modules.SkillStates;
 using HG;
 using R2API;
 using RoR2;
+using RoR2.Audio;
 using RoR2.Skills;
 using System.IO;
 using UnityEngine;
@@ -96,6 +97,13 @@ namespace ExtradimensionalItems.Modules.Items
             destroyOnTimer.duration = 0.6f;
         }
 
+        protected override void LoadSoundBank()
+        {
+            base.LoadSoundBank();
+            Utils.RegisterNetworkSound("EI_RoyalGuard_Block");
+            Utils.RegisterNetworkSound("EI_RoyalGuard_JustBlock");
+        }
+
         protected override void Hooks()
         {
             //On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
@@ -166,10 +174,10 @@ namespace ExtradimensionalItems.Modules.Items
                 }
                 if(numberOfBuffs == 3)
                 {
-                    Util.PlaySound("EI_RoyalGuard_JustBlock", body.gameObject);
+                    EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_RoyalGuard_JustBlock", body.gameObject);
                 } else
                 {
-                    Util.PlaySound("EI_RoyalGuard_Block", body.gameObject);
+                    EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_RoyalGuard_Block", body.gameObject);
                 }
                 if (body.GetBuffCount(Content.Buffs.RoyalGuardDamage) + numberOfBuffs > MaxBuffStacks.Value)
                 {

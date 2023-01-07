@@ -47,6 +47,12 @@ namespace ExtradimensionalItems.Modules.Equipment
             Hooks();
         }
 
+        protected override void LoadSoundBank()
+        {
+            base.LoadSoundBank();
+            Utils.RegisterNetworkSound("EI_Checkpoint_Use");
+        }
+
         private void LoadInteractable()
         {
             var flagInteractablePrefab2 = RespawnFlagInteractable.GetInteractable(AssetBundle.LoadAsset<GameObject>("RespawnFlagInteractable"), EquipmentLangTokenName);
@@ -123,8 +129,6 @@ namespace ExtradimensionalItems.Modules.Equipment
             NetworkServer.Spawn(gameObject);
 
             behavior.flag = gameObject;
-
-            Util.PlaySound("EI_Checkpoint_Use", gameObject);
 
             // thanks ThinkInvisible
             body.inventory.SetEquipment(new EquipmentState(EquipmentIndex.None, Run.FixedTimeStamp.now + Cooldown, 0), (uint)slot.characterBody.inventory.activeEquipmentSlot);

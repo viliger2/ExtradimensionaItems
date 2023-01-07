@@ -15,6 +15,7 @@ namespace ExtradimensionalItems.Modules
     [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
     [BepInDependency(R2API.Networking.NetworkingAPI.PluginGUID)]
     [BepInDependency(R2API.TempVisualEffectAPI.PluginGUID)]
+    [BepInDependency(R2API.SoundAPI.PluginGUID)]
     [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
