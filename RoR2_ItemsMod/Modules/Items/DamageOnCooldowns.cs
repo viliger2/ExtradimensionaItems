@@ -15,37 +15,26 @@ namespace ExtradimensionalItems.Modules.Items
 
             public void FixedUpdate()
             {
-                var newBuffCount = GetBuffCountFromSkill(body.skillLocator.primary)
-                    + GetBuffCountFromSkill(body.skillLocator.secondary)
-                    + GetBuffCountFromSkill(body.skillLocator.utility)
-                    + GetBuffCountFromSkill(body.skillLocator.special)
-                    + GetBuffCountFromInventory(body.equipmentSlot);
-
-                if(prevNumberOfBuffs != newBuffCount && !NetworkServer.active)
+                if (body.hasAuthority)
                 {
-                    new DamageOnCooldownsSendNumberBuffs(body.GetComponent<NetworkIdentity>().netId, newBuffCount).Send(R2API.Networking.NetworkDestination.Server);
-                }
+                    var newBuffCount = GetBuffCountFromSkill(body.skillLocator.primary)
+                        + GetBuffCountFromSkill(body.skillLocator.secondary)
+                        + GetBuffCountFromSkill(body.skillLocator.utility)
+                        + GetBuffCountFromSkill(body.skillLocator.special)
+                        + GetBuffCountFromInventory(body.equipmentSlot);
 
-                if (NetworkServer.active && body == PlayerCharacterMasterController.instances[0].master.GetBody() && prevNumberOfBuffs != newBuffCount)
-                {
-                    ApplyBuffs(newBuffCount);
-                }
+                    if (prevNumberOfBuffs != newBuffCount)
+                    {
+                        if (!NetworkServer.active)
+                        {
+                            new DamageOnCooldownsSendNumberBuffs(body.gameObject.GetComponent<NetworkIdentity>().netId, newBuffCount).Send(R2API.Networking.NetworkDestination.Server);
+                        } else
+                        {
+                            ApplyBuffs(body, newBuffCount);
+                        }
+                    }
 
-                prevNumberOfBuffs = newBuffCount;
-            }
-
-            public void ApplyBuffs(int count)
-            {
-                var currentBuffCount = body.GetBuffCount(Content.Buffs.DamageOnCooldowns);
-                while (count > currentBuffCount)
-                {
-                    body.AddBuff(Content.Buffs.DamageOnCooldowns);
-                    currentBuffCount++;
-                }
-                while (count < currentBuffCount)
-                {
-                    body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
-                    count++;
+                    prevNumberOfBuffs = newBuffCount;
                 }
             }
 
@@ -90,12 +79,12 @@ namespace ExtradimensionalItems.Modules.Items
                     return;
                 }
 
-                GameObject gameObject = Utils.FindNetworkPlayer(netId);
+                GameObject gameObject = Util.FindNetworkObject(netId);
                 if (gameObject)
                 {
-                    if(gameObject.TryGetComponent(out DamageOnCooldownsBehavior component))
+                    if(gameObject.TryGetComponent(out CharacterBody body))
                     {
-                        component.ApplyBuffs(numberOfBuffsFromClient);
+                        ApplyBuffs(body, numberOfBuffsFromClient);
                     }
                 }
             }
@@ -167,14 +156,35 @@ namespace ExtradimensionalItems.Modules.Items
         {
             if (body)
             {
-                body.AddItemBehavior<DamageOnCooldownsBehavior>(GetCount(body));
-                if (body.HasBuff(Content.Buffs.DamageOnCooldowns) && GetCount(body) == 0)
+                if (body.hasAuthority) 
                 {
-                    while (body.HasBuff(Content.Buffs.DamageOnCooldowns))
+                    body.AddItemBehavior<DamageOnCooldownsBehavior>(GetCount(body));
+                }
+                if(NetworkServer.active) 
+                {
+                    if (body.HasBuff(Content.Buffs.DamageOnCooldowns) && GetCount(body) == 0)
                     {
-                        body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
+                        while (body.HasBuff(Content.Buffs.DamageOnCooldowns))
+                        {
+                            body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
+                        }
                     }
                 }
+            }
+        }
+
+        public static void ApplyBuffs(CharacterBody body, int count)
+        {
+            var currentBuffCount = body.GetBuffCount(Content.Buffs.DamageOnCooldowns);
+            while (count > currentBuffCount)
+            {
+                body.AddBuff(Content.Buffs.DamageOnCooldowns);
+                currentBuffCount++;
+            }
+            while (count < currentBuffCount)
+            {
+                body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
+                count++;
             }
         }
 

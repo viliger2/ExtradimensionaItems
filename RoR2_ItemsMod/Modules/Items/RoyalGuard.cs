@@ -193,15 +193,6 @@ namespace ExtradimensionalItems.Modules.Items
             orig(self, damageInfo);
         }
 
-        private void CharacterBody_OnInventoryChanged(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody self)
-        {
-            orig(self);
-            if (self.skillLocator)
-            {
-                self.ReplaceSkillIfItemPresent(self.skillLocator.utility, ItemDef.itemIndex, Content.Skills.Parry);
-            }
-        }
-
         private void CreateSkills()
         {
             var RoyalGuardSkillParryDef = ScriptableObject.CreateInstance<SkillDef>();
@@ -308,7 +299,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void CreateVisualEffects()
         {
-            TempVisualEffectAPI.AddTemporaryVisualEffect(RoyalGuardParryEffectInstance.InstantiateClone("RoyalGuardParryEffect", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.RoyalGuardParryState); }, false);
+            TempVisualEffectAPI.AddTemporaryVisualEffect(RoyalGuardParryEffectInstance.InstantiateClone("RoyalGuardParryEffect", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.RoyalGuardParryState); }, true);
 
             R2API.ContentAddition.AddEffect(RoyalGuardExplodeEffectInstance);
         }

@@ -106,19 +106,16 @@ namespace ExtradimensionalItems.Modules.Interactables
 
             public void OnBodyDeath(On.RoR2.CharacterMaster.orig_OnBodyDeath orig, CharacterMaster self, CharacterBody body)
             {
-                bool overrideVanilla = false;
                 if (NetworkServer.active)
                 {
-                    if (gameObject && owner.isPlayerControlled && owner.inventory.GetItemCount(RoR2Content.Items.ExtraLife) == 0 && owner.inventory.GetItemCount(DLC1Content.Items.ExtraLifeVoid) == 0)
+                    if (gameObject && owner.isPlayerControlled)
                     {
-                        overrideVanilla = true;
                         Invoke("RespawnOnCheckpoint", 2f);
                         Invoke("PlayExtraLifeSFX", 1f);
+                    } else
+                    {
+                        orig(self, body);
                     }
-                }
-                if (!overrideVanilla)
-                {
-                    orig(self, body);
                 }
             }
 

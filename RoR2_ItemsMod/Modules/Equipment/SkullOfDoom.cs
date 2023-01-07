@@ -112,9 +112,13 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected override bool ActivateEquipment(EquipmentSlot slot)
         {
-            var body = slot.characterBody;
+            if (!NetworkServer.active)
+            {
+                MyLogger.LogWarning("[Server] function Modules.Equipment.SkullOfDoom::ActivateEquipment(RoR2.EquipmentSlot) called on client.");
+                return false;
+            }
 
-            if (!body || !body.teamComponent) return false;
+            var body = slot.characterBody;
 
             if (body.HasBuff(Content.Buffs.SkullOfDoom))
             {

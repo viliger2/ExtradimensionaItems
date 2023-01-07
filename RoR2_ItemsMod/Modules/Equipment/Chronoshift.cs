@@ -353,7 +353,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                     return;
                 }
 
-                GameObject gameObject = Utils.FindNetworkPlayer(netId);
+                GameObject gameObject = Util.FindNetworkObject(netId);
                 if(gameObject)
                 {
                     if (gameObject.GetComponent<CharacterBody>().hasAuthority)
@@ -395,7 +395,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                     return;
                 }
 
-                GameObject gameObject = Utils.FindNetworkPlayer(netId);
+                GameObject gameObject = Util.FindNetworkObject(netId);
                 if (gameObject)
                 {
                     if (gameObject.TryGetComponent(out ChronoshiftBehavior component))
@@ -677,6 +677,12 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected override bool ActivateEquipment(EquipmentSlot slot)
         {
+            if (!NetworkServer.active)
+            {
+                MyLogger.LogWarning("[Server] function Modules.Equipment.Chronoshift::ActivateEquipment(RoR2.EquipmentSlot) called on client.");
+                return false;
+            }
+
             var body = slot.characterBody;
 
             if (body.gameObject.TryGetComponent<ChronoshiftBehavior>(out var component))

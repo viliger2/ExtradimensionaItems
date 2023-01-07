@@ -99,9 +99,13 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected override bool ActivateEquipment(EquipmentSlot slot)
         {
-            CharacterBody body = slot.characterBody;
+            if (!NetworkServer.active)
+            {
+                MyLogger.LogWarning("[Server] function Modules.Equipment.RespawnFlag::ActivateEquipment(RoR2.EquipmentSlot) called on client.");
+                return false;
+            }
 
-            if (!body || !body.teamComponent) return false;
+            CharacterBody body = slot.characterBody;
 
             MyLogger.LogMessage(string.Format("Player {0}({1}) used equipment {2}.", body.GetUserName(), body.name, EquipmentLangTokenName));
 
