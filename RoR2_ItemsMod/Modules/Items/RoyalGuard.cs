@@ -267,7 +267,6 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
 
         }
-
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
@@ -283,30 +282,6 @@ namespace ExtradimensionalItems.Modules.Items
         protected override void LoadAssetBundle()
         {
             base.LoadAssetBundle();
-
-            RoyalGuardParryEffectInstance = AssetBundle.LoadAsset<GameObject>("RoyalGuardEffect");
-            var tempEffectComponent = RoyalGuardParryEffectInstance.AddComponent<TemporaryVisualEffect>();
-            tempEffectComponent.visualTransform = RoyalGuardParryEffectInstance.GetComponent<Transform>();
-
-            var destroyOnTimerComponent = RoyalGuardParryEffectInstance.AddComponent<DestroyOnTimer>();
-            destroyOnTimerComponent.duration = 0.1f;
-            MonoBehaviour[] exitComponents = new MonoBehaviour[1];
-            exitComponents[0] = destroyOnTimerComponent;
-
-            tempEffectComponent.exitComponents = exitComponents;
-
-            RoyalGuardExplodeEffectInstance = AssetBundle.LoadAsset<GameObject>("RoyalGuard_ReleaseExplosion");
-
-            var effectComponent = RoyalGuardExplodeEffectInstance.AddComponent<EffectComponent>();
-            effectComponent.applyScale = true;
-            effectComponent.soundName = "EI_RoyalGuard_Release";
-
-            var vfxAttributes = RoyalGuardExplodeEffectInstance.AddComponent<VFXAttributes>();
-            vfxAttributes.vfxPriority = VFXAttributes.VFXPriority.Medium;
-            vfxAttributes.vfxIntensity = VFXAttributes.VFXIntensity.Medium;
-
-            var destroyOnTimer = RoyalGuardExplodeEffectInstance.AddComponent<DestroyOnTimer>();
-            destroyOnTimer.duration = 0.6f;
         }
 
         protected override void LoadSoundBank()
@@ -432,7 +407,7 @@ namespace ExtradimensionalItems.Modules.Items
             RoyalGuardSkillParryDef.requiredStock = 1;
             RoyalGuardSkillParryDef.stockToConsume = 1;
 
-            RoyalGuardSkillParryDef.icon = AssetBundle.LoadAsset<Sprite>("texRoyalGuardSkill");
+            RoyalGuardSkillParryDef.icon = AssetBundle.LoadAsset<Sprite>("texRoyalGuardSkillGuard");
             RoyalGuardSkillParryDef.skillDescriptionToken = "SKILL_ROYAL_GUARD_PARRY_DESC";
             RoyalGuardSkillParryDef.skillName = "RoyalGuardParry";
             RoyalGuardSkillParryDef.skillNameToken = "SKILL_ROYAL_GUARD_PARRY_NAME";
@@ -459,7 +434,7 @@ namespace ExtradimensionalItems.Modules.Items
             RoyalGuardSkillExplodeDef.requiredStock = 1;
             RoyalGuardSkillExplodeDef.stockToConsume = 1;
 
-            RoyalGuardSkillExplodeDef.icon = AssetBundle.LoadAsset<Sprite>("texRoyalGuardSkill");
+            RoyalGuardSkillExplodeDef.icon = AssetBundle.LoadAsset<Sprite>("texRoyalGuardSkillRelease");
             RoyalGuardSkillExplodeDef.skillDescriptionToken = "SKILL_ROYAL_GUARD_RELEASE_DESC";
             RoyalGuardSkillExplodeDef.skillName = "RoyalGuardRelease";
             RoyalGuardSkillExplodeDef.skillNameToken = "SKILL_ROYAL_GUARD_RELEASE_NAME";
@@ -519,7 +494,31 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void CreateVisualEffects()
         {
+            RoyalGuardParryEffectInstance = AssetBundle.LoadAsset<GameObject>("RoyalGuardEffect");
+            var tempEffectComponent = RoyalGuardParryEffectInstance.AddComponent<TemporaryVisualEffect>();
+            tempEffectComponent.visualTransform = RoyalGuardParryEffectInstance.GetComponent<Transform>();
+
+            var destroyOnTimerComponent = RoyalGuardParryEffectInstance.AddComponent<DestroyOnTimer>();
+            destroyOnTimerComponent.duration = 0.1f;
+            MonoBehaviour[] exitComponents = new MonoBehaviour[1];
+            exitComponents[0] = destroyOnTimerComponent;
+
+            tempEffectComponent.exitComponents = exitComponents;
+
             TempVisualEffectAPI.AddTemporaryVisualEffect(RoyalGuardParryEffectInstance.InstantiateClone("RoyalGuardParryEffect", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.RoyalGuardParryState); }, true);
+
+            RoyalGuardExplodeEffectInstance = AssetBundle.LoadAsset<GameObject>("RoyalGuard_ReleaseExplosion");
+
+            var effectComponent = RoyalGuardExplodeEffectInstance.AddComponent<EffectComponent>();
+            effectComponent.applyScale = true;
+            effectComponent.soundName = "EI_RoyalGuard_Release";
+
+            var vfxAttributes = RoyalGuardExplodeEffectInstance.AddComponent<VFXAttributes>();
+            vfxAttributes.vfxPriority = VFXAttributes.VFXPriority.Medium;
+            vfxAttributes.vfxIntensity = VFXAttributes.VFXIntensity.Medium;
+
+            var destroyOnTimer = RoyalGuardExplodeEffectInstance.AddComponent<DestroyOnTimer>();
+            destroyOnTimer.duration = 0.6f;
 
             R2API.ContentAddition.AddEffect(RoyalGuardExplodeEffectInstance);
         }

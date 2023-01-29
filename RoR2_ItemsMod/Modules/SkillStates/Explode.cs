@@ -11,10 +11,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            if (NetworkServer.active)
-            {
-                ExplodeNow();
-            }
+            ExplodeNow();
         }
 
         public override void FixedUpdate()

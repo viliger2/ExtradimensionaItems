@@ -91,7 +91,6 @@ namespace ExtradimensionalItems.Modules.Items
         public static ConfigEntry<bool> CanStack;
         public static ConfigEntry<float> BuffDuration;
         public static ConfigEntry<int> MaxBuffStacks;
-
         public override string ItemName => "Sheen";
 
         public override string ItemLangTokenName => "SHEEN";
@@ -101,8 +100,6 @@ namespace ExtradimensionalItems.Modules.Items
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("sheen");
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texSheenIcon");
-
-        private static GameObject SheenEffectInstance;
 
         public override string BundleName => "sheen";
 
@@ -125,17 +122,6 @@ namespace ExtradimensionalItems.Modules.Items
         protected override void LoadAssetBundle()
         {
             base.LoadAssetBundle();
-
-            SheenEffectInstance = AssetBundle.LoadAsset<GameObject>("SheenEffect");
-            var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
-            tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
-
-            var destroyOnTimerComponent = SheenEffectInstance.AddComponent<DestroyOnTimer>();
-            destroyOnTimerComponent.duration = 0.1f;
-            MonoBehaviour[] exitComponents = new MonoBehaviour[1];
-            exitComponents[0] = destroyOnTimerComponent;
-
-            tempEffectComponent.exitComponents = exitComponents;
         }
 
         protected override void Hooks()
@@ -173,6 +159,17 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void CreateVisualEffects()
         {
+            var SheenEffectInstance = AssetBundle.LoadAsset<GameObject>("SheenEffect");
+            var tempEffectComponent = SheenEffectInstance.AddComponent<TemporaryVisualEffect>();
+            tempEffectComponent.visualTransform = SheenEffectInstance.GetComponent<Transform>();
+
+            var destroyOnTimerComponent = SheenEffectInstance.AddComponent<DestroyOnTimer>();
+            destroyOnTimerComponent.duration = 0.1f;
+            MonoBehaviour[] exitComponents = new MonoBehaviour[1];
+            exitComponents[0] = destroyOnTimerComponent;
+
+            tempEffectComponent.exitComponents = exitComponents;
+
             TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectL", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.Sheen); }, true, "HandL");
             TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectR", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.Sheen); }, true, "HandR");
         }
