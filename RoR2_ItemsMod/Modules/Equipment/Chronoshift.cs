@@ -432,8 +432,8 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             var ItemBodyModelPrefab = AssetBundle.LoadAsset<GameObject>("Chronoshift");
             ItemBodyModelPrefab.AddComponent<RoR2.ItemDisplay>();
-            // TODO: unfuck item fade, it doesn't work now and I have no idea why
-            // probably has something to do with shaders
+            
+            // to fix item fade enable "Dither" on hopoo shader in Unity
             ItemBodyModelPrefab.GetComponent<RoR2.ItemDisplay>().rendererInfos = Utils.ItemDisplaySetup(ItemBodyModelPrefab);
 
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict();

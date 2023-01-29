@@ -62,8 +62,10 @@ namespace ExtradimensionalItems.Modules.Items
             var dynamicBone = slice.gameObject.AddComponent<DynamicBone>();
 
             dynamicBone.m_Root = slice;
-            dynamicBone.m_Exclusions = new System.Collections.Generic.List<Transform>();
-            dynamicBone.m_Exclusions.Add(slice);
+            dynamicBone.m_Exclusions = new System.Collections.Generic.List<Transform>
+            {
+                slice
+            };
             dynamicBone.m_UpdateMode = DynamicBone.UpdateMode.Normal;
             dynamicBone.m_Damping = 0.3f;
             dynamicBone.m_Elasticity = 0.1f;
@@ -71,8 +73,7 @@ namespace ExtradimensionalItems.Modules.Items
             dynamicBone.m_FreezeAxis = DynamicBone.FreezeAxis.None;
 
             ItemBodyModelPrefab.AddComponent<RoR2.ItemDisplay>();
-            // TODO: unfuck item fade, it doesn't work now and I have no idea why
-            // probably has something to do with shaders
+
             ItemBodyModelPrefab.GetComponent<RoR2.ItemDisplay>().rendererInfos = Utils.ItemDisplaySetup(ItemBodyModelPrefab);
 
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict();
