@@ -13,6 +13,8 @@ namespace ExtradimensionalItems.Modules.Interactables
         {
             interactableModel.AddComponent<NetworkIdentity>();
 
+            var mesh = interactableModel.transform.Find("mdlRespawnFlagInteractable").gameObject;
+
             var genericInteractController = interactableModel.AddComponent<GenericInteraction>();
             genericInteractController.contextToken = $"INTERACTABLE_{langToken}_CONTEXT";
             genericInteractController.shouldShowOnScanner = false;
@@ -21,12 +23,12 @@ namespace ExtradimensionalItems.Modules.Interactables
             genericNameDisplay.displayToken = $"INTERACTABLE_{langToken}_NAME";
 
             var modelLocator = interactableModel.AddComponent<ModelLocator>();
-            modelLocator.modelTransform = interactableModel.transform.Find("mdlRespawnFlagInteractable");
-            modelLocator.modelBaseTransform = interactableModel.transform.Find("Base");
+            modelLocator.modelTransform = mesh.transform;
+//            modelLocator.modelBaseTransform = interactableModel.transform.Find("Base");
             modelLocator.dontDetatchFromParent = false;
             modelLocator.autoUpdateModelTransform = true;
 
-            var entityLocator = interactableModel.GetComponentInChildren<MeshCollider>().gameObject.AddComponent<EntityLocator>();
+            var entityLocator = mesh.AddComponent<EntityLocator>();
             entityLocator.entity = interactableModel;
 
             var respawnFlagManager = interactableModel.AddComponent<RespawnFlagInteractableManager>();
