@@ -186,29 +186,31 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         private void CreateVisualEffects()
         {
+            // have to use an empty object created in Unity, otherwise 
+            // TemporaryVisualEffect class throws an error on start up
+            var emptyObject = AssetBundle.LoadAsset<GameObject>("EmptyObject.prefab");
+
             var fireAsset = AssetBundle.LoadAsset<GameObject>("parFire.prefab");
-            if(fireAsset.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
+            if (fireAsset.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
             {
                 particle.GetComponent<Renderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matFirePillarParticle.mat").WaitForCompletion();
             }
 
-            var gameObject = new GameObject();
-            var trasnform = gameObject.AddComponent<Transform>();
-            var grounfFire = gameObject.AddComponent<GroundFires>();
+            var grounfFire = emptyObject.AddComponent<GroundFires>();
             grounfFire.fire = fireAsset;
 
-            var tempEffectComponent = gameObject.AddComponent<TemporaryVisualEffect>();
-            tempEffectComponent.visualTransform = trasnform;
+            var tempEffectComponent = emptyObject.AddComponent<TemporaryVisualEffect>();
+            tempEffectComponent.visualTransform = emptyObject.GetComponent<Transform>();
 
-            var destroyOnTimerComponent = gameObject.AddComponent<DestroyOnTimer>();
+            var destroyOnTimerComponent = emptyObject.AddComponent<DestroyOnTimer>();
             destroyOnTimerComponent.duration = 0.1f;
             MonoBehaviour[] exitComponents = new MonoBehaviour[1];
             exitComponents[0] = destroyOnTimerComponent;
 
             tempEffectComponent.exitComponents = exitComponents;
 
-            TempVisualEffectAPI.AddTemporaryVisualEffect(gameObject.InstantiateClone("SkullOfDoomEffectL", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.SkullOfDoom); }, false, "FootL");
-            TempVisualEffectAPI.AddTemporaryVisualEffect(gameObject.InstantiateClone("SkullOfDoomEffectR", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.SkullOfDoom); }, false, "FootR");
+            TempVisualEffectAPI.AddTemporaryVisualEffect(emptyObject.InstantiateClone("SkullOfDoomEffectL", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.SkullOfDoom); }, false, "FootL");
+            TempVisualEffectAPI.AddTemporaryVisualEffect(emptyObject.InstantiateClone("SkullOfDoomEffectR", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.SkullOfDoom); }, false, "FootR");
         }
 
         protected override void CreateConfig(ConfigFile config)
