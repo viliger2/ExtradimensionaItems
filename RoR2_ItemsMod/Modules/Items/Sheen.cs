@@ -103,6 +103,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "sheen";
 
+        public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Damage };
+
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             // TODO: maybe someday but not today

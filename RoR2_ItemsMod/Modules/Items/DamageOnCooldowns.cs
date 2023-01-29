@@ -107,6 +107,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "damageoncooldowns";
 
+        public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Damage };
+
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("damageoncooldowns");
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texDamageOnCooldownIcon");

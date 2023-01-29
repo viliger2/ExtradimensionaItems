@@ -25,6 +25,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texCooldownReductionIcon");
 
+        public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Utility };
+
         public override ExpansionDef Expansion => ExpansionCatalog.expansionDefs.FirstOrDefault(def => def.nameToken == "DLC1_NAME");
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()

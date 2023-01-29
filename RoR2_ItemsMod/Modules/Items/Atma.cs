@@ -21,6 +21,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "atma";
 
+        public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Damage };
+
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("atma");
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texAtmaIcon");

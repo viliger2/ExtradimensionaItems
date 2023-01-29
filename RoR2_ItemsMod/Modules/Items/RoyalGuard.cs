@@ -38,6 +38,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texRoyalGuardItemIconGood");
 
+        public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Damage, ItemTag.AIBlacklist };
+
         public override string BundleName => "royalguard";
 
         public override bool AIBlacklisted => true;
