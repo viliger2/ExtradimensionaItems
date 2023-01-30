@@ -218,18 +218,6 @@ namespace ExtradimensionalItems.Modules.Items
                     localScale = new Vector3(0.4842F, 0.4842F, 0.4842F)
                 }
             });
-            //rules.Add("mdlMiner", new RoR2.ItemDisplayRule[]
-            //{
-            //    new RoR2.ItemDisplayRule
-            //    {
-            //        ruleType = ItemDisplayRuleType.ParentedPrefab,
-            //        followerPrefab = ItemBodyModelPrefab,
-            //        childName = "Chest",
-            //        localPos = new Vector3(0F, 0.00339F, -0.00108F),
-            //        localAngles = new Vector3(317.3549F, 221.5528F, 123.0072F),
-            //        localScale = new Vector3(0.00557F, 0.00557F, 0.00557F)
-            //    }
-            //});
             rules.Add("mdlHeretic", new RoR2.ItemDisplayRule[]
             {
                 new RoR2.ItemDisplayRule
