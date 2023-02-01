@@ -13,7 +13,7 @@
 		"INTERACTABLE_RESPAWN_FLAG_CONTEXT": "Pick up Checkpoint?",
 		"INTERACTABLE_RESPAWN_FLAG_NAME": "Checkpoint",
 		"INTERACTABLE_RESPAWN_FLAG_RESPAWN": "{0} got saved by their trusty flag.",
-		"INTERACTABLE_RESPAWN_FLAG_RESPAWN_2": "You got saved by your trusty flag.",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN_2P": "You got saved by your trusty flag.",
 
 		"EQUIPMENT_SKULL_OF_DOOM_NAME": "Skull of Impending Doom",
 		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Tonight at 11.",
