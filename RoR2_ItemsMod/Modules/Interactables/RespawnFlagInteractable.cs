@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using JetBrains.Annotations;
+using RoR2;
 using RoR2.Audio;
 using System.Linq;
 using UnityEngine;
@@ -9,22 +10,24 @@ namespace ExtradimensionalItems.Modules.Interactables
 {
     internal class RespawnFlagInteractable
     {
+        // TODO: rewrite with RespawnFlagInteractableManager2 since that would be a
+        // propper way to add new interactable without hacky piggybagging of existing classes
+        // however, in order to use UNet or whatever, you need to patch the dll and if
+        // I am gonna do that then might as well move all of the networking to UNet instead of R2API
+        // end TODO
         public static GameObject GetInteractable(GameObject interactableModel, string langToken)
         {
-            interactableModel.AddComponent<NetworkIdentity>();
-
             var mesh = interactableModel.transform.Find("mdlRespawnFlagInteractable").gameObject;
+
+            //var interactableController = interactableModel.AddComponent<RespawnFlagInteractableManager2>();
+            //interactableController.langToken = langToken;
 
             var genericInteractController = interactableModel.AddComponent<GenericInteraction>();
             genericInteractController.contextToken = $"INTERACTABLE_{langToken}_CONTEXT";
             genericInteractController.shouldShowOnScanner = false;
 
-            var genericNameDisplay = interactableModel.AddComponent<GenericDisplayNameProvider>();
-            genericNameDisplay.displayToken = $"INTERACTABLE_{langToken}_NAME";
-
             var modelLocator = interactableModel.AddComponent<ModelLocator>();
             modelLocator.modelTransform = mesh.transform;
-//            modelLocator.modelBaseTransform = interactableModel.transform.Find("Base");
             modelLocator.dontDetatchFromParent = false;
             modelLocator.autoUpdateModelTransform = true;
 
@@ -40,12 +43,195 @@ namespace ExtradimensionalItems.Modules.Interactables
             highlightController.strength = 1;
             highlightController.highlightColor = Highlight.HighlightColor.interactive;
 
-            interactableModel.tag = "Respawn";
-
             return interactableModel;
         }
 
-        public class RespawnFlagInteractableManager : NetworkBehaviour
+        //public class RespawnFlagInteractableManager2 : NetworkBehaviour, IInteractable, IDisplayNameProvider
+        //{
+        //    private CharacterBody _owner;
+        //    private NetworkInstanceId ownerNetId;
+
+
+        //    public CharacterBody owner
+        //    {
+        //        get { return _owner; }
+        //        set { 
+        //            _owner = value;
+        //            if (_owner) 
+        //            { 
+        //                SyncOwnerClientRpc(_owner.GetComponent<NetworkIdentity>().netId.Value); 
+        //            } 
+        //        }
+        //    }
+        //    public string langToken;
+
+        //    public void Start()
+        //    {
+        //        EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Checkpoint_Use", gameObject);
+        //        // TODO: You are not supposed to use hooks when onBodyDeath is itself a UnityEvent
+        //        // however due to how both Dios are made, using event will result in two respawns
+        //        // consuming both Dio and the flag, to alliviate this issue we use hook
+        //        // Can probably be fixed with Reflection
+        //        //owner.master.onBodyDeath.AddListener(OnBodyDeath);
+        //        On.RoR2.CharacterMaster.OnBodyDeath += OnBodyDeath;
+        //        //if(owner)
+        //        //{
+        //        //    RpcSyncOwner(owner.GetComponent<NetworkIdentity>().netId.Value);
+        //        //}
+        //    }
+
+        //    public void Update()
+        //    {
+        //        if (owner)
+        //        {
+        //            SyncOwnerClientRpc(_owner.GetComponent<NetworkIdentity>().netId.Value);
+        //        }
+        //    }
+
+        //    [ClientRpc]
+        //    private void SyncOwnerClientRpc(uint netId)
+        //    {
+        //        var ownerNetId = new NetworkInstanceId(netId);
+
+        //        GameObject gameObject = Util.FindNetworkObject(ownerNetId);
+        //        if (gameObject)
+        //        {
+        //            //owner = gameObject.GetComponent<CharacterBody>();
+        //            this.ownerNetId = ownerNetId;
+        //        }
+        //    }
+
+        //    public void OnDestroy()
+        //    {
+        //        On.RoR2.CharacterMaster.OnBodyDeath -= OnBodyDeath;
+        //    }
+
+        //    public void OnBodyDeath(On.RoR2.CharacterMaster.orig_OnBodyDeath orig, CharacterMaster self, CharacterBody body)
+        //    {
+        //        if (NetworkServer.active)
+        //        {
+        //            if (gameObject && owner.isPlayerControlled && body == owner)
+        //            {
+        //                Invoke("RespawnOnCheckpoint", 2f);
+        //                Invoke("PlayExtraLifeSFX", 1f);
+        //            }
+        //            else
+        //            {
+        //                orig(self, body);
+        //            }
+        //        }
+        //    }
+
+        //    public void RespawnOnCheckpoint()
+        //    {
+        //        CharacterMaster master = owner.master;
+
+        //        if (EnableFuelCellInteraction.Value && owner.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) > 0)
+        //        {
+        //            MyLogger.LogMessage(string.Format("Player {0}({1}) has died, has {2} up and has {3} in their inventory, respawning them and replacing {3} with {4}.", owner.GetUserName(), owner.name, $"INTERACTABLE_{langToken}", RoR2Content.Items.EquipmentMagazine.name, Content.Items.FuelCellDepleted.name));
+        //            owner.inventory.RemoveItem(RoR2Content.Items.EquipmentMagazine);
+        //            owner.inventory.GiveItem(Content.Items.FuelCellDepleted);
+        //            CharacterMasterNotificationQueue.SendTransformNotification(master, RoR2Content.Items.EquipmentMagazine.itemIndex, Content.Items.FuelCellDepleted.itemIndex, CharacterMasterNotificationQueue.TransformationType.Default);
+        //        }
+        //        else
+        //        {
+        //            MyLogger.LogMessage(string.Format("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", owner.GetUserName(), owner.name, $"INTERACTABLE_{langToken}"));
+        //            RespawnFlagBehavior behavior = owner.GetComponent<RespawnFlagBehavior>();
+        //            if (behavior)
+        //            {
+        //                Destroy(behavior);
+        //            }
+        //            Destroy(gameObject);
+        //        }
+
+        //        Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
+        //        {
+        //            subjectAsCharacterBody = owner,
+        //            baseToken = $"INTERACTABLE_{langToken}_RESPAWN"
+        //        });
+
+        //        master.Respawn(gameObject.transform.position, gameObject.transform.rotation);
+        //        master.GetBody().AddTimedBuff(RoR2Content.Buffs.Immune, 3f);
+
+        //        GameObject respawnEffect = Resources.Load<GameObject>("Prefabs/Effects/HippoRezEffect");
+        //        if (respawnEffect)
+        //        {
+        //            EffectManager.SpawnEffect(respawnEffect, new EffectData
+        //            {
+        //                origin = gameObject.transform.position,
+        //                rotation = gameObject.transform.rotation
+        //            }, true);
+        //        }
+
+        //        owner = master.GetBody();
+        //    }
+
+        //    public void PlayExtraLifeSFX()
+        //    {
+        //        owner.master.PlayExtraLifeSFX();
+        //    }
+
+        //    public string GetContextString([NotNull] Interactor activator)
+        //    {
+        //        return Language.GetString($"INTERACTABLE_{langToken}_CONTEXT");
+        //    }
+        //    public string GetDisplayName()
+        //    {
+        //        return Language.GetString($"INTERACTABLE_{langToken}_NAME");
+        //    }
+
+        //    public Interactability GetInteractability([NotNull] Interactor activator)
+        //    {
+        //        if (!owner)
+        //        {
+        //            var ownerGameObject = Util.FindNetworkObject(this.ownerNetId);
+        //            if (ownerGameObject)
+        //            {
+        //                owner = ownerGameObject.GetComponent<CharacterBody>();
+        //            }
+        //        }
+
+        //        var body = activator.GetComponent<CharacterBody>();
+
+        //        if (body == owner)
+        //        {
+        //            return Interactability.Available;
+        //        }
+
+        //        return Interactability.Disabled;
+        //    }
+
+        //    public void OnInteractionBegin([NotNull] Interactor activator)
+        //    {
+        //        if (!NetworkServer.active)
+        //        {
+        //            MyLogger.LogWarning("[Server] function 'ExtradimensionalItems.Modules.Interactables.RespawnFlagInteractable::OnActivation(RoR2.Interactor)' called on client.");
+        //            return;
+        //        }
+
+        //        var body = activator.GetComponent<CharacterBody>();
+
+        //        MyLogger.LogMessage(string.Format("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
+
+        //        PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(Content.Equipment.RespawnFlag.equipmentIndex);
+        //        PickupDropletController.CreatePickupDroplet(pickupIndex, transform.position, Vector3.up * 5 + transform.forward * 3);
+
+        //        Destroy(gameObject);
+        //    }
+
+        //    public bool ShouldIgnoreSpherecastForInteractibility([NotNull] Interactor activator)
+        //    {
+        //        return false;
+        //    }
+
+        //    public bool ShouldShowOnScanner()
+        //    {
+        //        return false;
+        //    }
+
+        //}
+
+        public class RespawnFlagInteractableManager : NetworkBehaviour, IDisplayNameProvider
         {
             public GenericInteraction genericInteraction;
             public CharacterBody owner;
@@ -113,11 +299,12 @@ namespace ExtradimensionalItems.Modules.Interactables
             {
                 if (NetworkServer.active)
                 {
-                    if (gameObject && owner.isPlayerControlled)
+                    if (gameObject && owner.isPlayerControlled && body == owner)
                     {
                         Invoke("RespawnOnCheckpoint", 2f);
                         Invoke("PlayExtraLifeSFX", 1f);
-                    } else
+                    }
+                    else
                     {
                         orig(self, body);
                     }
@@ -134,7 +321,8 @@ namespace ExtradimensionalItems.Modules.Interactables
                     owner.inventory.RemoveItem(RoR2Content.Items.EquipmentMagazine);
                     owner.inventory.GiveItem(Content.Items.FuelCellDepleted);
                     CharacterMasterNotificationQueue.SendTransformNotification(master, RoR2Content.Items.EquipmentMagazine.itemIndex, Content.Items.FuelCellDepleted.itemIndex, CharacterMasterNotificationQueue.TransformationType.Default);
-                } else
+                }
+                else
                 {
                     MyLogger.LogMessage(string.Format("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", owner.GetUserName(), owner.name, $"INTERACTABLE_{langToken}"));
                     RespawnFlagBehavior behavior = owner.GetComponent<RespawnFlagBehavior>();
@@ -189,9 +377,7 @@ namespace ExtradimensionalItems.Modules.Interactables
                 }
 
                 var body = interactor.GetComponent<CharacterBody>();
-                // we are checking for owner here instead of On.RoR2.GenericInteraction.RoR2_IInteractable_GetInteractability
-                // because it doesn't work, most likely something wrong with game's code since MMMHOOK is generated on launch
-                // TODO: write IL hook that might or might not work
+
                 if (body && body == owner)
                 {
                     MyLogger.LogMessage(string.Format("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
@@ -201,6 +387,11 @@ namespace ExtradimensionalItems.Modules.Interactables
 
                     Destroy(gameObject);
                 }
+            }
+
+            public string GetDisplayName()
+            {
+                return Language.GetString($"INTERACTABLE_{langToken}_NAME");
             }
         }
     }
