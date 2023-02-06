@@ -164,9 +164,9 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
-                    childName = "ThighL",
-                    localPos = new Vector3(0.13617F, 0.15119F, -0.03824F),
-                    localAngles = new Vector3(31.9797F, 263.4167F, 177.7921F),
+                    childName = "ThighR",
+                    localPos = new Vector3(-0.18828F, 0.13572F, 0.00151F),
+                    localAngles = new Vector3(30.69436F, 274.8616F, 176.1863F),
                     localScale = new Vector3(0.22972F, 0.22972F, 0.22972F)
                 }
             });

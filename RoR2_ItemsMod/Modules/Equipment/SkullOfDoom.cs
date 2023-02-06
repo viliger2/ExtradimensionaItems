@@ -72,10 +72,11 @@ namespace ExtradimensionalItems.Modules.Equipment
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
-                    childName = "Stomach",
-                    localPos = new Vector3(-0.19923F, 0.08317F, 0.03548F),
-                    localAngles = new Vector3(350.8318F, 300.4222F, 356.9493F),
-                    localScale = new Vector3(0.2684F, 0.2684F, 0.2684F)             }
+childName = "Stomach",
+localPos = new Vector3(-0.18344F, 0.09567F, -0.07979F),
+localAngles = new Vector3(345.6406F, 245.6418F, 357.0431F),
+localScale = new Vector3(0.2684F, 0.2684F, 0.2684F)
+                }
             });
             rules.Add("mdlHuntress", new RoR2.ItemDisplayRule[]
             {
@@ -83,10 +84,10 @@ namespace ExtradimensionalItems.Modules.Equipment
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
-                    childName = "Stomach",
-                    localPos = new Vector3(-0.16529F, 0.04989F, -0.02857F),
-                    localAngles = new Vector3(350.4587F, 257.6385F, 357.8118F),
-                    localScale = new Vector3(0.36207F, 0.36207F, 0.36207F)
+childName = "Stomach",
+localPos = new Vector3(0.12679F, 0.08065F, -0.0143F),
+localAngles = new Vector3(348.8699F, 116.6115F, 13.81139F),
+localScale = new Vector3(0.36207F, 0.36207F, 0.36207F)
                 }
             });
             rules.Add("mdlToolbot", new RoR2.ItemDisplayRule[]
@@ -108,8 +109,8 @@ namespace ExtradimensionalItems.Modules.Equipment
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
                     childName = "Stomach",
-                    localPos = new Vector3(-0.25298F, -0.01193F, 0.06011F),
-                    localAngles = new Vector3(355.0486F, 303.5604F, 353.3625F),
+                    localPos = new Vector3(-0.1407F, -0.02355F, 0.16146F),
+                    localAngles = new Vector3(356.7233F, 324.9602F, 354.826F),
                     localScale = new Vector3(0.3983F, 0.3983F, 0.3983F)
                 }
             });
@@ -132,8 +133,8 @@ namespace ExtradimensionalItems.Modules.Equipment
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
                     childName = "Stomach",
-                    localPos = new Vector3(0.20725F, -0.06014F, 0.03081F),
-                    localAngles = new Vector3(355.3281F, 100.7571F, 357.9822F),
+                    localPos = new Vector3(0.18282F, -0.05672F, 0.09466F),
+                    localAngles = new Vector3(354.4527F, 82.68719F, 357.8358F),
                     localScale = new Vector3(0.32309F, 0.32309F, 0.32309F)
                 }
             });
@@ -180,8 +181,8 @@ namespace ExtradimensionalItems.Modules.Equipment
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
                     childName = "Stomach",
-                    localPos = new Vector3(-0.15867F, 0.13074F, 0.14613F),
-                    localAngles = new Vector3(3.29058F, 323.2306F, 0.45459F),
+                    localPos = new Vector3(0.10521F, 0.12538F, 0.16917F),
+                    localAngles = new Vector3(4.82773F, 21.6987F, 10.16348F),
                     localScale = new Vector3(0.44293F, 0.44293F, 0.44293F)
                 }
             });
