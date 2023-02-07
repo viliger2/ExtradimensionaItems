@@ -37,10 +37,11 @@ namespace ExtradimensionalItems.Modules.Items
             private void Body_onSkillActivatedServer(GenericSkill skill)
             {
                 var self = body;
+                int itemCount = body?.inventory?.GetItemCount(Content.Items.Sheen) ?? 0;
                 if (body?.inventory?.GetItemCount(Content.Items.Sheen) > 0)
                 {
                     var skillLocator = self.GetComponent<SkillLocator>();
-                    if (skillLocator?.primary != skill && self.GetBuffCount(Content.Buffs.Sheen) < MaxBuffStacks.Value)
+                    if (skillLocator?.primary != skill && self.GetBuffCount(Content.Buffs.Sheen) < BuffStackPerItem.Value * itemCount)
                     {
                         MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, Content.Buffs.Sheen.name));
                         self.AddTimedBuff(Content.Buffs.Sheen, BuffDuration.Value);
@@ -55,14 +56,14 @@ namespace ExtradimensionalItems.Modules.Items
             private void GlobalEventManager_onServerDamageDealt(DamageReport damageReport)
             {
                 var damageInfo = damageReport.damageInfo;
-                var attacker = damageInfo?.attacker;
-                var body = attacker?.GetComponent<CharacterBody>();
-                if (body && body == this.body)
+                var attacker = damageInfo?.attacker ?? null;
+                var body = attacker?.GetComponent<CharacterBody>() ?? null;
+                if (body && body == this.body && body.HasBuff(Content.Buffs.Sheen))
                 {
                     var victim = damageReport.victimBody;
                     if (!damageInfo.rejected || damageInfo == null)
                     {
-                        if (body.HasBuff(Content.Buffs.Sheen) && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT && this.usedPrimary)
+                        if ((damageInfo.damageType & DamageType.DoT) != DamageType.DoT && this.usedPrimary)
                         {
                             var victimBody = victim.GetComponent<CharacterBody>();
 
@@ -90,7 +91,8 @@ namespace ExtradimensionalItems.Modules.Items
         public static ConfigEntry<float> DamageModifier;
         public static ConfigEntry<bool> CanStack;
         public static ConfigEntry<float> BuffDuration;
-        public static ConfigEntry<int> MaxBuffStacks;
+        //public static ConfigEntry<int> MaxBuffStacks;
+        public static ConfigEntry<int> BuffStackPerItem;
         public override string ItemName => "Sheen";
 
         public override string ItemLangTokenName => "SHEEN";
@@ -318,7 +320,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return string.Format(pickupString, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? MaxBuffStacks.Value : 1);
+            return string.Format(pickupString, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? BuffStackPerItem.Value : 1, CanStack.Value ? BuffStackPerItem.Value : 0);
         }
 
         public void CreateBuffs()
@@ -357,7 +359,8 @@ namespace ExtradimensionalItems.Modules.Items
             CanStack = config.Bind("Item: " + ItemName, "Can Buff Stack", true, "Determines whether the buff that indicates damage bonus can stack or not.");
             DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 250f, "What damage modifier (per stack) the item should use.");
             BuffDuration = config.Bind("Item: " + ItemName, "Buff Duration", 10f, "How long the buff should remain active after using non-primary ability.");
-            MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
+            BuffStackPerItem = config.Bind("Item: " + ItemName, "Buff Stacks Per Item", 2, "How much stacks of a buff you get per item.");
+            //MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
         }
     }
 }

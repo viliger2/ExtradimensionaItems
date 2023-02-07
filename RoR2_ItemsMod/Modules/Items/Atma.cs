@@ -224,7 +224,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return string.Format(pickupString, (PercentBonusDamage.Value / 100).ToString("###%"), (PercentBonusDamagePerStack.Value / 100).ToString("###%"));
+            return string.Format(pickupString, (PercentBonusDamage.Value / 100).ToString("0.#%"), (PercentBonusDamagePerStack.Value / 100).ToString("0.#%"));
         }
 
         public override void Init(ConfigFile config)

@@ -2,7 +2,7 @@
 	"strings": {
 		"ITEM_SHEEN_NAME": "Sheen",
 		"ITEM_SHEEN_PICKUP": "Go get 'em champ",
-		"ITEM_SHEEN_DESCRIPTION": "After using <style=cIsUtility>non-primary ability</style> gain one stack of <style=cIsDamage>buff</style>. Dealing <style=cIsDamage>damage</style> with <style=cIsUtility>primary ability</style> while having said buff will cause target take additional <style=cIsDamage>{0} base damage</style> <style=cStack>(+{0} per stack)</style> and consume one stack of buff. Buff can be stacked up to <style=cIsUtility>{1}</style> times.",
+		"ITEM_SHEEN_DESCRIPTION": "After using <style=cIsUtility>non-primary ability</style> gain one stack of <style=cIsDamage>buff</style>. Dealing <style=cIsDamage>damage</style> with <style=cIsUtility>primary ability</style> while having said buff will cause target take additional <style=cIsDamage>{0} base damage</style> <style=cStack>(+{0} per stack)</style> and consume one stack of buff. Buff can be stacked up to <style=cIsUtility>{1}</style> <style=cStack>(+{2} per stack)</style> times.",
 		"ITEM_SHEEN_LORE": "lore",
 
 		"EQUIPMENT_RESPAWN_FLAG_NAME": "Checkpoint",

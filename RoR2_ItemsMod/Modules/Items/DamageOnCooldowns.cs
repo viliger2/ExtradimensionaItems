@@ -351,7 +351,17 @@ namespace ExtradimensionalItems.Modules.Items
         {
             base.Hooks();
             CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
-            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+            On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+        }
+
+        private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        {
+            var body = damageInfo?.attacker?.GetComponent<CharacterBody>() ?? null;
+            if (body)
+            {
+                damageInfo.damage += damageInfo.damage * (((DamageBonus.Value / 100) + (DamageBonusPerStack.Value / 100) * (GetCount(body) - 1)) * body.GetBuffCount(Content.Buffs.DamageOnCooldowns));
+            }
+            orig(self, damageInfo);
         }
 
         private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
@@ -387,14 +397,6 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
                 count++;
-            }
-        }
-
-        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody body, RecalculateStatsAPI.StatHookEventArgs args)
-        {
-            if (body.HasBuff(Content.Buffs.DamageOnCooldowns))
-            {
-                args.damageMultAdd += ((DamageBonus.Value / 100) + (DamageBonusPerStack.Value / 100) * (GetCount(body) - 1)) * body.GetBuffCount(Content.Buffs.DamageOnCooldowns);
             }
         }
 
