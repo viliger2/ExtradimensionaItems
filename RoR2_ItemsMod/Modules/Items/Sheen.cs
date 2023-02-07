@@ -165,7 +165,7 @@ namespace ExtradimensionalItems.Modules.Items
                     localScale = new Vector3(0.50649F, 0.50649F, 0.50649F)
                 }
             });
-            rules.Add("mdlMage", new RoR2.ItemDisplayRule[] 
+            rules.Add("mdlMage", new RoR2.ItemDisplayRule[]
             {
                 new RoR2.ItemDisplayRule
                 {

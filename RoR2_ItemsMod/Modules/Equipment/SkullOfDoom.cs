@@ -72,10 +72,10 @@ namespace ExtradimensionalItems.Modules.Equipment
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
-childName = "Stomach",
-localPos = new Vector3(-0.18344F, 0.09567F, -0.07979F),
-localAngles = new Vector3(345.6406F, 245.6418F, 357.0431F),
-localScale = new Vector3(0.2684F, 0.2684F, 0.2684F)
+                    childName = "Stomach",
+                    localPos = new Vector3(-0.18344F, 0.09567F, -0.07979F),
+                    localAngles = new Vector3(345.6406F, 245.6418F, 357.0431F),
+                    localScale = new Vector3(0.2684F, 0.2684F, 0.2684F)
                 }
             });
             rules.Add("mdlHuntress", new RoR2.ItemDisplayRule[]
@@ -84,10 +84,10 @@ localScale = new Vector3(0.2684F, 0.2684F, 0.2684F)
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
-childName = "Stomach",
-localPos = new Vector3(0.12679F, 0.08065F, -0.0143F),
-localAngles = new Vector3(348.8699F, 116.6115F, 13.81139F),
-localScale = new Vector3(0.36207F, 0.36207F, 0.36207F)
+                    childName = "Stomach",
+                    localPos = new Vector3(0.12679F, 0.08065F, -0.0143F),
+                    localAngles = new Vector3(348.8699F, 116.6115F, 13.81139F),
+                    localScale = new Vector3(0.36207F, 0.36207F, 0.36207F)
                 }
             });
             rules.Add("mdlToolbot", new RoR2.ItemDisplayRule[]
@@ -271,7 +271,7 @@ localScale = new Vector3(0.36207F, 0.36207F, 0.36207F)
         public override string GetFormatedDiscription(string pickupString)
         {
             // TODO: implement Fuel Cells condition with Language.GetString
-            return string.Format(pickupString, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value, 
+            return string.Format(pickupString, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value,
                 EnableFuelCellInteraction.Value ? string.Format(Language.GetString("EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL"), (FuelCellSpeedBuff.Value / 100).ToString("###%"), (FuelCellDamageOverTime.Value / 100).ToString("###%")) : "");
         }
 
@@ -285,7 +285,7 @@ localScale = new Vector3(0.36207F, 0.36207F, 0.36207F)
 
         private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
         {
-            if(EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) != Content.Equipment.SkullOfDoom)
+            if (EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) != Content.Equipment.SkullOfDoom)
             {
                 if (body.HasBuff(Content.Buffs.SkullOfDoom))
                 {

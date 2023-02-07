@@ -1,9 +1,6 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -46,7 +43,7 @@ namespace ExtradimensionalItems.Modules.Items
                     childName = "Chest",
                     localPos = new Vector3(0.05931F, 0.11769F, -0.21938F),
                     localAngles = new Vector3(23.27695F, 5.91633F, 22.06631F),
-                    localScale = new Vector3(2.11112F, 2.11112F, 2.11112F)  
+                    localScale = new Vector3(2.11112F, 2.11112F, 2.11112F)
                 }
             });
             rules.Add("mdlHuntress", new RoR2.ItemDisplayRule[]
@@ -243,7 +240,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (GetCount(sender) > 0) {
+            if (GetCount(sender) > 0)
+            {
                 args.baseDamageAdd += sender.maxHealth * (PercentBonusDamage.Value / 100) + sender.maxHealth * (PercentBonusDamagePerStack.Value / 100 * (GetCount(sender) - 1));
             }
         }

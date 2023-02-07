@@ -1,14 +1,11 @@
 ﻿using BepInEx.Configuration;
 using EntityStates;
 using ExtradimensionalItems.Modules.SkillStates;
-using HG;
 using R2API;
 using RoR2;
 using RoR2.Audio;
 using RoR2.Skills;
-using System.IO;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace ExtradimensionalItems.Modules.Items
 {
@@ -297,7 +294,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
         {
-            if(body.skillLocator)
+            if (body.skillLocator)
             {
                 body.ReplaceSkillIfItemPresent(body.skillLocator.utility, ItemDef.itemIndex, Content.Skills.Parry);
             }
@@ -350,10 +347,11 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     numberOfBuffs = 1;
                 }
-                if(numberOfBuffs == 3)
+                if (numberOfBuffs == 3)
                 {
                     EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_RoyalGuard_JustBlock", body.gameObject);
-                } else
+                }
+                else
                 {
                     EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_RoyalGuard_Block", body.gameObject);
                 }

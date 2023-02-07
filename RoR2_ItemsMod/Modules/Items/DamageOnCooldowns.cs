@@ -28,7 +28,8 @@ namespace ExtradimensionalItems.Modules.Items
                         if (!NetworkServer.active)
                         {
                             new DamageOnCooldownsSendNumberBuffs(body.gameObject.GetComponent<NetworkIdentity>().netId, newBuffCount).Send(R2API.Networking.NetworkDestination.Server);
-                        } else
+                        }
+                        else
                         {
                             ApplyBuffs(body, newBuffCount);
                         }
@@ -82,7 +83,7 @@ namespace ExtradimensionalItems.Modules.Items
                 GameObject gameObject = Util.FindNetworkObject(netId);
                 if (gameObject)
                 {
-                    if(gameObject.TryGetComponent(out CharacterBody body))
+                    if (gameObject.TryGetComponent(out CharacterBody body))
                     {
                         ApplyBuffs(body, numberOfBuffsFromClient);
                     }
@@ -340,7 +341,7 @@ namespace ExtradimensionalItems.Modules.Items
             DamageOnCooldownsBuff.buffColor = Color.grey;
             DamageOnCooldownsBuff.canStack = true;
             DamageOnCooldownsBuff.isDebuff = false;
-            DamageOnCooldownsBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("texDamageOnCooldownBuffIcon"); 
+            DamageOnCooldownsBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("texDamageOnCooldownBuffIcon");
 
             ContentAddition.AddBuffDef(DamageOnCooldownsBuff);
 
@@ -368,11 +369,11 @@ namespace ExtradimensionalItems.Modules.Items
         {
             if (body)
             {
-                if (body.hasAuthority) 
+                if (body.hasAuthority)
                 {
                     body.AddItemBehavior<DamageOnCooldownsBehavior>(GetCount(body));
                 }
-                if(NetworkServer.active) 
+                if (NetworkServer.active)
                 {
                     if (body.HasBuff(Content.Buffs.DamageOnCooldowns) && GetCount(body) == 0)
                     {

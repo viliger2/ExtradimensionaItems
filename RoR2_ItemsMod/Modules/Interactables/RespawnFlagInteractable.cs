@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using RoR2;
+﻿using RoR2;
 using RoR2.Audio;
 using System.Linq;
 using UnityEngine;

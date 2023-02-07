@@ -2,7 +2,6 @@
 using ExtradimensionalItems.Modules.Interactables;
 using R2API;
 using RoR2;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -281,9 +280,10 @@ namespace ExtradimensionalItems.Modules.Equipment
                     PickupDropletController.CreatePickupDroplet(pickupIndex, position, Vector3.up * 5);
                     Object.Destroy(behavior);
                 }
-            } else if(equipmentDef == Content.Equipment.RespawnFlag)
+            }
+            else if (equipmentDef == Content.Equipment.RespawnFlag)
             {
-                if(!body.TryGetComponent(out RespawnFlagBehavior behavior))
+                if (!body.TryGetComponent(out RespawnFlagBehavior behavior))
                 {
                     body.AddItemBehavior<RespawnFlagBehavior>(1);
                 }
@@ -327,7 +327,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             position = new Vector3();
 
-            if(behavior)
+            if (behavior)
             {
                 GameObject flag = behavior.flag;
                 if (flag)

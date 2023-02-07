@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Effects
 {
@@ -15,11 +12,12 @@ namespace ExtradimensionalItems.Modules.Effects
 
         void Update()
         {
-            if(timer <= 0)
+            if (timer <= 0)
             {
                 Instantiate(fire, transform.position, Quaternion.identity);
                 timer = timeBetweenSpawns + UnityEngine.Random.Range(0f, 0.1f);
-            } else
+            }
+            else
             {
                 timer -= Time.deltaTime;
             }
