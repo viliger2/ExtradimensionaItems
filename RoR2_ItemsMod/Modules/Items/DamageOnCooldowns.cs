@@ -353,8 +353,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            var body = damageInfo?.attacker?.GetComponent<CharacterBody>() ?? null;
-            if (body)
+            var attacker = damageInfo?.attacker ?? null;
+            if (attacker && attacker.TryGetComponent<CharacterBody>(out var body))
             {
                 damageInfo.damage += damageInfo.damage * (((DamageBonus.Value / 100) + (DamageBonusPerStack.Value / 100) * (GetCount(body) - 1)) * body.GetBuffCount(Content.Buffs.DamageOnCooldowns));
             }

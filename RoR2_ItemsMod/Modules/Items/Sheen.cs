@@ -38,7 +38,7 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 var self = body;
                 int itemCount = body?.inventory?.GetItemCount(Content.Items.Sheen) ?? 0;
-                if (body?.inventory?.GetItemCount(Content.Items.Sheen) > 0)
+                if (itemCount > 0)
                 {
                     var skillLocator = self.GetComponent<SkillLocator>();
                     if (skillLocator?.primary != skill && self.GetBuffCount(Content.Buffs.Sheen) < BuffStackPerItem.Value * itemCount)
@@ -57,30 +57,32 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 var damageInfo = damageReport.damageInfo;
                 var attacker = damageInfo?.attacker ?? null;
-                var body = attacker?.GetComponent<CharacterBody>() ?? null;
-                if (body && body == this.body && body.HasBuff(Content.Buffs.Sheen))
+                if (attacker && attacker.TryGetComponent<CharacterBody>(out var body))
                 {
-                    var victim = damageReport.victimBody;
-                    if (!damageInfo.rejected || damageInfo == null)
+                    if (body == this.body && body.HasBuff(Content.Buffs.Sheen))
                     {
-                        if ((damageInfo.damageType & DamageType.DoT) != DamageType.DoT && this.usedPrimary)
+                        var victim = damageReport.victimBody;
+                        if (damageInfo != null && !damageInfo.rejected)
                         {
-                            var victimBody = victim.GetComponent<CharacterBody>();
+                            if ((damageInfo.damageType & DamageType.DoT) != DamageType.DoT && this.usedPrimary)
+                            {
+                                var victimBody = victim.GetComponent<CharacterBody>();
 
-                            DamageInfo damageInfo2 = new DamageInfo();
-                            damageInfo2.damage = body.damage * body.inventory.GetItemCount(Content.Items.Sheen) * (DamageModifier.Value / 100);
-                            damageInfo2.attacker = attacker;
-                            damageInfo2.crit = false;
-                            damageInfo2.position = damageInfo.position;
-                            damageInfo2.damageColorIndex = DamageColorIndex.Item;
-                            damageInfo2.damageType = DamageType.Generic;
+                                DamageInfo damageInfo2 = new DamageInfo();
+                                damageInfo2.damage = body.damage * body.inventory.GetItemCount(Content.Items.Sheen) * (DamageModifier.Value / 100);
+                                damageInfo2.attacker = attacker;
+                                damageInfo2.crit = false;
+                                damageInfo2.position = damageInfo.position;
+                                damageInfo2.damageColorIndex = DamageColorIndex.Item;
+                                damageInfo2.damageType = DamageType.Generic;
 
-                            MyLogger.LogMessage(string.Format("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
+                                MyLogger.LogMessage(string.Format("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
 
-                            body.RemoveTimedBuff(Content.Buffs.Sheen);
-                            this.usedPrimary = false;
+                                body.RemoveTimedBuff(Content.Buffs.Sheen);
+                                this.usedPrimary = false;
 
-                            victimBody.healthComponent.TakeDamage(damageInfo2);
+                                victimBody.healthComponent.TakeDamage(damageInfo2);
+                            }
                         }
                     }
                 }
