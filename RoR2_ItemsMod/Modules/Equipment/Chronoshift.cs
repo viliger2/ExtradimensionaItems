@@ -18,7 +18,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         // TODO: maybe rewrite this entire shitshow to use EntityStateMachine and NetworkStateMachine
         private class ChronoshiftBehavior : CharacterBody.ItemBehavior
         {
-            private enum ChronoshiftState
+            public enum ChronoshiftState
             {
                 Saving,
                 Moving,
@@ -54,7 +54,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             private float timer = Frequency.Value;
             private float teleportTimer = 0.01f;
             private int currentState = -1;
-            private ChronoshiftState currentEquipmentState;
+            public ChronoshiftState currentEquipmentState;
 
             private int listCapacity = (int)(RewindTime.Value / Frequency.Value);
 
@@ -138,7 +138,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                             }
                             speed = Vector3.Distance(motor.Rigidbody.position, states[currentState].position) / teleportTimer;
                         }
-                    }                    
+                    }
                 }
             }
 
@@ -214,7 +214,9 @@ namespace ExtradimensionalItems.Modules.Equipment
 
                     state.timer = Run.instance.time;
                     return state;
-                } else {
+                }
+                else
+                {
                     return null;
                 }
             }
@@ -305,7 +307,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
                 MyLogger.LogMessage(string.Format("Player {0}({1}) finished restoring state, starting proccess of saving states.", body.GetUserName(), body.name));
 
-                ClearStatesAndStartSaving();     
+                ClearStatesAndStartSaving();
             }
 
             public void ClearStatesAndStartSaving()
@@ -321,7 +323,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 currentEquipmentState = ChronoshiftState.Moving;
                 currentState = 0;
             }
-       
+
             public void SetTrailRendererMaterial(Material material)
             {
                 if (trailRenderer)
@@ -355,7 +357,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 }
 
                 GameObject gameObject = Util.FindNetworkObject(netId);
-                if(gameObject)
+                if (gameObject)
                 {
                     if (gameObject.GetComponent<CharacterBody>().hasAuthority)
                     {
@@ -432,7 +434,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             var ItemBodyModelPrefab = AssetBundle.LoadAsset<GameObject>("Chronoshift");
             ItemBodyModelPrefab.AddComponent<RoR2.ItemDisplay>();
-            
+
             // to fix item fade enable "Dither" on hopoo shader in Unity
             ItemBodyModelPrefab.GetComponent<RoR2.ItemDisplay>().rendererInfos = Utils.ItemDisplaySetup(ItemBodyModelPrefab);
 
@@ -675,6 +677,19 @@ namespace ExtradimensionalItems.Modules.Equipment
             // previous equipment is already overwritten by new equipment so we can't detect changes
             On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
             On.RoR2.CharacterBody.OnEquipmentLost += CharacterBody_OnEquipmentLost;
+            On.RoR2.GenericPickupController.BodyHasPickupPermission += GenericPickupController_BodyHasPickupPermission;
+        }
+
+        private bool GenericPickupController_BodyHasPickupPermission(On.RoR2.GenericPickupController.orig_BodyHasPickupPermission orig, CharacterBody body)
+        {
+            if (body.TryGetComponent<ChronoshiftBehavior>(out var chronoshiftBehavior))
+            {
+                if(chronoshiftBehavior.currentEquipmentState == ChronoshiftBehavior.ChronoshiftState.Moving)
+                {
+                    return false;
+                }
+            }
+            return orig(body);
         }
 
         private void CharacterBody_OnEquipmentLost(On.RoR2.CharacterBody.orig_OnEquipmentLost orig, CharacterBody self, EquipmentDef equipmentDef)
