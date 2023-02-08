@@ -41,16 +41,12 @@ namespace ExtradimensionalItems.Modules.Items
 
             private int GetBuffCountFromSkill(GenericSkill skill)
             {
-                return skill.maxStock != skill.stock ? 1 : 0;
+                return skill && skill.maxStock != skill.stock ? 1 : 0;
             }
 
             private int GetBuffCountFromInventory(EquipmentSlot es)
             {
-                if (es.equipmentIndex != EquipmentIndex.None)
-                {
-                    return es.maxStock != es.stock ? 1 : 0;
-                }
-                return 0;
+                return es && es.equipmentIndex != EquipmentIndex.None && es.maxStock != es.stock ? 1 : 0;
             }
         }
 
