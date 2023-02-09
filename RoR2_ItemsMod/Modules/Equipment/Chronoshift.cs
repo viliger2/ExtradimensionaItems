@@ -673,11 +673,20 @@ namespace ExtradimensionalItems.Modules.Equipment
         protected override void Hooks()
         {
             base.Hooks();
-            // we cannot use CharacterBody.onBodyInventoryChangedGlobal because by the time we get to our method
-            // previous equipment is already overwritten by new equipment so we can't detect changes
-            On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
-            On.RoR2.CharacterBody.OnEquipmentLost += CharacterBody_OnEquipmentLost;
             On.RoR2.GenericPickupController.BodyHasPickupPermission += GenericPickupController_BodyHasPickupPermission;
+            RoR2.CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
+        }
+
+        private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
+        {
+            if (body)
+            {
+                var behavior = body.AddItemBehavior<ChronoshiftBehavior>(EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) == Content.Equipment.Chronoshift ? 1 : 0);
+                if (behavior)
+                {
+                    behavior.SetTrailRendererMaterial(AssetBundle.LoadAsset<Material>("matChronoshiftTrail"));
+                }
+            }
         }
 
         private bool GenericPickupController_BodyHasPickupPermission(On.RoR2.GenericPickupController.orig_BodyHasPickupPermission orig, CharacterBody body)
@@ -690,25 +699,6 @@ namespace ExtradimensionalItems.Modules.Equipment
                 }
             }
             return orig(body);
-        }
-
-        private void CharacterBody_OnEquipmentLost(On.RoR2.CharacterBody.orig_OnEquipmentLost orig, CharacterBody self, EquipmentDef equipmentDef)
-        {
-            if (equipmentDef == Content.Equipment.Chronoshift)
-            {
-                self.AddItemBehavior<ChronoshiftBehavior>(0);
-            }
-            orig(self, equipmentDef);
-        }
-
-        private void CharacterBody_OnEquipmentGained(On.RoR2.CharacterBody.orig_OnEquipmentGained orig, CharacterBody self, EquipmentDef equipmentDef)
-        {
-            if (equipmentDef == Content.Equipment.Chronoshift)
-            {
-                var behaviour = self.AddItemBehavior<ChronoshiftBehavior>(1);
-                behaviour.SetTrailRendererMaterial(AssetBundle.LoadAsset<Material>("matChronoshiftTrail"));
-            }
-            orig(self, equipmentDef);
         }
 
         protected override bool ActivateEquipment(EquipmentSlot slot)

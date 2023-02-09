@@ -285,13 +285,16 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
         {
-            if (EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) != Content.Equipment.SkullOfDoom)
+            if (body)
             {
-                if (body.HasBuff(Content.Buffs.SkullOfDoom))
+                if (EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) != Content.Equipment.SkullOfDoom)
                 {
-                    MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing the buff.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name));
-                    body.RemoveBuff(Content.Buffs.SkullOfDoom);
-                    body.AddItemBehavior<SkullOfDoomBehavior>(0);
+                    if (body.HasBuff(Content.Buffs.SkullOfDoom))
+                    {
+                        MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing the buff.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name));
+                        body.RemoveBuff(Content.Buffs.SkullOfDoom);
+                        body.AddItemBehavior<SkullOfDoomBehavior>(0);
+                    }
                 }
             }
         }

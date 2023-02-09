@@ -254,15 +254,20 @@ namespace ExtradimensionalItems.Modules.Equipment
         protected override void Hooks()
         {
             base.Hooks();
-            On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
+            RoR2.CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
         }
 
-        private void CharacterBody_OnEquipmentGained(On.RoR2.CharacterBody.orig_OnEquipmentGained orig, CharacterBody body, EquipmentDef equipmentDef)
+        private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
         {
-            orig(body, equipmentDef);
-
-            if (equipmentDef != Content.Equipment.RespawnFlag)
+            if (EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) == Content.Equipment.RespawnFlag)
             {
+                body.AddItemBehavior<RespawnFlagBehavior>(1);
+            }
+            else if(body.TryGetComponent<RespawnFlagBehavior>(out var behavior))
+            {
+                // check for MUL-T, checking if the other slot is empty when
+                // picking up equipment that is not RespawnFlag so we don't despawn
+                // existing interactable when other slot is empty
                 for (uint i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
                 {
                     var equipmentState = body.inventory.GetEquipment(i);
