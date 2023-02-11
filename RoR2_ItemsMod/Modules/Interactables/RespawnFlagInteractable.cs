@@ -324,8 +324,7 @@ namespace ExtradimensionalItems.Modules.Interactables
                 else
                 {
                     MyLogger.LogMessage(string.Format("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", owner.GetUserName(), owner.name, $"INTERACTABLE_{langToken}"));
-                    RespawnFlagBehavior behavior = owner.GetComponent<RespawnFlagBehavior>();
-                    if (behavior)
+                    if (owner.TryGetComponent<RespawnFlagBehavior>(out var behavior))
                     {
                         Destroy(behavior);
                     }
@@ -375,9 +374,7 @@ namespace ExtradimensionalItems.Modules.Interactables
                     return;
                 }
 
-                var body = interactor.GetComponent<CharacterBody>();
-
-                if (body && body == owner)
+                if (interactor.TryGetComponent<CharacterBody>(out var body) && body == owner)
                 {
                     MyLogger.LogMessage(string.Format("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
 

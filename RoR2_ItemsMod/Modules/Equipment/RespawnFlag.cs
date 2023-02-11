@@ -276,7 +276,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                         return;
                     }
                 }
-                RespawnFlagBehavior behavior = body.GetComponent<RespawnFlagBehavior>();
+
                 var result = DestroyExistingFlag(behavior, out Vector3 position);
                 if (result)
                 {
@@ -284,13 +284,6 @@ namespace ExtradimensionalItems.Modules.Equipment
                     PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(Content.Equipment.RespawnFlag.equipmentIndex);
                     PickupDropletController.CreatePickupDroplet(pickupIndex, position, Vector3.up * 5);
                     Object.Destroy(behavior);
-                }
-            }
-            else if (equipmentDef == Content.Equipment.RespawnFlag)
-            {
-                if (!body.TryGetComponent(out RespawnFlagBehavior behavior))
-                {
-                    body.AddItemBehavior<RespawnFlagBehavior>(1);
                 }
             }
         }
@@ -307,7 +300,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             MyLogger.LogMessage(string.Format("Player {0}({1}) used equipment {2}.", body.GetUserName(), body.name, EquipmentLangTokenName));
 
-            RespawnFlagBehavior behavior = body.GetComponent<RespawnFlagBehavior>();
+            var behavior = body.AddItemBehavior<RespawnFlagBehavior>(1);
+
             var result = DestroyExistingFlag(behavior, out _);
             if (result)
             {
@@ -332,15 +326,11 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             position = new Vector3();
 
-            if (behavior)
+            if (behavior && behavior.flag)
             {
-                GameObject flag = behavior.flag;
-                if (flag)
-                {
-                    position = flag.transform.position;
-                    Object.Destroy(flag);
-                    return true;
-                }
+                position = behavior.flag.transform.position;
+                Object.Destroy(behavior.flag);
+                return true;
             }
 
             return false;
