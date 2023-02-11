@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.Equipment
@@ -62,6 +63,9 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             private TrailRenderer trailRenderer;
 
+            private KinematicCharacterMotor characterMotor;
+            private NetworkInstanceId netId;
+
             public void Awake()
             {
                 currentEquipmentState = ChronoshiftState.Saving;
@@ -77,6 +81,9 @@ namespace ExtradimensionalItems.Modules.Equipment
                     trailRenderer.time = RewindTime.Value;
                     trailRenderer.endColor = new Color(1, 1, 1, 0);
                     trailRenderer.enabled = body.equipmentSlot.stock > 0;
+
+                    characterMotor = body.GetComponent<KinematicCharacterMotor>();
+                    netId = body.GetComponent<NetworkIdentity>().netId;
                 }
             }
 
@@ -108,12 +115,11 @@ namespace ExtradimensionalItems.Modules.Equipment
                     {
                         CharacterState state = states[currentState];
 
-                        var motor = body.GetComponent<KinematicCharacterMotor>();
-                        Vector3 position = motor.Rigidbody.position;
+                        Vector3 position = characterMotor.Rigidbody.position;
                         Vector3 target = state.position;
                         if (speed == 0f) speed = Vector3.Distance(position, target) / teleportTimer;
-                        motor.SetPosition(Vector3.MoveTowards(position, target, speed * Time.fixedDeltaTime));
-                        if (Vector3.Distance(motor.Rigidbody.position, target) < 0.001f)
+                        characterMotor.SetPosition(Vector3.MoveTowards(position, target, speed * Time.fixedDeltaTime));
+                        if (Vector3.Distance(characterMotor.Rigidbody.position, target) < 0.001f)
                         {
                             currentState++;
                             if (currentState >= states.Count)
@@ -125,18 +131,20 @@ namespace ExtradimensionalItems.Modules.Equipment
                                 {
                                     MyLogger.LogMessage(string.Format("Player {0}({1}) finished moving back in time, restoring state.", body.GetUserName(), body.name));
                                     RestoreSkills();
+                                    //RestoreHealth();
                                     RestoreState();
                                 }
                                 else
                                 {
                                     MyLogger.LogMessage(string.Format("Player {0}({1}) finished moving back in time, sending message to server to restore state.", body.GetUserName(), body.name));
                                     RestoreSkills();
-                                    new ChronoshiftRestoreStateOnServer(body.GetComponent<NetworkIdentity>().netId).Send(R2API.Networking.NetworkDestination.Server);
+                                    //RestoreHealth();
+                                    new ChronoshiftRestoreStateOnServer(netId).Send(R2API.Networking.NetworkDestination.Server);
                                     ClearStatesAndStartSaving();
                                 }
                                 return;
                             }
-                            speed = Vector3.Distance(motor.Rigidbody.position, states[currentState].position) / teleportTimer;
+                            speed = Vector3.Distance(characterMotor.Rigidbody.position, states[currentState].position) / teleportTimer;
                         }
                     }
                 }
@@ -251,6 +259,15 @@ namespace ExtradimensionalItems.Modules.Equipment
                 }
             }
 
+            private void RestoreHealth()
+            {
+                CharacterState state = GetRewindState();
+
+                body.healthComponent.health = state.health;
+                body.healthComponent.barrier = state.barrier;
+                body.healthComponent.shield = state.shield;
+            }
+
             public void RestoreState()
             {
                 if (!NetworkServer.active)
@@ -261,10 +278,42 @@ namespace ExtradimensionalItems.Modules.Equipment
                 CharacterState state = GetRewindState();
 
                 body.master.money = state.money;
-                body.healthComponent.health = state.health;
-                body.healthComponent.barrier = state.barrier;
-                body.healthComponent.shield = state.shield;
-                body.outOfDanger = state.outOfDanger;
+
+                //if (body.healthComponent.health != state.health)
+                //{
+                //    if (body.healthComponent.health > state.health)
+                //    {
+                //        body.healthComponent.TakeDamage(new DamageInfo
+                //        {
+                //            attacker = null,
+                //            crit = false,
+                //            position = body.transform.position,
+                //            damageColorIndex = DamageColorIndex.Default,
+                //            damageType = DamageType.BypassArmor,
+                //            damage = body.healthComponent.health - state.health
+                //        });
+                //    }
+                //    else
+                //    {
+                //        body.healthComponent.Heal(state.health - body.healthComponent.health, default);
+                //    }
+                //}
+                //body.healthComponent.RechargeShield(body.healthComponent.shield - state.shield);
+                //body.healthComponent.AddBarrier(body.healthComponent.barrier - state.barrier);
+
+                //body.healthComponent.Networkhealth = state.health;
+                if (Mathf.Abs(body.healthComponent.barrier - state.barrier) > 1f)
+                {
+                    body.healthComponent.Networkbarrier = state.barrier;
+                }
+                if(Mathf.Abs(body.healthComponent.shield - state.shield) > 1f)
+                {
+                    body.healthComponent.Networkshield = state.shield;
+                }
+                if(Mathf.Abs(body.healthComponent.health - state.health) > 1f)
+                {
+                    body.healthComponent.Networkhealth = state.health;
+                }
 
                 // items
                 Inventory inv = new Inventory();
@@ -715,8 +764,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             {
                 MyLogger.LogMessage(string.Format("Player {0}({1}) used equipment {2}, moving back in time...", body.GetUserName(), body.name, EquipmentLangTokenName));
 
-                var identity = body.GetComponent<NetworkIdentity>();
-                if (!identity)
+                if (!body.TryGetComponent<NetworkIdentity>(out var identity))
                 {
                     MyLogger.LogWarning(string.Format("Body {0} did not have NetworkIdentity.", body));
                     return false;
