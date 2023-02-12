@@ -3,6 +3,7 @@ using HarmonyLib;
 using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
+using ShrineOfRepair.Modules;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -251,6 +252,10 @@ namespace ExtradimensionalItems.Modules.Items
         public override void CreateConfig(ConfigFile config)
         {
             CooldownReduction = config.Bind("Item: " + ItemName, "Cooldown Reduction", 10f, "How much cooldown reduction, per stack, in percentage, you get. Stacks hyperbolically, like Haste in WoW or Ability Haste in LoL, as in 100% will reduce cooldown by half, 200% by 3/4, etc.");
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(CooldownReduction, 1f, 25f, 1f);
+            }
         }
     }
 }

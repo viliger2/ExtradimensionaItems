@@ -3,6 +3,7 @@ using ExtradimensionalItems.Modules.Effects;
 using R2API;
 using RoR2;
 using RoR2.Audio;
+using ShrineOfRepair.Modules;
 using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -410,8 +411,17 @@ namespace ExtradimensionalItems.Modules.Equipment
             DamageOverTime = config.Bind("Equipment: " + EquipmentName, "Damage Over Time", 10f, "How much percentage damage from max health DoT deals.");
             DamageFrequency = config.Bind("Equipment: " + EquipmentName, "Damage Over Time Frequency", 3f, "How frequently, in seconds, damage is applied.");
             EnableFuelCellInteraction = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Interaction", true, "Enables interaction with Fuel Cells.");
-            FuelCellSpeedBuff = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Speed Buff", 15f, "How much additional movement speed each Fuel Cell provides, linearly.");
-            FuelCellDamageOverTime = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Damage Over Time Reduction", 15f, "By how much each Fuel Cell reduces DoT damage, exponentially.");
+            FuelCellSpeedBuff = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Speed Buff", 15f, "How much additional movement speed each Fuel Cell provides, linearly. EnableFuelCellInteraction should be enabled for it to work.");
+            FuelCellDamageOverTime = config.Bind("Equipment: " + EquipmentName, "Fuel Cell Damage Over Time Reduction", 15f, "By how much each Fuel Cell reduces DoT damage, exponentially. EnableFuelCellInteraction should be enabled for it to work.");
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(SpeedBuff, 1f, 200f, 1f);
+                RiskOfOptionsCompat.CreateNewOption(DamageOverTime, 1f, 99f, 1f);
+                RiskOfOptionsCompat.CreateNewOption(DamageFrequency, 0.1f, 10f, 0.1f);
+                RiskOfOptionsCompat.CreateNewOption(EnableFuelCellInteraction);
+                RiskOfOptionsCompat.CreateNewOption(FuelCellSpeedBuff, 1f, 50f, 1f);
+                RiskOfOptionsCompat.CreateNewOption(FuelCellDamageOverTime, 1f, 50f, 1f);
+            }
         }
 
     }

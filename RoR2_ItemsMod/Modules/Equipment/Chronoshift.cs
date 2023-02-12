@@ -5,6 +5,7 @@ using R2API;
 using R2API.Networking.Interfaces;
 using RoR2;
 using RoR2.Audio;
+using ShrineOfRepair.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -788,6 +789,13 @@ namespace ExtradimensionalItems.Modules.Equipment
             RewindTime = config.Bind("Equipment: " + EquipmentName, "Rewind time", 10f, "How much, in seconds, back in time equipment takes you.");
             Frequency = config.Bind("Equipment: " + EquipmentName, "Frequency", 0.25f, "How frequently, in seconds, your state in snapshotted. Smaller values will result in higher memory consumption.");
             CooldownConfig = config.Bind("Equipment: " + EquipmentName, "Cooldown", 120f, "What is the cooldown of equipment.");
+
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(RewindTime, 1f, 20f);
+                RiskOfOptionsCompat.CreateNewOption(Frequency, 0.01f, 1f, 0.01f);
+                RiskOfOptionsCompat.CreateNewOption(CooldownConfig, 1f, 200f, 1f);
+            }
         }
     }
 }

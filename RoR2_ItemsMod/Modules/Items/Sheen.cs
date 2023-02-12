@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
+using ShrineOfRepair.Modules;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -66,7 +67,7 @@ namespace ExtradimensionalItems.Modules.Items
                             {
                                 DamageInfo damageInfo2 = new DamageInfo();
                                 damageInfo2.damage = body.damage * body.inventory.GetItemCount(Content.Items.Sheen) * (DamageModifier.Value / 100);
-                                damageInfo2.attacker = attacker.gameObject;
+                                damageInfo2.attacker = damageReport.attacker;
                                 damageInfo2.crit = false;
                                 damageInfo2.position = damageInfo.position;
                                 damageInfo2.damageColorIndex = DamageColorIndex.Item;
@@ -359,6 +360,13 @@ namespace ExtradimensionalItems.Modules.Items
             BuffDuration = config.Bind("Item: " + ItemName, "Buff Duration", 10f, "How long the buff should remain active after using non-primary ability.");
             BuffStackPerItem = config.Bind("Item: " + ItemName, "Buff Stacks Per Item", 2, "How much stacks of a buff you get per item.");
             //MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(CanStack);
+                RiskOfOptionsCompat.CreateNewOption(DamageModifier, 100f, 500f, 10f);
+                RiskOfOptionsCompat.CreateNewOption(BuffDuration, 1f, 30f, 1f);
+                RiskOfOptionsCompat.CreateNewOption(BuffStackPerItem, 1, 10);
+            }
         }
     }
 }

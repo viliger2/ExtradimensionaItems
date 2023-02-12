@@ -5,6 +5,7 @@ using R2API;
 using RoR2;
 using RoR2.Audio;
 using RoR2.Skills;
+using ShrineOfRepair.Modules;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -519,6 +520,14 @@ namespace ExtradimensionalItems.Modules.Items
             BaseDuration = config.Bind("Item: " + ItemName, "Base Parry State Duration", 0.5f, "How long, in seconds, is base Parry skill duration.");
             PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much, in seconds, each stack (after first one) of item adds to Parry skill duration.");
             DamageRadius = config.Bind("Item: " + ItemName, "Release Damage Radius", 15f, "What is the damage radius of Release skill, in meters.");
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(DamageModifier, 100f, 10000f, 10f);
+                RiskOfOptionsCompat.CreateNewOption(MaxBuffStacks, 1, 20);
+                RiskOfOptionsCompat.CreateNewOption(BaseDuration, 0.01f, 1f, 0.01f);
+                RiskOfOptionsCompat.CreateNewOption(PerStackDuration, 0.01f, 1f, 0.01f);
+                RiskOfOptionsCompat.CreateNewOption(DamageRadius, 1f, 50f, 15f);
+            }
         }
     }
 }

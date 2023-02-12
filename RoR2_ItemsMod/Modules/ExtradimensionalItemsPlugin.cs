@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using ExtradimensionalItems.Modules.Equipment;
 using ExtradimensionalItems.Modules.Items;
 using R2API.Networking;
+using ShrineOfRepair.Modules;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,13 +11,14 @@ using static ExtradimensionalItems.Modules.Equipment.Chronoshift;
 
 namespace ExtradimensionalItems.Modules
 {
-    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "1.0")]
+    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.0")]
     [BepInDependency(R2API.ItemAPI.PluginGUID)]
     [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
     [BepInDependency(R2API.Networking.NetworkingAPI.PluginGUID)]
     [BepInDependency(R2API.TempVisualEffectAPI.PluginGUID)]
     [BepInDependency(R2API.SoundAPI.PluginGUID)]
     [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
         public static ConfigEntry<bool> ExtensiveLogging;
@@ -83,6 +85,14 @@ namespace ExtradimensionalItems.Modules
             #region DamageOnCooldownsMessages
             NetworkingAPI.RegisterMessageType<DamageOnCooldowns.DamageOnCooldownsSendNumberBuffs>();
             #endregion
+
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.SetDescription();
+                RiskOfOptionsCompat.SetIcon();
+
+                RiskOfOptionsCompat.CreateNewOption(ExtensiveLogging);
+            }
 
         }
 

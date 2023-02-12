@@ -2,6 +2,7 @@
 using ExtradimensionalItems.Modules.Interactables;
 using R2API;
 using RoR2;
+using ShrineOfRepair.Modules;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -339,6 +340,10 @@ namespace ExtradimensionalItems.Modules.Equipment
         protected override void CreateConfig(ConfigFile config)
         {
             EnableFuelCellInteraction = config.Bind("Equipment: " + EquipmentName, "Enable Fuel Cell Interaction", true, "Enables Fuel Cell interaction, using Fuel Cells to revive instead of destroying checkpoint.");
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(EnableFuelCellInteraction);
+            }
         }
     }
 

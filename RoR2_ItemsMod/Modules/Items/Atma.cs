@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
+using ShrineOfRepair.Modules;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -250,6 +251,11 @@ namespace ExtradimensionalItems.Modules.Items
         {
             PercentBonusDamage = config.Bind("Item: " + ItemName, "Percent Bonus Damage From Health", 0.5f, "How much bonus damage, in percentage, you get from health.");
             PercentBonusDamagePerStack = config.Bind("Item: " + ItemName, "Percent Bonus Damage From Health Per Item", 0.5f, "How much bonus damage, in percentage, per stack (above first), you get from health.");
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(PercentBonusDamage, 0.1f, 5f, 0.1f);
+                RiskOfOptionsCompat.CreateNewOption(PercentBonusDamagePerStack, 0.1f, 5, 0.1f);
+            }
         }
     }
 }

@@ -41,6 +41,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="RiskOfOptions">
+	    <HintPath>lib\RiskOfOptions.dll</HintPath>
+	  </Reference>
 	  <Reference Include="ShrineOfRepair">
 	    <HintPath>lib\ShrineOfRepair.dll</HintPath>
 	  </Reference>
@@ -51,6 +54,9 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Assets\chronoshift">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Assets\config">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Assets\cooldownreduction">

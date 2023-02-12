@@ -2,6 +2,7 @@
 using R2API;
 using R2API.Networking.Interfaces;
 using RoR2;
+using ShrineOfRepair.Modules;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -409,6 +410,11 @@ namespace ExtradimensionalItems.Modules.Items
         {
             DamageBonus = config.Bind("Item: " + ItemName, "Damage Bonus", 10f, "How much additional damage, in percentage, each ability and equipment on cooldown adds.");
             DamageBonusPerStack = config.Bind("Item: " + ItemName, "Damage Bonus Per Stack", 5f, "How much additional damage per item stack, in percentage, each each ability and equipment on cooldown adds.");
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(DamageBonus, 1f, 30f, 1f);
+                RiskOfOptionsCompat.CreateNewOption(DamageBonusPerStack, 1f, 30f, 1f);
+            }
         }
     }
 }
