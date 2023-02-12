@@ -376,6 +376,11 @@ namespace ExtradimensionalItems.Modules.Equipment
             ContentAddition.AddBuffDef(SkullOfDoomBuff);
 
             Content.Buffs.SkullOfDoom = SkullOfDoomBuff;
+
+            if (BetterUICompat.enabled)
+            {
+                BetterUICompat.AddBuffInfo(SkullOfDoomBuff, "BUFF_SKULL_OF_DOOM_NAME", "BUFF_SKULL_OF_DOOM_DESCRIPTION");
+            }
         }
 
         private void CreateVisualEffects()

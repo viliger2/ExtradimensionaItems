@@ -247,6 +247,12 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
+        public override void AddBetterUIStats(ItemDef item)
+        {
+            base.AddBetterUIStats(item);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", PercentBonusDamage.Value / 100, PercentBonusDamagePerStack.Value / 100, BetterUICompat.StackingFormulas.LinearStacking, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTags.Damage);
+        }
+
         public override void CreateConfig(ConfigFile config)
         {
             PercentBonusDamage = config.Bind("Item: " + ItemName, "Percent Bonus Damage From Health", 0.5f, "How much bonus damage, in percentage, you get from health.");

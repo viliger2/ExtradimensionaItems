@@ -19,6 +19,7 @@ namespace ExtradimensionalItems.Modules
     [BepInDependency(R2API.SoundAPI.PluginGUID)]
     [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.xoxfaby.BetterUI", BepInDependency.DependencyFlags.SoftDependency)]
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
         public static ConfigEntry<bool> ExtensiveLogging;

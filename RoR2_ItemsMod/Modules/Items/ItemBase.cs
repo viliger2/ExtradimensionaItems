@@ -62,6 +62,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         public virtual void CreateConfig(ConfigFile config) { }
 
+        public virtual void AddBetterUIStats(ItemDef item) { }
+
         protected virtual void LoadAssetBundle()
         {
             AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.BundleFolder, BundleName));
@@ -96,6 +98,10 @@ namespace ExtradimensionalItems.Modules.Items
             ItemAPI.Add(new CustomItem(ItemDef, CreateItemDisplayRules()));
 
             staticItemDef = ItemDef;
+            if (BetterUICompat.enabled)
+            {
+                AddBetterUIStats(ItemDef);
+            }
         }
 
         protected virtual void Hooks()

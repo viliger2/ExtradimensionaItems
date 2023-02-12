@@ -469,6 +469,9 @@ namespace ExtradimensionalItems.Modules.Items
 
             Content.Buffs.RoyalGuardDamage = RoyalGuardDamageBuff;
 
+            // TODO: replace it with in-game invunerability, no reason to waste resources on this
+            // when game already has and checks for it
+
             var RoyalGuardGraceBuff = ScriptableObject.CreateInstance<BuffDef>();
             RoyalGuardGraceBuff.name = "Royal Guard Grace State";
             RoyalGuardGraceBuff.buffColor = Color.green;
@@ -480,6 +483,13 @@ namespace ExtradimensionalItems.Modules.Items
             ContentAddition.AddBuffDef(RoyalGuardGraceBuff);
 
             Content.Buffs.RoyalGuardGrace = RoyalGuardGraceBuff;
+
+            // end TODO
+            if (BetterUICompat.enabled)
+            {
+                BetterUICompat.AddBuffInfo(RoyalGuardDamageBuff, "BUFF_ROYALGUARD_DAMAGE_NAME", "BUFF_ROYALGUARD_DAMAGE_DESCRIPTION");
+                BetterUICompat.AddBuffInfo(RoyalGuardParryStateBuff, "BUFF_ROYALGUARD_PARRY_NAME", "BUFF_ROYALGUARD_PARRY_DESCRIPTION");
+            }
         }
 
         private void CreateVisualEffects()
@@ -511,6 +521,13 @@ namespace ExtradimensionalItems.Modules.Items
             destroyOnTimer.duration = 0.6f;
 
             R2API.ContentAddition.AddEffect(RoyalGuardExplodeEffectInstance);
+        }
+
+        public override void AddBetterUIStats(ItemDef item)
+        {
+            base.AddBetterUIStats(item);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageModifier.Value / 100, BetterUICompat.StackingFormulas.LinearStacking, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTags.Damage);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW", BaseDuration.Value, PerStackDuration.Value, BetterUICompat.StackingFormulas.LinearStacking, BetterUICompat.StatFormatter.Seconds);
         }
 
         public override void CreateConfig(ConfigFile config)

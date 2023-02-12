@@ -5,7 +5,7 @@ using RiskOfOptions.OptionConfigs;
 using RiskOfOptions.Options;
 using UnityEngine;
 
-namespace ShrineOfRepair.Modules
+namespace ExtradimensionalItems.Modules
 {
     public static class RiskOfOptionsCompat
     {
@@ -43,7 +43,7 @@ namespace ShrineOfRepair.Modules
 
         public static void CreateNewOption(ConfigEntry<float> entry, float min, float max, float increment = 1f)
         {
-            ModSettingsManager.AddOption(new StepSliderOption(entry, new StepSliderConfig() { min = min, max = max, increment = increment} ));
+            ModSettingsManager.AddOption(new StepSliderOption(entry, new StepSliderConfig() { min = min, max = max, increment = increment }));
         }
 
         public static void CreateNewOption(ConfigEntry<bool> entry)
@@ -55,5 +55,6 @@ namespace ShrineOfRepair.Modules
         {
             ModSettingsManager.AddOption(new IntSliderOption(entry, new IntSliderConfig() { min = min, max = max }));
         }
+
     }
 }

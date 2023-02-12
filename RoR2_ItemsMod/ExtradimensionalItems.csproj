@@ -20,6 +20,9 @@
 	  <None Remove="Assets\e4f09554996c16288f7d3b84d38eb70a.bundle.manifest" />
 	  <None Remove="Assets\e8f7180f308b6994d31332a60b4753e7.bundle" />
 	  <None Remove="Assets\e8f7180f308b6994d31332a60b4753e7.bundle.manifest" />
+	  <None Remove="lib\BetterUI.dll" />
+	  <None Remove="lib\RiskOfOptions.dll" />
+	  <None Remove="lib\ShrineOfRepair.dll" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,12 +44,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="BetterUI">
+	    <HintPath>lib\BetterUI.dll</HintPath>
+	  </Reference>
 	  <Reference Include="RiskOfOptions">
 	    <HintPath>lib\RiskOfOptions.dll</HintPath>
 	  </Reference>
 	  <Reference Include="ShrineOfRepair">
 	    <HintPath>lib\ShrineOfRepair.dll</HintPath>
 	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="lib\BetterUI.dll">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="lib\RiskOfOptions.dll">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="lib\ShrineOfRepair.dll">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 
 	<ItemGroup>

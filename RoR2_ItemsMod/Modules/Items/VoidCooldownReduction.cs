@@ -244,6 +244,12 @@ namespace ExtradimensionalItems.Modules.Items
             orig();
         }
 
+        public override void AddBetterUIStats(ItemDef item)
+        {
+            base.AddBetterUIStats(item);
+            BetterUICompat.RegisterStat(item, "BETTERUICOPMAT_COOLDOWN_REDUCTUION", CooldownReduction.Value, BetterUICompat.StackingFormulas.ProbablyExponentialStacking, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTags.CooldownReduction);
+        }
+
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
             args.cooldownMultAdd += (float)(1 / Math.Pow(2, (CooldownReduction.Value * GetCount(sender) / 100))) - 1;

@@ -4,6 +4,8 @@
 		"ITEM_SHEEN_PICKUP": "Go get 'em champ",
 		"ITEM_SHEEN_DESCRIPTION": "After using <style=cIsUtility>non-primary ability</style> gain one stack of <style=cIsDamage>buff</style>. Dealing <style=cIsDamage>damage</style> with <style=cIsUtility>primary ability</style> while having said buff will cause target take additional <style=cIsDamage>{0} base damage</style> <style=cStack>(+{0} per stack)</style> and consume one stack of buff. Buff can be stacked up to <style=cIsUtility>{1}</style> <style=cStack>(+{2} per stack)</style> times.",
 		"ITEM_SHEEN_LORE": "lore",
+		"BUFF_SHEEN_NAME": "Sheen",
+		"BUFF_SHEEN_DESCRIPTION": "Deal additional damage on next primary attack. Tons of damage.",
 
 		"EQUIPMENT_RESPAWN_FLAG_NAME": "Checkpoint",
 		"EQUIPMENT_RESPAWN_FLAG_PICKUP": "It keeps you safe.",
@@ -20,6 +22,8 @@
 		"EQUIPMENT_SKULL_OF_DOOM_DESCRIPTION": "Gain <style=cIsUtility>{0}</style> movement speed, while taking <style=cIsHealth>{1} max health</style> as damage every <style=cIsUtility>{2} seconds</style>. Use again to disable the effect.{3}",
 		"EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL": "\r\nIf <style=cIsHealing>Fuel Cells</style> are present, gain additional <style=cStack>{0} movement speed</style> and <style=cStack>reduce damage by {1}</style> per stack.",
 		"EQUIPMENT_SKULL_OF_DOOM_LORE": "It's a WoW item, the best I can do is either <style=cIsVoid>corruption</style> or <style=cShrine>retcons</style>. Which one do you want?",
+		"BUFF_SKULL_OF_DOOM_NAME": "Skull of Impending Doom",
+		"BUFF_SKULL_OF_DOOM_DESCRIPTION": "Doom is coming, better run for your life.",
 
 		"ITEM_FUEL_CELL_DEPLETED_NAME": "Fuel Cell (Depleted)",
 		"ITEM_FUEL_CELL_DEPLETED_PICKUP": "It saved your life, be grateful.",
@@ -34,6 +38,10 @@
 		"SKILL_ROYAL_GUARD_PARRY_DESC": "Enter a defensive stance for <style=cIsUtility>{0}</style> <style=cStack>(+{1} per stack)</style> seconds, deflecting first non-periodic hit. <style=cIsUtility>Depending for how long you were in the stance</style> gain <style=cIsDamage>3 to 1</style> damage buff(s). If you have <style=cIsDamage>damage buffs</style> when using <style=cIsUtility>Block</style>, your <style=cIsUtility>Primary Skill</style> gets replaced with <style=cIsUtility>Release</style>. You can have up to <style=cIsDamage>{2} stacks of damage buff</style>.",
 		"SKILL_ROYAL_GUARD_RELEASE_NAME": "Release",
 		"SKILL_ROYAL_GUARD_RELEASE_DESC": "<style=cIsDamage>Consume all damage buffs</style> and deal <style=cIsDamage>{0}</style> <style=cStack>(+{0} per stack)</style> base damage per buff stack to everyone in <style=cIsDamage>{1}m</style> radius. Has increased proc coefficient.\r\n\r\nWow you are fast.",
+		"BUFF_ROYALGUARD_DAMAGE_NAME": "Pizza Slices",
+		"BUFF_ROYALGUARD_DAMAGE_DESCRIPTION": "Determines how much damage you will deal on using Release skill.",
+		"BUFF_ROYALGUARD_PARRY_NAME": "Royal Guard",
+		"BUFF_ROYALGUARD_PARRY_DESCRIPTION": "ROYALGUNSWORDTRICK",
 
 		"ITEM_COOLDOWN_REDUCTION_VOID_NAME": "Sorcerer's Pills",
 		"ITEM_COOLDOWN_REDUCTION_VOID_PICKUP": "Grabbin' pills",
@@ -44,6 +52,8 @@
 		"ITEM_DAMAGE_ON_COOLDOWNS_PICKUP": "It is a firestarter.",
 		"ITEM_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "For each <style=cIsUtility>ability and equipment</style> on cooldown gain <style=cIsDamage>{0}<style=cStack>(+{1} per stack)</style> bonus damage.</style>",
 		"ITEM_DAMAGE_ON_COOLDOWNS_LORE": "lore",
+		"BUFF_DAMAGE_ON_COOLDOWNS_NAME": "Fueling Bellows",
+		"BUFF_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "All damage in increased.",
 
 		"EQUIPMENT_CHRONOSHIFT_NAME": "Chronoshift",
 		"EQUIPMENT_CHRONOSHIFT_PICKUP": "Let's do the Time Warp again!",
@@ -53,7 +63,12 @@
 		"ITEM_ATMAS_IMPALER_NAME": "Atma's Impaler",
 		"ITEM_ATMAS_IMPALER_PICKUP": "Metagolem lives!",
 		"ITEM_ATMAS_IMPALER_DESCRIPTION": "Gain additional <style=cIsDamage>base damage</style> equal to <style=cIsHealth>{0} <style=cStack>(+{1} per stack)</style> maximum health</style>.",
-		"ITEM_ATMAS_IMPALER_LORE": "lore"
+		"ITEM_ATMAS_IMPALER_LORE": "lore",
+
+		"BETTERUICOMPAT_DESC_STACKS": "Max Buff Stacks",
+		"BETTERUICOMPAT_DESC_DAMAGE": "Damage",
+		"BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW": "Parry Window",
+		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Cooldown Reduction"
 	},
 	"RU": {
 		"ITEM_SHEEN_NAME": "Сияние",

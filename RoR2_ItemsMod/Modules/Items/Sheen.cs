@@ -334,6 +334,12 @@ namespace ExtradimensionalItems.Modules.Items
             ContentAddition.AddBuffDef(SheenBuff);
 
             Content.Buffs.Sheen = SheenBuff;
+
+            if (BetterUICompat.enabled)
+            {
+                BetterUICompat.AddBuffInfo(SheenBuff, "BUFF_SHEEN_NAME", "BUFF_SHEEN_DESCRIPTION");
+            }
+
         }
 
         private void CreateVisualEffects()
@@ -351,6 +357,13 @@ namespace ExtradimensionalItems.Modules.Items
 
             TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectL", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.Sheen); }, true, "HandL");
             TempVisualEffectAPI.AddTemporaryVisualEffect(SheenEffectInstance.InstantiateClone("SheenEffectR", false), (CharacterBody body) => { return body.HasBuff(Content.Buffs.Sheen); }, true, "HandR");
+        }
+
+        public override void AddBetterUIStats(ItemDef item)
+        {
+            base.AddBetterUIStats(item);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageModifier.Value / 100, BetterUICompat.StackingFormulas.LinearStacking, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTags.Damage);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_STACKS", BuffStackPerItem.Value, BetterUICompat.StackingFormulas.LinearStacking, BetterUICompat.StatFormatter.Charges);
         }
 
         public override void CreateConfig(ConfigFile config)

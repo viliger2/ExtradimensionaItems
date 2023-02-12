@@ -351,6 +351,11 @@ namespace ExtradimensionalItems.Modules.Items
             ContentAddition.AddBuffDef(DamageOnCooldownsBuff);
 
             Content.Buffs.DamageOnCooldowns = DamageOnCooldownsBuff;
+
+            if (BetterUICompat.enabled)
+            {
+                BetterUICompat.AddBuffInfo(DamageOnCooldownsBuff, "BUFF_DAMAGE_ON_COOLDOWNS_NAME", "BUFF_DAMAGE_ON_COOLDOWNS_DESCRIPTION");
+            }
         }
 
         protected override void Hooks()
@@ -404,6 +409,12 @@ namespace ExtradimensionalItems.Modules.Items
                 body.RemoveBuff(Content.Buffs.DamageOnCooldowns);
                 count++;
             }
+        }
+
+        public override void AddBetterUIStats(ItemDef item)
+        {
+            base.AddBetterUIStats(item);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageBonus.Value / 100, DamageBonusPerStack.Value / 100, BetterUICompat.StackingFormulas.LinearStacking, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTags.Damage);
         }
 
         public override void CreateConfig(ConfigFile config)
