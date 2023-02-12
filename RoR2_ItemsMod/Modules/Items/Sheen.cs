@@ -36,41 +36,37 @@ namespace ExtradimensionalItems.Modules.Items
 
             private void Body_onSkillActivatedServer(GenericSkill skill)
             {
-                var self = body;
                 int itemCount = body?.inventory?.GetItemCount(Content.Items.Sheen) ?? 0;
                 if (itemCount > 0)
                 {
-                    var skillLocator = self.GetComponent<SkillLocator>();
-                    if (skillLocator?.primary != skill && self.GetBuffCount(Content.Buffs.Sheen) < BuffStackPerItem.Value * itemCount)
+                    if (body.skillLocator.primary != skill && body.GetBuffCount(Content.Buffs.Sheen) < BuffStackPerItem.Value * itemCount)
                     {
-                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", self.GetUserName(), self.name, Content.Buffs.Sheen.name));
-                        self.AddTimedBuff(Content.Buffs.Sheen, BuffDuration.Value);
+                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", body.GetUserName(), body.name, Content.Buffs.Sheen.name));
+                        body.AddTimedBuff(Content.Buffs.Sheen, BuffDuration.Value);
                     }
-                    else if (skillLocator?.primary == skill && self.HasBuff(Content.Buffs.Sheen) && self.TryGetComponent(out SheenBehavior component))
+                    else if (body.skillLocator.primary == skill && body.HasBuff(Content.Buffs.Sheen))
                     {
-                        component.usedPrimary = true;
+                        this.usedPrimary = true;
                     }
                 }
             }
 
             private void GlobalEventManager_onServerDamageDealt(DamageReport damageReport)
             {
-                var damageInfo = damageReport.damageInfo;
-                var attacker = damageInfo?.attacker ?? null;
-                if (attacker && attacker.TryGetComponent<CharacterBody>(out var body))
+                if (this.usedPrimary)
                 {
-                    if (body == this.body && body.HasBuff(Content.Buffs.Sheen))
+                    var damageInfo = damageReport.damageInfo;
+                    var attacker = damageReport?.attackerBody ?? null;
+                    var victim = damageReport?.victimBody ?? null;
+                    if (attacker && victim)
                     {
-                        var victim = damageReport.victimBody;
-                        if (damageInfo != null && !damageInfo.rejected)
+                        if (attacker == this.body && attacker.HasBuff(Content.Buffs.Sheen))
                         {
-                            if ((damageInfo.damageType & DamageType.DoT) != DamageType.DoT && this.usedPrimary)
+                            if (!damageInfo.rejected && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
                             {
-                                var victimBody = victim.GetComponent<CharacterBody>();
-
                                 DamageInfo damageInfo2 = new DamageInfo();
                                 damageInfo2.damage = body.damage * body.inventory.GetItemCount(Content.Items.Sheen) * (DamageModifier.Value / 100);
-                                damageInfo2.attacker = attacker;
+                                damageInfo2.attacker = attacker.gameObject;
                                 damageInfo2.crit = false;
                                 damageInfo2.position = damageInfo.position;
                                 damageInfo2.damageColorIndex = DamageColorIndex.Item;
@@ -81,7 +77,7 @@ namespace ExtradimensionalItems.Modules.Items
                                 body.RemoveTimedBuff(Content.Buffs.Sheen);
                                 this.usedPrimary = false;
 
-                                victimBody.healthComponent.TakeDamage(damageInfo2);
+                                damageReport.victim.TakeDamage(damageInfo2);
                             }
                         }
                     }

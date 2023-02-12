@@ -384,10 +384,8 @@ namespace ExtradimensionalItems.Modules.Equipment
             var emptyObject = AssetBundle.LoadAsset<GameObject>("EmptyObject.prefab");
 
             var fireAsset = AssetBundle.LoadAsset<GameObject>("parFire.prefab");
-            if (fireAsset.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
-            {
-                particle.GetComponent<Renderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matFirePillarParticle.mat").WaitForCompletion();
-            }
+
+            fireAsset.GetComponent<ParticleSystem>().GetComponent<Renderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matFirePillarParticle.mat").WaitForCompletion();
 
             var grounfFire = emptyObject.AddComponent<GroundFires>();
             grounfFire.fire = fireAsset;

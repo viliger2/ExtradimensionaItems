@@ -12,6 +12,14 @@ namespace ExtradimensionalItems.Modules.Items
         public class DamageOnCooldownsBehavior : CharacterBody.ItemBehavior
         {
             private int prevNumberOfBuffs;
+            private NetworkInstanceId netId;
+            public void OnEnable()
+            {
+                if (body)
+                {
+                    this.netId = body.GetComponent<NetworkIdentity>().netId;
+                }
+            }
 
             public void FixedUpdate()
             {
@@ -27,7 +35,7 @@ namespace ExtradimensionalItems.Modules.Items
                     {
                         if (!NetworkServer.active)
                         {
-                            new DamageOnCooldownsSendNumberBuffs(body.gameObject.GetComponent<NetworkIdentity>().netId, newBuffCount).Send(R2API.Networking.NetworkDestination.Server);
+                            new DamageOnCooldownsSendNumberBuffs(netId, newBuffCount).Send(R2API.Networking.NetworkDestination.Server);
                         }
                         else
                         {
