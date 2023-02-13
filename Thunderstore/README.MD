@@ -3,6 +3,12 @@ A mod that aims to add ideas from another games, while extending the playstyles 
 
 <table>
   <tr>
+    <th>Icon (more text so icons are bigger)</th>
+    <th>Name</th>
+    <th>Decription</th>
+    <th>Type</th>
+  </tr>
+  <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texSheenIcon.png" alt="Sheen"></td>
     <td>Sheen</td>
     <td>After using non-primary ability gain one stack of buff. Dealing damage with primary ability while having said buff will cause target take additional <b>250%</b> base damage (<b>+250%</b> per stack) and consume one stack of buff. Buff can be stacked up to <b>2</b> (<b>+2</b> per stack) times.</td>
@@ -47,7 +53,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texAtmaIcon.png" alt="Atma's Impaler"></td>
     <td>Atma's Impaler</td>
-    <td>Gain additional base damage equal to <b>0.5%</b> (<b>+0.5%</b> per stack) maximum health</style>.</td>
+    <td>Gain additional base damage equal to <b>0.5%</b> (<b>+0.5%</b> per stack) maximum health.</td>
     <td>Equipment</td>
   </tr>   
 </table>
