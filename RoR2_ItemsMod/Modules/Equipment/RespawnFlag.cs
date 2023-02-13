@@ -3,6 +3,7 @@ using ExtradimensionalItems.Modules.Interactables;
 using R2API;
 using RoR2;
 using ShrineOfRepair.Modules;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -243,8 +244,33 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         private void LoadInteractable()
         {
-            var flagInteractablePrefab2 = RespawnFlagInteractable.GetInteractable(AssetBundle.LoadAsset<GameObject>("RespawnFlagInteractable"), EquipmentLangTokenName);
+            var flagInteractablePrefab2 = GetInteractable(AssetBundle.LoadAsset<GameObject>("RespawnFlagInteractable"), EquipmentLangTokenName);
             flagInteractablePrefab = PrefabAPI.InstantiateClone(flagInteractablePrefab2, "RespawnFlagInteractable"); // always use PrefabAPI, it will network it
+        }
+
+        private GameObject GetInteractable(GameObject interactableModel, string langToken)
+        {
+            interactableModel.AddComponent<NetworkIdentity>();
+
+            var mesh = interactableModel.transform.Find("mdlRespawnFlagInteractable").gameObject;
+
+            var interactableController = interactableModel.AddComponent<RespawnFlagInteractableManager>();
+            interactableController.langToken = langToken;
+
+            var modelLocator = interactableModel.AddComponent<ModelLocator>();
+            modelLocator.modelTransform = mesh.transform;
+            modelLocator.dontDetatchFromParent = false;
+            modelLocator.autoUpdateModelTransform = true;
+
+            var entityLocator = mesh.AddComponent<EntityLocator>();
+            entityLocator.entity = interactableModel;
+
+            var highlightController = interactableModel.AddComponent<Highlight>();
+            highlightController.targetRenderer = interactableModel.GetComponentsInChildren<SkinnedMeshRenderer>().Where(x => x.gameObject.name.Contains("mdlRespawnFlagInteractable")).First();
+            highlightController.strength = 1;
+            highlightController.highlightColor = Highlight.HighlightColor.interactive;
+
+            return interactableModel;
         }
 
         public override string GetFormatedDiscription(string pickupString)
@@ -310,7 +336,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             }
 
             GameObject gameObject = Object.Instantiate(flagInteractablePrefab, body.transform.position, Quaternion.identity);
-            RespawnFlagInteractable.RespawnFlagInteractableManager flagManager = gameObject.GetComponent<RespawnFlagInteractable.RespawnFlagInteractableManager>();
+            RespawnFlagInteractableManager flagManager = gameObject.GetComponent<RespawnFlagInteractableManager>();
             flagManager.owner = body;
 
             NetworkServer.Spawn(gameObject);
