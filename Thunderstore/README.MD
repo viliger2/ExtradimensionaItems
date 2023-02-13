@@ -47,7 +47,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texChronoshiftIcon.png" alt="Chronoshift"></td>
     <td>Chronoshift</td>
-    <td>Move <b>10</b> seconds back in time. Restores position, money, items, health, barrier, shield and skill cooldowns to the state they were. Snapshots are taken every <b>0.25</b> seconds.<br> 120 second cooldown.</td> 
+    <td>Move <b>10</b> seconds back in time. Restores position, money, items, health, barrier, shield and skill cooldowns to the state they were. Snapshots are taken every <b>0.25</b> seconds.<br> <b>120</b> second cooldown.</td> 
     <td>Equipment</td>
   </tr>  
   <tr>
@@ -62,8 +62,8 @@ Things marked in bold can be edited via config. Mod supports in-game config setu
 
 If you find any bugs, want to write lore or help me with assets\code send me a message on discord at **viliger#9877** or submit an issue\pull request on github. 
 
+## Known issues\things
 <details>
-<summary><h2>Known issues\things</h2></summary>
 
   * Some effects and sounds might not work on third client (as in not server and not client that sound comes from), but as far as functionality everything should be working. 
   * Respawn Flag:
@@ -77,8 +77,9 @@ If you find any bugs, want to write lore or help me with assets\code send me a m
     * Cooldown reduction from Alien Head is applied after Sorcerer's Pills. For example, Commando's special has base cooldown of 9 seconds, 10 pills will bring it down to 4.5 and additional Alien Head will bring it down to 3.375. This is R2API behavior, not much I can do without not using it and even then, I think it is fine as it is.
 
 </details>
+
+## Credits
 <details>
-<summary><h2>Credits</h2></summary>
 
   * Models come from https://thebasemesh.com/ unless stated otherwise.
   * Pizza Box - model comes from https://sketchfab.com/3d-models/pizza-box-7c982c66dade4967961f13e1fea6c07a, sound effects come from DMC4 and DMC5, property of Capcom, effects come from World of Warcraft, property of Blizzard
@@ -86,8 +87,9 @@ If you find any bugs, want to write lore or help me with assets\code send me a m
   * Chronoshift - cut out from Ekko model from League of Legends, property of Riot Games
   * Skull of Doom - model from Tales of Monkey Island, property of Telltale Games, sounds come from World of Warcraft, property of Blizzard
 </details>
+
+## TODO\Future things
 <details>
-<summary><h2>TODO\Future things</h2></summary>
 
   * Implement item displays for modded characters.
   * Fix logbook item displays. Only Chronoshift currently has "display", as in it follows what I put in the code, but it needs a lot of fixing to look good.

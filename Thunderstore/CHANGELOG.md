@@ -1,4 +1,5 @@
-# Changelog
+<details>
+<summary>0.5.0 </summary>
 
-## 0.5.0 
-	* Initial release
+* Initial release
+</details>
