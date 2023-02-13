@@ -3,7 +3,6 @@ using HarmonyLib;
 using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
-using ShrineOfRepair.Modules;
 using System;
 using System.Linq;
 using UnityEngine;

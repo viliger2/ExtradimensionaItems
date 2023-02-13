@@ -2,7 +2,6 @@
 using ExtradimensionalItems.Modules.Interactables;
 using R2API;
 using RoR2;
-using ShrineOfRepair.Modules;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -290,7 +289,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             {
                 body.AddItemBehavior<RespawnFlagBehavior>(1);
             }
-            else if(body.TryGetComponent<RespawnFlagBehavior>(out var behavior))
+            else if (body.TryGetComponent<RespawnFlagBehavior>(out var behavior))
             {
                 // check for MUL-T, checking if the other slot is empty when
                 // picking up equipment that is not RespawnFlag so we don't despawn

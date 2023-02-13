@@ -1,5 +1,4 @@
 ﻿using BepInEx.Configuration;
-using ExtradimensionalItems.Modules;
 using RiskOfOptions;
 using RiskOfOptions.OptionConfigs;
 using RiskOfOptions.Options;

@@ -1,7 +1,5 @@
 ﻿using EntityStates;
 using RoR2;
-using System;
-using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.SkillStates
 {

@@ -3,7 +3,6 @@ using ExtradimensionalItems.Modules.Effects;
 using R2API;
 using RoR2;
 using RoR2.Audio;
-using ShrineOfRepair.Modules;
 using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

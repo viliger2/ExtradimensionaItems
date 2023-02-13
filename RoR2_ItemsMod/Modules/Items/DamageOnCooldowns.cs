@@ -2,7 +2,6 @@
 using R2API;
 using R2API.Networking.Interfaces;
 using RoR2;
-using ShrineOfRepair.Modules;
 using UnityEngine;
 using UnityEngine.Networking;
 

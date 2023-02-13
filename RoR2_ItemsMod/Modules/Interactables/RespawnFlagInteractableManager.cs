@@ -1,9 +1,9 @@
 ﻿using RoR2;
-using static ExtradimensionalItems.Modules.Equipment.RespawnFlag;
-using UnityEngine.Networking;
-using UnityEngine;
 using RoR2.Audio;
+using UnityEngine;
 using UnityEngine.Bindings;
+using UnityEngine.Networking;
+using static ExtradimensionalItems.Modules.Equipment.RespawnFlag;
 
 namespace ExtradimensionalItems.Modules.Interactables
 {

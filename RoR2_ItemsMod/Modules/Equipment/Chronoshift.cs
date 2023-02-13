@@ -5,12 +5,10 @@ using R2API;
 using R2API.Networking.Interfaces;
 using RoR2;
 using RoR2.Audio;
-using ShrineOfRepair.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
 namespace ExtradimensionalItems.Modules.Equipment
@@ -307,11 +305,11 @@ namespace ExtradimensionalItems.Modules.Equipment
                 {
                     body.healthComponent.Networkbarrier = state.barrier;
                 }
-                if(Mathf.Abs(body.healthComponent.shield - state.shield) > 1f)
+                if (Mathf.Abs(body.healthComponent.shield - state.shield) > 1f)
                 {
                     body.healthComponent.Networkshield = state.shield;
                 }
-                if(Mathf.Abs(body.healthComponent.health - state.health) > 1f)
+                if (Mathf.Abs(body.healthComponent.health - state.health) > 1f)
                 {
                     body.healthComponent.Networkhealth = state.health;
                 }
@@ -743,7 +741,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             if (body.TryGetComponent<ChronoshiftBehavior>(out var chronoshiftBehavior))
             {
-                if(chronoshiftBehavior.currentEquipmentState == ChronoshiftBehavior.ChronoshiftState.Moving)
+                if (chronoshiftBehavior.currentEquipmentState == ChronoshiftBehavior.ChronoshiftState.Moving)
                 {
                     return false;
                 }

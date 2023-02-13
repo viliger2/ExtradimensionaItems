@@ -3,7 +3,6 @@ using BepInEx.Configuration;
 using ExtradimensionalItems.Modules.Equipment;
 using ExtradimensionalItems.Modules.Items;
 using R2API.Networking;
-using ShrineOfRepair.Modules;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;

@@ -1,7 +1,6 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
-using ShrineOfRepair.Modules;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items

@@ -5,7 +5,6 @@ using R2API;
 using RoR2;
 using RoR2.Audio;
 using RoR2.Skills;
-using ShrineOfRepair.Modules;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
