@@ -54,7 +54,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texAtmaIcon.png" alt="Atma's Impaler"></td>
     <td>Atma's Impaler</td>
     <td>Gain additional base damage equal to <b>0.5%</b> (<b>+0.5%</b> per stack) maximum health.</td>
-    <td>Equipment</td>
+    <td>Uncommon</td>
   </tr>   
 </table>
 
