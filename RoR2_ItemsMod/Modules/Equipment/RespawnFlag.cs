@@ -306,7 +306,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 var result = DestroyExistingFlag(behavior, out Vector3 position);
                 if (result)
                 {
-                    MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2} and picked up new equipment, destroying it and spawning equipment at its place.", body.GetUserName(), body.name, EquipmentLangTokenName));
+                    MyLogger.LogMessage("Player {0}({1}) has existing {2} and picked up new equipment, destroying it and spawning equipment at its place.", body.GetUserName(), body.name, EquipmentLangTokenName);
                     PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(Content.Equipment.RespawnFlag.equipmentIndex);
                     PickupDropletController.CreatePickupDroplet(pickupIndex, position, Vector3.up * 5);
                     Object.Destroy(behavior);
@@ -324,14 +324,14 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             CharacterBody body = slot.characterBody;
 
-            MyLogger.LogMessage(string.Format("Player {0}({1}) used equipment {2}.", body.GetUserName(), body.name, EquipmentLangTokenName));
+            MyLogger.LogMessage("Player {0}({1}) used equipment {2}.", body.GetUserName(), body.name, EquipmentLangTokenName);
 
             var behavior = body.AddItemBehavior<RespawnFlagBehavior>(1);
 
             var result = DestroyExistingFlag(behavior, out _);
             if (result)
             {
-                MyLogger.LogMessage(string.Format("Player {0}({1}) has existing {2}, destroying it.", body.GetUserName(), body.name, EquipmentLangTokenName));
+                MyLogger.LogMessage("Player {0}({1}) has existing {2}, destroying it.", body.GetUserName(), body.name, EquipmentLangTokenName);
             }
 
             GameObject gameObject = Object.Instantiate(flagInteractablePrefab, body.transform.position, Quaternion.identity);

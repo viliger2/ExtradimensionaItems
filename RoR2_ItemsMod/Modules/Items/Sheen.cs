@@ -41,7 +41,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     if (body.skillLocator.primary != skill && body.GetBuffCount(Content.Buffs.Sheen) < BuffStackPerItem.Value * itemCount)
                     {
-                        MyLogger.LogMessage(string.Format("Player {0}({1}) used non-primary skill, adding buff {2}.", body.GetUserName(), body.name, Content.Buffs.Sheen.name));
+                        MyLogger.LogMessage("Player {0}({1}) used non-primary skill, adding buff {2}.", body.GetUserName(), body.name, Content.Buffs.Sheen.name);
                         body.AddTimedBuff(Content.Buffs.Sheen, BuffDuration.Value);
                     }
                     else if (body.skillLocator.primary == skill && body.HasBuff(Content.Buffs.Sheen))
@@ -72,7 +72,7 @@ namespace ExtradimensionalItems.Modules.Items
                                 damageInfo2.damageColorIndex = DamageColorIndex.Item;
                                 damageInfo2.damageType = DamageType.Generic;
 
-                                MyLogger.LogMessage(string.Format("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage, victim.name));
+                                MyLogger.LogMessage("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage.ToString(), victim.name);
 
                                 body.RemoveTimedBuff(Content.Buffs.Sheen);
                                 this.usedPrimary = false;

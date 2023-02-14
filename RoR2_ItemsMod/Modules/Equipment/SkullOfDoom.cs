@@ -291,7 +291,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 {
                     if (body.HasBuff(Content.Buffs.SkullOfDoom))
                     {
-                        MyLogger.LogMessage(string.Format("Player {0}({1}) picked up another equipment while having {2} buff, removing the buff.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name));
+                        MyLogger.LogMessage("Player {0}({1}) picked up another equipment while having {2} buff, removing the buff.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name);
                         body.RemoveBuff(Content.Buffs.SkullOfDoom);
                         body.AddItemBehavior<SkullOfDoomBehavior>(0);
                     }
@@ -325,13 +325,13 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             if (body.HasBuff(Content.Buffs.SkullOfDoom))
             {
-                MyLogger.LogMessage(string.Format("Player {0}({1}) used {2}, removing damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName));
+                MyLogger.LogMessage("Player {0}({1}) used {2}, removing damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName);
                 body.RemoveBuff(Content.Buffs.SkullOfDoom);
                 body.AddItemBehavior<SkullOfDoomBehavior>(0);
             }
             else
             {
-                MyLogger.LogMessage(string.Format("Player {0}({1}) used {2}, applying damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName));
+                MyLogger.LogMessage("Player {0}({1}) used {2}, applying damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName);
                 DealDamage(body);
                 body.AddBuff(Content.Buffs.SkullOfDoom);
                 body.AddItemBehavior<SkullOfDoomBehavior>(1);

@@ -80,14 +80,14 @@ namespace ExtradimensionalItems.Modules.Interactables
 
             if (EnableFuelCellInteraction.Value && owner.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) > 0)
             {
-                MyLogger.LogMessage(string.Format("Player {0}({1}) has died, has {2} up and has {3} in their inventory, respawning them and replacing {3} with {4}.", owner.GetUserName(), owner.name, $"INTERACTABLE_{langToken}", RoR2Content.Items.EquipmentMagazine.name, Content.Items.FuelCellDepleted.name));
+                MyLogger.LogMessage("Player {0}({1}) has died, has {2} up and has {3} in their inventory, respawning them and replacing {3} with {4}.", owner.GetUserName(), owner.name, $"INTERACTABLE_{langToken}", RoR2Content.Items.EquipmentMagazine.name, Content.Items.FuelCellDepleted.name);
                 owner.inventory.RemoveItem(RoR2Content.Items.EquipmentMagazine);
                 owner.inventory.GiveItem(Content.Items.FuelCellDepleted);
                 CharacterMasterNotificationQueue.SendTransformNotification(master, RoR2Content.Items.EquipmentMagazine.itemIndex, Content.Items.FuelCellDepleted.itemIndex, CharacterMasterNotificationQueue.TransformationType.Default);
             }
             else
             {
-                MyLogger.LogMessage(string.Format("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", owner.GetUserName(), owner.name, $"INTERACTABLE_{langToken}"));
+                MyLogger.LogMessage("Player {0}({1}) has died and has {2} up, respawning them and destroying interactable.", owner.GetUserName(), owner.name, $"INTERACTABLE_{langToken}");
                 RespawnFlagBehavior behavior = owner.GetComponent<RespawnFlagBehavior>();
                 if (behavior)
                 {
@@ -154,7 +154,7 @@ namespace ExtradimensionalItems.Modules.Interactables
 
             var body = activator.GetComponent<CharacterBody>();
 
-            MyLogger.LogMessage(string.Format("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}"));
+            MyLogger.LogMessage("Player {0}({1}) used their {2}, spawning equipment and destroying interactable.", body.GetUserName(), body.name, $"INTERACTABLE_{langToken}");
             PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(Content.Equipment.RespawnFlag.equipmentIndex);
             PickupDropletController.CreatePickupDroplet(pickupIndex, transform.position, Vector3.up * 5 + transform.forward * 3);
 

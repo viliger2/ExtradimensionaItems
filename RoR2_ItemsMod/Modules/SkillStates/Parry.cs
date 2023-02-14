@@ -17,7 +17,10 @@ namespace ExtradimensionalItems.Modules.SkillStates
             if (NetworkServer.active)
             {
                 characterBody.AddTimedBuff(Content.Buffs.RoyalGuardParryState, duration);
-                MyLogger.LogMessage(string.Format("Player {0}({1}) entered parry state for {2} seconds.", base.characterBody.GetUserName(), base.characterBody.name, duration));
+#if DEBUG
+                //characterBody.AddBuff(Content.Buffs.RoyalGuardDamage);
+#endif
+                MyLogger.LogMessage("Player {0}({1}) entered parry state for {2} seconds.", base.characterBody.GetUserName(), base.characterBody.name, duration.ToString());
 
             }
             if (isAuthority)
@@ -58,12 +61,12 @@ namespace ExtradimensionalItems.Modules.SkillStates
             if (fixedAge >= duration && isAuthority)
             {
                 outer.SetNextStateToMain();
-                MyLogger.LogMessage(string.Format("Player {0}({1}) has left parry state due to timeout without being damaged.", characterBody.GetUserName(), characterBody.name));
+                MyLogger.LogMessage("Player {0}({1}) has left parry state due to timeout without being damaged.", characterBody.GetUserName(), characterBody.name);
             }
             if (buffAdded && !characterBody.HasBuff(Content.Buffs.RoyalGuardParryState) && isAuthority)
             {
                 outer.SetNextStateToMain();
-                MyLogger.LogMessage(string.Format("Player {0}({1}) has left parry state because they don't have parry state buff after being damaged.", characterBody.GetUserName(), characterBody.name));
+                MyLogger.LogMessage("Player {0}({1}) has left parry state because they don't have parry state buff after being damaged.", characterBody.GetUserName(), characterBody.name);
             }
         }
 

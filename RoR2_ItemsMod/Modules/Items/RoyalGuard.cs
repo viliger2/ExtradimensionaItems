@@ -364,14 +364,14 @@ namespace ExtradimensionalItems.Modules.Items
                     body.AddBuff(Content.Buffs.RoyalGuardDamage);
                 }
                 // end TODO
-                MyLogger.LogMessage(string.Format("Player {0}({1}) got damaged in {2} after entering parry state. Adding {3} damage buff(s), adding grace buff and removing parry state buff.", body.GetUserName(), body.name, parryStateDuration - timedBuff.timer, numberOfBuffs));
+                MyLogger.LogMessage("Player {0}({1}) got damaged in {2} after entering parry state. Adding {3} damage buff(s), adding grace buff and removing parry state buff.", body.GetUserName(), body.name, (parryStateDuration - timedBuff.timer).ToString(), numberOfBuffs.ToString());
                 body.AddTimedBuff(Content.Buffs.RoyalGuardGrace, 0.0167f);
                 body.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
                 damageInfo.rejected = true;
             }
             else if (body.HasBuff(Content.Buffs.RoyalGuardGrace))
             {
-                MyLogger.LogMessage(string.Format("Player {0}({1}) got damaged while having grace buff, rejecting received damage.", body.GetUserName(), body.name));
+                MyLogger.LogMessage("Player {0}({1}) got damaged while having grace buff, rejecting received damage.", body.GetUserName(), body.name);
                 damageInfo.rejected = true;
             }
             orig(self, damageInfo);

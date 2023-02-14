@@ -21,11 +21,11 @@ namespace ExtradimensionalItems.Modules
             logger.LogInfo(data);
         }
 
-        public static void LogMessage(object data)
+        public static void LogMessage(string data, params string[] args)
         {
             if (ExtensiveLogging.Value)
             {
-                logger.LogMessage(data);
+                logger.LogMessage(string.Format(data, args));
             }
         }
     }

@@ -128,14 +128,14 @@ namespace ExtradimensionalItems.Modules.Equipment
                                 trailRenderer.enabled = false;
                                 if (NetworkServer.active)
                                 {
-                                    MyLogger.LogMessage(string.Format("Player {0}({1}) finished moving back in time, restoring state.", body.GetUserName(), body.name));
+                                    MyLogger.LogMessage("Player {0}({1}) finished moving back in time, restoring state.", body.GetUserName(), body.name);
                                     RestoreSkills();
                                     //RestoreHealth();
                                     RestoreState();
                                 }
                                 else
                                 {
-                                    MyLogger.LogMessage(string.Format("Player {0}({1}) finished moving back in time, sending message to server to restore state.", body.GetUserName(), body.name));
+                                    MyLogger.LogMessage("Player {0}({1}) finished moving back in time, sending message to server to restore state.", body.GetUserName(), body.name);
                                     RestoreSkills();
                                     //RestoreHealth();
                                     new ChronoshiftRestoreStateOnServer(netId).Send(R2API.Networking.NetworkDestination.Server);
@@ -353,7 +353,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
                 EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Chronoshift_End", body.gameObject);
 
-                MyLogger.LogMessage(string.Format("Player {0}({1}) finished restoring state, starting proccess of saving states.", body.GetUserName(), body.name));
+                MyLogger.LogMessage("Player {0}({1}) finished restoring state, starting proccess of saving states.", body.GetUserName(), body.name);
 
                 ClearStatesAndStartSaving();
             }
@@ -400,7 +400,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             {
                 if (NetworkServer.active)
                 {
-                    MyLogger.LogMessage("Recieved ChronoshiftStartMovingOnClient message on server, doing nothing...");
+                    MyLogger.LogInfo("Recieved ChronoshiftStartMovingOnClient message on server, doing nothing...");
                     return;
                 }
 
@@ -442,7 +442,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             {
                 if (!NetworkServer.active)
                 {
-                    MyLogger.LogMessage("Recieved ChronoshiftRestoreStateOnServer message on client, doing nothing...");
+                    MyLogger.LogInfo("Recieved ChronoshiftRestoreStateOnServer message on client, doing nothing...");
                     return;
                 }
 
@@ -761,7 +761,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             if (body.gameObject.TryGetComponent<ChronoshiftBehavior>(out var component))
             {
-                MyLogger.LogMessage(string.Format("Player {0}({1}) used equipment {2}, moving back in time...", body.GetUserName(), body.name, EquipmentLangTokenName));
+                MyLogger.LogMessage("Player {0}({1}) used equipment {2}, moving back in time...", body.GetUserName(), body.name, EquipmentLangTokenName);
 
                 if (!body.TryGetComponent<NetworkIdentity>(out var identity))
                 {

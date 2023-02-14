@@ -43,7 +43,7 @@ namespace ExtradimensionalItems.Modules
 
         private void Awake()
         {
-            ExtensiveLogging = Config.Bind("Logging", "Enable extensive logging?", true, "Enables extensive logging, logs every major event related to new content.");
+            ExtensiveLogging = Config.Bind("Logging", "Enable extensive logging?", true, "Enables extensive logging, logs every major event related to new content. Might result in worse performance because it logs a lot.");
 
             MyLogger.Init(Logger);
             //MyLogger = Logger;

@@ -1,6 +1,6 @@
 {
     "name": "ExtradimensionalItems",
-    "version_number": "0.6.0",
+    "version_number": "0.5.0",
     "website_url": "https://github.com/viliger2/ExtradimensionaItems",
     "description": "They are coming through the portal!",
     "dependencies": [
@@ -9,7 +9,7 @@
 		"RiskofThunder-R2API_RecalculateStats-1.1.0",
 		"RiskofThunder-R2API_Networking-1.0.2",
 		"RiskofThunder-R2API_TempVisualEffect-1.0.0",
-		" 	RiskofThunder-R2API_Sound-1.0.0",
+		"RiskofThunder-R2API_Sound-1.0.0",
 		"RiskofThunder-HookGenPatcher-1.2.3"
     ]
 }

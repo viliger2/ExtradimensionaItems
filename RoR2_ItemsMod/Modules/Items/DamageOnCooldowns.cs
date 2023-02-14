@@ -80,7 +80,7 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 if (!NetworkServer.active)
                 {
-                    MyLogger.LogMessage("Recieved ChronoshiftRestoreStateOnServer message on client, doing nothing...");
+                    MyLogger.LogInfo("Recieved ChronoshiftRestoreStateOnServer message on client, doing nothing...");
                     return;
                 }
 

@@ -18,7 +18,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
             if (!characterBody.HasBuff(Content.Buffs.RoyalGuardDamage))
             {
                 outer.SetNextStateToMain();
-                MyLogger.LogMessage(string.Format("Player {0}({1}) has left parry state because they don't have damage buff after using Release.", characterBody.GetUserName(), characterBody.name));
+                MyLogger.LogMessage("Player {0}({1}) has left parry state because they don't have damage buff after using Release.", characterBody.GetUserName(), characterBody.name);
             }
         }
 
@@ -54,7 +54,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
 
                 EffectManager.SpawnEffect(Items.RoyalGuard.RoyalGuardExplodeEffectInstance, effectData, true);
 
-                MyLogger.LogMessage(string.Format("Player {0}({1}) used Release, dealing to everyone around {2} damage.", characterBody.GetUserName(), characterBody.name, blastAttack.baseDamage));
+                MyLogger.LogMessage("Player {0}({1}) used Release, dealing to everyone around {2} damage.", characterBody.GetUserName(), characterBody.name, blastAttack.baseDamage.ToString());
             }
         }
     }
