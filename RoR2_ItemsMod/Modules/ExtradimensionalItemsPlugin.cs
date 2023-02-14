@@ -50,7 +50,7 @@ namespace ExtradimensionalItems.Modules
             PInfo = Info;
 
 #if DEBUG == true
-            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
 #endif
 
             new ExtradimensionalItemsLanguages().Init(PInfo);

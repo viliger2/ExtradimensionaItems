@@ -67,13 +67,79 @@
 
 		"BETTERUICOMPAT_DESC_STACKS": "Max Buff Stacks",
 		"BETTERUICOMPAT_DESC_DAMAGE": "Damage",
-		"BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW": "Parry Window",
+		"BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW": "Block Window",
 		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Cooldown Reduction"
 	},
 	"RU": {
 		"ITEM_SHEEN_NAME": "Сияние",
 		"ITEM_SHEEN_PICKUP": "Тонны тунельного урона",
-		"ITEM_SHEEN_DESCRIPTION": "После использования <style=cIsUtility>не основной способности</style> накладывает один стак <style=cIsDamage>эффекта</style>. Нанесение <style=cIsDamage>урона</style> <style=cIsUtility>основной способностью</style> находясь под этим эффектом нанесет дополнительные <style=cIsDamage>{0} базового урона</style> <style=cStack>(+{0} за штуку)</style> цели и съест один стак эффекта. Эффект можно состакать до <style=cIsUtility>{1}</style> раз.",
-		"ITEM_SHEEN_LORE": "haha funni"
+		"ITEM_SHEEN_DESCRIPTION": "После использования <style=cIsUtility>не основной способности</style> накладывается одна единица <style=cIsDamage>эффекта</style>. Нанесение <style=cIsDamage>урона</style> <style=cIsUtility>основной способностью</style> находясь под этим эффектом нанесет дополнительные <style=cIsDamage>{0} базового урона</style> <style=cStack>(+{0} за штуку)</style> и уберет одну единицу эффекта. Эффект можно наложить до <style=cIsUtility>{1}</style> <style=cStack>(+{2} за штуку)</style> раз.",
+		"ITEM_SHEEN_LORE": "haha funni",
+		"BUFF_SHEEN_NAME": "Сияние",
+		"BUFF_SHEEN_DESCRIPTION": "Использование основной способности нанесет дополнительный урон. Тонны урона",
+
+		"EQUIPMENT_RESPAWN_FLAG_NAME": "Контрольный флаг",
+		"EQUIPMENT_RESPAWN_FLAG_PICKUP": "Ты в безопасности.",
+		"EQUIPMENT_RESPAWN_FLAG_DESCRIPTION": "Устанавливает <style=cIsUtility>флаг</style> на земле. <style=cIsUtility>После смерти</style> <style=cIsHealing>возрождает</style> на координатах флага, <style=cIsUtility>уничтожая его</style>. Неиспользованный флаг можно <style=cIsUtility>подобрать</style>. Одновременно только <style=cIsUtility>один</style> флаг может существовать <style=cIsUtility>на каждого игрока</style>. Подбор <style=cIsDamage>любого другого снаряжения</style> приведет к <style=cIsUtility>отключению флага и превращению его обратно в снаряжение.</style>{0}",
+		"EQUIPMENT_RESPAWN_FLAG_LORE": "Пошел и начал играть в Super Cloudbuilt.",
+		"EQUIPMENT_RESPAWN_FLAG_FUEL_CELL": "\r\nЕсли в инвентаре есть <style=cIsHealing>Топливные батареи</style>, одна будет <style=cIsUtility>использована</style> вместо <style=cIsUtility>флага</style>.",
+		"INTERACTABLE_RESPAWN_FLAG_CONTEXT": "Поднять флаг?",
+		"INTERACTABLE_RESPAWN_FLAG_NAME": "Контрольный флаг",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN": "{0} был спасен своим верным флагом.",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN_2P": "Ты был спасен своим верным флагом.",
+
+		"EQUIPMENT_SKULL_OF_DOOM_NAME": "Череп надвигающегося рока",
+		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Сегодня в 11.",
+		"EQUIPMENT_SKULL_OF_DOOM_DESCRIPTION": "Дает <style=cIsUtility>{0}</style> скорости передвижения, одновременно нанося урон, равный <style=cIsHealth>{1} максимального здоровья</style> каждые <style=cIsUtility>{2} секунды</style>. Повторное использование отключает эффект.{3}",
+		"EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL": "\r\nЕсли в инвентаре есть <style=cIsHealing>Топливные батареи</style>, то тогда <style=cStack>скорость передвижения будет дополнительно увеличена на {0}</style> и <style=cStack>урон будет уменьшен на {1}</style> за штуку.",
+		"EQUIPMENT_SKULL_OF_DOOM_LORE": "Это предмет из WoW, я могу либо в <style=cIsVoid>коррупцию</style> или <style=cShrine>ретконы</style>. Что хочешь?",
+		"BUFF_SKULL_OF_DOOM_NAME": "Череп надвигающегося рока",
+		"BUFF_SKULL_OF_DOOM_DESCRIPTION": "Рок надвигается, беги и не оглядывайся.",
+
+		"ITEM_FUEL_CELL_DEPLETED_NAME": "Топливная батарея (потрачена)",
+		"ITEM_FUEL_CELL_DEPLETED_PICKUP": "Она спасла тебе жизнь.",
+		"ITEM_FUEL_CELL_DEPLETED_DESCRIPTION": "Пустая топливная батарея",
+		"ITEM_FUEL_CELL_DEPLETED_LORE": "Как отключить лор у предмета лмао",
+
+		"ITEM_ROYAL_GUARD_NAME": "Коробка с пиццей",
+		"ITEM_ROYAL_GUARD_PICKUP": "Эта вечеринка безумная, давай отожжем!",
+		"ITEM_ROYAL_GUARD_DESCRIPTION": "Заменяет <style=cIsUtility>вспомогательный навык</style> на <style=cIsUtility>Блок</style>.\r\nВводит в защитную стойку на <style=cIsUtility>{0}</style> <style=cStack>(+{1} за штуку)</style> секунд, отражая первый непериодический урон. <style=cIsUtility>В зависимости от того насколько быстро был отражен урон</style> накладывает <style=cIsDamage>от 3 до 1</style> эффекта(ов). Если эти <style=cIsDamage>эффекты</style> есть на игроке когда был использован <style=cIsUtility>Блок</style>, <style=cIsUtility>основной навык</style> будет заменен на <style=cIsUtility>Взрыв</style>.\r\n<style=cIsUtility>Взрыв</style> снимет <style=cIsDamage>все эффекты</style> от Блока и нанесет <style=cIsDamage>{2}</style> <style=cStack>(+{2} за штуку)</style> базового урона за единицу эффекта всем врагам в <style=cIsDamage>{3} метровом</style> радиусе. <style=cIsUtility>Взрыв</style> имеет увеличенный коэффициент проков. Одновременно может быть наложено до <style=cIsDamage>{4} единиц эффекта</style>.",
+		"ITEM_ROYAL_GUARD_LORE": "Я не буду переводить это потому что слишком канонично.\r\nMitrix: It was my assumption that those chimeras would prove far inferior... In the face of your tactics.\r\nCommando: You construct and kill... Construct and kill... I fail to see the logic here. Is sanity the price to pay for power!?\r\nMitrix: Lemurians... They are but stubborn and foolish. It takes a journey to Petrichor V for them to accept and praise Providence. A fact that tickles irony's judgment.\r\nCommando: And your judgments interests me not. For I'm here... To reclaim... What is rightfully mine.\r\nMitrix: Ukulele! That is what you seek. And that is why I wait in your path!\r\nCommando: You will fumble in your opposition of my quest. Though I encourage! For an opportunity to battle a being of such grand delusions as you, is a sweet fortune!",
+		"SKILL_ROYAL_GUARD_PARRY_NAME": "Блок",
+		"SKILL_ROYAL_GUARD_PARRY_DESC": "Вводит в защитную стойку на <style=cIsUtility>{0}</style> <style=cStack>(+{1} за штуку)</style> секунд, отражая первый непериодический урон. <style=cIsUtility>В зависимости от того насколько быстро был отражен урон</style> накладывает <style=cIsDamage>от 3 до 1</style> эффекта(ов). Если эти <style=cIsDamage>эффекты</style> есть на игроке когда был использован <style=cIsUtility>Блок</style>, <style=cIsUtility>основной навык</style> будет заменен на <style=cIsUtility>Взрыв</style>. Одновременно может быть наложено до <style=cIsDamage>{2} единиц эффекта</style>.",
+		"SKILL_ROYAL_GUARD_RELEASE_NAME": "Взрыв",
+		"SKILL_ROYAL_GUARD_RELEASE_DESC": "Снимет <style=cIsDamage>все эффекты</style> от Блока и нанесет <style=cIsDamage>{0}</style> <style=cStack>(+{0} за штуку)</style> базового урона за единицу эффекта всем врагам в <style=cIsDamage>{1} метровом</style> радиусе. Имеет увеличенный коэффициент проков.\r\n\r\nА ты шустрый.",
+		"BUFF_ROYALGUARD_DAMAGE_NAME": "Кусочки пиццы",
+		"BUFF_ROYALGUARD_DAMAGE_DESCRIPTION": "Определяет сколько урона будет нанесено Взрывом.",
+		"BUFF_ROYALGUARD_PARRY_NAME": "Royal Guard",
+		"BUFF_ROYALGUARD_PARRY_DESCRIPTION": "ROYALGUNSWORDTRICK",
+
+		"ITEM_COOLDOWN_REDUCTION_VOID_NAME": "Пилюли чародея",
+		"ITEM_COOLDOWN_REDUCTION_VOID_PICKUP": "Поднимаю пилюли",
+		"ITEM_COOLDOWN_REDUCTION_VOID_DESCRIPTION": "Уменьшает <style=cIsUtility>время восстановления навыков</style> на {0} <style=cStack>(+{0} за штуку)</style>. Складывается <style=cIsUtility>гиперболически</style>. <style=cIsVoid>Оскверняет все Шприцы солдата.</style>",
+		"ITEM_COOLDOWN_REDUCTION_VOID_LORE": "\"Мне не нравятся эти шприцы.\"\r\n\r\n\"Что не так?\"\r\n\r\n\"В них желтая жидкость, они светятся в темноте и я боюсь уколов.\"\r\n\r\n\"Ну и что ты хочешь чтобы я сделал?\"\r\n\r\n\"Можно что-нибудь другое?\"\r\n\r\n\"Ну есть таблетки...\"\r\n\r\n\"Беру!\"\r\n\r\n\"Прямо так? Не узнав даже что за таблетки такие?\"\r\n\r\n\"А надо?\"\r\n\r\n\"Ну они фиолетовые и тоже светятся в темноте, а также...\"\r\n\r\n\"Но мне не нужно их вкалывать, так?\"\r\n\r\n\"...Да.\"",
+
+		"ITEM_DAMAGE_ON_COOLDOWNS_NAME": "Разжигающие меха",
+		"ITEM_DAMAGE_ON_COOLDOWNS_PICKUP": "Огонь горячий.",
+		"ITEM_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "За <style=cIsUtility>каждую способность и каждое снаряжение</style> на восстановлении накладывает эффект, который увеличивает <style=cIsDamage>урон</style> на <style=cIsDamage>{0}<style=cStack>(+{1} за штуку).",
+		"ITEM_DAMAGE_ON_COOLDOWNS_LORE": "lore",
+		"BUFF_DAMAGE_ON_COOLDOWNS_NAME": "Разжигающие меха",
+		"BUFF_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "Весь урон увеличен.",
+
+		"EQUIPMENT_CHRONOSHIFT_NAME": "Хронодевайс",
+		"EQUIPMENT_CHRONOSHIFT_PICKUP": "Это действительно новое слово в науке и технике!",
+		"EQUIPMENT_CHRONOSHIFT_DESCRIPTION": "Возвращает на <style=cIsUtility>{0}</style> секунд <style=cIsDamage>назад во времени</style>. Восстанавливает <style=cIsUtility>позицию, деньги, предметы, здоровье, барьер, щит и состояние способностей</style> в то состояние, в каком они были. Состояния сохраняются каждые <style=cIsUtility>{1}</style> секунд.",
+		"EQUIPMENT_CHRONOSHIFT_LORE": "lore",
+
+		"ITEM_ATMAS_IMPALER_NAME": "Пронзатель Атмы",
+		"ITEM_ATMAS_IMPALER_PICKUP": "Метаголем жив!",
+		"ITEM_ATMAS_IMPALER_DESCRIPTION": "Увеличивает <style=cIsDamage>базовый урон</style> на размер равный <style=cIsHealth>{0} <style=cStack>(+{1} за штуку)</style> максимального здоровья</style>.",
+		"ITEM_ATMAS_IMPALER_LORE": "lore",
+
+		"BETTERUICOMPAT_DESC_STACKS": "Макс. кол-во эффектов",
+		"BETTERUICOMPAT_DESC_DAMAGE": "Урон",
+		"BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW": "Окно блока",
+		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Процент уменьшения восстановления навыков"
+
 	}
 }

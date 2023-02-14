@@ -60,7 +60,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
 
 Things marked in bold can be edited via config. Mod supports in-game config setup via RiskOfOptions and has full BetterUI support for every item.
 
-If you find any bugs, want to write lore or help me with assets\code send me a message on discord at **viliger#9877** or submit an issue\pull request on github. 
+If you find any bugs send me a message on discord at **viliger#9877** or submit an issue on github. I also need help with some of the assets (Atma needs a proper model, Pizza box needs good skill icons, etc), writing propper lore and models\animation extraction from game called Super Cloudbuilt. If you want to help, let me know.
 
 ## Known issues\things
 <details>
@@ -101,8 +101,4 @@ If you find any bugs, want to write lore or help me with assets\code send me a m
   * New Survivor (0.7.0)
   * New Stage (0.8.0)
 
-</details>
-<details>
-<summary>do not open</summary>
-I told you. Basically, there probably won't be any versions from 0.6.0 and up, I want to do them but it took me half a year to implement 8 items into the game. With what I want to do it is simply not feasable to do solo in any reasonable ammount of time or before Randy ruins this game even further from what Hopoo did. Code rewrite, modded character item displays and any written lore\new assets will be released sooner or later, but beyond that don't expect much. The most realistic thing is new survivor but what mostly stops me is assets, so if anyone knows how the export models and animations from the game Super Cloudbuilt - hit me up.
 </details>
