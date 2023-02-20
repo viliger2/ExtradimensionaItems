@@ -16,6 +16,13 @@ namespace ExtradimensionalItems.Modules.Items
         //   0.1 seconds for best parry or 0.5/5
         //   0.25 (or 0.15 from previous) for middle parry or 0.5/2
         //   the rest of the timer is for worst parry
+
+        public enum ItemType
+        {
+            Lunar,
+            Legendary
+        }
+
         private const int BEST_PARRY_COEF = 5;
         private const int MIDDLE_PARRY_COEF = 2;
 
@@ -24,16 +31,17 @@ namespace ExtradimensionalItems.Modules.Items
         public static ConfigEntry<float> BaseDuration;
         public static ConfigEntry<float> PerStackDuration;
         public static ConfigEntry<float> DamageRadius;
+        public static ConfigEntry<ItemType> ItemTier;
 
         public override string ItemName => "RoyalGuard";
 
         public override string ItemLangTokenName => "ROYAL_GUARD";
 
-        public override ItemTier Tier => ItemTier.Tier3;
+        public override ItemTier Tier => ItemTier.Value == ItemType.Lunar ? RoR2.ItemTier.Lunar : RoR2.ItemTier.Tier3;
 
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("royalguard");
 
-        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texRoyalGuardItemIconGood");
+        public override Sprite ItemIcon => ItemTier.Value == ItemType.Lunar ? AssetBundle.LoadAsset<Sprite>("texRoyalGuardItemIconLunar") : AssetBundle.LoadAsset<Sprite>("texRoyalGuardItemIconGood");
 
         public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Damage, ItemTag.AIBlacklist };
 
@@ -365,13 +373,8 @@ namespace ExtradimensionalItems.Modules.Items
                 }
                 // end TODO
                 MyLogger.LogMessage("Player {0}({1}) got damaged in {2} after entering parry state. Adding {3} damage buff(s), adding grace buff and removing parry state buff.", body.GetUserName(), body.name, (parryStateDuration - timedBuff.timer).ToString(), numberOfBuffs.ToString());
-                body.AddTimedBuff(Content.Buffs.RoyalGuardGrace, 0.0167f);
+                body.AddTimedBuff(RoR2.RoR2Content.Buffs.HiddenInvincibility, 0.0167f);
                 body.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
-                damageInfo.rejected = true;
-            }
-            else if (body.HasBuff(Content.Buffs.RoyalGuardGrace))
-            {
-                MyLogger.LogMessage("Player {0}({1}) got damaged while having grace buff, rejecting received damage.", body.GetUserName(), body.name);
                 damageInfo.rejected = true;
             }
             orig(self, damageInfo);
@@ -468,22 +471,6 @@ namespace ExtradimensionalItems.Modules.Items
 
             Content.Buffs.RoyalGuardDamage = RoyalGuardDamageBuff;
 
-            // TODO: replace it with in-game invunerability, no reason to waste resources on this
-            // when game already has and checks for it
-
-            var RoyalGuardGraceBuff = ScriptableObject.CreateInstance<BuffDef>();
-            RoyalGuardGraceBuff.name = "Royal Guard Grace State";
-            RoyalGuardGraceBuff.buffColor = Color.green;
-            RoyalGuardGraceBuff.canStack = false;
-            RoyalGuardGraceBuff.isDebuff = false;
-            RoyalGuardGraceBuff.isHidden = true;
-            RoyalGuardGraceBuff.iconSprite = AssetBundle.LoadAsset<Sprite>("texRoyalGuardBuffIcon.png");
-
-            ContentAddition.AddBuffDef(RoyalGuardGraceBuff);
-
-            Content.Buffs.RoyalGuardGrace = RoyalGuardGraceBuff;
-
-            // end TODO
             if (BetterUICompat.enabled)
             {
                 BetterUICompat.AddBuffInfo(RoyalGuardDamageBuff, "BUFF_ROYALGUARD_DAMAGE_NAME", "BUFF_ROYALGUARD_DAMAGE_DESCRIPTION");
@@ -536,6 +523,7 @@ namespace ExtradimensionalItems.Modules.Items
             BaseDuration = config.Bind("Item: " + ItemName, "Base Parry State Duration", 0.5f, "How long, in seconds, is base Parry skill duration.");
             PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much, in seconds, each stack (after first one) of item adds to Parry skill duration.");
             DamageRadius = config.Bind("Item: " + ItemName, "Release Damage Radius", 15f, "What is the damage radius of Release skill, in meters.");
+            ItemTier = config.Bind("Item: " + ItemName, "Item Tier", ItemType.Lunar, "Determines the type of the item.");
             if (RiskOfOptionsCompat.enabled)
             {
                 RiskOfOptionsCompat.CreateNewOption(DamageModifier, 100f, 10000f, 10f);

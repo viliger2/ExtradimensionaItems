@@ -41,8 +41,6 @@ namespace ExtradimensionalItems.Modules.Content
 
         public static BuffDef RoyalGuardDamage;
 
-        public static BuffDef RoyalGuardGrace;
-
         public static BuffDef Sheen;
 
         public static BuffDef SkullOfDoom;
