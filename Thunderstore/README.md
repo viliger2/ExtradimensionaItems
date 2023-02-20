@@ -27,10 +27,10 @@ A mod that aims to add ideas from another games, while extending the playstyles 
     <td>Lunar Equipment</td>
   </tr>  
   <tr>
-    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texRoyalGuardItemIconGood.png" alt="Pizza Box"></td>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texRoyalGuardItemIconLunar.png" alt="Pizza Box"></td>
     <td>Pizza Box</td>
     <td>Replace your Utility Skill with Block. Block allows you to enter a defensive stance for <b>0.5</b> (<b>+0.1</b> per stack) seconds, deflecting first non-periodic hit. Depending for how long you were in the stance gain 3 to 1 damage buff(s). If you have damage buffs when using Block, your Primary Skill gets replaced with Release. Using Release will consume all damage buffs and deal <b>1000%</b> (<b>+1000%</b> per stack) base damage per buff stack to everyone in <b>15m</b> radius. Release has increased proc coefficient. You can have up to <b>8</b> stacks of damage buff.</td>
-    <td>Legendary</td>
+    <td>Lunar</td>
   </tr>  
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texCooldownReductionIcon.png" alt="Sorcerer's Pills"></td>
@@ -60,14 +60,16 @@ A mod that aims to add ideas from another games, while extending the playstyles 
 
 Things marked in bold can be edited via config. Mod supports in-game config setup via RiskOfOptions and has full BetterUI support for every item.
 
-If you find any bugs send me a message on discord at **viliger#9877** or submit an issue on github. I also need help with some of the assets (Atma needs a proper model, Pizza box needs good skill icons, etc), writing propper lore and models\animation extraction from game called Super Cloudbuilt. If you want to help, let me know.
+Mod features extensive logging of practically every in-game event related to new content, so it might spam the log a lot. There is an option to completely disable logging if you have performance issues or log sizes go out of control.
+
+If you find any bugs send me a message on discord at **viliger#9877** or submit an issue on github. I also need help with some of the assets (Atma needs a proper model, Pizza box needs good skill icons, etc), writing proper lore and models\animation extraction from game called Super Cloudbuilt. If you want to help, let me know.
 
 ## Known issues\things
 <details>
 
   * Some effects and sounds might not work on third client (as in not server and not client that sound comes from), but as far as functionality everything should be working. 
   * Respawn Flag:
-    * If MUL-T picks flag as first item, places it and then picks up item without using Retool flag convers back into the item, like if anothe equipment was picked up. It can be resolved by using Retool once with any equipment, at the start MUL-T has one equipment slot, until MUL-T uses Retool at least once with any equipment.
+    * If MUL-T picks flag as first item, places it and then picks up item without using Retool flag converts back into the item, like if another equipment was picked up. It can be resolved by using Retool once with any equipment, at the start MUL-T has one equipment slot, until MUL-T uses Retool at least once with any equipment.
   * Chronoshift:
     * Oddly-shaped Opal doesn't reset.
     * Doesn't reset states, MUL-T won't swap back, Void Fiend won't get his energy\state, Railgunner will be scoped if she was scoped or still be overheated, etc.
@@ -95,7 +97,7 @@ If you find any bugs send me a message on discord at **viliger#9877** or submit 
   * Fix logbook item displays. Only Chronoshift currently has "display", as in it follows what I put in the code, but it needs a lot of fixing to look good.
   * Majority of items lack lore, you are free to submit a pull request or message me directly if you want to write it.
   * New model and icon for Atma, it looks terrible
-  * Propper skill icons for Pizza Box
+  * Proper skill icons for Pizza Box
   * Code rewrite to Chronoshift at the very least, it is very janky at the moment
   * Quest system, where you pick quests in the lobby, for a price of course (0.6.0)
   * New Survivor (0.7.0)
