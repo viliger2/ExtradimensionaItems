@@ -619,18 +619,6 @@ namespace ExtradimensionalItems.Modules.Equipment
                     localScale = new Vector3(0.4842F, 0.4842F, 0.4842F)
                 }
             });
-            //rules.Add("mdlMiner", new RoR2.ItemDisplayRule[]
-            //{
-            //    new RoR2.ItemDisplayRule
-            //    {
-            //        ruleType = ItemDisplayRuleType.ParentedPrefab,
-            //        followerPrefab = ItemBodyModelPrefab,
-            //        childName = "Chest",
-            //        localPos = new Vector3(0F, 0.00339F, -0.00108F),
-            //        localAngles = new Vector3(317.3549F, 221.5528F, 123.0072F),
-            //        localScale = new Vector3(0.00557F, 0.00557F, 0.00557F)
-            //    }
-            //});
             rules.Add("mdlHeretic", new RoR2.ItemDisplayRule[]
             {
                 new RoR2.ItemDisplayRule
@@ -665,6 +653,18 @@ namespace ExtradimensionalItems.Modules.Equipment
                     localPos = new Vector3(0.02187F, 0.06523F, -0.0598F),
                     localAngles = new Vector3(350.3206F, 192.9503F, 149.9679F),
                     localScale = new Vector3(0.60224F, 0.60224F, 0.60224F)
+                }
+            });
+            rules.Add("mdlMiner", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemBodyModelPrefab,
+                    childName = "Chest",
+                    localPos = new Vector3(0.00002F, 0.00338F, -0.00125F),
+                    localAngles = new Vector3(332.6535F, 195.4189F, 113.9351F),
+                    localScale = new Vector3(0.00557F, 0.00557F, 0.00557F)
                 }
             });
             // EXAMPLE
