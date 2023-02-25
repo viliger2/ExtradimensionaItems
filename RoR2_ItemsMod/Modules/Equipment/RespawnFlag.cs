@@ -231,6 +231,18 @@ namespace ExtradimensionalItems.Modules.Equipment
                     localScale = new Vector3(0.0017F, 0.0017F, 0.0017F)
                 }
             });
+            rules.Add("mdlNemforcer(Clone)", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemBodyModelPrefab,
+                    childName = "Head",
+                    localPos = new Vector3(0.0003F, 0.01046F, 0.00159F),
+                    localAngles = new Vector3(0F, 0F, 0F),
+                    localScale = new Vector3(0.00817F, 0.00817F, 0.00817F)
+                }
+            });
             rules.Add("mdlEnforcer", new RoR2.ItemDisplayRule[]
             {
                 new RoR2.ItemDisplayRule
