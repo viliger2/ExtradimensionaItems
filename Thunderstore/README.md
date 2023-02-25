@@ -30,7 +30,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texRoyalGuardItemIconLunar.png" alt="Pizza Box"></td>
     <td>Pizza Box</td>
     <td>Replace your Utility Skill with Block. Block allows you to enter a defensive stance for <b>0.5</b> (<b>+0.1</b> per stack) seconds, deflecting first non-periodic hit. Depending for how long you were in the stance gain 3 to 1 damage buff(s). If you have damage buffs when using Block, your Primary Skill gets replaced with Release. Using Release will consume all damage buffs and deal <b>1000%</b> (<b>+1000%</b> per stack) base damage per buff stack to everyone in <b>15m</b> radius. Release has increased proc coefficient. You can have up to <b>8</b> stacks of damage buff.</td>
-    <td>Lunar</td>
+    <td><b>Lunar/Legendary</b></td>
   </tr>  
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texCooldownReductionIcon.png" alt="Sorcerer's Pills"></td>

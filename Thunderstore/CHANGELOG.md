@@ -1,4 +1,13 @@
 <details>
+<summary>0.5.1 </summary>
+
+* Pizza Box
+	* Tier replaced with Lunar
+		* _After some thinking and suggestions, I decided to move Pizza Box into Lunar tier from Legendary. Simply put, the item is way too playstyle changing to be red, unless you deliberately want to play with it, finding it inside Stage 4 chest can lead to frustration, if you pick it up it can end your run and if you don't you just wasted gold on something that you can't even pick up. It doesn't suit Lunar tier stylistically, maybe something for later_.
+	* Removed unneeded after parry grace buff, replaced it with in-game invincibility.
+* Added item displays for Miner, Enforcer, Nemforcer and Paladin.
+</details>
+<details>
 <summary>0.5.0 </summary>
 
 * Initial release
