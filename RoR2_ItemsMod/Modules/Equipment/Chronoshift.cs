@@ -691,6 +691,19 @@ namespace ExtradimensionalItems.Modules.Equipment
                     localScale = new Vector3(0.54473F, 0.54473F, 0.54473F)
                 }
             });
+            rules.Add("mdlPaladin", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemBodyModelPrefab,
+                    childName = "Pelvis",
+                    localPos = new Vector3(0.01017F, 0.33085F, -0.04936F),
+                    localAngles = new Vector3(332.5034F, 164.0989F, 178.2899F),
+                    localScale = new Vector3(0.63325F, 0.63325F, 0.63325F)
+                }
+            });
+
             // EXAMPLE
             //rules.Add("body", new RoR2.ItemDisplayRule[]
             //{
