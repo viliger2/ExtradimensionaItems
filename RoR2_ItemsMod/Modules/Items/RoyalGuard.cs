@@ -11,18 +11,17 @@ namespace ExtradimensionalItems.Modules.Items
 {
     public class RoyalGuard : ItemBase<RoyalGuard>
     {
-        // these are used to determine windows for how many stacks of damage buff player gets on parry
-        // from the base duration of parry stance 0.5 seconds:
-        //   0.1 seconds for best parry or 0.5/5
-        //   0.25 (or 0.15 from previous) for middle parry or 0.5/2
-        //   the rest of the timer is for worst parry
-
         public enum ItemType
         {
             Lunar,
             Legendary
         }
 
+        // these are used to determine windows for how many stacks of damage buff player gets on parry
+        // from the base duration of parry stance 0.5 seconds:
+        //   0.1 seconds for best parry or 0.5/5
+        //   0.25 (or 0.15 from previous) for middle parry or 0.5/2
+        //   the rest of the timer is for worst parry
         private const int BEST_PARRY_COEF = 5;
         private const int MIDDLE_PARRY_COEF = 2;
 

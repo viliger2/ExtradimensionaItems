@@ -7,9 +7,9 @@ namespace ExtradimensionalItems.Modules.Items
 {
     public class Sheen : ItemBase<Sheen>
     {
-        private class SheenBehavior : CharacterBody.ItemBehavior
+        private class SheenBehavior : CharacterBody.ItemBehavior, IOnDamageDealtServerReceiver
         {
-            public bool usedPrimary;
+            private bool usedPrimary;
 
             public void Awake()
             {
@@ -21,7 +21,6 @@ namespace ExtradimensionalItems.Modules.Items
                 if (body)
                 {
                     body.onSkillActivatedServer += Body_onSkillActivatedServer;
-                    GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
                 }
             }
 
@@ -30,7 +29,6 @@ namespace ExtradimensionalItems.Modules.Items
                 if (body)
                 {
                     body.onSkillActivatedServer -= Body_onSkillActivatedServer;
-                    GlobalEventManager.onServerDamageDealt -= GlobalEventManager_onServerDamageDealt;
                 }
             }
 
@@ -51,7 +49,7 @@ namespace ExtradimensionalItems.Modules.Items
                 }
             }
 
-            private void GlobalEventManager_onServerDamageDealt(DamageReport damageReport)
+            public void OnDamageDealtServer(DamageReport damageReport)
             {
                 if (this.usedPrimary)
                 {
@@ -83,7 +81,6 @@ namespace ExtradimensionalItems.Modules.Items
                     }
                 }
             }
-
         }
 
         public static ConfigEntry<float> DamageModifier;
@@ -91,6 +88,7 @@ namespace ExtradimensionalItems.Modules.Items
         public static ConfigEntry<float> BuffDuration;
         //public static ConfigEntry<int> MaxBuffStacks;
         public static ConfigEntry<int> BuffStackPerItem;
+
         public override string ItemName => "Sheen";
 
         public override string ItemLangTokenName => "SHEEN";
