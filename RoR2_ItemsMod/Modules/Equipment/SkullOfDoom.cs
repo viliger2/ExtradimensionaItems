@@ -13,6 +13,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 {
     public class SkullOfDoom : EquipmentBase<SkullOfDoom>
     {
+        // TODO: rewrite to maybe DoT component? make it so buff itself deals DoT damage
+        // and not component that checks for buff and deals damage if buff is present
         public class SkullOfDoomBehavior : ItemBehavior
         {
             private float stopwatch;

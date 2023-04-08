@@ -308,7 +308,7 @@ namespace ExtradimensionalItems.Modules.Items
             if (RiskOfOptionsCompat.enabled)
             {
                 RiskOfOptionsCompat.CreateNewOption(PercentBonusDamage, 0.1f, 5f, 0.1f);
-                RiskOfOptionsCompat.CreateNewOption(PercentBonusDamagePerStack, 0.1f, 5, 0.1f);
+                RiskOfOptionsCompat.CreateNewOption(PercentBonusDamagePerStack, 0.1f, 5f, 0.1f);
             }
         }
     }

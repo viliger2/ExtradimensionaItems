@@ -1,7 +1,12 @@
-﻿using RoR2;
+﻿using R2API.Utils;
+using RoR2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
+
+[assembly: HG.Reflection.SearchableAttribute.OptInAttribute]
 
 namespace ExtradimensionalItems.Modules
 {
@@ -57,6 +62,76 @@ namespace ExtradimensionalItems.Modules
             }
 
             return renderInfos;
+        }
+
+        //thanks Harb for "give_item" template
+        [ConCommand(commandName = "give_item_ai", flags = ConVarFlags.ExecuteOnServer, helpText = "Gives the specified item to AI team. Only works with Artifact of Evolution enabled or if players are in Void Fields. Requires 2 arguments: {item} [count:1]")]
+        private static void CCGiveItemAI(ConCommandArgs args)
+        {
+            // using Debug.Log() so it shows in the console
+            if (args.Count == 0)
+            {
+                Debug.Log("No parameters specified. Requires 2 arguments: {item} [count:1]");
+                return;
+            }
+
+            int iCount = 1;
+            if (args.Count >= 2 && args[1] != "")
+            {
+                iCount = int.TryParse(args[1], out iCount) ? iCount : 1;
+            }
+
+            var item = GetItemFromPartial(args[0]);
+            if (item != ItemIndex.None)
+            {
+                if (RoR2.RunArtifactManager.instance.IsArtifactEnabled(RoR2.RoR2Content.Artifacts.monsterTeamGainsItemsArtifactDef) && RoR2.Artifacts.MonsterTeamGainsItemsArtifactManager.monsterTeamInventory)
+                {
+                    RoR2.Artifacts.MonsterTeamGainsItemsArtifactManager.monsterTeamInventory.GiveItem(item, iCount);
+                    Debug.Log(string.Format("Gave {0} {1} to AIs", iCount, item));
+                } else if (RoR2.SceneCatalog.GetSceneDefForCurrentScene() == RoR2.SceneCatalog.GetSceneDefFromSceneName("arena") && ArenaMissionController.instance && RoR2.ArenaMissionController.instance.inventory)
+                {
+                    RoR2.ArenaMissionController.instance.inventory.GiveItem(item, iCount);
+                    Debug.Log(string.Format("Gave {0} {1} to AIs", iCount, item));
+                }
+                else
+                {
+                    Debug.Log("Only works when Artifact of Evolution is enabled or if players are in Void Fields.");
+                }
+            }
+            else
+            {
+                Debug.Log(string.Format("Item {0} is not found.", args[0]));
+            }
+        }
+
+        private static ItemIndex GetItemFromPartial(string name)
+        {
+            string langInvar;
+
+            if (Enum.TryParse(name, true, out ItemIndex foundItem) && ItemCatalog.IsIndexValid(foundItem))
+            {
+                return foundItem;
+            }
+
+            foreach (var item in typeof(ItemCatalog).GetFieldValue<ItemDef[]>("itemDefs"))
+            {
+                langInvar = GetLangInvar(item.nameToken.ToUpper());
+                if (item.name.ToUpper().Contains(name.ToUpper()) || langInvar.ToUpper().Contains(name.ToUpper()) || langInvar.ToUpper().Contains(RemoveSpacesAndAlike(name.ToUpper())))
+                {
+                    return item.itemIndex;
+                }
+            }
+            return ItemIndex.None;
+        }
+
+        private static string GetLangInvar(string baseToken)
+        {
+            return RemoveSpacesAndAlike(Language.GetString(baseToken));
+        }
+
+        private static string RemoveSpacesAndAlike(string input)
+        {
+            return Regex.Replace(input, @"[ '-]", string.Empty);
         }
     }
 }

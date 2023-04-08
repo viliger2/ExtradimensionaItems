@@ -7,6 +7,9 @@ namespace ExtradimensionalItems.Modules.Items
 {
     public class Sheen : ItemBase<Sheen>
     {
+        // TODO: rewrite so the buff is independent from ItemBehavior, so we can use it outside of the intended item
+        // not sure if it is worth it since it would create additional overhead
+
         private class SheenBehavior : CharacterBody.ItemBehavior, IOnDamageDealtServerReceiver
         {
             private bool usedPrimary;
@@ -51,7 +54,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-                if (this.usedPrimary)
+                if (this.usedPrimary && enabled)
                 {
                     var damageInfo = damageReport.damageInfo;
                     var attacker = damageReport?.attackerBody ?? null;

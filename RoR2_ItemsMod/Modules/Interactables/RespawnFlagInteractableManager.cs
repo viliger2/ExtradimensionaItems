@@ -127,6 +127,7 @@ namespace ExtradimensionalItems.Modules.Interactables
         {
             return Language.GetString($"INTERACTABLE_{langToken}_CONTEXT");
         }
+       
         public string GetDisplayName()
         {
             return Language.GetString($"INTERACTABLE_{langToken}_NAME");

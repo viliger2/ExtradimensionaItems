@@ -8,6 +8,8 @@ using System.Linq;
 using System.Reflection;
 using static ExtradimensionalItems.Modules.Equipment.Chronoshift;
 
+[assembly: HG.Reflection.SearchableAttribute.OptInAttribute]
+
 namespace ExtradimensionalItems.Modules
 {
     [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.1")]
@@ -93,7 +95,6 @@ namespace ExtradimensionalItems.Modules
 
                 RiskOfOptionsCompat.CreateNewOption(ExtensiveLogging);
             }
-
         }
 
         public bool ValidateEquipment(EquipmentBase equipment)
