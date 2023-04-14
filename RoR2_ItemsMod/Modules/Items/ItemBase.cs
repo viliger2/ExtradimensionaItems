@@ -111,12 +111,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         protected virtual void LoadSoundBank()
         {
-            using (FileStream fsSource = new FileStream(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.SoundBanksFolder, string.Concat(BundleName, ".bnk")), FileMode.Open, FileAccess.Read))
-            {
-                byte[] bytes = new byte[fsSource.Length];
-                fsSource.Read(bytes, 0, bytes.Length);
-                SoundAPI.SoundBanks.Add(bytes);
-            }
+            SoundAPI.SoundBanks.Add(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.SoundBanksFolder, string.Concat(BundleName, ".bnk")));
         }
 
         // using this monstrosity because strings are not loaded on initialization
