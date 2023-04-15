@@ -8,7 +8,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using static ExtradimensionalItems.Modules.Items.ReturnalAdrenalin;
+using static ExtradimensionalItems.Modules.Items.ReturnalAdrenaline;
 
 namespace ExtradimensionalItems.Modules.UI
 {
@@ -27,7 +27,7 @@ namespace ExtradimensionalItems.Modules.UI
 
         public RoR2.UI.HUD hud;
 
-        private ReturnalAdrenalinItemBehavior itemBehavior;
+        private ReturnalAdrenalineItemBehavior itemBehavior;
 
         private void Update()
         {
@@ -35,9 +35,9 @@ namespace ExtradimensionalItems.Modules.UI
             {
                 if (!itemBehavior)
                 {
-                    itemBehavior = hud.targetMaster.GetComponent<ReturnalAdrenalinItemBehavior>();
+                    itemBehavior = hud.targetMaster.GetComponent<ReturnalAdrenalineItemBehavior>();
                 }
-                if (itemBehavior && hud.targetMaster.inventory.GetItemCount(Content.Items.ReturnalAdrenalin) > 0)
+                if (itemBehavior && hud.targetMaster.inventory.GetItemCount(Content.Items.ReturnalAdrenaline) > 0)
                 {
                     UpdateUI(itemBehavior.adrenalineLevel);
                 } else
@@ -51,16 +51,16 @@ namespace ExtradimensionalItems.Modules.UI
         {
             if (textMesh)
             {
-                textMesh.SetText(string.Format("Lv. {0}", adrenalineLevel / ReturnalAdrenalinItemBehavior.adrenalinePerLevel));
+                textMesh.SetText(string.Format("Lv. {0}", adrenalineLevel / ReturnalAdrenalineItemBehavior.adrenalinePerLevel));
             }
             if (levelBar)
             {
-                if (adrenalineLevel >= ReturnalAdrenalinItemBehavior.adrenalinePerLevel * 5)
+                if (adrenalineLevel >= ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 5)
                 {
                     levelBar.fillAmount = 1f;
                 } else 
                 {
-                    levelBar.fillAmount = Mathf.Clamp((float)adrenalineLevel % ReturnalAdrenalinItemBehavior.adrenalinePerLevel / ReturnalAdrenalinItemBehavior.adrenalinePerLevel, 0f, 1f);
+                    levelBar.fillAmount = Mathf.Clamp((float)adrenalineLevel % ReturnalAdrenalineItemBehavior.adrenalinePerLevel / ReturnalAdrenalineItemBehavior.adrenalinePerLevel, 0f, 1f);
                 }
 
             }

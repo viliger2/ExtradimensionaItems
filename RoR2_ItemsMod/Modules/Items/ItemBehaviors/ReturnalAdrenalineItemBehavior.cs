@@ -8,7 +8,8 @@ using UnityEngine.Networking;
 namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 {
     // attach it to master for it to last through stages
-    public class ReturnalAdrenalinItemBehavior : NetworkBehaviour
+    // use NetworkWeaver after build to patch dll so it actually works
+    public class ReturnalAdrenalineItemBehavior : NetworkBehaviour
     {
         public CharacterMaster master;
 

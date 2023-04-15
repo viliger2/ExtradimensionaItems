@@ -27,7 +27,7 @@ namespace ExtradimensionalItems.Modules.Content
 
         public static ItemDef Atma;
 
-        public static ItemDef ReturnalAdrenalin;
+        public static ItemDef ReturnalAdrenaline;
     }
 
     public static class Skills

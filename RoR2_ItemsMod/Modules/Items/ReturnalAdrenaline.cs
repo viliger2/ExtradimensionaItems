@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 namespace ExtradimensionalItems.Modules.Items
 {
-    public class ReturnalAdrenalin : ItemBase<ReturnalAdrenalin>
+    public class ReturnalAdrenaline : ItemBase<ReturnalAdrenaline>
     {
         public override string ItemName => "ReturnalAdrenalin";
 
@@ -44,7 +44,7 @@ namespace ExtradimensionalItems.Modules.Items
         public override void Init(ConfigFile config)
         {
             Hooks();
-            CreateItem(ref Content.Items.ReturnalAdrenalin);
+            CreateItem(ref Content.Items.ReturnalAdrenaline);
         }
 
         protected override void Hooks()
@@ -56,11 +56,14 @@ namespace ExtradimensionalItems.Modules.Items
             On.RoR2.CharacterMaster.Awake += CharacterMaster_Awake;
         }
 
+        // attaching it here so networking works
+        // basically you can't attack networked components during runtime, even with NetWeaver they won't network
+        // so we have to do it during awake
         private void CharacterMaster_Awake(On.RoR2.CharacterMaster.orig_Awake orig, CharacterMaster self)
         {
             if (self)
             {
-                var component = self.gameObject.AddComponent<ReturnalAdrenalinItemBehavior>();
+                var component = self.gameObject.AddComponent<ReturnalAdrenalineItemBehavior>();
                 component.master = self;
             }
             orig(self);
@@ -74,13 +77,13 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody body, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (GetCount(body) > 0 && body.master.TryGetComponent(out ReturnalAdrenalinItemBehavior component))
+            if (GetCount(body) > 0 && body.master.TryGetComponent(out ReturnalAdrenalineItemBehavior component))
             {
-                args.attackSpeedMultAdd += 0.15f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalinItemBehavior.adrenalinePerLevel * 1)) ? 1 : 0);
-                args.moveSpeedMultAdd += 0.14f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalinItemBehavior.adrenalinePerLevel * 2)) ? 1 : 0);
-                args.baseHealthAdd += 25f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalinItemBehavior.adrenalinePerLevel * 3)) ? 1 : 0);
-                args.baseShieldAdd += body.maxHealth * 0.25f * ((component.adrenalineLevel >= (ReturnalAdrenalinItemBehavior.adrenalinePerLevel * 4)) ? 1 : 0);
-                args.critAdd += 25f * ((component.adrenalineLevel >= (ReturnalAdrenalinItemBehavior.adrenalinePerLevel * 5)) ? 1 : 0);
+                args.attackSpeedMultAdd += 0.15f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 1)) ? 1 : 0);
+                args.moveSpeedMultAdd += 0.14f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 2)) ? 1 : 0);
+                args.baseHealthAdd += 25f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 3)) ? 1 : 0);
+                args.baseShieldAdd += body.maxHealth * 0.25f * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 4)) ? 1 : 0);
+                args.critAdd += 25f * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 5)) ? 1 : 0);
                 //args.baseDamageAdd += sender.maxHealth * (PercentBonusDamage.Value / 100) + sender.maxHealth * (PercentBonusDamagePerStack.Value / 100 * (GetCount(sender) - 1));
             }
         }
@@ -93,7 +96,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     //ReturnalAdrenalineUI.Enable();
 
-                    var component = body.master.gameObject.GetComponent<ReturnalAdrenalinItemBehavior>();
+                    var component = body.master.gameObject.GetComponent<ReturnalAdrenalineItemBehavior>();
                     if (component)
                     {
                         component.enabled = true;
@@ -104,7 +107,7 @@ namespace ExtradimensionalItems.Modules.Items
                         }
                     }
                 }
-                else if (body.master.gameObject.TryGetComponent<ReturnalAdrenalinItemBehavior>(out var component))
+                else if (body.master.gameObject.TryGetComponent<ReturnalAdrenalineItemBehavior>(out var component))
                 {
                     component.enabled = false;
                     //UnityEngine.Object.Destroy(component);
