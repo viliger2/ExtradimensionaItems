@@ -48,6 +48,8 @@ namespace ExtradimensionalItems.Modules.Content
         public static BuffDef SkullOfDoom;
 
         public static BuffDef DamageOnCooldowns;
+
+        public static BuffDef ReturnalMaxLevelProtection;
     }
 
 }

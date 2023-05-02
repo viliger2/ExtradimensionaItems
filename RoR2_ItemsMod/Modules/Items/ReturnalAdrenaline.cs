@@ -15,13 +15,37 @@ namespace ExtradimensionalItems.Modules.Items
 {
     public class ReturnalAdrenaline : ItemBase<ReturnalAdrenaline>
     {
-        public override string ItemName => "ReturnalAdrenalin";
+        public static ConfigEntry<int> KillsPerLevel;
+        public static ConfigEntry<int> NormalEnemyReward;
+        public static ConfigEntry<int> EliteEnemyReward;
+        public static ConfigEntry<int> BossEnemyReward;
 
-        public override string ItemLangTokenName => "RETURNAL_ADRENALIN";
+        public static ConfigEntry<float> AttackSpeedBonus;
+        public static ConfigEntry<float> MovementSpeedBonus;
+        public static ConfigEntry<float> HealthBonus;
+        public static ConfigEntry<float> ShieldBonus;
+        public static ConfigEntry<float> CritBonus;
+
+        public static ConfigEntry<float> CriticalDamage;
+
+        public static ConfigEntry<float> HealthCheckFrequency;
+
+        public static ConfigEntry<float> KillsPerLevelPerStack;
+        public static ConfigEntry<float> AttackSpeedBonusPerStack;
+        public static ConfigEntry<float> MovementSpeedBonusPerStack;
+        public static ConfigEntry<float> HealthBonusPerStack;
+        public static ConfigEntry<float> ShieldBonusPerStack;
+        public static ConfigEntry<float> CritBonusPerStack;
+
+        public static ConfigEntry<bool> MaxLevelProtection;
+
+        public override string ItemName => "ReturnalAdrenaline";
+
+        public override string ItemLangTokenName => "RETURNAL_ADRENALINE";
 
         public override ItemTier Tier => ItemTier.Tier3;
 
-        public override string BundleName => "returnaladrenalin";
+        public override string BundleName => "returnaladrenaline";
 
         public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Damage };
 
@@ -44,6 +68,8 @@ namespace ExtradimensionalItems.Modules.Items
         public override void Init(ConfigFile config)
         {
             Hooks();
+            CreateConfig(config);
+            CreateBuffs();
             CreateItem(ref Content.Items.ReturnalAdrenaline);
         }
 
@@ -51,14 +77,13 @@ namespace ExtradimensionalItems.Modules.Items
         {
             base.Hooks();
             CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
-            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
             On.RoR2.UI.HUD.Awake += HUD_Awake;
             On.RoR2.CharacterMaster.Awake += CharacterMaster_Awake;
         }
 
         // attaching it here so networking works
-        // basically you can't attack networked components during runtime, even with NetWeaver they won't network
-        // so we have to do it during awake
+        // basically you can't attach networked components during runtime, even with NetWeaver they won't network
+        // so we have to do it during awake, which is also technically runtime but it works because some Unity stuff
         private void CharacterMaster_Awake(On.RoR2.CharacterMaster.orig_Awake orig, CharacterMaster self)
         {
             if (self)
@@ -75,32 +100,18 @@ namespace ExtradimensionalItems.Modules.Items
             ReturnalAdrenalineUI.CreateUI(self);
         }
 
-        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody body, RecalculateStatsAPI.StatHookEventArgs args)
-        {
-            if (GetCount(body) > 0 && body.master.TryGetComponent(out ReturnalAdrenalineItemBehavior component))
-            {
-                args.attackSpeedMultAdd += 0.15f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 1)) ? 1 : 0);
-                args.moveSpeedMultAdd += 0.14f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 2)) ? 1 : 0);
-                args.baseHealthAdd += 25f * 5 * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 3)) ? 1 : 0);
-                args.baseShieldAdd += body.maxHealth * 0.25f * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 4)) ? 1 : 0);
-                args.critAdd += 25f * ((component.adrenalineLevel >= (ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 5)) ? 1 : 0);
-                //args.baseDamageAdd += sender.maxHealth * (PercentBonusDamage.Value / 100) + sender.maxHealth * (PercentBonusDamagePerStack.Value / 100 * (GetCount(sender) - 1));
-            }
-        }
-
         private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
         {
             if (body)
             {
                 if (GetCount(body) > 0)
                 {
-                    //ReturnalAdrenalineUI.Enable();
-
                     var component = body.master.gameObject.GetComponent<ReturnalAdrenalineItemBehavior>();
                     if (component)
                     {
                         component.enabled = true;
-                        component.stack = GetCount(body);
+                        component.RecalculatePerLevelValue(GetCount(body));
+                            
                         if (ReturnalAdrenalineUI.instance)
                         {
                             ReturnalAdrenalineUI.instance.Enable();
@@ -110,7 +121,6 @@ namespace ExtradimensionalItems.Modules.Items
                 else if (body.master.gameObject.TryGetComponent<ReturnalAdrenalineItemBehavior>(out var component))
                 {
                     component.enabled = false;
-                    //UnityEngine.Object.Destroy(component);
 
                     if (ReturnalAdrenalineUI.instance && ReturnalAdrenalineUI.instance.hud.targetMaster == body.master)
                     {
@@ -118,6 +128,53 @@ namespace ExtradimensionalItems.Modules.Items
                     }
                 }
             }
+        }
+        private void CreateBuffs()
+        {
+            var ReturnalBuffProtection = ScriptableObject.CreateInstance<BuffDef>();
+            ReturnalBuffProtection.name = "Returnal Protection";
+            ReturnalBuffProtection.buffColor = Color.yellow;
+            ReturnalBuffProtection.canStack = false;
+            ReturnalBuffProtection.isDebuff = false;
+            ReturnalBuffProtection.iconSprite = null; //TODO: fix
+
+            ContentAddition.AddBuffDef(ReturnalBuffProtection);
+
+            Content.Buffs.ReturnalMaxLevelProtection = ReturnalBuffProtection;
+
+            //if (BetterUICompat.enabled)
+            //{
+            //    BetterUICompat.AddBuffInfo(ReturnalBuffProtection, "BUFF_DAMAGE_ON_COOLDOWNS_NAME", "BUFF_DAMAGE_ON_COOLDOWNS_DESCRIPTION");
+            //}
+        }
+
+        public override void CreateConfig(ConfigFile config)
+        {
+            base.CreateConfig(config);
+
+            KillsPerLevel = config.Bind("Item: " + ItemName, "Number of Kills Per Level", 10, "How many kills are needed per item's level.");
+            NormalEnemyReward = config.Bind("Item: " + ItemName, "Normal Enemy Reward", 1, "How many points normal enemy rewards towards item's levels.");
+            EliteEnemyReward = config.Bind("Item: " + ItemName, "Elite Enemy Reward", 3, "How many points elite enemy rewards towards item's levels.");
+            BossEnemyReward = config.Bind("Item: " + ItemName, "Boss Enemy Reward", 5, "How many points boss enemy rewards towards item's levels.");
+
+            AttackSpeedBonus = config.Bind("Item: " + ItemName, "Attack Speed Bonus", 75f, "How much attack speed item gives. By default it is equal to 5 Soldier's Syringes.");
+            MovementSpeedBonus = config.Bind("Item " + ItemName, "Movement Speed Bonus", 70f, "How much movement speed item gives. By default it is equal to 5 Paul's Goat Hoofs.");
+            HealthBonus = config.Bind("Item " + ItemName, "Health Bonus", 125f, "How much health item gives. By default it is equal to 5 Bison Steaks.");
+            ShieldBonus = config.Bind("Item " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health, or two hits that would result in losing item's levels.");
+            CritBonus = config.Bind("Item " + ItemName, "Crit Bonus", 25f, "How much crit item gives.");
+
+            CriticalDamage = config.Bind("Item " + ItemName, "Critical Damage", 20f, "How much damage, in percentage of health, you need to take to lose item's levels.");
+
+            HealthCheckFrequency = config.Bind("Item " + ItemName, "Health Check Timer", 0.1f, "How frequently game check for lost HP. Higher values will result in multiple hits being lumped together for when lost health check occurs, lower velues will result it worse game performance but hits will be registered separately.");
+
+            KillsPerLevelPerStack = config.Bind("Item " + ItemName, "Number of Kills Per Level Reduction Per Stack", 10f, "How much, in percent, number of needed kills is being reduced by each stack. Stack hyperbolically.");
+            AttackSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Attack Speed Bonus Per Stack", 30f, "How much attack speed item gives per stack. By default it is equal to 2 Soldier's Syringes.");
+            MovementSpeedBonusPerStack = config.Bind("Item " + ItemName, "Movement Speed Bonus", 28f, "How much movement speed item gives per stack. By default it is equal to 2 Paul's Goat Hoofs.");
+            HealthBonusPerStack = config.Bind("Item " + ItemName, "Health Bonus", 50f, "How much health item gives per stack. By default it is equal to 2 Bison Steaks.");
+            ShieldBonusPerStack = config.Bind("Item " + ItemName, "Shield Bonus", 10f, "How much shield item gives per stack. By default it is equal to 10% of max health, or one hit that would result in losing item's levels.");
+            CritBonusPerStack = config.Bind("Item " + ItemName, "Crit Bonus", 10f, "How much crit item gives per stack.");
+
+            MaxLevelProtection = config.Bind("Item: " + ItemName, "Max Level Protection", true, "Enables Max level protection. At level 5 you will get a buff that will save you a single time from losing item's levels.");
         }
     }
 }

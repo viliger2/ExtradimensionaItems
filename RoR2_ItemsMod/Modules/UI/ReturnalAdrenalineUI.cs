@@ -17,15 +17,11 @@ namespace ExtradimensionalItems.Modules.UI
     {
         public static ReturnalAdrenalineUI instance;
 
-        //private static ReturnalAdrenalineUI instance;
-
-        //private static GameObject AdrenalineHUD;
-
         private HGTextMeshProUGUI textMesh;
 
         private Image levelBar;
 
-        public RoR2.UI.HUD hud;
+        public RoR2.UI.HUD hud { get; private set; }
 
         private ReturnalAdrenalineItemBehavior itemBehavior;
 
@@ -51,16 +47,16 @@ namespace ExtradimensionalItems.Modules.UI
         {
             if (textMesh)
             {
-                textMesh.SetText(string.Format("Lv. {0}", adrenalineLevel / ReturnalAdrenalineItemBehavior.adrenalinePerLevel));
+                textMesh.SetText(string.Format("Lv. {0}", (int)(adrenalineLevel / itemBehavior.adrenalinePerLevel)));
             }
             if (levelBar)
             {
-                if (adrenalineLevel >= ReturnalAdrenalineItemBehavior.adrenalinePerLevel * 5)
+                if (adrenalineLevel >= itemBehavior.adrenalinePerLevel * 5)
                 {
                     levelBar.fillAmount = 1f;
                 } else 
                 {
-                    levelBar.fillAmount = Mathf.Clamp((float)adrenalineLevel % ReturnalAdrenalineItemBehavior.adrenalinePerLevel / ReturnalAdrenalineItemBehavior.adrenalinePerLevel, 0f, 1f);
+                    levelBar.fillAmount = Mathf.Clamp((float)adrenalineLevel % itemBehavior.adrenalinePerLevel / itemBehavior.adrenalinePerLevel, 0f, 1f);
                 }
 
             }
@@ -70,17 +66,13 @@ namespace ExtradimensionalItems.Modules.UI
         {
             if (!instance)
             {
-                //if (!instance)
-                //{
                 var AdrenalineHUD = new GameObject("AdrenalineHUD");
 
                 instance = AdrenalineHUD.AddComponent<ReturnalAdrenalineUI>();
 
                 RectTransform rectTransform = AdrenalineHUD.AddComponent<RectTransform>();
 
-                //AdrenalineHUD.transform.SetParent(HUD.mainContainer.transform);
                 AdrenalineHUD.transform.SetParent(HUD.healthBar.transform);
-                //AdrenalineHUD.transform.SetAsFirstSibling();
 
                 Image image = AdrenalineHUD.AddComponent<Image>();
                 Image copyImage = HUD.itemInventoryDisplay.gameObject.GetComponent<Image>();
@@ -104,8 +96,6 @@ namespace ExtradimensionalItems.Modules.UI
                 var textMesh = AdrenalineLevelText.AddComponent<HGTextMeshProUGUI>();
 
                 AdrenalineLevelText.transform.SetParent(AdrenalineHUD.transform);
-
-                //AdrenalineHUD.transform.SetParent(HUD.mainContainer.transform);
 
                 rectTransform1.localPosition = Vector3.zero;
                 rectTransform1.anchorMin = Vector2.zero;
@@ -145,16 +135,10 @@ namespace ExtradimensionalItems.Modules.UI
                 levelBar.fillOrigin = (int)Image.OriginHorizontal.Left;
                 levelBar.fillAmount = 0.5f;
 
-                //var body = LocalUserManager.GetFirstLocalUser().cachedMasterController.master.GetBody();
-                //AdrenalineHUD.gameObject.SetActive(body ? body.inventory.GetItemCount(Content.Items.ReturnalAdrenalin) > 0 : false);
-
-                //var component = LocalUserManager.GetFirstLocalUser().cachedMasterController.master.GetComponent<ReturnalAdrenalinItemBehavior>();
-
                 instance.hud = HUD;
                 instance.textMesh = textMesh;
                 instance.levelBar = levelBar;
 
-                //instance.UpdateUI(component ? component.adrenalineLevel : 0);
                 AdrenalineHUD.gameObject.SetActive(true);
             }
 
