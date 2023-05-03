@@ -84,6 +84,7 @@ namespace ExtradimensionalItems.Modules.Items
         // attaching it here so networking works
         // basically you can't attach networked components during runtime, even with NetWeaver they won't network
         // so we have to do it during awake, which is also technically runtime but it works because some Unity stuff
+        // this results in every single master having this component, but since we disable it on creation it should be fiiiine
         private void CharacterMaster_Awake(On.RoR2.CharacterMaster.orig_Awake orig, CharacterMaster self)
         {
             if (self)
@@ -152,7 +153,7 @@ namespace ExtradimensionalItems.Modules.Items
         {
             base.CreateConfig(config);
 
-            KillsPerLevel = config.Bind("Item: " + ItemName, "Number of Kills Per Level", 10, "How many kills are needed per item's level.");
+            KillsPerLevel = config.Bind("Item: " + ItemName, "Number of Kills Per Level", 15, "How many kills are needed per item's level.");
             NormalEnemyReward = config.Bind("Item: " + ItemName, "Normal Enemy Reward", 1, "How many points normal enemy rewards towards item's levels.");
             EliteEnemyReward = config.Bind("Item: " + ItemName, "Elite Enemy Reward", 3, "How many points elite enemy rewards towards item's levels.");
             BossEnemyReward = config.Bind("Item: " + ItemName, "Boss Enemy Reward", 5, "How many points boss enemy rewards towards item's levels.");
@@ -160,12 +161,12 @@ namespace ExtradimensionalItems.Modules.Items
             AttackSpeedBonus = config.Bind("Item: " + ItemName, "Attack Speed Bonus", 75f, "How much attack speed item gives. By default it is equal to 5 Soldier's Syringes.");
             MovementSpeedBonus = config.Bind("Item " + ItemName, "Movement Speed Bonus", 70f, "How much movement speed item gives. By default it is equal to 5 Paul's Goat Hoofs.");
             HealthBonus = config.Bind("Item " + ItemName, "Health Bonus", 125f, "How much health item gives. By default it is equal to 5 Bison Steaks.");
-            ShieldBonus = config.Bind("Item " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health, or two hits that would result in losing item's levels.");
+            ShieldBonus = config.Bind("Item " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health, or one hit that would result in losing item's levels.");
             CritBonus = config.Bind("Item " + ItemName, "Crit Bonus", 25f, "How much crit item gives.");
 
             CriticalDamage = config.Bind("Item " + ItemName, "Critical Damage", 20f, "How much damage, in percentage of health, you need to take to lose item's levels.");
 
-            HealthCheckFrequency = config.Bind("Item " + ItemName, "Health Check Timer", 0.1f, "How frequently game check for lost HP. Higher values will result in multiple hits being lumped together for when lost health check occurs, lower velues will result it worse game performance but hits will be registered separately.");
+            HealthCheckFrequency = config.Bind("Item " + ItemName, "Health Check Timer", 0.1f, "How frequently game check for lost HP. Higher values will result in multiple hits being lumped together for when lost health check occurs, lower velues will result in worse game performance but hits will be registered separately.");
 
             KillsPerLevelPerStack = config.Bind("Item " + ItemName, "Number of Kills Per Level Reduction Per Stack", 10f, "How much, in percent, number of needed kills is being reduced by each stack. Stack hyperbolically.");
             AttackSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Attack Speed Bonus Per Stack", 30f, "How much attack speed item gives per stack. By default it is equal to 2 Soldier's Syringes.");

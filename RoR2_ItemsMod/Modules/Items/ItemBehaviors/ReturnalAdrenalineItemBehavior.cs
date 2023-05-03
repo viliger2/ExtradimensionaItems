@@ -38,8 +38,6 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
             if (master && master.GetBody())
             {
                 previousHp = master.GetBody().healthComponent.health;
-                // TODO: remove, debug
-                adrenalineLevel = (int)(adrenalinePerLevel * 4.5f);
             }
         }
 
@@ -50,9 +48,9 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                 var itemCount = master.inventory.GetItemCount(Content.Items.ReturnalAdrenaline);
                 args.attackSpeedMultAdd += ((ReturnalAdrenaline.AttackSpeedBonus.Value / 100) + ((ReturnalAdrenaline.AttackSpeedBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 1)) ? 1 : 0);
                 args.moveSpeedMultAdd += ((ReturnalAdrenaline.MovementSpeedBonus.Value / 100) + ((ReturnalAdrenaline.MovementSpeedBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 2)) ? 1 : 0);
-                args.baseHealthAdd += ((ReturnalAdrenaline.HealthBonus.Value / 100) + ((ReturnalAdrenaline.HealthBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 3)) ? 1 : 0);
+                args.baseHealthAdd += ((ReturnalAdrenaline.HealthBonus.Value) + ((ReturnalAdrenaline.HealthBonusPerStack.Value) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 3)) ? 1 : 0);
                 args.baseShieldAdd += (body.maxHealth * (ReturnalAdrenaline.ShieldBonus.Value / 100) + (body.maxHealth * (ReturnalAdrenaline.ShieldBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 4)) ? 1 : 0);
-                args.critAdd += ((ReturnalAdrenaline.CritBonus.Value / 100) + ((ReturnalAdrenaline.CritBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 5)) ? 1 : 0);
+                args.critAdd += ((ReturnalAdrenaline.CritBonus.Value) + ((ReturnalAdrenaline.CritBonusPerStack.Value) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 5)) ? 1 : 0);
             }
         }
 
@@ -92,7 +90,10 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                     {
                         adrenalineLevel = (int)(adrenalinePerLevel * 5);
 
-                        master.GetBody().AddBuff(Content.Buffs.ReturnalMaxLevelProtection);
+                        if (ReturnalAdrenaline.MaxLevelProtection.Value)
+                        {
+                            master.GetBody().AddBuff(Content.Buffs.ReturnalMaxLevelProtection);
+                        }
                     }
                     MyLogger.LogMessage("new stack number {0}", adrenalineLevel.ToString());
                 }

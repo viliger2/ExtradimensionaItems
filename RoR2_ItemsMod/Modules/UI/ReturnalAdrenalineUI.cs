@@ -13,13 +13,19 @@ using static ExtradimensionalItems.Modules.Items.ReturnalAdrenaline;
 namespace ExtradimensionalItems.Modules.UI
 {
     // this is terrible, I am sorry
+
+    // TODO: add animations
     public class ReturnalAdrenalineUI : MonoBehaviour
     {
+        private const float BAR_PER_FRAME_INCREMENT = 0.1f;
+
         public static ReturnalAdrenalineUI instance;
 
         private HGTextMeshProUGUI textMesh;
 
         private Image levelBar;
+
+        private float currentDisplayedLevel = 0f;
 
         public RoR2.UI.HUD hud { get; private set; }
 
@@ -35,7 +41,7 @@ namespace ExtradimensionalItems.Modules.UI
                 }
                 if (itemBehavior && hud.targetMaster.inventory.GetItemCount(Content.Items.ReturnalAdrenaline) > 0)
                 {
-                    UpdateUI(itemBehavior.adrenalineLevel);
+                    UpdateUI(itemBehavior.adrenalineLevel, itemBehavior.adrenalinePerLevel);
                 } else
                 {
                     Disable();
@@ -43,22 +49,26 @@ namespace ExtradimensionalItems.Modules.UI
             }
         }
 
-        public void UpdateUI(int adrenalineLevel)
+        public void UpdateUI(int adrenalineLevel, float adrenalinePerLevel, bool forced = false)
         {
-            if (textMesh)
+            if ((int)currentDisplayedLevel != adrenalineLevel || forced)
             {
-                textMesh.SetText(string.Format("Lv. {0}", (int)(adrenalineLevel / itemBehavior.adrenalinePerLevel)));
-            }
-            if (levelBar)
-            {
-                if (adrenalineLevel >= itemBehavior.adrenalinePerLevel * 5)
+                currentDisplayedLevel = Mathf.Clamp(currentDisplayedLevel < adrenalineLevel ? currentDisplayedLevel + BAR_PER_FRAME_INCREMENT : currentDisplayedLevel - BAR_PER_FRAME_INCREMENT, 0f, adrenalineLevel);
+                if (textMesh)
                 {
-                    levelBar.fillAmount = 1f;
-                } else 
-                {
-                    levelBar.fillAmount = Mathf.Clamp((float)adrenalineLevel % itemBehavior.adrenalinePerLevel / itemBehavior.adrenalinePerLevel, 0f, 1f);
+                    textMesh.SetText(string.Format("Lv. {0}", (int)(adrenalineLevel / adrenalinePerLevel)));
                 }
-
+                if (levelBar)
+                {
+                    if (adrenalineLevel >= adrenalinePerLevel * 5)
+                    {
+                        levelBar.fillAmount = 1f;
+                    }
+                    else
+                    {
+                        levelBar.fillAmount = Mathf.Clamp(currentDisplayedLevel % adrenalinePerLevel / adrenalinePerLevel, 0f, 1f);
+                    }
+                }
             }
         }
 
@@ -140,6 +150,7 @@ namespace ExtradimensionalItems.Modules.UI
                 instance.levelBar = levelBar;
 
                 AdrenalineHUD.gameObject.SetActive(true);
+                instance.UpdateUI(0, 15f, true);
             }
 
             return instance;
