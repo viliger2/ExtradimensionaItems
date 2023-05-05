@@ -93,9 +93,9 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                         if (ReturnalAdrenaline.MaxLevelProtection.Value)
                         {
                             master.GetBody().AddBuff(Content.Buffs.ReturnalMaxLevelProtection);
+                            MyLogger.LogMessage("Player {0}({1}) reached max level of ReturnalAdrenaline, adding ReturnalMaxLevelProtection buff", master.GetBody().GetUserName(), master.GetBody().name);
                         }
                     }
-                    MyLogger.LogMessage("new stack number {0}", adrenalineLevel.ToString());
                 }
             }
         }
@@ -119,12 +119,12 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                     if (body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection))
                     {
                         body.RemoveBuff(Content.Buffs.ReturnalMaxLevelProtection);
-                        MyLogger.LogMessage("saved by max level buff");
+                        MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, removing ReturnalMaxLevelProtection buff", master.GetBody().GetUserName(), master.GetBody().name);
                     }
                     else
                     {
                         adrenalineLevel = 0;
-                        MyLogger.LogMessage("lost all stacks");
+                        MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, losing all item's levels", master.GetBody().GetUserName(), master.GetBody().name);
                     }
                 }
 
@@ -135,7 +135,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
         public void RecalculatePerLevelValue(int count)
         {
             adrenalinePerLevel = ReturnalAdrenaline.KillsPerLevel.Value * ((100f - Util.ConvertAmplificationPercentageIntoReductionPercentage(ReturnalAdrenaline.KillsPerLevelPerStack.Value * (count - 1))) / 100f);
-            MyLogger.LogMessage("Current per level exp {0}", adrenalinePerLevel.ToString());
+            MyLogger.LogMessage("Player {0}({1}) has picked up additional stack of ReturnalAdrenaline, new per level requirement is {2}", master.GetBody().GetUserName(), master.GetBody().name, adrenalinePerLevel.ToString());
         }
     }
 

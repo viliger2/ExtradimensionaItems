@@ -39,6 +39,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         public static ConfigEntry<bool> MaxLevelProtection;
 
+        public static ConfigEntry<bool> DisableHUD;
+
         public override string ItemName => "ReturnalAdrenaline";
 
         public override string ItemLangTokenName => "RETURNAL_ADRENALINE";
@@ -51,12 +53,17 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override bool AIBlacklisted => true;
 
-        public override GameObject ItemModel => null;
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("ReturnalAdrenaline");
 
         public override Sprite ItemIcon => null;
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
+            var itemModel = AssetBundle.LoadAsset<GameObject>("ReturnalAdrenaline");
+            //itemModel.AddComponent<ReturnalAdrenalineAnimator>(); // for animations
+
+
+
             return new ItemDisplayRuleDict();
         }
 
@@ -67,8 +74,9 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override void Init(ConfigFile config)
         {
-            Hooks();
             CreateConfig(config);
+            Hooks();
+            LoadAssetBundle();
             CreateBuffs();
             CreateItem(ref Content.Items.ReturnalAdrenaline);
         }
@@ -77,7 +85,10 @@ namespace ExtradimensionalItems.Modules.Items
         {
             base.Hooks();
             CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
-            On.RoR2.UI.HUD.Awake += HUD_Awake;
+            if (!DisableHUD.Value)
+            {
+                On.RoR2.UI.HUD.Awake += HUD_Awake;
+            }
             On.RoR2.CharacterMaster.Awake += CharacterMaster_Awake;
         }
 
@@ -116,6 +127,7 @@ namespace ExtradimensionalItems.Modules.Items
                         if (ReturnalAdrenalineUI.instance)
                         {
                             ReturnalAdrenalineUI.instance.Enable();
+                            MyLogger.LogMessage("Player {0}({1}) picked up ReturnalAdrenaline, activating master component, current stack count {2}.", body.GetUserName(), body.name, GetCount(body).ToString());
                         }
                     }
                 }
@@ -126,6 +138,7 @@ namespace ExtradimensionalItems.Modules.Items
                     if (ReturnalAdrenalineUI.instance && ReturnalAdrenalineUI.instance.hud.targetMaster == body.master)
                     {
                         ReturnalAdrenalineUI.instance.Disable();
+                        MyLogger.LogMessage("Player {0}({1}) lost all stacks of ReturnalAdrenaline, deactivating master component.", body.GetUserName(), body.name);
                     }
                 }
             }
@@ -176,6 +189,9 @@ namespace ExtradimensionalItems.Modules.Items
             CritBonusPerStack = config.Bind("Item " + ItemName, "Crit Bonus", 10f, "How much crit item gives per stack.");
 
             MaxLevelProtection = config.Bind("Item: " + ItemName, "Max Level Protection", true, "Enables Max level protection. At level 5 you will get a buff that will save you a single time from losing item's levels.");
+
+            DisableHUD = config.Bind("Item: " + ItemName, "Disable Adrenaline HUD", false, "Disables in-game Adrenaline HUD (level progress bar and level value text).");
+
         }
     }
 }
