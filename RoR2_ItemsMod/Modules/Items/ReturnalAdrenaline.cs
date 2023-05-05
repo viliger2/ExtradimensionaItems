@@ -59,12 +59,29 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
+            // we don't actually need an animation controller, not sure why aetherium adds it
+            // but we need to make sure that the animated mesh is not at the top of hierarchy
+            // otherwise the animation breaks ited displays
             var itemModel = AssetBundle.LoadAsset<GameObject>("ReturnalAdrenaline");
-            //itemModel.AddComponent<ReturnalAdrenalineAnimator>(); // for animations
 
+            itemModel.AddComponent<RoR2.ItemDisplay>();
+            // to fix item fade enable "Dither" on hopoo shader in Unity
+            itemModel.GetComponent<RoR2.ItemDisplay>().rendererInfos = Utils.ItemDisplaySetup(itemModel);
 
-
-            return new ItemDisplayRuleDict();
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict();
+            rules.Add("mdlCommandoDualies", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = itemModel,
+                    childName = "Base",
+                    localPos = new Vector3(-0.50488F, 0.02964F, -0.72541F),
+                    localAngles = new Vector3(270F, 0.00001F, 0F),
+                    localScale = new Vector3(0.4561F, 0.4561F, 0.4561F)
+                }
+            });
+            return rules;
         }
 
         public override string GetFormatedDiscription(string pickupString)
@@ -94,7 +111,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         // attaching it here so networking works
         // basically you can't attach networked components during runtime, even with NetWeaver they won't network
-        // so we have to do it during awake, which is also technically runtime but it works because some Unity stuff
+        // so we have to do it during awake, which is also technically runtime but it works because some Unity stuff I don't know or understand
         // this results in every single master having this component, but since we disable it on creation it should be fiiiine
         private void CharacterMaster_Awake(On.RoR2.CharacterMaster.orig_Awake orig, CharacterMaster self)
         {
@@ -191,7 +208,6 @@ namespace ExtradimensionalItems.Modules.Items
             MaxLevelProtection = config.Bind("Item: " + ItemName, "Max Level Protection", true, "Enables Max level protection. At level 5 you will get a buff that will save you a single time from losing item's levels.");
 
             DisableHUD = config.Bind("Item: " + ItemName, "Disable Adrenaline HUD", false, "Disables in-game Adrenaline HUD (level progress bar and level value text).");
-
         }
     }
 }
