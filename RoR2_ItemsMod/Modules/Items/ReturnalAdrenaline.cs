@@ -61,7 +61,7 @@ namespace ExtradimensionalItems.Modules.Items
         {
             // we don't actually need an animation controller, not sure why aetherium adds it
             // but we need to make sure that the animated mesh is not at the top of hierarchy
-            // otherwise the animation breaks ited displays
+            // otherwise the animation breaks item displays 
             var itemModel = AssetBundle.LoadAsset<GameObject>("ReturnalAdrenaline");
 
             itemModel.AddComponent<RoR2.ItemDisplay>();
@@ -82,6 +82,9 @@ namespace ExtradimensionalItems.Modules.Items
                 }
             });
             return rules;
+
+            //CharacterModel.GetIremDisplayObjects(Content.Items.ReturnalAdrenaline.itemIndex);
+            //body.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().GetIremDisplayObjects(Content.Items.ReturnalAdrenaline.itemIndex);
         }
 
         public override string GetFormatedDiscription(string pickupString)
@@ -94,8 +97,16 @@ namespace ExtradimensionalItems.Modules.Items
             CreateConfig(config);
             Hooks();
             LoadAssetBundle();
+            LoadSoundBank();
             CreateBuffs();
             CreateItem(ref Content.Items.ReturnalAdrenaline);
+        }
+
+        protected override void LoadSoundBank()
+        {
+            base.LoadSoundBank();
+            Utils.RegisterNetworkSound("EI_Returnal_LevelUp");
+            Utils.RegisterNetworkSound("EI_Returnal_Break");
         }
 
         protected override void Hooks()
@@ -140,30 +151,34 @@ namespace ExtradimensionalItems.Modules.Items
                     {
                         component.enabled = true;
                         component.RecalculatePerLevelValue(GetCount(body));
-                            
-                        if (ReturnalAdrenalineUI.instance)
+
+                        var adrenalineHUD = ReturnalAdrenalineUI.FindInstance(body.master);
+                        if (adrenalineHUD)
                         {
-                            ReturnalAdrenalineUI.instance.Enable();
-                            MyLogger.LogMessage("Player {0}({1}) picked up ReturnalAdrenaline, activating master component, current stack count {2}.", body.GetUserName(), body.name, GetCount(body).ToString());
+                            adrenalineHUD.Enable();
                         }
+
+                        MyLogger.LogMessage("Player {0}({1}) picked up ReturnalAdrenaline, activating master component, current stack count {2}.", body.GetUserName(), body.name, GetCount(body).ToString());
                     }
                 }
-                else if (body.master.gameObject.TryGetComponent<ReturnalAdrenalineItemBehavior>(out var component))
+                else if (body.master.gameObject.TryGetComponent<ReturnalAdrenalineItemBehavior>(out var component) && component.enabled)
                 {
                     component.enabled = false;
 
-                    if (ReturnalAdrenalineUI.instance && ReturnalAdrenalineUI.instance.hud.targetMaster == body.master)
+                    var adrenalineHUD = ReturnalAdrenalineUI.FindInstance(body.master);
+                    if (adrenalineHUD)
                     {
-                        ReturnalAdrenalineUI.instance.Disable();
-                        MyLogger.LogMessage("Player {0}({1}) lost all stacks of ReturnalAdrenaline, deactivating master component.", body.GetUserName(), body.name);
+                        adrenalineHUD.Disable();
                     }
+
+                    MyLogger.LogMessage("Player {0}({1}) lost all stacks of ReturnalAdrenaline, deactivating master component.", body.GetUserName(), body.name);
                 }
             }
         }
         private void CreateBuffs()
         {
             var ReturnalBuffProtection = ScriptableObject.CreateInstance<BuffDef>();
-            ReturnalBuffProtection.name = "Returnal Protection";
+            ReturnalBuffProtection.name = "Adrenaline Protection";
             ReturnalBuffProtection.buffColor = Color.yellow;
             ReturnalBuffProtection.canStack = false;
             ReturnalBuffProtection.isDebuff = false;
@@ -189,21 +204,21 @@ namespace ExtradimensionalItems.Modules.Items
             BossEnemyReward = config.Bind("Item: " + ItemName, "Boss Enemy Reward", 5, "How many points boss enemy rewards towards item's levels.");
 
             AttackSpeedBonus = config.Bind("Item: " + ItemName, "Attack Speed Bonus", 75f, "How much attack speed item gives. By default it is equal to 5 Soldier's Syringes.");
-            MovementSpeedBonus = config.Bind("Item " + ItemName, "Movement Speed Bonus", 70f, "How much movement speed item gives. By default it is equal to 5 Paul's Goat Hoofs.");
-            HealthBonus = config.Bind("Item " + ItemName, "Health Bonus", 125f, "How much health item gives. By default it is equal to 5 Bison Steaks.");
-            ShieldBonus = config.Bind("Item " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health, or one hit that would result in losing item's levels.");
-            CritBonus = config.Bind("Item " + ItemName, "Crit Bonus", 25f, "How much crit item gives.");
+            MovementSpeedBonus = config.Bind("Item: " + ItemName, "Movement Speed Bonus", 70f, "How much movement speed item gives. By default it is equal to 5 Paul's Goat Hoofs.");
+            HealthBonus = config.Bind("Item: " + ItemName, "Health Bonus", 125f, "How much health item gives. By default it is equal to 5 Bison Steaks.");
+            ShieldBonus = config.Bind("Item: " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health, or one hit that would result in losing item's levels.");
+            CritBonus = config.Bind("Item: " + ItemName, "Crit Bonus", 25f, "How much crit item gives.");
+                
+            CriticalDamage = config.Bind("Item: " + ItemName, "Critical Damage", 20f, "How much damage, in percentage of health, you need to take to lose item's levels.");
+                
+            HealthCheckFrequency = config.Bind("Item: " + ItemName, "Health Check Timer", 0.1f, "How frequently game check for lost HP. Higher values will result in multiple hits being lumped together for when lost health check occurs, lower velues will result in worse game performance but hits will be registered separately.");
 
-            CriticalDamage = config.Bind("Item " + ItemName, "Critical Damage", 20f, "How much damage, in percentage of health, you need to take to lose item's levels.");
-
-            HealthCheckFrequency = config.Bind("Item " + ItemName, "Health Check Timer", 0.1f, "How frequently game check for lost HP. Higher values will result in multiple hits being lumped together for when lost health check occurs, lower velues will result in worse game performance but hits will be registered separately.");
-
-            KillsPerLevelPerStack = config.Bind("Item " + ItemName, "Number of Kills Per Level Reduction Per Stack", 10f, "How much, in percent, number of needed kills is being reduced by each stack. Stack hyperbolically.");
+            KillsPerLevelPerStack = config.Bind("Item: " + ItemName, "Number of Kills Per Level Reduction Per Stack", 10f, "How much, in percent, number of needed kills is being reduced by each stack. Stack hyperbolically.");
             AttackSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Attack Speed Bonus Per Stack", 30f, "How much attack speed item gives per stack. By default it is equal to 2 Soldier's Syringes.");
-            MovementSpeedBonusPerStack = config.Bind("Item " + ItemName, "Movement Speed Bonus", 28f, "How much movement speed item gives per stack. By default it is equal to 2 Paul's Goat Hoofs.");
-            HealthBonusPerStack = config.Bind("Item " + ItemName, "Health Bonus", 50f, "How much health item gives per stack. By default it is equal to 2 Bison Steaks.");
-            ShieldBonusPerStack = config.Bind("Item " + ItemName, "Shield Bonus", 10f, "How much shield item gives per stack. By default it is equal to 10% of max health, or one hit that would result in losing item's levels.");
-            CritBonusPerStack = config.Bind("Item " + ItemName, "Crit Bonus", 10f, "How much crit item gives per stack.");
+            MovementSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Movement Speed Bonus", 28f, "How much movement speed item gives per stack. By default it is equal to 2 Paul's Goat Hoofs.");
+            HealthBonusPerStack = config.Bind("Item: " + ItemName, "Health Bonus", 50f, "How much health item gives per stack. By default it is equal to 2 Bison Steaks.");
+            ShieldBonusPerStack = config.Bind("Item: " + ItemName, "Shield Bonus", 10f, "How much shield item gives per stack. By default it is equal to 10% of max health, or one hit that would result in losing item's levels.");
+            CritBonusPerStack = config.Bind("Item: " + ItemName, "Crit Bonus", 10f, "How much crit item gives per stack.");
 
             MaxLevelProtection = config.Bind("Item: " + ItemName, "Max Level Protection", true, "Enables Max level protection. At level 5 you will get a buff that will save you a single time from losing item's levels.");
 
