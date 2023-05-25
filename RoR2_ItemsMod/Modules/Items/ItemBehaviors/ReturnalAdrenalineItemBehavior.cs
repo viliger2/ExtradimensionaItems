@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using static RoR2.CharacterMaster;
 
 namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 {
@@ -25,11 +26,11 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
         [SyncVar]
         public float adrenalinePerLevel;
 
-        private float previousHp;
+        private int currentLevel = 0;
+
+        private float previousHp = 0f;
 
         private float stopwatch;
-
-        private int currentLevel = 0; // just for the sound
 
         private GameObject glow;
 
@@ -45,47 +46,88 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
             if (master && master.GetBody())
             {
+                master.onBodyStart += Master_onBodyStart;
                 SetupBody();
             }
-        }
-
-        private void SetupBody()
-        {
-            body = master.GetBody();
-            previousHp = body.healthComponent.health;
-            glow = FindGlow();
-            if (glow)
-            {
-                glow.SetActive(false);
-            }
-        }
-
-        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody body, RecalculateStatsAPI.StatHookEventArgs args)
-        {
-            if (body.master == master)
-            {
-                var itemCount = master.inventory.GetItemCount(Content.Items.ReturnalAdrenaline);
-                args.attackSpeedMultAdd += ((ReturnalAdrenaline.AttackSpeedBonus.Value / 100) + ((ReturnalAdrenaline.AttackSpeedBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 1)) ? 1 : 0);
-                args.moveSpeedMultAdd += ((ReturnalAdrenaline.MovementSpeedBonus.Value / 100) + ((ReturnalAdrenaline.MovementSpeedBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 2)) ? 1 : 0);
-                args.baseHealthAdd += ((ReturnalAdrenaline.HealthBonus.Value) + ((ReturnalAdrenaline.HealthBonusPerStack.Value) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 3)) ? 1 : 0);
-                args.baseShieldAdd += (body.maxHealth * (ReturnalAdrenaline.ShieldBonus.Value / 100) + (body.maxHealth * (ReturnalAdrenaline.ShieldBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 4)) ? 1 : 0);
-                args.critAdd += ((ReturnalAdrenaline.CritBonus.Value) + ((ReturnalAdrenaline.CritBonusPerStack.Value) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 5)) ? 1 : 0);
-            }
-
         }
 
         public void OnDisable()
         {
             RoR2.GlobalEventManager.onCharacterDeathGlobal -= GlobalEventManager_onCharacterDeathGlobal;
             RecalculateStatsAPI.GetStatCoefficients -= RecalculateStatsAPI_GetStatCoefficients;
+            if (master)
+            {
+                master.onBodyStart -= Master_onBodyStart;
+            }
             adrenalineLevel = 0;
-            currentLevel = 0;
+            currentLevel = 0; // so if the player picks it up again sound doesn't play
         }
 
         public void OnDestroy()
         {
             RoR2.GlobalEventManager.onCharacterDeathGlobal -= GlobalEventManager_onCharacterDeathGlobal;
             RecalculateStatsAPI.GetStatCoefficients -= RecalculateStatsAPI_GetStatCoefficients;
+            if (master)
+            {
+                master.onBodyStart -= Master_onBodyStart;
+            }
+        }
+
+        [ServerCallback]
+        public void FixedUpdate()
+        {
+            stopwatch += Time.fixedDeltaTime;
+            if (stopwatch < ReturnalAdrenaline.HealthCheckFrequency.Value)
+            {
+                return;
+            }
+
+            stopwatch -= ReturnalAdrenaline.HealthCheckFrequency.Value;
+
+            if (body)
+            {
+                if ((previousHp - body.healthComponent.health) > body.healthComponent.fullHealth * 0.2)
+                {
+                    if (body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection))
+                    {
+                        body.RemoveBuff(Content.Buffs.ReturnalMaxLevelProtection);
+                        MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, removing ReturnalMaxLevelProtection buff", body.GetUserName(), body.name);
+                    }
+                    else
+                    {
+                        adrenalineLevel = 0;
+                        //currentLevel = 0;
+                        EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Returnal_Break", body.gameObject);
+                        MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, losing all item's levels", body.GetUserName(), body.name);
+                    }
+                }
+
+                previousHp = body.healthComponent.health;
+            }
+        }
+
+        public void Update()
+        {
+            if (!ReturnalAdrenaline.DisableHUD.Value)
+            {
+                if (master)
+                {
+                    var instance = ReturnalAdrenalineUI.FindInstance(master);
+                    if (instance && !instance.gameObject.activeSelf && master.hasEffectiveAuthority)
+                    {
+                        instance.Enable();
+                    }
+                }
+            }
+            if (glow)
+            {
+                if (currentLevel != (int)(adrenalineLevel / adrenalinePerLevel))
+                {
+                    Util.PlaySound("EI_Returnal_LevelUp", body.gameObject);
+                    currentLevel = (int)(adrenalineLevel / adrenalinePerLevel);
+                    SetGlow();
+                }
+            }
         }
 
         private void GlobalEventManager_onCharacterDeathGlobal(DamageReport damageReport)
@@ -117,65 +159,44 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                             MyLogger.LogMessage("Player {0}({1}) reached max level of ReturnalAdrenaline, adding ReturnalMaxLevelProtection buff", body.GetUserName(), body.name);
                         }
                     }
-
-                    if(currentLevel != (int)(adrenalineLevel / adrenalinePerLevel))
-                    {
-                        EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Returnal_LevelUp", body.gameObject);
-                        currentLevel = (int)(adrenalineLevel / adrenalinePerLevel);
-                        RpcSetGlow();
-                    }
                 }
             }
         }
 
-        [ServerCallback]
-        public void FixedUpdate()
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody body, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            stopwatch += Time.fixedDeltaTime;
-            if (stopwatch < ReturnalAdrenaline.HealthCheckFrequency.Value)
+            if (body.master == master)
             {
-                return;
+                var itemCount = master.inventory.GetItemCount(Content.Items.ReturnalAdrenaline);
+                args.attackSpeedMultAdd += ((ReturnalAdrenaline.AttackSpeedBonus.Value / 100) + ((ReturnalAdrenaline.AttackSpeedBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 1)) ? 1 : 0);
+                args.moveSpeedMultAdd += ((ReturnalAdrenaline.MovementSpeedBonus.Value / 100) + ((ReturnalAdrenaline.MovementSpeedBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 2)) ? 1 : 0);
+                args.baseHealthAdd += ((ReturnalAdrenaline.HealthBonus.Value) + ((ReturnalAdrenaline.HealthBonusPerStack.Value) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 3)) ? 1 : 0);
+                args.baseShieldAdd += (body.maxHealth * (ReturnalAdrenaline.ShieldBonus.Value / 100) + (body.maxHealth * (ReturnalAdrenaline.ShieldBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 4)) ? 1 : 0);
+                args.critAdd += ((ReturnalAdrenaline.CritBonus.Value) + ((ReturnalAdrenaline.CritBonusPerStack.Value) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 5)) ? 1 : 0);
             }
 
-            stopwatch -= ReturnalAdrenaline.HealthCheckFrequency.Value;
+        }
 
+        private void Master_onBodyStart(CharacterBody body)
+        {
+            this.body = body;
+            SetupBody();
+        }
+
+        private void SetupBody()
+        {
+            if (!body)
+            {
+                body = master.GetBody();
+            }
             if (body)
             {
-                if ((previousHp - body.healthComponent.health) > body.healthComponent.fullHealth * 0.2)
+                if (body.healthComponent)
                 {
-                    if (body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection))
-                    {
-                        body.RemoveBuff(Content.Buffs.ReturnalMaxLevelProtection);
-                        MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, removing ReturnalMaxLevelProtection buff", body.GetUserName(), body.name);
-                    }
-                    else
-                    {
-                        adrenalineLevel = 0;
-                        currentLevel = 0;
-                        RpcSetGlow();
-                        EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Returnal_Break", body.gameObject);
-                        MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, losing all item's levels", body.GetUserName(), body.name);
-                    }
+                    previousHp = body.healthComponent.health;
                 }
-
-                previousHp = body.healthComponent.health;
-            } else if (master.GetBody())
-            {
-                // it is here since on stage transitions master can exist without a body
-                // so when we awake together with master body simply wont be there
-                 SetupBody();
-            }
-        }
-
-        public void Update()
-        {
-            if(master)
-            {
-                var instance = ReturnalAdrenalineUI.FindInstance(master);
-                if (instance && !instance.gameObject.activeSelf && master.hasEffectiveAuthority)
-                {
-                    instance.Enable();
-                }
+                glow = FindGlow();
+                SetGlow();
             }
         }
 
@@ -196,10 +217,10 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                 if (modelLocator)
                 {
                     var characterModel = modelLocator.modelTransform.GetComponent<CharacterModel>();
-                    if(characterModel)
+                    if (characterModel)
                     {
                         List<GameObject> list = characterModel.GetItemDisplayObjects(Content.Items.ReturnalAdrenaline.itemIndex);
-                        if(list.Count > 0)
+                        if (list.Count > 0)
                         {
                             var glowTransform = list[0].transform.Find("Effect");
                             if (glowTransform)
@@ -214,8 +235,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
             return null;
         }
 
-        [ClientRpc]
-        private void RpcSetGlow()
+        private void SetGlow()
         {
             if (glow)
             {
@@ -223,25 +243,26 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
                 var particles = glow.GetComponent<ParticleSystem>();
 
-                if (particles) {
+                if (particles)
+                {
                     particles.Clear();
                     var main = particles.main;
                     switch (currentLevel)
                     {
                         case 1:
-                            main.startColor = Color.yellow;
+                            main.startColor = new Color(Color.yellow.r, Color.yellow.g, Color.yellow.b, 0.5f);
                             break;
                         case 2:
-                            main.startColor = Color.gray;
+                            main.startColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.5f);
                             break;
                         case 3:
-                            main.startColor = Color.white;
+                            main.startColor = new Color(Color.white.r, Color.white.g, Color.white.b, 0.5f);
                             break;
                         case 4:
-                            main.startColor = Color.blue;
+                            main.startColor = new Color(Color.blue.r, Color.blue.g, Color.blue.b, 0.5f);
                             break;
                         case 5:
-                            main.startColor = Color.red;
+                            main.startColor = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
                             break;
                     }
                     particles.Play();
