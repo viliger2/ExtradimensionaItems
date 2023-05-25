@@ -107,6 +107,7 @@ namespace ExtradimensionalItems.Modules.Items
             base.LoadSoundBank();
             Utils.RegisterNetworkSound("EI_Returnal_LevelUp");
             Utils.RegisterNetworkSound("EI_Returnal_Break");
+            Utils.RegisterNetworkSound("EI_Returnal_LevelDown");
         }
 
         protected override void Hooks()

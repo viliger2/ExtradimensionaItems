@@ -34,6 +34,12 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
         private GameObject glow;
 
+        private GameObject maxLevelEffect;
+
+        // since buffs are cleared on stage transition 
+        // we need some way to keep them between stages
+        private bool hasProtectionBuff;
+
         public void Awake()
         {
             enabled = false;
@@ -90,14 +96,16 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                 {
                     if (body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection))
                     {
+                        EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Returnal_Break", body.gameObject);
                         body.RemoveBuff(Content.Buffs.ReturnalMaxLevelProtection);
+                        hasProtectionBuff = false;
                         MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, removing ReturnalMaxLevelProtection buff", body.GetUserName(), body.name);
                     }
                     else
                     {
                         adrenalineLevel = 0;
                         //currentLevel = 0;
-                        EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Returnal_Break", body.gameObject);
+                        EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Returnal_LevelDown", body.gameObject);
                         MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, losing all item's levels", body.GetUserName(), body.name);
                     }
                 }
@@ -127,6 +135,34 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                     currentLevel = (int)(adrenalineLevel / adrenalinePerLevel);
                     SetGlow();
                 }
+                // we don't need glow for "bubble" effect
+                // but checking for glow ensures that item display exists
+                if (ReturnalAdrenaline.MaxLevelProtection.Value)
+                {
+                    ManageMaxLevelProtectionEffect();
+                }
+            }
+        }
+
+        private void ManageMaxLevelProtectionEffect()
+        {
+            bool hasProtectionBuff = body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection);
+            if (hasProtectionBuff && !maxLevelEffect)
+            {
+                maxLevelEffect = Instantiate(RoR2.CharacterBody.AssetReferences.bearVoidTempEffectPrefab, FindItemDisplayTransform());
+                maxLevelEffect.transform.localPosition = new Vector3(0, 0.1745f, 0);
+                maxLevelEffect.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                // removing TVE component since it automatically destroys the object
+                // on the next frame
+                var component = maxLevelEffect.gameObject.GetComponent<TemporaryVisualEffect>();
+                if (component)
+                {
+                    Destroy(component);
+                }
+            }
+            else if (maxLevelEffect && !hasProtectionBuff)
+            {
+                Destroy(maxLevelEffect);
             }
         }
 
@@ -156,6 +192,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                         if (ReturnalAdrenaline.MaxLevelProtection.Value)
                         {
                             body.AddBuff(Content.Buffs.ReturnalMaxLevelProtection);
+                            hasProtectionBuff = true;
                             MyLogger.LogMessage("Player {0}({1}) reached max level of ReturnalAdrenaline, adding ReturnalMaxLevelProtection buff", body.GetUserName(), body.name);
                         }
                     }
@@ -197,6 +234,10 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                 }
                 glow = FindGlow();
                 SetGlow();
+                if(hasProtectionBuff)
+                {
+                    body.AddBuff(Content.Buffs.ReturnalMaxLevelProtection);
+                }
             }
         }
 
@@ -211,6 +252,21 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
         private GameObject FindGlow()
         {
+            var transform = FindItemDisplayTransform();
+            if (transform)
+            {
+                var glowTransform = transform.Find("Effect");
+                if (glowTransform)
+                {
+                    return glowTransform.gameObject;
+                }
+            }
+
+            return null;
+        }
+
+        private Transform FindItemDisplayTransform()
+        {
             if (body)
             {
                 var modelLocator = body.GetComponent<ModelLocator>();
@@ -222,11 +278,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                         List<GameObject> list = characterModel.GetItemDisplayObjects(Content.Items.ReturnalAdrenaline.itemIndex);
                         if (list.Count > 0)
                         {
-                            var glowTransform = list[0].transform.Find("Effect");
-                            if (glowTransform)
-                            {
-                                return glowTransform.gameObject;
-                            }
+                            return list[0].transform;
                         }
                     }
                 }
