@@ -107,10 +107,9 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                         hasProtectionBuff = false;
                         MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, removing ReturnalMaxLevelProtection buff", body.GetUserName(), body.name);
                     }
-                    else
+                    else if(adrenalineLevel > 0)
                     {
                         adrenalineLevel = 0;
-                        //currentLevel = 0;
                         EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_Returnal_LevelDown", body.gameObject);
                         MyLogger.LogMessage("Player {0}({1}) has been damaged equal to threshold, losing all item's levels", body.GetUserName(), body.name);
                     }
@@ -133,21 +132,22 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                     }
                 }
             }
-            if (glow)
+            if (currentLevel != (int)(adrenalineLevel / adrenalinePerLevel))
             {
-                if (currentLevel != (int)(adrenalineLevel / adrenalinePerLevel))
+                currentLevel = (int)(adrenalineLevel / adrenalinePerLevel);
+                if (currentLevel > 0) Util.PlaySound("EI_Returnal_LevelUp", body.gameObject);
+                if (glow)
                 {
-                    Util.PlaySound("EI_Returnal_LevelUp", body.gameObject);
-                    currentLevel = (int)(adrenalineLevel / adrenalinePerLevel);
                     SetGlow();
-                }
-                // we don't need glow for "bubble" effect
-                // but checking for glow ensures that item display exists
-                if (ReturnalAdrenaline.MaxLevelProtection.Value)
-                {
-                    ManageMaxLevelProtectionEffect();
+                    // we don't need glow for "bubble" effect
+                    // but checking for glow ensures that item display exists
+                    if (ReturnalAdrenaline.MaxLevelProtection.Value)
+                    {
+                        ManageMaxLevelProtectionEffect();
+                    }
                 }
             }
+
         }
 
         private void GlobalEventManager_onCharacterDeathGlobal(DamageReport damageReport)

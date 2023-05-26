@@ -22,6 +22,7 @@ namespace ExtradimensionalItems.Modules
         public struct StackingFormulas
         {
             public static StackingFormula LinearStacking => BetterUI.ItemStats.LinearStacking;
+            public static StackingFormula NegativeExponentialStacking => BetterUI.ItemStats.NegativeExponentialStacking;
             public static StackingFormula ProbablyExponentialStacking => NotSureWhatExponentialStacking;
         }
 

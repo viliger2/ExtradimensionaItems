@@ -11,19 +11,16 @@ namespace ExtradimensionalItems.Modules.UI
     // this is terrible, I am sorry
     public class ReturnalAdrenalineUI : MonoBehaviour
     {
-        public static List<ReturnalAdrenalineUI> instancesList = new List<ReturnalAdrenalineUI>();
-
-        //public static ReturnalAdrenalineUI instance;
+        private static List<ReturnalAdrenalineUI> instancesList = new List<ReturnalAdrenalineUI>();
 
         private HGTextMeshProUGUI textMesh;
 
         private Image levelBar;
 
-        public RoR2.UI.HUD hud { get; private set; }
+        private RoR2.UI.HUD hud;
 
         private void Update()
         {
-            //MyLogger.LogMessage("Hud belongs to: " + hud.targetMaster.netId);
             if (hud && hud.targetMaster)
             {
                 var itemBehavior = hud.targetMaster.GetComponent<ReturnalAdrenalineItemBehavior>();
@@ -42,11 +39,11 @@ namespace ExtradimensionalItems.Modules.UI
             }
         }
 
-        public void UpdateUI(int adrenalineLevel, float adrenalinePerLevel)
+        private void UpdateUI(int adrenalineLevel, float adrenalinePerLevel)
         {
             if (textMesh)
             {
-                textMesh.SetText(string.Format("Lv. {0}", (int)(adrenalineLevel / adrenalinePerLevel)));
+                textMesh.SetText(string.Format(Language.GetString("ITEM_RETURNAL_ADRENALINE_LEVEL"), (int)(adrenalineLevel / adrenalinePerLevel)));
             }
             if (levelBar)
             {

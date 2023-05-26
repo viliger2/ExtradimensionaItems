@@ -4,6 +4,7 @@ using ExtradimensionalItems.Modules.UI;
 using R2API;
 using RoR2;
 using UnityEngine;
+using static RoR2.HurtBox;
 
 namespace ExtradimensionalItems.Modules.Items
 {
@@ -49,7 +50,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("ReturnalAdrenaline");
 
-        public override Sprite ItemIcon => null;
+        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texReturnalAdrenalineIcon");
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
@@ -83,7 +84,28 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string GetFormatedDiscription(string pickupString)
         {
-            return pickupString;
+            // oh yeah baby
+            return string.Format(
+                pickupString,
+                (AttackSpeedBonus.Value / 100).ToString("###%"),
+                (AttackSpeedBonusPerStack.Value/ 100).ToString("###%"),
+                (MovementSpeedBonus.Value / 100).ToString("###%"),
+                (MovementSpeedBonusPerStack.Value / 100).ToString("###%"),
+                HealthBonus.Value.ToString(),
+                HealthBonusPerStack.Value.ToString(),
+                (ShieldBonus.Value / 100).ToString("###%"),
+                (ShieldBonusPerStack.Value / 100).ToString("###%"),
+                (CritBonus.Value / 100).ToString("###%"),
+                (CritBonusPerStack.Value / 100).ToString("###%"),
+                KillsPerLevel.Value,
+                (KillsPerLevelPerStack.Value / 100).ToString("###%"),
+                NormalEnemyReward.Value,
+                EliteEnemyReward.Value,
+                BossEnemyReward.Value,
+                (CriticalDamage.Value / 100).ToString("###%"),
+                HealthCheckFrequency.Value,
+                MaxLevelProtection.Value ? Language.GetString("ITEM_RETURNAL_ADRENALINE_DESCRIPTION_SHIELD") : ""
+                );
         }
 
         public override void Init(ConfigFile config)
@@ -141,10 +163,10 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 if (GetCount(body) > 0)
                 {
-                    var component = body.master.gameObject.GetComponent<ReturnalAdrenalineItemBehavior>();
-                    if (component)
+                    if (body.master.gameObject.TryGetComponent<ReturnalAdrenalineItemBehavior>(out var component) && component.itemCount != GetCount(body))
                     {
                         component.enabled = true;
+                        component.itemCount = GetCount(body);
                         component.RecalculatePerLevelValue(GetCount(body));
 
                         if (!ReturnalAdrenaline.DisableHUD.Value)
@@ -176,23 +198,31 @@ namespace ExtradimensionalItems.Modules.Items
                 }
             }
         }
+       
         private void CreateBuffs()
         {
             var ReturnalBuffProtection = ScriptableObject.CreateInstance<BuffDef>();
             ReturnalBuffProtection.name = "Adrenaline Protection";
-            ReturnalBuffProtection.buffColor = Color.yellow;
+            ReturnalBuffProtection.buffColor = Color.cyan;
             ReturnalBuffProtection.canStack = false;
             ReturnalBuffProtection.isDebuff = false;
-            ReturnalBuffProtection.iconSprite = null; //TODO: fix
+            ReturnalBuffProtection.iconSprite = AssetBundle.LoadAsset<Sprite>("texReturnalAdrenalineBuffIcon"); 
 
             ContentAddition.AddBuffDef(ReturnalBuffProtection);
 
             Content.Buffs.ReturnalMaxLevelProtection = ReturnalBuffProtection;
 
-            //if (BetterUICompat.enabled)
-            //{
-            //    BetterUICompat.AddBuffInfo(ReturnalBuffProtection, "BUFF_DAMAGE_ON_COOLDOWNS_NAME", "BUFF_DAMAGE_ON_COOLDOWNS_DESCRIPTION");
-            //}
+            if (BetterUICompat.enabled)
+            {
+                BetterUICompat.AddBuffInfo(ReturnalBuffProtection, "BUFF_ADRENALINE_PROTECTION_NAME", "BUFF_ADRENALINE_PROTECTION_DESCRIPTION");
+            }
+        }
+
+        public override void AddBetterUIStats(ItemDef item)
+        {
+            base.AddBetterUIStats(item);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_KILLS_PER_LEVEL", KillsPerLevel.Value, KillsPerLevelPerStack.Value / 100, BetterUICompat.StackingFormulas.NegativeExponentialStacking, BetterUICompat.StatFormatter.Charges);
+
         }
 
         public override void CreateConfig(ConfigFile config)
@@ -204,26 +234,48 @@ namespace ExtradimensionalItems.Modules.Items
             EliteEnemyReward = config.Bind("Item: " + ItemName, "Elite Enemy Reward", 3, "How many points elite enemy rewards towards item's levels.");
             BossEnemyReward = config.Bind("Item: " + ItemName, "Boss Enemy Reward", 5, "How many points boss enemy rewards towards item's levels.");
 
-            AttackSpeedBonus = config.Bind("Item: " + ItemName, "Attack Speed Bonus", 75f, "How much attack speed item gives. By default it is equal to 5 Soldier's Syringes.");
-            MovementSpeedBonus = config.Bind("Item: " + ItemName, "Movement Speed Bonus", 70f, "How much movement speed item gives. By default it is equal to 5 Paul's Goat Hoofs.");
+            AttackSpeedBonus = config.Bind("Item: " + ItemName, "Attack Speed Bonus", 45f, "How much attack speed item gives. By default it is equal to 3 Soldier's Syringes.");
+            MovementSpeedBonus = config.Bind("Item: " + ItemName, "Movement Speed Bonus", 42f, "How much movement speed item gives. By default it is equal to 3 Paul's Goat Hoofs.");
             HealthBonus = config.Bind("Item: " + ItemName, "Health Bonus", 125f, "How much health item gives. By default it is equal to 5 Bison Steaks.");
             ShieldBonus = config.Bind("Item: " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health, or one hit that would result in losing item's levels.");
-            CritBonus = config.Bind("Item: " + ItemName, "Crit Bonus", 25f, "How much crit item gives.");
+            CritBonus = config.Bind("Item: " + ItemName, "Crit Bonus", 20f, "How much crit item gives. By default it is equal to 2 Lens-Maker's Glasses.");
 
             CriticalDamage = config.Bind("Item: " + ItemName, "Critical Damage", 20f, "How much damage, in percentage of health, you need to take to lose item's levels.");
 
             HealthCheckFrequency = config.Bind("Item: " + ItemName, "Health Check Timer", 0.1f, "How frequently game check for lost HP. Higher values will result in multiple hits being lumped together for when lost health check occurs, lower velues will result in worse game performance but hits will be registered separately.");
 
-            KillsPerLevelPerStack = config.Bind("Item: " + ItemName, "Number of Kills Per Level Reduction Per Stack", 10f, "How much, in percent, number of needed kills is being reduced by each stack. Stack hyperbolically.");
+            KillsPerLevelPerStack = config.Bind("Item: " + ItemName, "Reduction of Kills Per Level Per Stack", 10f, "How much, in percent, number of needed kills is being reduced by each stack. Stack hyperbolically.");
             AttackSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Attack Speed Bonus Per Stack", 30f, "How much attack speed item gives per stack. By default it is equal to 2 Soldier's Syringes.");
-            MovementSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Movement Speed Bonus", 28f, "How much movement speed item gives per stack. By default it is equal to 2 Paul's Goat Hoofs.");
-            HealthBonusPerStack = config.Bind("Item: " + ItemName, "Health Bonus", 50f, "How much health item gives per stack. By default it is equal to 2 Bison Steaks.");
-            ShieldBonusPerStack = config.Bind("Item: " + ItemName, "Shield Bonus", 10f, "How much shield item gives per stack. By default it is equal to 10% of max health, or one hit that would result in losing item's levels.");
-            CritBonusPerStack = config.Bind("Item: " + ItemName, "Crit Bonus", 10f, "How much crit item gives per stack.");
+            MovementSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Movement Speed Bonus Per Stack", 28f, "How much movement speed item gives per stack. By default it is equal to 2 Paul's Goat Hoofs.");
+            HealthBonusPerStack = config.Bind("Item: " + ItemName, "Health Bonus Per Stack", 75f, "How much health item gives per stack. By default it is equal to 3 Bison Steaks.");
+            ShieldBonusPerStack = config.Bind("Item: " + ItemName, "Shield Bonus Per Stack", 10f, "How much shield item gives per stack. By default it is equal to 10% of max health.");
+            CritBonusPerStack = config.Bind("Item: " + ItemName, "Crit Bonus Per Stack", 10f, "How much crit item gives per stack. By default it is equal to 1 Lens-Maker's Glasses.");
 
             MaxLevelProtection = config.Bind("Item: " + ItemName, "Max Level Protection", true, "Enables Max level protection. At level 5 you will get a buff that will save you a single time from losing item's levels.");
 
             DisableHUD = config.Bind("Item: " + ItemName, "Disable Adrenaline HUD", false, "Disables in-game Adrenaline HUD (level progress bar and level value text).");
+            if (RiskOfOptionsCompat.enabled)
+            {
+                RiskOfOptionsCompat.CreateNewOption(KillsPerLevel);
+                RiskOfOptionsCompat.CreateNewOption(NormalEnemyReward);
+                RiskOfOptionsCompat.CreateNewOption(EliteEnemyReward);
+                RiskOfOptionsCompat.CreateNewOption(BossEnemyReward);
+                RiskOfOptionsCompat.CreateNewOption(AttackSpeedBonus);
+                RiskOfOptionsCompat.CreateNewOption(MovementSpeedBonus);
+                RiskOfOptionsCompat.CreateNewOption(HealthBonus);
+                RiskOfOptionsCompat.CreateNewOption(ShieldBonus);
+                RiskOfOptionsCompat.CreateNewOption(CritBonus);
+                RiskOfOptionsCompat.CreateNewOption(CriticalDamage);
+                RiskOfOptionsCompat.CreateNewOption(HealthCheckFrequency);
+                RiskOfOptionsCompat.CreateNewOption(KillsPerLevelPerStack);
+                RiskOfOptionsCompat.CreateNewOption(AttackSpeedBonusPerStack);
+                RiskOfOptionsCompat.CreateNewOption(MovementSpeedBonusPerStack);
+                RiskOfOptionsCompat.CreateNewOption(HealthBonusPerStack);
+                RiskOfOptionsCompat.CreateNewOption(ShieldBonusPerStack);
+                RiskOfOptionsCompat.CreateNewOption(CritBonusPerStack);
+                RiskOfOptionsCompat.CreateNewOption(MaxLevelProtection);
+                RiskOfOptionsCompat.CreateNewOption(DisableHUD);
+            }
         }
     }
 }

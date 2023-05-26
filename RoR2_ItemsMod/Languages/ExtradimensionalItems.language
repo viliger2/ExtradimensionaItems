@@ -65,10 +65,20 @@
 		"ITEM_ATMAS_IMPALER_DESCRIPTION": "Gain additional <style=cIsDamage>base damage</style> equal to <style=cIsHealth>{0} <style=cStack>(+{1} per stack)</style> maximum health</style>.",
 		"ITEM_ATMAS_IMPALER_LORE": "lore",
 
+		"ITEM_RETURNAL_ADRENALINE_NAME": "Adrenaline Core",
+		"ITEM_RETURNAL_ADRENALINE_PICKUP": "Follow the White Shadow",
+		"ITEM_RETURNAL_ADRENALINE_DESCRIPTION": "Gain ability to <style=cIsUtility>acquire Adrenaline levels, up to 5.</style> For each level gain additional stats:\r\n<style=cIsVoid>Lv.1</style> - <style=cIsDamage>{0}<style=cStack>(+{1} per stack)</style> attack speed</style>\r\n<style=cIsVoid>Lv.2</style> - <style=cIsUtility>{2}<style=cStack>(+{3} per stack)</style> movement speed</style>\r\n<style=cIsVoid>Lv.3</style> - <style=cIsHealing>{4}<style=cStack>(+{5} per stack)</style> health</style>\r\n<style=cIsVoid>Lv.4</style> - <style=cIsHealing>{6}<style=cStack>(+{7} per stack)</style> of max health as shield</style>\r\n<style=cIsVoid>Lv.5</style> - <style=cIsDamage>{8}<style=cStack>(+{9} per stack)</style> crit chance</style>.\r\nEach Adrenaline level takes <style=cIsUtility>{10}<style=cStack>(-{11} per stack, stacks hyperbolically)</style> points</style> to reach, normal enemy rewards <style=cIsUtility>{12} point(s)</style>, elite - <style=cIsUtility>{13}</style>, boss - <style=cIsUtility>{14}</style>. Losing more than <style=cIsHealth>{15} health</style> over <style=cIsUtility>{16} seconds</style> will result in <style=cDeath>losing all levels of Adrenaline</style>.{17}",
+		"ITEM_RETURNAL_ADRENALINE_DESCRIPTION_SHIELD": "\r\nAt max level of Adrenaline gain <style=cIsUtility>protective shield</style> that will <style=cIsUtility>save your Adrenaline levels upon taking threshold damage</style>, but it will not prevent the damage itself.",
+		"ITEM_RETURNAL_ADRENALINE_LEVEL": "Lv.{0}",
+		"ITEM_RETURNAL_ADRENALINE_LORE": "lore",
+		"BUFF_ADRENALINE_PROTECTION_NAME": "Adrenaline Protection",
+		"BUFF_ADRENALINE_PROTECTION_DESCRIPTION": "Will save your Adrenaline levels upon taking threshold damage.",
+
 		"BETTERUICOMPAT_DESC_STACKS": "Max Buff Stacks",
 		"BETTERUICOMPAT_DESC_DAMAGE": "Damage",
 		"BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW": "Block Window",
-		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Cooldown Reduction"
+		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Cooldown Reduction",
+		"BETTERUICOMPAT_DESC_KILLS_PER_LEVEL": "Kills Per Level"
 	},
 	"RU": {
 		"ITEM_SHEEN_NAME": "Сияние",
@@ -136,10 +146,20 @@
 		"ITEM_ATMAS_IMPALER_DESCRIPTION": "Увеличивает <style=cIsDamage>базовый урон</style> на размер равный <style=cIsHealth>{0} <style=cStack>(+{1} за штуку)</style> максимального здоровья</style>.",
 		"ITEM_ATMAS_IMPALER_LORE": "lore",
 
+		"ITEM_RETURNAL_ADRENALINE_NAME": "Ядро Адреналина",
+		"ITEM_RETURNAL_ADRENALINE_PICKUP": "Следуй за Белой тенью.",
+		"ITEM_RETURNAL_ADRENALINE_DESCRIPTION": "Дает возможность <style=cIsUtility>получать уровни Адреналина, до 5.</style> За каждый уровень дает следующие атрибуты:\r\n<style=cIsVoid>Ур.1</style> - <style=cIsDamage>{0}<style=cStack>(+{1} за штуку)</style> скорости атаки</style>\r\n<style=cIsVoid>Ур.2</style> - <style=cIsUtility>{2}<style=cStack>(+{3} за штуку)</style> скорости передвижения</style>\r\n<style=cIsVoid>Ур.3</style> - <style=cIsHealing>{4}<style=cStack>(+{5} за штуку)</style> здоровья</style>\r\n<style=cIsVoid>Ур.4</style> - <style=cIsHealing>{6}<style=cStack>(+{7} за штуку)</style> максимального здоровья в виде щита</style>\r\n<style=cIsVoid>Ур.5</style> - <style=cIsDamage>{8}<style=cStack>(+{9} за штуку)</style> шанса критического попадания</style>.\r\nКаждый уровень Адреналина требует <style=cIsUtility>{10}<style=cStack>(-{11} за штуку, гиперболически)</style> очков</style>, обычные враги дают <style=cIsUtility>{12} очка(ов)</style>, элитные - <style=cIsUtility>{13}</style>, боссы - <style=cIsUtility>{14}</style>. Потеря более чем <style=cIsHealth>{15} здоровья</style> за <style=cIsUtility>{16} секунд</style> приведет к <style=cDeath>потере всех уровней адреналина</style>.{17}",
+		"ITEM_RETURNAL_ADRENALINE_DESCRIPTION_SHIELD": "\r\nНа максимальном уровне Адреналина дает <style=cIsUtility>защитный барьер</style> который <style=cIsUtility>защитит от потери уровней Адреналина при получении порогового урона</style>, но не предотвратит сам урон.",
+		"ITEM_RETURNAL_ADRENALINE_LEVEL": "Ур.{0}",
+		"ITEM_RETURNAL_ADRENALINE_LORE": "lore",
+		"BUFF_ADRENALINE_PROTECTION_NAME": "Защита Адреналина",
+		"BUFF_ADRENALINE_PROTECTION_DESCRIPTION": "Сохранит твой уровень Адреналина при получении порогового урона.",
+
 		"BETTERUICOMPAT_DESC_STACKS": "Макс. кол-во эффектов",
 		"BETTERUICOMPAT_DESC_DAMAGE": "Урон",
 		"BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW": "Окно блока",
-		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Процент уменьшения восстановления навыков"
+		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Процент уменьшения восстановления навыков",
+		"BETTERUICOMPAT_DESC_KILLS_PER_LEVEL": "Убийств на уровень"
 
 	}
 }
