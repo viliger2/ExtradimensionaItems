@@ -1,15 +1,9 @@
 ﻿using BepInEx.Configuration;
 using ExtradimensionalItems.Modules.Items.ItemBehaviors;
 using ExtradimensionalItems.Modules.UI;
-using IL.RoR2.UI;
 using R2API;
 using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UI;
 
 namespace ExtradimensionalItems.Modules.Items
 {
@@ -153,10 +147,13 @@ namespace ExtradimensionalItems.Modules.Items
                         component.enabled = true;
                         component.RecalculatePerLevelValue(GetCount(body));
 
-                        var adrenalineHUD = ReturnalAdrenalineUI.FindInstance(body.master);
-                        if (adrenalineHUD)
+                        if (!ReturnalAdrenaline.DisableHUD.Value)
                         {
-                            adrenalineHUD.Enable();
+                            var adrenalineHUD = ReturnalAdrenalineUI.FindInstance(body.master);
+                            if (adrenalineHUD)
+                            {
+                                adrenalineHUD.Enable();
+                            }
                         }
 
                         MyLogger.LogMessage("Player {0}({1}) picked up ReturnalAdrenaline, activating master component, current stack count {2}.", body.GetUserName(), body.name, GetCount(body).ToString());
@@ -166,10 +163,13 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     component.enabled = false;
 
-                    var adrenalineHUD = ReturnalAdrenalineUI.FindInstance(body.master);
-                    if (adrenalineHUD)
+                    if (!ReturnalAdrenaline.DisableHUD.Value)
                     {
-                        adrenalineHUD.Disable();
+                        var adrenalineHUD = ReturnalAdrenalineUI.FindInstance(body.master);
+                        if (adrenalineHUD)
+                        {
+                            adrenalineHUD.Disable();
+                        }
                     }
 
                     MyLogger.LogMessage("Player {0}({1}) lost all stacks of ReturnalAdrenaline, deactivating master component.", body.GetUserName(), body.name);
@@ -209,9 +209,9 @@ namespace ExtradimensionalItems.Modules.Items
             HealthBonus = config.Bind("Item: " + ItemName, "Health Bonus", 125f, "How much health item gives. By default it is equal to 5 Bison Steaks.");
             ShieldBonus = config.Bind("Item: " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health, or one hit that would result in losing item's levels.");
             CritBonus = config.Bind("Item: " + ItemName, "Crit Bonus", 25f, "How much crit item gives.");
-                
+
             CriticalDamage = config.Bind("Item: " + ItemName, "Critical Damage", 20f, "How much damage, in percentage of health, you need to take to lose item's levels.");
-                
+
             HealthCheckFrequency = config.Bind("Item: " + ItemName, "Health Check Timer", 0.1f, "How frequently game check for lost HP. Higher values will result in multiple hits being lumped together for when lost health check occurs, lower velues will result in worse game performance but hits will be registered separately.");
 
             KillsPerLevelPerStack = config.Bind("Item: " + ItemName, "Number of Kills Per Level Reduction Per Stack", 10f, "How much, in percent, number of needed kills is being reduced by each stack. Stack hyperbolically.");

@@ -1,14 +1,10 @@
-﻿using ExtradimensionalItems.Modules.Items;
-using ExtradimensionalItems.Modules.Items.ItemBehaviors;
+﻿using ExtradimensionalItems.Modules.Items.ItemBehaviors;
 using RoR2;
 using RoR2.UI;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using static ExtradimensionalItems.Modules.Items.ReturnalAdrenaline;
 
 namespace ExtradimensionalItems.Modules.UI
 {
@@ -57,7 +53,8 @@ namespace ExtradimensionalItems.Modules.UI
                 if (adrenalineLevel >= adrenalinePerLevel * 5)
                 {
                     levelBar.fillAmount = 1f;
-                } else 
+                }
+                else
                 {
                     levelBar.fillAmount = Mathf.Clamp((float)adrenalineLevel % adrenalinePerLevel / adrenalinePerLevel, 0f, 1f);
                 }
@@ -147,7 +144,7 @@ namespace ExtradimensionalItems.Modules.UI
 
         public static ReturnalAdrenalineUI FindInstance(CharacterMaster master)
         {
-            foreach(ReturnalAdrenalineUI instance in instancesList)
+            foreach (ReturnalAdrenalineUI instance in instancesList)
             {
                 if (instance.hud.targetMaster == master) return instance;
             }

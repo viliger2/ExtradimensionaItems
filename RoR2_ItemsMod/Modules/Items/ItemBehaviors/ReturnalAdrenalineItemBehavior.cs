@@ -1,14 +1,10 @@
 ﻿using ExtradimensionalItems.Modules.UI;
-using IL.RoR2.UI;
 using R2API;
 using RoR2;
 using RoR2.Audio;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-using static RoR2.CharacterMaster;
 
 namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 {
@@ -65,6 +61,10 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
             {
                 master.onBodyStart -= Master_onBodyStart;
             }
+            if (body && ReturnalAdrenaline.MaxLevelProtection.Value)
+            {
+                body.RemoveBuff(Content.Buffs.ReturnalMaxLevelProtection);
+            }
             adrenalineLevel = 0;
             currentLevel = 0; // so if the player picks it up again sound doesn't play
         }
@@ -76,6 +76,10 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
             if (master)
             {
                 master.onBodyStart -= Master_onBodyStart;
+            }
+            if (body && ReturnalAdrenaline.MaxLevelProtection.Value)
+            {
+                body.RemoveBuff(Content.Buffs.ReturnalMaxLevelProtection);
             }
         }
 
@@ -92,7 +96,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
             if (body)
             {
-                if ((previousHp - body.healthComponent.health) > body.healthComponent.fullHealth * 0.2)
+                if ((previousHp - body.healthComponent.health) > body.healthComponent.fullHealth * (ReturnalAdrenaline.CriticalDamage.Value / 100f))
                 {
                     if (body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection))
                     {
@@ -173,13 +177,13 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                 CharacterBody attackerBody = damageReport.attackerBody;
                 if (attackerBody && attackerBody == body)
                 {
-                    if (damageReport.victimIsElite)
-                    {
-                        adrenalineLevel += ReturnalAdrenaline.EliteEnemyReward.Value;
-                    }
-                    else if (damageReport.victimIsChampion)
+                    if (damageReport.victimIsChampion)
                     {
                         adrenalineLevel += ReturnalAdrenaline.BossEnemyReward.Value;
+                    }
+                    else if (damageReport.victimIsElite)
+                    {
+                        adrenalineLevel += ReturnalAdrenaline.EliteEnemyReward.Value;
                     }
                     else
                     {
@@ -234,7 +238,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                 }
                 glow = FindGlow();
                 SetGlow();
-                if(hasProtectionBuff)
+                if (hasProtectionBuff && ReturnalAdrenaline.MaxLevelProtection.Value)
                 {
                     body.AddBuff(Content.Buffs.ReturnalMaxLevelProtection);
                 }
@@ -305,7 +309,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                             main.startColor = new Color(Color.yellow.r, Color.yellow.g, Color.yellow.b, 0.5f);
                             break;
                         case 2:
-                            main.startColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.5f);
+                            main.startColor = new Color(Color.magenta.r, Color.magenta.g, Color.magenta.b, 0.5f);
                             break;
                         case 3:
                             main.startColor = new Color(Color.white.r, Color.white.g, Color.white.b, 0.5f);
