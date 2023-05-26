@@ -12,15 +12,17 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
     // use NetworkWeaver after build to patch dll so it actually works
     public class ReturnalAdrenalineItemBehavior : NetworkBehaviour
     {
-        public CharacterMaster master;
-
-        public CharacterBody body;
-
         [SyncVar]
         public int adrenalineLevel;
 
         [SyncVar]
         public float adrenalinePerLevel;
+
+        public int itemCount;
+
+        public CharacterMaster master;
+
+        private CharacterBody body;
 
         private int currentLevel = 0;
 
@@ -148,28 +150,6 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
             }
         }
 
-        private void ManageMaxLevelProtectionEffect()
-        {
-            bool hasProtectionBuff = body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection);
-            if (hasProtectionBuff && !maxLevelEffect)
-            {
-                maxLevelEffect = Instantiate(RoR2.CharacterBody.AssetReferences.bearVoidTempEffectPrefab, FindItemDisplayTransform());
-                maxLevelEffect.transform.localPosition = new Vector3(0, 0.1745f, 0);
-                maxLevelEffect.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                // removing TVE component since it automatically destroys the object
-                // on the next frame
-                var component = maxLevelEffect.gameObject.GetComponent<TemporaryVisualEffect>();
-                if (component)
-                {
-                    Destroy(component);
-                }
-            }
-            else if (maxLevelEffect && !hasProtectionBuff)
-            {
-                Destroy(maxLevelEffect);
-            }
-        }
-
         private void GlobalEventManager_onCharacterDeathGlobal(DamageReport damageReport)
         {
             if (enabled && adrenalineLevel < adrenalinePerLevel * 5)
@@ -191,7 +171,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                     }
                     if (adrenalineLevel >= adrenalinePerLevel * 5)
                     {
-                        adrenalineLevel = (int)(adrenalinePerLevel * 5);
+                        adrenalineLevel = Mathf.CeilToInt(adrenalinePerLevel * 5);
 
                         if (ReturnalAdrenaline.MaxLevelProtection.Value)
                         {
@@ -323,6 +303,28 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                     }
                     particles.Play();
                 }
+            }
+        }
+
+        private void ManageMaxLevelProtectionEffect()
+        {
+            bool hasProtectionBuff = body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection);
+            if (hasProtectionBuff && !maxLevelEffect)
+            {
+                maxLevelEffect = Instantiate(RoR2.CharacterBody.AssetReferences.bearVoidTempEffectPrefab, FindItemDisplayTransform());
+                maxLevelEffect.transform.localPosition = new Vector3(0, 0.1745f, 0);
+                maxLevelEffect.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                // removing TVE component since it automatically destroys the object
+                // on the next frame
+                var component = maxLevelEffect.gameObject.GetComponent<TemporaryVisualEffect>();
+                if (component)
+                {
+                    Destroy(component);
+                }
+            }
+            else if (maxLevelEffect && !hasProtectionBuff)
+            {
+                Destroy(maxLevelEffect);
             }
         }
 
