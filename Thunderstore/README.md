@@ -56,6 +56,19 @@ A mod that aims to add ideas from another games, while extending the playstyles 
     <td>Gain additional base damage equal to <b>0.5%</b> (<b>+0.5%</b> per stack) maximum health.</td>
     <td>Uncommon</td>
   </tr>   
+    <tr>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texReturnalAdrenalineIcon.png" alt="Adrenaline Core"></td>
+    <td>Adrenaline Core</td>
+    <td>Gain ability to acquire Adrenaline levels, up to 5. Levels persist through stages. For each level gain additional stats:<br>
+      Lv.1 - <b>45%</b>(<b>+30%</b> per stack) attack speed.<br>
+      Lv.2 - <b>42%</b>(<b>+28%</b> per stack) movement speed.<br>
+      Lv.3 - <b>125</b>(<b>+75</b> per stack) health.<br>
+      Lv.4 - <b>20%</b>(<b>+12%</b> per stack) of max health as shield.<br>
+      Lv.5 - <b>20%</b>(<b>+10%</b> per stack) crit chance.<br>
+      Each Adrenaline level takes <b>15</b>(<b>-10%</b> per stack, stacks hyperbolically) points to reach, normal enemy rewards <b>1</b> point(s), elite - <b>3</b>, boss - <b>5</b>. Losing more than <b>10%</b> health over <b>0.1</b> seconds will result in losing all levels of Adrenaline. <b>Levels are displayed on their own bar under HP bar.</b><br>
+      <b>At max level of Adrenaline gain protective shield that will save your Adrenaline levels upon taking threshold damage, but it will not prevent the damage itself.</b></td>
+    <td>Legendary</td>
+  </tr>  
 </table>
 
 Things marked in bold can be edited via config. Mod supports in-game config setup via RiskOfOptions and has full BetterUI support for every item.
@@ -67,7 +80,7 @@ If you find any bugs send me a message on discord at **viliger#9877** or submit 
 ## Known issues\things
 <details>
 
-  * Some effects and sounds might not work on third client (as in not server and not client that sound comes from), but as far as functionality everything should be working. 
+  * Some effects and sounds might not work on third client (as in not server and not client that it comes from), but as far as functionality everything should be working. 
   * Respawn Flag:
     * If MUL-T picks flag as first item, places it and then picks up item without using Retool flag converts back into the item, like if another equipment was picked up. It can be resolved by using Retool once with any equipment, at the start MUL-T has one equipment slot, until MUL-T uses Retool at least once with any equipment.
   * Chronoshift:
@@ -77,7 +90,9 @@ If you find any bugs send me a message on discord at **viliger#9877** or submit 
     * Probably completely breaks custom characters that rely on buffs for states.
   * Sorcerer's Pills:
     * Cooldown reduction from Alien Head is applied after Sorcerer's Pills. For example, Commando's special has base cooldown of 9 seconds, 10 pills will bring it down to 4.5 and additional Alien Head will bring it down to 3.375. This is R2API behavior, not much I can do without not using it and even then, I think it is fine as it is.
-
+  * Adrenaline Core:
+    * Getting item back from Mithrix will not restore it's levels.
+  
 </details>
 
 ## Credits
@@ -88,6 +103,7 @@ If you find any bugs send me a message on discord at **viliger#9877** or submit 
   * Checkpoint - model, sounds and textures come from Super Cloudbuilt, property of Coilworks
   * Chronoshift - cut out from Ekko model from League of Legends, property of Riot Games
   * Skull of Doom - model from Tales of Monkey Island, property of Telltale Games, sounds come from World of Warcraft, property of Blizzard
+  * Adrenaline Core - model, textures and sounds from Returnal, property of Housemarque and Sony Entertainment
 </details>
 
 ## TODO\Future things
