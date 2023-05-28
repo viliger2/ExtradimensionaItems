@@ -1,4 +1,16 @@
 <details>
+<summary>0.5.2 </summary>
+
+* Adrenaline Core
+	* New item.
+* New console command "give_item_ai"
+	* It can be used to give AI team items when either Artifact of Evolution is enabled or if players are in Void Fields. Won't work otherwise.
+* Skull of Impending Doom
+	* DamageType now also inculdes DoT.
+* Atma's Impaler
+	* BetterUI now shows actual bonus damage from the item instead of percent value.
+</details>
+<details>
 <summary>0.5.1 </summary>
 
 * Pizza Box
