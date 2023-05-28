@@ -4,7 +4,6 @@ using ExtradimensionalItems.Modules.UI;
 using R2API;
 using RoR2;
 using UnityEngine;
-using static RoR2.HurtBox;
 
 namespace ExtradimensionalItems.Modules.Items
 {
@@ -44,7 +43,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "returnaladrenaline";
 
-        public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Damage };
+        public override ItemTag[] ItemTags => new ItemTag[] { ItemTag.Damage, ItemTag.Utility, ItemTag.AIBlacklist };
 
         public override bool AIBlacklisted => true;
 
@@ -77,9 +76,6 @@ namespace ExtradimensionalItems.Modules.Items
                 }
             });
             return rules;
-
-            //CharacterModel.GetIremDisplayObjects(Content.Items.ReturnalAdrenaline.itemIndex);
-            //body.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().GetIremDisplayObjects(Content.Items.ReturnalAdrenaline.itemIndex);
         }
 
         public override string GetFormatedDiscription(string pickupString)
@@ -237,10 +233,10 @@ namespace ExtradimensionalItems.Modules.Items
             AttackSpeedBonus = config.Bind("Item: " + ItemName, "Attack Speed Bonus", 45f, "How much attack speed item gives. By default it is equal to 3 Soldier's Syringes.");
             MovementSpeedBonus = config.Bind("Item: " + ItemName, "Movement Speed Bonus", 42f, "How much movement speed item gives. By default it is equal to 3 Paul's Goat Hoofs.");
             HealthBonus = config.Bind("Item: " + ItemName, "Health Bonus", 125f, "How much health item gives. By default it is equal to 5 Bison Steaks.");
-            ShieldBonus = config.Bind("Item: " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health, or one hit that would result in losing item's levels.");
+            ShieldBonus = config.Bind("Item: " + ItemName, "Shield Bonus", 20f, "How much shield item gives. By default it is equal to 20% of max health.");
             CritBonus = config.Bind("Item: " + ItemName, "Crit Bonus", 20f, "How much crit item gives. By default it is equal to 2 Lens-Maker's Glasses.");
 
-            CriticalDamage = config.Bind("Item: " + ItemName, "Critical Damage", 20f, "How much damage, in percentage of health, you need to take to lose item's levels.");
+            CriticalDamage = config.Bind("Item: " + ItemName, "Critical Damage", 10f, "How much damage, in percentage of health, you need to take to lose item's levels.");
 
             HealthCheckFrequency = config.Bind("Item: " + ItemName, "Health Check Timer", 0.1f, "How frequently game check for lost HP. Higher values will result in multiple hits being lumped together for when lost health check occurs, lower velues will result in worse game performance but hits will be registered separately.");
 
@@ -248,7 +244,7 @@ namespace ExtradimensionalItems.Modules.Items
             AttackSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Attack Speed Bonus Per Stack", 30f, "How much attack speed item gives per stack. By default it is equal to 2 Soldier's Syringes.");
             MovementSpeedBonusPerStack = config.Bind("Item: " + ItemName, "Movement Speed Bonus Per Stack", 28f, "How much movement speed item gives per stack. By default it is equal to 2 Paul's Goat Hoofs.");
             HealthBonusPerStack = config.Bind("Item: " + ItemName, "Health Bonus Per Stack", 75f, "How much health item gives per stack. By default it is equal to 3 Bison Steaks.");
-            ShieldBonusPerStack = config.Bind("Item: " + ItemName, "Shield Bonus Per Stack", 10f, "How much shield item gives per stack. By default it is equal to 10% of max health.");
+            ShieldBonusPerStack = config.Bind("Item: " + ItemName, "Shield Bonus Per Stack", 12f, "How much shield item gives per stack. By default it is equal to 12% of max health.");
             CritBonusPerStack = config.Bind("Item: " + ItemName, "Crit Bonus Per Stack", 10f, "How much crit item gives per stack. By default it is equal to 1 Lens-Maker's Glasses.");
 
             MaxLevelProtection = config.Bind("Item: " + ItemName, "Max Level Protection", true, "Enables Max level protection. At level 5 you will get a buff that will save you a single time from losing item's levels.");

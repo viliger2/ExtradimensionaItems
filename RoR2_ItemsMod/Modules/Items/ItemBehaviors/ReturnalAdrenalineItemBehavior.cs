@@ -69,6 +69,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
             }
             adrenalineLevel = 0;
             currentLevel = 0; // so if the player picks it up again sound doesn't play
+            itemCount = 0; // so when we pick it up again checks actually work
         }
 
         public void OnDestroy()
@@ -188,7 +189,6 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
         {
             if (body.master == master)
             {
-                var itemCount = master.inventory.GetItemCount(Content.Items.ReturnalAdrenaline);
                 args.attackSpeedMultAdd += ((ReturnalAdrenaline.AttackSpeedBonus.Value / 100) + ((ReturnalAdrenaline.AttackSpeedBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 1)) ? 1 : 0);
                 args.moveSpeedMultAdd += ((ReturnalAdrenaline.MovementSpeedBonus.Value / 100) + ((ReturnalAdrenaline.MovementSpeedBonusPerStack.Value / 100) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 2)) ? 1 : 0);
                 args.baseHealthAdd += ((ReturnalAdrenaline.HealthBonus.Value) + ((ReturnalAdrenaline.HealthBonusPerStack.Value) * (itemCount - 1))) * ((adrenalineLevel >= (adrenalinePerLevel * 3)) ? 1 : 0);
