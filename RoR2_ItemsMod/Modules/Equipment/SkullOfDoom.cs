@@ -399,7 +399,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             damageInfo.crit = false;
             damageInfo.position = body.transform.position;
             damageInfo.damageColorIndex = DamageColorIndex.Item;
-            damageInfo.damageType = DamageType.BypassArmor;
+            damageInfo.damageType = DamageType.BypassArmor & DamageType.DoT;
 
             if (EnableFuelCellInteraction.Value)
             {
