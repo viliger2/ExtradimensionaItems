@@ -11,6 +11,12 @@ namespace ExtradimensionalItems.Modules
             public static BetterUI.ItemStats.StatFormatter Charges => BetterUI.ItemStats.StatFormatter.Charges;
             public static BetterUI.ItemStats.StatFormatter Percent => BetterUI.ItemStats.StatFormatter.Percent;
             public static BetterUI.ItemStats.StatFormatter Seconds => BetterUI.ItemStats.StatFormatter.Seconds;
+
+            public static BetterUI.ItemStats.StatFormatter DamageFromHealth => new BetterUI.ItemStats.StatFormatter()
+            {
+                style = BetterUI.ItemStats.Styles.Damage,
+                statFormatter = (sb, value, master) => { sb.Append((master.GetBody().maxHealth * value).ToString()); }
+            };
         }
 
         public struct ItemTags

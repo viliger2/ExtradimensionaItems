@@ -298,7 +298,7 @@ namespace ExtradimensionalItems.Modules.Items
         public override void AddBetterUIStats(ItemDef item)
         {
             base.AddBetterUIStats(item);
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", PercentBonusDamage.Value / 100, PercentBonusDamagePerStack.Value / 100, BetterUICompat.StackingFormulas.LinearStacking, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTags.Damage);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", PercentBonusDamage.Value / 100, PercentBonusDamagePerStack.Value / 100, BetterUICompat.StackingFormulas.LinearStacking, BetterUICompat.StatFormatter.DamageFromHealth);
         }
 
         public override void CreateConfig(ConfigFile config)
