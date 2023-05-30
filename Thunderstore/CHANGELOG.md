@@ -7,7 +7,6 @@
 	* Fixed an issue, when disabling UI in RiskOfOptions didn't actually disable it.
 </details>
 <details>
-<details>
 <summary>0.5.2 </summary>
 
 * Adrenaline Core
