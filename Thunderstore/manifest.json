@@ -1,8 +1,8 @@
 {
     "name": "ExtradimensionalItems",
-    "version_number": "0.5.1",
+    "version_number": "0.5.3",
     "website_url": "https://github.com/viliger2/ExtradimensionaItems",
-    "description": "They are coming through the portal!",
+    "description": "One new item coming through the portal! Hotfix for RiskUI.",
     "dependencies": [
 	    "bbepis-BepInExPack-5.4.2103",
 		"RiskofThunder-R2API_Items-1.0.1",

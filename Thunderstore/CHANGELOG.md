@@ -1,4 +1,13 @@
 <details>
+<summary>0.5.3 </summary>
+
+* Adrenaline Core
+	* Fixed errors and UI disappearing when using RiskUI
+		* _Currently the UI portion of the item just disables itself when it can't find some things that RiskUI removes. I might add actual UI with appropriate style to support RiskUI, but for now, we just disable the leveling bar. It also opens another can of worms of supporting each UI that comes out (which I doubt more will happen but still) and I really don't wanna do that. In the meantime, you can check you current Adrenaline level by looking at the color of the item display's glow.
+	* Fixed an issue, when disabling UI in RiskOfOptions didn't actually disable it.
+</details>
+<details>
+<details>
 <summary>0.5.2 </summary>
 
 * Adrenaline Core
