@@ -361,7 +361,10 @@ namespace ExtradimensionalItems.Modules.Items
         private void HUD_Awake(On.RoR2.UI.HUD.orig_Awake orig, RoR2.UI.HUD self)
         {
             orig(self);
-            ReturnalAdrenalineUI.CreateUI(self);
+            if (!DisableHUD.Value) // another check here in case user disables the UI via RiskOfOptions
+            {
+                ReturnalAdrenalineUI.CreateUI(self);
+            }
         }
 
         private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)

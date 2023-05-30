@@ -61,6 +61,16 @@ namespace ExtradimensionalItems.Modules.UI
 
         public static void CreateUI(RoR2.UI.HUD HUD)
         {
+            if(!HUD || !HUD.healthBar || !HUD.itemInventoryDisplay)
+            {
+                return;
+            }
+
+            if(!HUD.itemInventoryDisplay.gameObject.TryGetComponent<Image>(out var copyImage))
+            {
+                return;
+            }
+
             var AdrenalineHUD = new GameObject("AdrenalineHUD");
 
             var instance = AdrenalineHUD.AddComponent<ReturnalAdrenalineUI>();
@@ -70,7 +80,6 @@ namespace ExtradimensionalItems.Modules.UI
             AdrenalineHUD.transform.SetParent(HUD.healthBar.transform);
 
             Image image = AdrenalineHUD.AddComponent<Image>();
-            Image copyImage = HUD.itemInventoryDisplay.gameObject.GetComponent<Image>();
 
             image.sprite = copyImage.sprite;
             image.color = copyImage.color;
