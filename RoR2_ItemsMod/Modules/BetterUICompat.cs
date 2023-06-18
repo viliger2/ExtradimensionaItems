@@ -41,30 +41,51 @@ namespace ExtradimensionalItems.Modules
             ProbablyExponential
         }
 
-        private static readonly Dictionary<StatFormatter, BetterUI.ItemStats.StatFormatter> statFormaters = new Dictionary<StatFormatter, BetterUI.ItemStats.StatFormatter>
+        private static BetterUI.ItemStats.StatFormatter GetStatFormatter(StatFormatter statFormatter)
         {
-            {StatFormatter.Charges, BetterUI.ItemStats.StatFormatter.Charges},
-            {StatFormatter.Percent, BetterUI.ItemStats.StatFormatter.Percent},
-            {StatFormatter.Seconds, BetterUI.ItemStats.StatFormatter.Seconds },
-            {StatFormatter.DamageFromHealth, new BetterUI.ItemStats.StatFormatter()
+            switch (statFormatter)
             {
-                style = BetterUI.ItemStats.Styles.Damage,
-                statFormatter = (sb, value, master) => { sb.Append((master.GetBody().maxHealth * value).ToString()); }
-            } }
-        };
+                case StatFormatter.Seconds:
+                    return BetterUI.ItemStats.StatFormatter.Seconds;
+                case StatFormatter.DamageFromHealth:
+                    return new BetterUI.ItemStats.StatFormatter()
+                    {
+                        style = BetterUI.ItemStats.Styles.Damage,
+                        statFormatter = (sb, value, master) => { sb.Append((master.GetBody().maxHealth * value).ToString()); }
+                    };
+                case StatFormatter.Percent:
+                    return BetterUI.ItemStats.StatFormatter.Percent;
+                case StatFormatter.Charges:
+                default:
+                    return BetterUI.ItemStats.StatFormatter.Charges;
+            }
+        }
 
-        private static readonly Dictionary<ItemTag, BetterUI.ItemStats.ItemTag> itemTags = new Dictionary<ItemTag, BetterUI.ItemStats.ItemTag>
+        private static BetterUI.ItemStats.ItemTag GetItemTag(ItemTag itemTag)
         {
-            {ItemTag.Damage, BetterUI.ItemStats.ItemTag.Damage },
-            {ItemTag.CooldownReduction, BetterUI.ItemStats.ItemTag.SkillCooldown }
-        };
+            switch (itemTag)
+            {
+                case ItemTag.CooldownReduction:
+                    return BetterUI.ItemStats.ItemTag.SkillCooldown;
+                case ItemTag.Damage:
+                default:
+                    return BetterUI.ItemStats.ItemTag.Damage;
+            }
+        }
 
-        private static readonly Dictionary<StackingFormula, BetterUI.ItemStats.StackingFormula> stackingFormulas = new Dictionary<StackingFormula, BetterUI.ItemStats.StackingFormula>
+        private static BetterUI.ItemStats.StackingFormula GetStackingFormula(StackingFormula stackingFormula)
         {
-            {StackingFormula.Linear, BetterUI.ItemStats.LinearStacking },
-            {StackingFormula.NegativeExponential, BetterUI.ItemStats.NegativeExponentialStacking },
-            {StackingFormula.ProbablyExponential, NotSureWhatExponentialStacking }
-        };
+            switch (stackingFormula)
+            {
+                case StackingFormula.Linear:
+                default:
+                    return BetterUI.ItemStats.LinearStacking;
+                case StackingFormula.NegativeExponential:
+                    return BetterUI.ItemStats.NegativeExponentialStacking;
+                case StackingFormula.ProbablyExponential:
+                    return NotSureWhatExponentialStacking;
+            }
+        }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static float NotSureWhatExponentialStacking(float value, float extraStackValue, int stacks)
@@ -81,25 +102,27 @@ namespace ExtradimensionalItems.Modules
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void RegisterStat(ItemDef itemDef, string nameToken, float value, StackingFormula stackingFormula, StatFormatter statFormatter)
         {
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackingFormulas[stackingFormula], statFormaters[statFormatter]);
+            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, GetStackingFormula(stackingFormula), GetStatFormatter(statFormatter));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void RegisterStat(ItemDef itemDef, string nameToken, float value, StackingFormula stackingFormula, StatFormatter statFormatter, ItemTag itemTag)
         {
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackingFormulas[stackingFormula], statFormaters[statFormatter], itemTags[itemTag]);
+            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, GetStackingFormula(stackingFormula), GetStatFormatter(statFormatter), GetItemTag(itemTag));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void RegisterStat(ItemDef itemDef, string nameToken, float value, float stackValue, StackingFormula stackingFormula, StatFormatter statFormatter)
         {
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, stackingFormulas[stackingFormula], statFormaters[statFormatter]);
+            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, GetStackingFormula(stackingFormula), GetStatFormatter(statFormatter));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void RegisterStat(ItemDef itemDef, string nameToken, float value, float stackValue, StackingFormula stackingFormula, StatFormatter statFormatter, ItemTag itemTag)
         {
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, stackingFormulas[stackingFormula], statFormaters[statFormatter], itemTags[itemTag]);
+            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, GetStackingFormula(stackingFormula), GetStatFormatter(statFormatter), GetItemTag(itemTag));
         }
+
+
     }
 }
