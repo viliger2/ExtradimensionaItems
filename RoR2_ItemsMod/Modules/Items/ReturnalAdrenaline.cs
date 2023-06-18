@@ -285,7 +285,30 @@ namespace ExtradimensionalItems.Modules.Items
                     localScale = new Vector3(0.4561F, 0.4561F, 0.4561F)
                 }
             });
-
+            rules.Add("mdlRocket", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = itemModel,
+                    childName = "Base",
+                    localPos = new Vector3(0.83275F, 0.34215F, 0.50625F),
+                    localAngles = new Vector3(0F, 0F, 270F),
+                    localScale = new Vector3(0.39888F, 0.39888F, 0.39888F)
+                }
+            });
+            rules.Add("mdlSniper", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = itemModel,
+                    childName = "Pelvis",
+                    localPos = new Vector3(-0.42742F, 1.02681F, -0.58784F),
+                    localAngles = new Vector3(0F, 0F, 0F),
+                    localScale = new Vector3(0.44807F, 0.44807F, 0.44807F)
+                }
+            });
             return rules;
         }
 
@@ -295,7 +318,7 @@ namespace ExtradimensionalItems.Modules.Items
             return string.Format(
                 pickupString,
                 (AttackSpeedBonus.Value / 100).ToString("###%"),
-                (AttackSpeedBonusPerStack.Value/ 100).ToString("###%"),
+                (AttackSpeedBonusPerStack.Value / 100).ToString("###%"),
                 (MovementSpeedBonus.Value / 100).ToString("###%"),
                 (MovementSpeedBonusPerStack.Value / 100).ToString("###%"),
                 HealthBonus.Value.ToString(),
@@ -408,7 +431,7 @@ namespace ExtradimensionalItems.Modules.Items
                 }
             }
         }
-       
+
         private void CreateBuffs()
         {
             var ReturnalBuffProtection = ScriptableObject.CreateInstance<BuffDef>();
@@ -416,7 +439,7 @@ namespace ExtradimensionalItems.Modules.Items
             ReturnalBuffProtection.buffColor = Color.cyan;
             ReturnalBuffProtection.canStack = false;
             ReturnalBuffProtection.isDebuff = false;
-            ReturnalBuffProtection.iconSprite = AssetBundle.LoadAsset<Sprite>("texReturnalAdrenalineBuffIcon"); 
+            ReturnalBuffProtection.iconSprite = AssetBundle.LoadAsset<Sprite>("texReturnalAdrenalineBuffIcon");
 
             ContentAddition.AddBuffDef(ReturnalBuffProtection);
 

@@ -203,7 +203,7 @@ namespace ExtradimensionalItems.Modules.Items
                 }
             });
             rules.Add("mdlMiner", new RoR2.ItemDisplayRule[]
-            {   
+            {
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
@@ -250,7 +250,30 @@ namespace ExtradimensionalItems.Modules.Items
                     localScale = new Vector3(4.30285F, 5.79825F, 4.30285F)
                 }
             });
-
+            rules.Add("mdlRocket", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemBodyModelPrefab,
+                    childName = "Chest",
+                    localPos = new Vector3(-0.18752F, -0.52693F, 0.03871F),
+                    localAngles = new Vector3(34.70107F, 248.6318F, 354.8853F),
+                    localScale = new Vector3(3.94916F, 3.94916F, 3.94916F)
+                }
+            });
+            rules.Add("mdlSniper", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemBodyModelPrefab,
+                    childName = "GunBarrel",
+                    localPos = new Vector3(0.00144F, 0.02943F, 0.3023F),
+                    localAngles = new Vector3(70.40952F, 185.3266F, 184.8057F),
+                    localScale = new Vector3(1.80279F, 1.80279F, 1.80279F)
+                }
+            });
             // EXAMPLE
             //rules.Add("body", new RoR2.ItemDisplayRule[]
             //{

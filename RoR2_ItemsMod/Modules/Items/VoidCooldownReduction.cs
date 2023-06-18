@@ -256,6 +256,30 @@ namespace ExtradimensionalItems.Modules.Items
                     localScale = new Vector3(0.34841F, 0.34841F, 0.34841F)
                 }
             });
+            rules.Add("mdlRocket", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemBodyModelPrefab,
+                    childName = "thigh.R",
+                    localPos = new Vector3(0.09489F, 0.00461F, 0.09076F),
+                    localAngles = new Vector3(351.1149F, 165.2264F, 177.6239F),
+                    localScale = new Vector3(0.15408F, 0.15408F, 0.15408F)
+                }
+            });
+            rules.Add("mdlSniper", new RoR2.ItemDisplayRule[]
+            {
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemBodyModelPrefab,
+                    childName = "Pelvis",
+                    localPos = new Vector3(-0.23019F, 0.14104F, -0.01109F),
+                    localAngles = new Vector3(11.31845F, 150.9209F, 8.90904F),
+                    localScale = new Vector3(0.22536F, 0.22536F, 0.22536F)
+                }
+            });
 
             return rules;
         }
