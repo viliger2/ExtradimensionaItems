@@ -1,4 +1,16 @@
 <details>
+<summary>0.5.4 </summary>
+
+* Fixed error on start up if BetterUI was not present.
+* Implemented item displays for Sniper and Rocket.
+* Chronoshift
+	* "Fixed" compatability issue with NetworkedTimedBuffs
+		* _Technically the issue is fixed from NetworkedTimedBuffs side, but since I got the bug report might as well put it here._
+* Sorcerer's Pills
+	* Added information about what it corrupts to pickup text.
+* Updated dependencies.
+</details>
+<details>
 <summary>0.5.3 </summary>
 
 * Adrenaline Core

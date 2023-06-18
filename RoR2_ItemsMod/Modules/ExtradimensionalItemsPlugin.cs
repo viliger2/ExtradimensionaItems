@@ -12,7 +12,7 @@ using static ExtradimensionalItems.Modules.Equipment.Chronoshift;
 
 namespace ExtradimensionalItems.Modules
 {
-    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.3")]
+    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.4")]
     [BepInDependency(R2API.ItemAPI.PluginGUID)]
     [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
     [BepInDependency(R2API.Networking.NetworkingAPI.PluginGUID)]
