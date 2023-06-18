@@ -431,8 +431,7 @@ namespace ExtradimensionalItems.Modules.Items
         public override void AddBetterUIStats(ItemDef item)
         {
             base.AddBetterUIStats(item);
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_KILLS_PER_LEVEL", KillsPerLevel.Value, KillsPerLevelPerStack.Value / 100, BetterUICompat.StackingFormulas.NegativeExponentialStacking, BetterUICompat.StatFormatter.Charges);
-
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_KILLS_PER_LEVEL", KillsPerLevel.Value, KillsPerLevelPerStack.Value / 100, BetterUICompat.StackingFormula.NegativeExponential, BetterUICompat.StatFormatter.Charges);
         }
 
         public override void CreateConfig(ConfigFile config)

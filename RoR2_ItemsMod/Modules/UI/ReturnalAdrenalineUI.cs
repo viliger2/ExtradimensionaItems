@@ -66,7 +66,7 @@ namespace ExtradimensionalItems.Modules.UI
                 return;
             }
 
-            if(!HUD.itemInventoryDisplay.gameObject.TryGetComponent<Image>(out var copyImage))
+            if (!HUD.itemInventoryDisplay.gameObject.TryGetComponent<Image>(out var copyImage))
             {
                 return;
             }

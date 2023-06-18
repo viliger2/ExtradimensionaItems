@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace ExtradimensionalItems.Modules
 {
@@ -19,11 +20,13 @@ namespace ExtradimensionalItems.Modules
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void AddListenerToFillDictionary()
         {
             ShrineOfRepair.Modules.ModExtension.AddListener(AddFuelCellDepletedToRepairList);
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void AddFuelCellDepletedToRepairList(ref List<ShrineOfRepair.Modules.ModExtension.RepairableItems> list)
         {
             list.Add(new ShrineOfRepair.Modules.ModExtension.RepairableItems

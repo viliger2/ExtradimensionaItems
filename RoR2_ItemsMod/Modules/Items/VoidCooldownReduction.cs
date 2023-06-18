@@ -294,7 +294,7 @@ namespace ExtradimensionalItems.Modules.Items
         public override void AddBetterUIStats(ItemDef item)
         {
             base.AddBetterUIStats(item);
-            BetterUICompat.RegisterStat(item, "BETTERUICOPMAT_COOLDOWN_REDUCTUION", CooldownReduction.Value, BetterUICompat.StackingFormulas.ProbablyExponentialStacking, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTags.CooldownReduction);
+            BetterUICompat.RegisterStat(item, "BETTERUICOPMAT_COOLDOWN_REDUCTUION", CooldownReduction.Value, BetterUICompat.StackingFormula.ProbablyExponential, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTag.CooldownReduction);
         }
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)

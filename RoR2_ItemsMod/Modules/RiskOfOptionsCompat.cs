@@ -2,6 +2,7 @@
 using RiskOfOptions;
 using RiskOfOptions.OptionConfigs;
 using RiskOfOptions.Options;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules
@@ -22,11 +23,13 @@ namespace ExtradimensionalItems.Modules
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void SetDescription()
         {
             ModSettingsManager.SetModDescription("Items from different worlds.", "com.Viliger.ExtradimensionalItems", "ExtradimensionalItems");
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void SetIcon()
         {
             var bundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.BundleFolder, "config"));
@@ -35,21 +38,25 @@ namespace ExtradimensionalItems.Modules
             ModSettingsManager.SetModIcon(icon, "com.Viliger.ExtradimensionalItems", "ExtradimensionalItems");
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void CreateNewOption(ConfigEntry<float> entry)
         {
             ModSettingsManager.AddOption(new StepSliderOption(entry, new StepSliderConfig()));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void CreateNewOption(ConfigEntry<float> entry, float min, float max, float increment = 1f)
         {
             ModSettingsManager.AddOption(new StepSliderOption(entry, new StepSliderConfig() { min = min, max = max, increment = increment }));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void CreateNewOption(ConfigEntry<bool> entry)
         {
             ModSettingsManager.AddOption(new CheckBoxOption(entry));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void CreateNewOption(ConfigEntry<int> entry, int min = 0, int max = 200)
         {
             ModSettingsManager.AddOption(new IntSliderOption(entry, new IntSliderConfig() { min = min, max = max }));
