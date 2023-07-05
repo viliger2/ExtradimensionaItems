@@ -41,52 +41,6 @@ namespace ExtradimensionalItems.Modules
             ProbablyExponential
         }
 
-        private static BetterUI.ItemStats.StatFormatter GetStatFormatter(StatFormatter statFormatter)
-        {
-            switch (statFormatter)
-            {
-                case StatFormatter.Seconds:
-                    return BetterUI.ItemStats.StatFormatter.Seconds;
-                case StatFormatter.DamageFromHealth:
-                    return new BetterUI.ItemStats.StatFormatter()
-                    {
-                        style = BetterUI.ItemStats.Styles.Damage,
-                        statFormatter = (sb, value, master) => { sb.Append((master.GetBody().maxHealth * value).ToString()); }
-                    };
-                case StatFormatter.Percent:
-                    return BetterUI.ItemStats.StatFormatter.Percent;
-                case StatFormatter.Charges:
-                default:
-                    return BetterUI.ItemStats.StatFormatter.Charges;
-            }
-        }
-
-        private static BetterUI.ItemStats.ItemTag GetItemTag(ItemTag itemTag)
-        {
-            switch (itemTag)
-            {
-                case ItemTag.CooldownReduction:
-                    return BetterUI.ItemStats.ItemTag.SkillCooldown;
-                case ItemTag.Damage:
-                default:
-                    return BetterUI.ItemStats.ItemTag.Damage;
-            }
-        }
-
-        private static BetterUI.ItemStats.StackingFormula GetStackingFormula(StackingFormula stackingFormula)
-        {
-            switch (stackingFormula)
-            {
-                case StackingFormula.Linear:
-                default:
-                    return BetterUI.ItemStats.LinearStacking;
-                case StackingFormula.NegativeExponential:
-                    return BetterUI.ItemStats.NegativeExponentialStacking;
-                case StackingFormula.ProbablyExponential:
-                    return NotSureWhatExponentialStacking;
-            }
-        }
-
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static float NotSureWhatExponentialStacking(float value, float extraStackValue, int stacks)
         {
@@ -102,25 +56,194 @@ namespace ExtradimensionalItems.Modules
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void RegisterStat(ItemDef itemDef, string nameToken, float value, StackingFormula stackingFormula, StatFormatter statFormatter)
         {
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, GetStackingFormula(stackingFormula), GetStatFormatter(statFormatter));
+            BetterUI.ItemStats.StackingFormula formula;
+            switch (stackingFormula)
+            {
+                case StackingFormula.Linear:
+                default:
+                    formula = BetterUI.ItemStats.LinearStacking;
+                    break;
+                case StackingFormula.NegativeExponential:
+                    formula = BetterUI.ItemStats.NegativeExponentialStacking;
+                    break;
+                case StackingFormula.ProbablyExponential:
+                    formula = NotSureWhatExponentialStacking;
+                    break;
+            }
+
+            BetterUI.ItemStats.StatFormatter formatter;
+            switch (statFormatter)
+            {
+                case StatFormatter.Seconds:
+                    formatter = BetterUI.ItemStats.StatFormatter.Seconds;
+                    break;
+                case StatFormatter.DamageFromHealth:
+                    formatter = new BetterUI.ItemStats.StatFormatter()
+                    {
+                        style = BetterUI.ItemStats.Styles.Damage,
+                        statFormatter = (sb, valuef, master) => { sb.Append((master.GetBody().maxHealth * valuef).ToString()); }
+                    };
+                    break;
+                case StatFormatter.Percent:
+                    formatter = BetterUI.ItemStats.StatFormatter.Percent;
+                    break;
+                case StatFormatter.Charges:
+                default:
+                    formatter = BetterUI.ItemStats.StatFormatter.Charges;
+                    break;
+            }
+
+            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, formula, formatter);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void RegisterStat(ItemDef itemDef, string nameToken, float value, StackingFormula stackingFormula, StatFormatter statFormatter, ItemTag itemTag)
         {
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, GetStackingFormula(stackingFormula), GetStatFormatter(statFormatter), GetItemTag(itemTag));
+            BetterUI.ItemStats.StackingFormula formula;
+            switch (stackingFormula)
+            {
+                case StackingFormula.Linear:
+                default:
+                    formula = BetterUI.ItemStats.LinearStacking;
+                    break;
+                case StackingFormula.NegativeExponential:
+                    formula = BetterUI.ItemStats.NegativeExponentialStacking;
+                    break;
+                case StackingFormula.ProbablyExponential:
+                    formula = NotSureWhatExponentialStacking;
+                    break;
+            }
+
+            BetterUI.ItemStats.StatFormatter formatter;
+            switch (statFormatter)
+            {
+                case StatFormatter.Seconds:
+                    formatter = BetterUI.ItemStats.StatFormatter.Seconds;
+                    break;
+                case StatFormatter.DamageFromHealth:
+                    formatter = new BetterUI.ItemStats.StatFormatter()
+                    {
+                        style = BetterUI.ItemStats.Styles.Damage,
+                        statFormatter = (sb, valuef, master) => { sb.Append((master.GetBody().maxHealth * valuef).ToString()); }
+                    };
+                    break;
+                case StatFormatter.Percent:
+                    formatter = BetterUI.ItemStats.StatFormatter.Percent;
+                    break;
+                case StatFormatter.Charges:
+                default:
+                    formatter = BetterUI.ItemStats.StatFormatter.Charges;
+                    break;
+            }
+            BetterUI.ItemStats.ItemTag tag;
+            switch (itemTag)
+            {
+                case ItemTag.CooldownReduction:
+                    tag = BetterUI.ItemStats.ItemTag.SkillCooldown;
+                    break;
+                case ItemTag.Damage:
+                default:
+                    tag = BetterUI.ItemStats.ItemTag.Damage;
+                    break;
+            }
+
+            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, formula, formatter, tag);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void RegisterStat(ItemDef itemDef, string nameToken, float value, float stackValue, StackingFormula stackingFormula, StatFormatter statFormatter)
         {
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, GetStackingFormula(stackingFormula), GetStatFormatter(statFormatter));
+            BetterUI.ItemStats.StackingFormula formula;
+            switch (stackingFormula)
+            {
+                case StackingFormula.Linear:
+                default:
+                    formula = BetterUI.ItemStats.LinearStacking;
+                    break;
+                case StackingFormula.NegativeExponential:
+                    formula = BetterUI.ItemStats.NegativeExponentialStacking;
+                    break;
+                case StackingFormula.ProbablyExponential:
+                    formula = NotSureWhatExponentialStacking;
+                    break;
+            }
+
+            BetterUI.ItemStats.StatFormatter formatter;
+            switch (statFormatter)
+            {
+                case StatFormatter.Seconds:
+                    formatter = BetterUI.ItemStats.StatFormatter.Seconds;
+                    break;
+                case StatFormatter.DamageFromHealth:
+                    formatter = new BetterUI.ItemStats.StatFormatter()
+                    {
+                        style = BetterUI.ItemStats.Styles.Damage,
+                        statFormatter = (sb, valuef, master) => { sb.Append((master.GetBody().maxHealth * valuef).ToString()); }
+                    };
+                    break;
+                case StatFormatter.Percent:
+                    formatter = BetterUI.ItemStats.StatFormatter.Percent;
+                    break;
+                case StatFormatter.Charges:
+                default:
+                    formatter = BetterUI.ItemStats.StatFormatter.Charges;
+                    break;
+            }
+            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, formula, formatter);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void RegisterStat(ItemDef itemDef, string nameToken, float value, float stackValue, StackingFormula stackingFormula, StatFormatter statFormatter, ItemTag itemTag)
         {
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, GetStackingFormula(stackingFormula), GetStatFormatter(statFormatter), GetItemTag(itemTag));
+            BetterUI.ItemStats.StackingFormula formula;
+            switch (stackingFormula)
+            {
+                case StackingFormula.Linear:
+                default:
+                    formula = BetterUI.ItemStats.LinearStacking;
+                    break;
+                case StackingFormula.NegativeExponential:
+                    formula = BetterUI.ItemStats.NegativeExponentialStacking;
+                    break;
+                case StackingFormula.ProbablyExponential:
+                    formula = NotSureWhatExponentialStacking;
+                    break;
+            }
+
+            BetterUI.ItemStats.StatFormatter formatter;
+            switch (statFormatter)
+            {
+                case StatFormatter.Seconds:
+                    formatter = BetterUI.ItemStats.StatFormatter.Seconds;
+                    break;
+                case StatFormatter.DamageFromHealth:
+                    formatter = new BetterUI.ItemStats.StatFormatter()
+                    {
+                        style = BetterUI.ItemStats.Styles.Damage,
+                        statFormatter = (sb, valuef, master) => { sb.Append((master.GetBody().maxHealth * valuef).ToString()); }
+                    };
+                    break;
+                case StatFormatter.Percent:
+                    formatter = BetterUI.ItemStats.StatFormatter.Percent;
+                    break;
+                case StatFormatter.Charges:
+                default:
+                    formatter = BetterUI.ItemStats.StatFormatter.Charges;
+                    break;
+            }
+            BetterUI.ItemStats.ItemTag tag;
+            switch (itemTag)
+            {
+                case ItemTag.CooldownReduction:
+                    tag = BetterUI.ItemStats.ItemTag.SkillCooldown;
+                    break;
+                case ItemTag.Damage:
+                default:
+                    tag = BetterUI.ItemStats.ItemTag.Damage;
+                    break;
+            }
+
+            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, formula, formatter, tag);
         }
 
 
