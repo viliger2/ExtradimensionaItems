@@ -28,6 +28,8 @@ namespace ExtradimensionalItems.Modules.Content
         public static ItemDef Atma;
 
         public static ItemDef ReturnalAdrenaline;
+
+        public static ItemDef DamageOnPing;
     }
 
     public static class Skills
@@ -50,6 +52,8 @@ namespace ExtradimensionalItems.Modules.Content
         public static BuffDef DamageOnCooldowns;
 
         public static BuffDef ReturnalMaxLevelProtection;
+
+        public static BuffDef DamageOnPing;
     }
 
 }
