@@ -74,7 +74,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
                             MyLogger.LogMessage("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage.ToString(), victim.name);
 
-                            body.RemoveTimedBuff(Content.Buffs.Sheen);
+                            body.RemoveOldestTimedBuff(Content.Buffs.Sheen);
                             this.usedPrimary = false;
 
                             damageReport.victim.TakeDamage(damageInfo2);

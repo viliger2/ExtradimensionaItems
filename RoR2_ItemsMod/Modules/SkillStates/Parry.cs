@@ -38,7 +38,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
             {
                 if (characterBody.HasBuff(Content.Buffs.RoyalGuardParryState))
                 {
-                    characterBody.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
+                    characterBody.RemoveOldestTimedBuff(Content.Buffs.RoyalGuardParryState);
                 }
             }
             if (isAuthority)

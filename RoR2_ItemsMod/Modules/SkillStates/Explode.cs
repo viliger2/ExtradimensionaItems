@@ -45,7 +45,7 @@ namespace ExtradimensionalItems.Modules.SkillStates
                 characterBody.SetBuffCount(Content.Buffs.RoyalGuardDamage.buffIndex, 0);
                 if (characterBody.HasBuff(Content.Buffs.RoyalGuardParryState))
                 {
-                    characterBody.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
+                    characterBody.RemoveOldestTimedBuff(Content.Buffs.RoyalGuardParryState);
                 }
 
                 EffectData effectData = new EffectData();

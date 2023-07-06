@@ -444,7 +444,7 @@ namespace ExtradimensionalItems.Modules.Items
                 // end TODO
                 MyLogger.LogMessage("Player {0}({1}) got damaged in {2} after entering parry state. Adding {3} damage buff(s), adding grace buff and removing parry state buff.", body.GetUserName(), body.name, (parryStateDuration - timedBuff.timer).ToString(), numberOfBuffs.ToString());
                 body.AddTimedBuff(RoR2.RoR2Content.Buffs.HiddenInvincibility, 0.0167f);
-                body.RemoveTimedBuff(Content.Buffs.RoyalGuardParryState);
+                body.RemoveOldestTimedBuff(Content.Buffs.RoyalGuardParryState);
                 damageInfo.rejected = true;
             }
             orig(self, damageInfo);

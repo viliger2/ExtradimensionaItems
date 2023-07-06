@@ -19,34 +19,34 @@ namespace ExtradimensionalItems.Modules
             }
         }
 
-        public static void RemoveTimedBuff(this CharacterBody body, BuffDef buff)
-        {
-            if (!NetworkServer.active)
-            {
-                MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffDef)' called on client");
-            }
-            else
-            {
-                body.RemoveTimedBuff(buff.buffIndex);
-            }
-        }
+        //public static void RemoveTimedBuff(this CharacterBody body, BuffDef buff)
+        //{
+        //    if (!NetworkServer.active)
+        //    {
+        //        MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffDef)' called on client");
+        //    }
+        //    else
+        //    {
+        //        body.RemoveTimedBuff(buff.buffIndex);
+        //    }
+        //}
 
-        public static void RemoveTimedBuff(this CharacterBody body, BuffIndex buff)
-        {
-            if (!NetworkServer.active)
-            {
-                MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffIndex)' called on client");
-                return;
-            }
+        //public static void RemoveTimedBuff(this CharacterBody body, BuffIndex buff)
+        //{
+        //    if (!NetworkServer.active)
+        //    {
+        //        MyLogger.LogWarning("[Server] extension function 'System.Void RoR2.CharacterBody::RemoveTimedBuff(RoR2.BuffIndex)' called on client");
+        //        return;
+        //    }
 
-            TimedBuff lowest = body.GetTimedBuff(buff, true);
+        //    TimedBuff lowest = body.GetTimedBuff(buff, true);
 
-            if (lowest != null)
-            {
-                body.timedBuffs.Remove(lowest);
-                body.RemoveBuff(lowest.buffIndex);
-            }
-        }
+        //    if (lowest != null)
+        //    {
+        //        body.timedBuffs.Remove(lowest);
+        //        body.RemoveBuff(lowest.buffIndex);
+        //    }
+        //}
 
         public static TimedBuff GetTimedBuff(this CharacterBody body, BuffDef buff, bool getLowest = false)
         {
