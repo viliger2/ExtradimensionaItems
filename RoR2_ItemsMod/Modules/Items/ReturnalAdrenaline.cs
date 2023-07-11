@@ -313,12 +313,9 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
         }
 
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION"))
-            {
-                // oh yeah baby
-                base.AddLanguageString(key, string.Format(
+            return string.Format(
                     value,
                     (AttackSpeedBonus.Value / 100).ToString("###%"),
                     (AttackSpeedBonusPerStack.Value / 100).ToString("###%"),
@@ -338,12 +335,7 @@ namespace ExtradimensionalItems.Modules.Items
                     (CriticalDamage.Value / 100).ToString("###%"),
                     HealthCheckFrequency.Value,
                     MaxLevelProtection.Value ? tokensNode["ITEM_RETURNAL_ADRENALINE_DESCRIPTION_SHIELD"].Value : ""
-                    ), language, tokensNode);
-            }
-            else
-            {
-                base.AddLanguageString(key, value, language, tokensNode);
-            }
+                    );
         }
 
         public override void Init(ConfigFile config)
@@ -516,6 +508,7 @@ namespace ExtradimensionalItems.Modules.Items
                 RiskOfOptionsCompat.CreateNewOption(CritBonusPerStack);
                 RiskOfOptionsCompat.CreateNewOption(MaxLevelProtection);
                 RiskOfOptionsCompat.CreateNewOption(DisableHUD);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
     }

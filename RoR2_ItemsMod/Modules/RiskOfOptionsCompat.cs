@@ -1,7 +1,9 @@
 ﻿using BepInEx.Configuration;
+using RewiredConsts;
 using RiskOfOptions;
 using RiskOfOptions.OptionConfigs;
 using RiskOfOptions.Options;
+using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -21,6 +23,12 @@ namespace ExtradimensionalItems.Modules
                 }
                 return (bool)_enabled;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        public static void AddDelegateOnModOptionsExit(System.Action action)
+        {
+            RiskOfOptions.Components.Panel.ModOptionPanelController.OnModOptionsExit += action;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]

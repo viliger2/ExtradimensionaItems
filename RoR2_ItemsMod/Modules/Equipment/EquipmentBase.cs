@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.ExpansionManagement;
 using SimpleJSON;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -50,6 +51,8 @@ namespace ExtradimensionalItems.Modules.Equipment
         public EquipmentDef EquipmentDef;
 
         public AssetBundle AssetBundle;
+
+        protected List<LanguageAPI.LanguageOverlay> overlayList = new List<LanguageAPI.LanguageOverlay>();
 
         public abstract ItemDisplayRuleDict CreateItemDisplayRules();
 
@@ -114,7 +117,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         protected abstract bool ActivateEquipment(EquipmentSlot slot);
 
         protected virtual void Hooks() { }
-
+       
         protected void LoadLanguageFile()
         {
             string jsonText = File.ReadAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.LanguageFolder, $"{BundleName}.json"));
@@ -130,15 +133,53 @@ namespace ExtradimensionalItems.Modules.Equipment
                 JSONNode tokensNode = languageNode[languageKey];
                 foreach (string key in tokensNode.Keys)
                 {
-                    AddLanguageString(key, tokensNode[key], languageKey == "strings" ? "generic" : languageKey, tokensNode);
+                    LoadDescription(key, tokensNode[key], languageKey == "strings" ? "generic" : languageKey, tokensNode);
                 }
             }
         }
 
-        protected virtual void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        protected virtual void LoadDescription(string key, string value, string languageKey, JSONNode tokensNode)
         {
-            LanguageAPI.Add(key, value, language);
+            if (key.Contains("DESCRIPTION"))
+            {
+                LanguageAPI.Add(key, GetOverlayDescription(tokensNode[key], tokensNode), languageKey);
+            }
+            else
+            {
+                LanguageAPI.Add(key, tokensNode[key], languageKey);
+            }
         }
+
+        protected virtual void OnModOptionsExit()
+        {
+            foreach (var overlay in overlayList)
+            {
+                overlay.Remove();
+            }
+
+            overlayList.Clear();
+
+            string jsonText = File.ReadAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.LanguageFolder, $"{BundleName}.json"));
+
+            JSONNode languageNode = JSON.Parse(jsonText);
+            if (languageNode == null)
+            {
+                return;
+            }
+
+            foreach (string languageKey in languageNode.Keys)
+            {
+                JSONNode tokensNode = languageNode[languageKey];
+                overlayList.Add(
+                    LanguageAPI.AddOverlay(
+                        "EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION",
+                        GetOverlayDescription(tokensNode["EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION"].Value, tokensNode),
+                        languageKey == "strings" ? "generic" : languageKey));
+            }
+
+        }
+
+        public abstract string GetOverlayDescription(string value, JSONNode tokensNode);
 
         protected virtual void LoadSoundBank()
         {

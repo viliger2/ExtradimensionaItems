@@ -747,16 +747,9 @@ namespace ExtradimensionalItems.Modules.Equipment
             return rules;
         }
 
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION"))
-            {
-                base.AddLanguageString(key, string.Format(value, RewindTime.Value, Frequency.Value), language, tokensNode);
-            }
-            else
-            {
-                base.AddLanguageString(key, value, language, tokensNode);
-            }
+            return string.Format(value, RewindTime.Value, Frequency.Value);
         }
 
         public override void Init(ConfigFile config)
@@ -864,6 +857,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                 RiskOfOptionsCompat.CreateNewOption(RewindTime, 1f, 20f);
                 RiskOfOptionsCompat.CreateNewOption(Frequency, 0.01f, 1f, 0.01f);
                 RiskOfOptionsCompat.CreateNewOption(CooldownConfig, 1f, 200f, 1f);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
     }

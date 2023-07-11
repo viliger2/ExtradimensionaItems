@@ -1,7 +1,10 @@
 ﻿using BepInEx.Configuration;
+using Newtonsoft.Json.Linq;
 using R2API;
 using RoR2;
 using SimpleJSON;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -314,20 +317,15 @@ namespace ExtradimensionalItems.Modules.Items
                 args.baseDamageAdd += sender.maxHealth * (PercentBonusDamage.Value / 100) + sender.maxHealth * (PercentBonusDamagePerStack.Value / 100 * (GetCount(sender) - 1));
             }
         }
-
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION"))
-            {
-                base.AddLanguageString(key, string.Format(value, (PercentBonusDamage.Value / 100).ToString("0.#%"), (PercentBonusDamagePerStack.Value / 100).ToString("0.#%")), language, tokensNode);
-            }
-            else
-            {
-                base.AddLanguageString(key, value, language, tokensNode);
-            }
+            return string.Format(
+                     value,
+                     (PercentBonusDamage.Value / 100).ToString("0.#%"),
+                     (PercentBonusDamagePerStack.Value / 100).ToString("0.#%"));
         }
 
-        public override void AddBetterUIStats(ItemDef item)
+        public override void AddBetterUIStats(ItemDef item) 
         {
             base.AddBetterUIStats(item);
             BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", PercentBonusDamage.Value / 100, PercentBonusDamagePerStack.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.DamageFromHealth);
@@ -341,6 +339,7 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 RiskOfOptionsCompat.CreateNewOption(PercentBonusDamage, 0.1f, 5f, 0.1f);
                 RiskOfOptionsCompat.CreateNewOption(PercentBonusDamagePerStack, 0.1f, 5f, 0.1f);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
     }

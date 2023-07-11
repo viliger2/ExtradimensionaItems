@@ -346,16 +346,9 @@ namespace ExtradimensionalItems.Modules.Equipment
             return interactableModel;
         }
 
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION"))
-            {
-                base.AddLanguageString(key, string.Format(value, EnableFuelCellInteraction.Value ? tokensNode["EQUIPMENT_RESPAWN_FLAG_FUEL_CELL"].Value : ""), language, tokensNode);
-            }
-            else
-            {
-                base.AddLanguageString(key, value, language, tokensNode);
-            }
+            return string.Format(value, EnableFuelCellInteraction.Value ? tokensNode["EQUIPMENT_RESPAWN_FLAG_FUEL_CELL"].Value : "");
         }
 
         protected override void Hooks()
@@ -449,6 +442,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             if (RiskOfOptionsCompat.enabled)
             {
                 RiskOfOptionsCompat.CreateNewOption(EnableFuelCellInteraction);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
     }

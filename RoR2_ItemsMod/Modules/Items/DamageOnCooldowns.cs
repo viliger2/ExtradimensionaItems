@@ -338,16 +338,9 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
         }
 
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION"))
-            {
-                base.AddLanguageString(key, string.Format(value, (DamageBonus.Value / 100).ToString("###%"), (DamageBonusPerStack.Value / 100).ToString("###%")), language, tokensNode);
-            }
-            else
-            {
-                base.AddLanguageString(key, value, language, tokensNode);
-            }
+            return string.Format(value, (DamageBonus.Value / 100).ToString("###%"), (DamageBonusPerStack.Value / 100).ToString("###%"));
         }
 
         public override void Init(ConfigFile config)
@@ -446,6 +439,7 @@ namespace ExtradimensionalItems.Modules.Items
             {
                 RiskOfOptionsCompat.CreateNewOption(DamageBonus, 1f, 30f, 1f);
                 RiskOfOptionsCompat.CreateNewOption(DamageBonusPerStack, 1f, 30f, 1f);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
     }

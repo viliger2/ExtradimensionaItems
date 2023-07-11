@@ -124,9 +124,6 @@
 	  <None Update="Languages\damageonping.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Languages\ExtradimensionalItems.json">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </None>
 	  <None Update="Languages\fuelcelldepleted.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

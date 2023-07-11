@@ -345,20 +345,10 @@ namespace ExtradimensionalItems.Modules.Equipment
             Utils.RegisterNetworkSound("EI_SkullOfDoom_Use");
         }
 
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION"))
-            {
-                base.AddLanguageString(key, 
-                    string.Format(value, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value,
-                        EnableFuelCellInteraction.Value ? string.Format(tokensNode["EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL"].Value, (FuelCellSpeedBuff.Value / 100).ToString("###%"), (FuelCellDamageOverTime.Value / 100).ToString("###%")) : ""), 
-                    language, 
-                    tokensNode);
-            }
-            else
-            {
-                base.AddLanguageString(key, value, language, tokensNode);
-            }
+            return string.Format(value, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value,
+                        EnableFuelCellInteraction.Value ? string.Format(tokensNode["EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL"].Value, (FuelCellSpeedBuff.Value / 100).ToString("###%"), (FuelCellDamageOverTime.Value / 100).ToString("###%")) : "");
         }
 
         protected override void Hooks()
@@ -511,8 +501,8 @@ namespace ExtradimensionalItems.Modules.Equipment
                 RiskOfOptionsCompat.CreateNewOption(EnableFuelCellInteraction);
                 RiskOfOptionsCompat.CreateNewOption(FuelCellSpeedBuff, 1f, 50f, 1f);
                 RiskOfOptionsCompat.CreateNewOption(FuelCellDamageOverTime, 1f, 50f, 1f);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
-
     }
 }

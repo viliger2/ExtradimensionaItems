@@ -12,6 +12,7 @@ namespace ExtradimensionalItems.Modules.Items
 {
     public class VoidCooldownReduction : ItemBase<VoidCooldownReduction>
     {
+        // TODO: add first stack and per stack config
         public static ConfigEntry<float> CooldownReduction;
 
         public override string ItemName => "CooldownReductionVoid";
@@ -285,16 +286,9 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
         }
 
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION"))
-            {
-                base.AddLanguageString(key, string.Format(value, (CooldownReduction.Value / 100).ToString("###%")), language, tokensNode);
-            }
-            else
-            {
-                base.AddLanguageString(key, value, language, tokensNode);
-            }
+            return string.Format(value, (CooldownReduction.Value / 100).ToString("###%"));
         }
 
         public override void Init(ConfigFile config)
@@ -341,6 +335,7 @@ namespace ExtradimensionalItems.Modules.Items
             if (RiskOfOptionsCompat.enabled)
             {
                 RiskOfOptionsCompat.CreateNewOption(CooldownReduction, 1f, 25f, 1f);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
     }

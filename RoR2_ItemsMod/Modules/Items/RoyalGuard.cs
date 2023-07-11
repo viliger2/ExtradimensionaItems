@@ -1,11 +1,13 @@
 ﻿using BepInEx.Configuration;
 using EntityStates;
 using ExtradimensionalItems.Modules.SkillStates;
+using Newtonsoft.Json.Linq;
 using R2API;
 using RoR2;
 using RoR2.Audio;
 using RoR2.Skills;
 using SimpleJSON;
+using System.IO;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -373,23 +375,71 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION")) 
+            return "";
+        }
+
+        protected override void OnModOptionsExit()
+        {
+            foreach (var overlay in overlayList)
             {
-                base.AddLanguageString(key, string.Format(value, BaseDuration.Value, PerStackDuration.Value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value), language, tokensNode);
+                overlay.Remove();
+            }
+
+            overlayList.Clear();
+
+            string jsonText = File.ReadAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.LanguageFolder, $"{BundleName}.json"));
+
+            JSONNode languageNode = JSON.Parse(jsonText);
+            if (languageNode == null)
+            {
+                return;
+            }
+
+            foreach (string languageKey in languageNode.Keys)
+            {
+                JSONNode tokensNode = languageNode[languageKey];
+
+                string language = languageKey == "strings" ? "generic" : languageKey;
+
+                overlayList.Add(
+                    LanguageAPI.AddOverlay(
+                        "ITEM_ROYAL_GUARD_DESCRIPTION",
+                        string.Format(tokensNode["ITEM_ROYAL_GUARD_DESCRIPTION"].Value, BaseDuration.Value, PerStackDuration.Value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value),
+                        language));
+
+                overlayList.Add(
+                    LanguageAPI.AddOverlay(
+                        "SKILL_ROYAL_GUARD_PARRY_DESC",
+                        string.Format(tokensNode["SKILL_ROYAL_GUARD_PARRY_DESC"].Value, BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value),
+                        language));
+
+                overlayList.Add(
+                    LanguageAPI.AddOverlay(
+                        "SKILL_ROYAL_GUARD_RELEASE_DESC",
+                        string.Format(tokensNode["SKILL_ROYAL_GUARD_RELEASE_DESC"].Value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value),
+                        language));
+            }
+        }
+
+        protected override void LoadDescription(string key, string value, string languageKey, JSONNode tokensNode)
+        {
+            if (key.Contains("DESCRIPTION"))
+            {
+                LanguageAPI.Add(key, string.Format(value, BaseDuration.Value, PerStackDuration.Value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value), languageKey);
             }
             else if (key.Contains("PARRY_DESC"))
             {
-                base.AddLanguageString(key, string.Format(value, BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value), language, tokensNode);
+                LanguageAPI.Add(key, string.Format(value, BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value), languageKey);
             }
-            else if(key.Contains("RELEASE_DESC"))
+            else if (key.Contains("RELEASE_DESC"))
             {
-                base.AddLanguageString(key, string.Format(value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value), language, tokensNode);
+                LanguageAPI.Add(key, string.Format(value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value), languageKey);
             }
             else
             {
-                base.AddLanguageString(key, value, language, tokensNode);
+                LanguageAPI.Add(key, value, languageKey);
             }
         }
 
@@ -584,7 +634,8 @@ namespace ExtradimensionalItems.Modules.Items
                 RiskOfOptionsCompat.CreateNewOption(MaxBuffStacks, 1, 20);
                 RiskOfOptionsCompat.CreateNewOption(BaseDuration, 0.01f, 1f, 0.01f);
                 RiskOfOptionsCompat.CreateNewOption(PerStackDuration, 0.01f, 1f, 0.01f);
-                RiskOfOptionsCompat.CreateNewOption(DamageRadius, 1f, 50f, 15f);
+                RiskOfOptionsCompat.CreateNewOption(DamageRadius, 1f, 50f, 1f);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
     }

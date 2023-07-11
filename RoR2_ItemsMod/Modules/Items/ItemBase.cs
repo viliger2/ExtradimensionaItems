@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using Newtonsoft.Json.Linq;
 using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
@@ -41,6 +42,8 @@ namespace ExtradimensionalItems.Modules.Items
         public virtual bool CanRemove { get; } = true;
         public virtual bool AIBlacklisted { get; } = false;
         public virtual ExpansionDef Expansion { get; } = null;
+
+        protected List<LanguageAPI.LanguageOverlay> overlayList = new List<LanguageAPI.LanguageOverlay>();
 
         /// <summary>
         /// This method structures your code execution of this class. An example implementation inside of it would be:
@@ -120,15 +123,53 @@ namespace ExtradimensionalItems.Modules.Items
                 JSONNode tokensNode = languageNode[languageKey];
                 foreach (string key in tokensNode.Keys)
                 {
-                    AddLanguageString(key, tokensNode[key], languageKey == "strings" ? "generic" : languageKey, tokensNode);
+                    LoadDescription(key, tokensNode[key], languageKey == "strings" ? "generic" : languageKey, tokensNode);
                 }
             }
         }
 
-        protected virtual void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        protected virtual void LoadDescription(string key, string value, string languageKey, JSONNode tokensNode)
         {
-            LanguageAPI.Add(key, value, language);
+            if (key.Contains("DESCRIPTION"))
+            {
+                LanguageAPI.Add(key, GetOverlayDescription(tokensNode[key], tokensNode), languageKey);
+            }
+            else
+            {
+                LanguageAPI.Add(key, tokensNode[key], languageKey);
+            }
         }
+
+        protected virtual void OnModOptionsExit()
+        {
+            foreach (var overlay in overlayList)
+            {
+                overlay.Remove();
+            }
+
+            overlayList.Clear();
+
+            string jsonText = File.ReadAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.LanguageFolder, $"{BundleName}.json"));
+
+            JSONNode languageNode = JSON.Parse(jsonText);
+            if (languageNode == null)
+            {
+                return;
+            }
+
+            foreach (string languageKey in languageNode.Keys)
+            {
+                JSONNode tokensNode = languageNode[languageKey];
+                overlayList.Add(
+                    LanguageAPI.AddOverlay(
+                        "ITEM_" + ItemLangTokenName + "_DESCRIPTION",
+                        GetOverlayDescription(tokensNode["ITEM_" + ItemLangTokenName + "_DESCRIPTION"].Value, tokensNode),
+                        languageKey == "strings" ? "generic" : languageKey)); 
+            }
+
+        }
+
+        public abstract string GetOverlayDescription(string value, JSONNode tokensNode);
 
         //Based on ThinkInvis' methods
         public int GetCount(CharacterBody body)

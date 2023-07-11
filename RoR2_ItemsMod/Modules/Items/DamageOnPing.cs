@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
+using SimpleJSON;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,6 +30,12 @@ namespace ExtradimensionalItems.Modules.Items
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
+        }
+
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
+        {
+            return value;
+            //throw new System.NotImplementedException();
         }
 
         public override void Init(ConfigFile config)

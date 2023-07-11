@@ -312,16 +312,9 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            if (key.Contains("DESCRIPTION"))
-            {
-                base.AddLanguageString(key, string.Format(value, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? BuffStackPerItem.Value : 1, CanStack.Value ? BuffStackPerItem.Value : 0), language, tokensNode);
-            }
-            else
-            {
-                base.AddLanguageString(key, value, language, tokensNode);
-            }
+            return string.Format(value, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? BuffStackPerItem.Value : 1, CanStack.Value ? BuffStackPerItem.Value : 0);
         }
 
         public void CreateBuffs()
@@ -381,6 +374,7 @@ namespace ExtradimensionalItems.Modules.Items
                 RiskOfOptionsCompat.CreateNewOption(DamageModifier, 100f, 500f, 10f);
                 RiskOfOptionsCompat.CreateNewOption(BuffDuration, 1f, 30f, 1f);
                 RiskOfOptionsCompat.CreateNewOption(BuffStackPerItem, 1, 10);
+                RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
     }
