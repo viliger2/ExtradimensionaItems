@@ -5,6 +5,7 @@ using R2API;
 using RoR2;
 using RoR2.Audio;
 using RoR2.Skills;
+using SimpleJSON;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -50,11 +51,6 @@ namespace ExtradimensionalItems.Modules.Items
 
         private static GameObject RoyalGuardParryEffectInstance;
         public static GameObject RoyalGuardExplodeEffectInstance;
-
-        // adding language checks because we can't check if token has been added to the OverlayDict for some reason
-        private bool isDescAdded = false;
-        private bool isParryDescAdded = false;
-        private bool isReleaseDescAdded = false;
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
@@ -333,6 +329,7 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
 
         }
+        
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
@@ -340,6 +337,7 @@ namespace ExtradimensionalItems.Modules.Items
             CreateConfig(config);
             CreateSkills();
             CreateBuffs();
+            LoadLanguageFile();
             CreateItem(ref Content.Items.RoyalGuard);
             CreateVisualEffects();
             Hooks();
@@ -365,9 +363,6 @@ namespace ExtradimensionalItems.Modules.Items
             // damage is already dealt, negating the entire point of blocking
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
             //RoR2.GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
-            // implementing our own replacements instead of using base.Hooks()
-            // since we also need to format skills
-            On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
         }
 
         private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
@@ -378,30 +373,24 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            if (token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION") && !isDescAdded)
+            if (key.Contains("DESCRIPTION")) 
             {
-                LanguageAPI.AddOverlay(token, GetFormatedDiscription(orig(self, token)), self.name);
-                isDescAdded = true;
+                base.AddLanguageString(key, string.Format(value, BaseDuration.Value, PerStackDuration.Value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value), language, tokensNode);
             }
-            else if (token.Equals($"SKILL_{ItemLangTokenName}_PARRY_DESC") && !isParryDescAdded)
+            else if (key.Contains("PARRY_DESC"))
             {
-                LanguageAPI.AddOverlay(token, string.Format(orig(self, token), BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value), self.name);
-                isParryDescAdded = true;
+                base.AddLanguageString(key, string.Format(value, BaseDuration.Value, PerStackDuration.Value, MaxBuffStacks.Value), language, tokensNode);
             }
-            else if (token.Equals($"SKILL_{ItemLangTokenName}_RELEASE_DESC") && !isReleaseDescAdded)
+            else if(key.Contains("RELEASE_DESC"))
             {
-                LanguageAPI.AddOverlay(token, string.Format(orig(self, token), (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value), self.name);
-                isReleaseDescAdded = true;
+                base.AddLanguageString(key, string.Format(value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value), language, tokensNode);
             }
-
-            if (isDescAdded && isParryDescAdded && isReleaseDescAdded)
+            else
             {
-                On.RoR2.Language.GetLocalizedStringByToken -= Language_GetLocalizedStringByToken;
+                base.AddLanguageString(key, value, language, tokensNode);
             }
-
-            return orig(self, token);
         }
 
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -510,11 +499,6 @@ namespace ExtradimensionalItems.Modules.Items
         public static float GetParryStateDuration(CharacterBody body)
         {
             return BaseDuration.Value + (PerStackDuration.Value * (body.inventory.GetItemCount(Content.Items.RoyalGuard) - 1));
-        }
-
-        public override string GetFormatedDiscription(string pickupString)
-        {
-            return string.Format(pickupString, BaseDuration.Value, PerStackDuration.Value, (DamageModifier.Value / 100).ToString("###%"), DamageRadius.Value, MaxBuffStacks.Value);
         }
 
         public void CreateBuffs()

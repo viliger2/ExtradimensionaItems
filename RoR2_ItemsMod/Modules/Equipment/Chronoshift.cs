@@ -5,6 +5,7 @@ using R2API;
 using R2API.Networking.Interfaces;
 using RoR2;
 using RoR2.Audio;
+using SimpleJSON;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -746,9 +747,16 @@ namespace ExtradimensionalItems.Modules.Equipment
             return rules;
         }
 
-        public override string GetFormatedDiscription(string pickupString)
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            return string.Format(pickupString, RewindTime.Value, Frequency.Value);
+            if (key.Contains("DESCRIPTION"))
+            {
+                base.AddLanguageString(key, string.Format(value, RewindTime.Value, Frequency.Value), language, tokensNode);
+            }
+            else
+            {
+                base.AddLanguageString(key, value, language, tokensNode);
+            }
         }
 
         public override void Init(ConfigFile config)
@@ -757,6 +765,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             SetLogbookCameraPosition();
             LoadSoundBank();
             CreateConfig(config);
+            LoadLanguageFile();
             CreateEquipment(ref Content.Equipment.Chronoshift);
             Hooks();
         }

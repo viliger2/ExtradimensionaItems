@@ -3,6 +3,7 @@ using ExtradimensionalItems.Modules.Items.ItemBehaviors;
 using R2API;
 using R2API.Networking.Interfaces;
 using RoR2;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -337,15 +338,23 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
         }
 
-        public override string GetFormatedDiscription(string pickupString)
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            return string.Format(pickupString, (DamageBonus.Value / 100).ToString("###%"), (DamageBonusPerStack.Value / 100).ToString("###%"));
+            if (key.Contains("DESCRIPTION"))
+            {
+                base.AddLanguageString(key, string.Format(value, (DamageBonus.Value / 100).ToString("###%"), (DamageBonusPerStack.Value / 100).ToString("###%")), language, tokensNode);
+            }
+            else
+            {
+                base.AddLanguageString(key, value, language, tokensNode);
+            }
         }
 
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
             CreateConfig(config);
+            LoadLanguageFile();
             CreateBuffs();
             CreateItem(ref Content.Items.DamageOnCooldowns);
             Hooks();

@@ -28,14 +28,10 @@ namespace ExtradimensionalItems.Modules.Items
             return new ItemDisplayRuleDict();
         }
 
-        public override string GetFormatedDiscription(string pickupString)
-        {
-            return pickupString;
-        }
-
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
+            LoadLanguageFile();
             CreateItem(ref Content.Items.FuelCellDepleted);
             if (ShrineOfRepairCompat.enabled)
             {

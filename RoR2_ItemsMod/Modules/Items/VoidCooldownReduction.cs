@@ -3,6 +3,7 @@ using HarmonyLib;
 using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
+using SimpleJSON;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -284,15 +285,23 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
         }
 
-        public override string GetFormatedDiscription(string pickupString)
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            return string.Format(pickupString, (CooldownReduction.Value / 100).ToString("###%"));
+            if (key.Contains("DESCRIPTION"))
+            {
+                base.AddLanguageString(key, string.Format(value, (CooldownReduction.Value / 100).ToString("###%")), language, tokensNode);
+            }
+            else
+            {
+                base.AddLanguageString(key, value, language, tokensNode);
+            }
         }
 
         public override void Init(ConfigFile config)
         {
             CreateConfig(config);
             LoadAssetBundle();
+            LoadLanguageFile();
             CreateItem(ref Content.Items.VoidCooldownReduction);
             Hooks();
         }

@@ -2,6 +2,7 @@
 using ExtradimensionalItems.Modules.Interactables;
 using R2API;
 using RoR2;
+using SimpleJSON;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -303,6 +304,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             LoadSoundBank();
             LoadInteractable();
             CreateConfig(config);
+            LoadLanguageFile();
             CreateEquipment(ref Content.Equipment.RespawnFlag);
             Hooks();
         }
@@ -344,9 +346,16 @@ namespace ExtradimensionalItems.Modules.Equipment
             return interactableModel;
         }
 
-        public override string GetFormatedDiscription(string pickupString)
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            return string.Format(pickupString, EnableFuelCellInteraction.Value ? Language.GetString("EQUIPMENT_RESPAWN_FLAG_FUEL_CELL") : "");
+            if (key.Contains("DESCRIPTION"))
+            {
+                base.AddLanguageString(key, string.Format(value, EnableFuelCellInteraction.Value ? tokensNode["EQUIPMENT_RESPAWN_FLAG_FUEL_CELL"].Value : ""), language, tokensNode);
+            }
+            else
+            {
+                base.AddLanguageString(key, value, language, tokensNode);
+            }
         }
 
         protected override void Hooks()

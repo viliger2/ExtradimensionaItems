@@ -2,6 +2,7 @@
 using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
+using SimpleJSON;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,20 +33,13 @@ namespace ExtradimensionalItems.Modules.Items
         public abstract string ItemLangTokenName { get; }
         public abstract ItemTier Tier { get; }
         public virtual ItemTag[] ItemTags { get; set; } = new ItemTag[] { };
-
         public abstract string BundleName { get; }
-
         public abstract GameObject ItemModel { get; }
         public abstract Sprite ItemIcon { get; }
-
         public ItemDef ItemDef;
-
         public AssetBundle AssetBundle;
-
         public virtual bool CanRemove { get; } = true;
-
         public virtual bool AIBlacklisted { get; } = false;
-
         public virtual ExpansionDef Expansion { get; } = null;
 
         /// <summary>
@@ -104,30 +98,37 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        protected virtual void Hooks()
-        {
-            On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
-        }
+        protected virtual void Hooks() { }
 
         protected virtual void LoadSoundBank()
         {
             SoundAPI.SoundBanks.Add(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.SoundBanksFolder, string.Concat(BundleName, ".bnk")));
         }
 
-        // using this monstrosity because strings are not loaded on initialization
-        // so if we try to use LanguageAPI.AddOverlay together with Language.GetString via token
-        // all we will get is token itself
-        private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
+        protected void LoadLanguageFile()
         {
-            if (token.Equals($"ITEM_{ItemLangTokenName}_DESCRIPTION"))
+            string jsonText = File.ReadAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.LanguageFolder, $"{BundleName}.json"));
+
+            JSONNode languageNode = JSON.Parse(jsonText);
+            if (languageNode == null)
             {
-                LanguageAPI.AddOverlay(token, GetFormatedDiscription(orig(self, token)), self.name);
-                On.RoR2.Language.GetLocalizedStringByToken -= Language_GetLocalizedStringByToken;
+                return;
             }
-            return orig(self, token);
+
+            foreach(string languageKey in languageNode.Keys)
+            {
+                JSONNode tokensNode = languageNode[languageKey];
+                foreach (string key in tokensNode.Keys)
+                {
+                    AddLanguageString(key, tokensNode[key], languageKey == "strings" ? "generic" : languageKey, tokensNode);
+                }
+            }
         }
 
-        public abstract string GetFormatedDiscription(string pickupString);
+        protected virtual void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        {
+            LanguageAPI.Add(key, value, language);
+        }
 
         //Based on ThinkInvis' methods
         public int GetCount(CharacterBody body)

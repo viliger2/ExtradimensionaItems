@@ -23,6 +23,7 @@
 	  <None Remove="lib\BetterUI.dll" />
 	  <None Remove="lib\RiskOfOptions.dll" />
 	  <None Remove="lib\ShrineOfRepair.dll" />
+	  <None Remove="lib\SimpleJSON.dll" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -53,6 +54,9 @@
 	  <Reference Include="ShrineOfRepair">
 	    <HintPath>lib\ShrineOfRepair.dll</HintPath>
 	  </Reference>
+	  <Reference Include="SimpleJSON">
+	    <HintPath>lib\SimpleJSON.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -65,6 +69,7 @@
 	  <Resource Include="lib\ShrineOfRepair.dll">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>
+	  <Resource Include="lib\SimpleJSON.dll" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -81,6 +86,9 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Assets\damageoncooldowns">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Assets\damageonping">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Assets\fuelcelldepleted">
@@ -101,7 +109,43 @@
 	  <None Update="Assets\skullofdoom">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Languages\ExtradimensionalItems.language">
+	  <None Update="Languages\atma.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\chronoshift.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\cooldownreduction.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\damageoncooldowns.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\damageonping.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\ExtradimensionalItems.json">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\fuelcelldepleted.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\respawnflag.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\returnaladrenaline.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\royalguard.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\sheen.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\skullofdoom.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Languages\voidcooldownreduction.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Soundbanks\Checkpoint.bnk">

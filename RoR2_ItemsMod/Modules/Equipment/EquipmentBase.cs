@@ -2,6 +2,7 @@
 using R2API;
 using RoR2;
 using RoR2.ExpansionManagement;
+using SimpleJSON;
 using System;
 using System.IO;
 using UnityEngine;
@@ -112,19 +113,31 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected abstract bool ActivateEquipment(EquipmentSlot slot);
 
-        protected virtual void Hooks()
+        protected virtual void Hooks() { }
+
+        protected void LoadLanguageFile()
         {
-            On.RoR2.Language.GetLocalizedStringByToken += Language_GetLocalizedStringByToken;
+            string jsonText = File.ReadAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.LanguageFolder, $"{BundleName}.json"));
+
+            JSONNode languageNode = JSON.Parse(jsonText);
+            if (languageNode == null)
+            {
+                return;
+            }
+
+            foreach (string languageKey in languageNode.Keys)
+            {
+                JSONNode tokensNode = languageNode[languageKey];
+                foreach (string key in tokensNode.Keys)
+                {
+                    AddLanguageString(key, tokensNode[key], languageKey == "strings" ? "generic" : languageKey, tokensNode);
+                }
+            }
         }
 
-        private string Language_GetLocalizedStringByToken(On.RoR2.Language.orig_GetLocalizedStringByToken orig, Language self, string token)
+        protected virtual void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            if (token.Equals($"EQUIPMENT_{EquipmentLangTokenName}_DESCRIPTION"))
-            {
-                LanguageAPI.AddOverlay(token, GetFormatedDiscription(orig(self, token)), self.name);
-                On.RoR2.Language.GetLocalizedStringByToken -= Language_GetLocalizedStringByToken;
-            }
-            return orig(self, token);
+            LanguageAPI.Add(key, value, language);
         }
 
         protected virtual void LoadSoundBank()
@@ -132,7 +145,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             SoundAPI.SoundBanks.Add(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.SoundBanksFolder, string.Concat(BundleName, ".bnk")));
         }
 
-        public abstract string GetFormatedDiscription(string pickupString);
+        //public abstract string GetFormatedDiscription(string pickupString);
 
         //#region Targeting Setup
         ////Targeting Support

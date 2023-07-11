@@ -1,0 +1,20 @@
+{
+	"strings": {
+		"EQUIPMENT_SKULL_OF_DOOM_NAME": "Skull of Impending Doom",
+		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Tonight at 11.",
+		"EQUIPMENT_SKULL_OF_DOOM_DESCRIPTION": "Gain <style=cIsUtility>{0}</style> movement speed, while taking <style=cIsHealth>{1} max health</style> as damage every <style=cIsUtility>{2} seconds</style>. Use again to disable the effect.{3}",
+		"EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL": "\r\nIf <style=cIsHealing>Fuel Cells</style> are present, gain additional <style=cStack>{0} movement speed</style> and <style=cStack>reduce damage by {1}</style> per stack.",
+		"EQUIPMENT_SKULL_OF_DOOM_LORE": "It's a WoW item, the best I can do is either <style=cIsVoid>corruption</style> or <style=cShrine>retcons</style>. Which one do you want?",
+		"BUFF_SKULL_OF_DOOM_NAME": "Skull of Impending Doom",
+		"BUFF_SKULL_OF_DOOM_DESCRIPTION": "Doom is coming, better run for your life."
+	},
+	"RU": {
+		"EQUIPMENT_SKULL_OF_DOOM_NAME": "Череп надвигающегося рока",
+		"EQUIPMENT_SKULL_OF_DOOM_PICKUP": "Сегодня в 11.",
+		"EQUIPMENT_SKULL_OF_DOOM_DESCRIPTION": "Дает <style=cIsUtility>{0}</style> скорости передвижения, одновременно нанося урон, равный <style=cIsHealth>{1} максимального здоровья</style> каждые <style=cIsUtility>{2} секунды</style>. Повторное использование отключает эффект.{3}",
+		"EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL": "\r\nЕсли в инвентаре есть <style=cIsHealing>Топливные батареи</style>, то тогда <style=cStack>скорость передвижения будет дополнительно увеличена на {0}</style> и <style=cStack>урон будет уменьшен на {1}</style> за штуку.",
+		"EQUIPMENT_SKULL_OF_DOOM_LORE": "Это предмет из WoW, я могу либо в <style=cIsVoid>коррупцию</style> или в <style=cShrine>ретконы</style>. Что хочешь?",
+		"BUFF_SKULL_OF_DOOM_NAME": "Череп надвигающегося рока",
+		"BUFF_SKULL_OF_DOOM_DESCRIPTION": "Рок надвигается, беги и не оглядывайся."
+	}
+}

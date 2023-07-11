@@ -3,6 +3,7 @@ using ExtradimensionalItems.Modules.Items.ItemBehaviors;
 using ExtradimensionalItems.Modules.UI;
 using R2API;
 using RoR2;
+using SimpleJSON;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -312,30 +313,37 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
         }
 
-        public override string GetFormatedDiscription(string pickupString)
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            // oh yeah baby
-            return string.Format(
-                pickupString,
-                (AttackSpeedBonus.Value / 100).ToString("###%"),
-                (AttackSpeedBonusPerStack.Value / 100).ToString("###%"),
-                (MovementSpeedBonus.Value / 100).ToString("###%"),
-                (MovementSpeedBonusPerStack.Value / 100).ToString("###%"),
-                HealthBonus.Value.ToString(),
-                HealthBonusPerStack.Value.ToString(),
-                (ShieldBonus.Value / 100).ToString("###%"),
-                (ShieldBonusPerStack.Value / 100).ToString("###%"),
-                (CritBonus.Value / 100).ToString("###%"),
-                (CritBonusPerStack.Value / 100).ToString("###%"),
-                KillsPerLevel.Value,
-                (KillsPerLevelPerStack.Value / 100).ToString("###%"),
-                NormalEnemyReward.Value,
-                EliteEnemyReward.Value,
-                BossEnemyReward.Value,
-                (CriticalDamage.Value / 100).ToString("###%"),
-                HealthCheckFrequency.Value,
-                MaxLevelProtection.Value ? Language.GetString("ITEM_RETURNAL_ADRENALINE_DESCRIPTION_SHIELD") : ""
-                );
+            if (key.Contains("DESCRIPTION"))
+            {
+                // oh yeah baby
+                base.AddLanguageString(key, string.Format(
+                    value,
+                    (AttackSpeedBonus.Value / 100).ToString("###%"),
+                    (AttackSpeedBonusPerStack.Value / 100).ToString("###%"),
+                    (MovementSpeedBonus.Value / 100).ToString("###%"),
+                    (MovementSpeedBonusPerStack.Value / 100).ToString("###%"),
+                    HealthBonus.Value.ToString(),
+                    HealthBonusPerStack.Value.ToString(),
+                    (ShieldBonus.Value / 100).ToString("###%"),
+                    (ShieldBonusPerStack.Value / 100).ToString("###%"),
+                    (CritBonus.Value / 100).ToString("###%"),
+                    (CritBonusPerStack.Value / 100).ToString("###%"),
+                    KillsPerLevel.Value,
+                    (KillsPerLevelPerStack.Value / 100).ToString("###%"),
+                    NormalEnemyReward.Value,
+                    EliteEnemyReward.Value,
+                    BossEnemyReward.Value,
+                    (CriticalDamage.Value / 100).ToString("###%"),
+                    HealthCheckFrequency.Value,
+                    MaxLevelProtection.Value ? tokensNode["ITEM_RETURNAL_ADRENALINE_DESCRIPTION_SHIELD"].Value : ""
+                    ), language, tokensNode);
+            }
+            else
+            {
+                base.AddLanguageString(key, value, language, tokensNode);
+            }
         }
 
         public override void Init(ConfigFile config)
@@ -344,6 +352,7 @@ namespace ExtradimensionalItems.Modules.Items
             Hooks();
             LoadAssetBundle();
             LoadSoundBank();
+            LoadLanguageFile();
             CreateBuffs();
             CreateItem(ref Content.Items.ReturnalAdrenaline);
         }

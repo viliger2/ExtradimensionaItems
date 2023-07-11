@@ -3,7 +3,9 @@ using ExtradimensionalItems.Modules.Effects;
 using R2API;
 using RoR2;
 using RoR2.Audio;
+using SimpleJSON;
 using System;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -330,6 +332,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             LoadAssetBundle();
             LoadSoundBank();
             CreateConfig(config);
+            LoadLanguageFile();
             CreateBuffs();
             CreateEquipment(ref Content.Equipment.SkullOfDoom);
             CreateVisualEffects();
@@ -342,11 +345,20 @@ namespace ExtradimensionalItems.Modules.Equipment
             Utils.RegisterNetworkSound("EI_SkullOfDoom_Use");
         }
 
-        public override string GetFormatedDiscription(string pickupString)
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            // TODO: implement Fuel Cells condition with Language.GetString
-            return string.Format(pickupString, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value,
-                EnableFuelCellInteraction.Value ? string.Format(Language.GetString("EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL"), (FuelCellSpeedBuff.Value / 100).ToString("###%"), (FuelCellDamageOverTime.Value / 100).ToString("###%")) : "");
+            if (key.Contains("DESCRIPTION"))
+            {
+                base.AddLanguageString(key, 
+                    string.Format(value, (SpeedBuff.Value / 100).ToString("###%"), (DamageOverTime.Value / 100).ToString("###%"), DamageFrequency.Value,
+                        EnableFuelCellInteraction.Value ? string.Format(tokensNode["EQUIPMENT_SKULL_OF_DOOM_FUEL_CELL"].Value, (FuelCellSpeedBuff.Value / 100).ToString("###%"), (FuelCellDamageOverTime.Value / 100).ToString("###%")) : ""), 
+                    language, 
+                    tokensNode);
+            }
+            else
+            {
+                base.AddLanguageString(key, value, language, tokensNode);
+            }
         }
 
         protected override void Hooks()

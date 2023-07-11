@@ -1,0 +1,14 @@
+{
+	"strings": {
+		"EQUIPMENT_CHRONOSHIFT_NAME": "Chronoshift",
+		"EQUIPMENT_CHRONOSHIFT_PICKUP": "Let's do the Time Warp again!",
+		"EQUIPMENT_CHRONOSHIFT_DESCRIPTION": "Move <style=cIsUtility>{0}</style> seconds <style=cIsDamage>back in time</style>. Restores <style=cIsUtility>position, money, items, health, barrier, shield and skill cooldowns</style> to the state they were. Snapshots are taken every <style=cIsUtility>{1}</style> seconds.",
+		"EQUIPMENT_CHRONOSHIFT_LORE": "lore"
+	},
+	"RU": {
+		"EQUIPMENT_CHRONOSHIFT_NAME": "Хронодевайс",
+		"EQUIPMENT_CHRONOSHIFT_PICKUP": "Это действительно новое слово в науке и технике!",
+		"EQUIPMENT_CHRONOSHIFT_DESCRIPTION": "Возвращает на <style=cIsUtility>{0}</style> секунд <style=cIsDamage>назад во времени</style>. Восстанавливает <style=cIsUtility>позицию, деньги, предметы, здоровье, барьер, щит и состояние способностей</style> в то состояние, в каком они были. Состояния сохраняются каждые <style=cIsUtility>{1}</style> секунд.",
+		"EQUIPMENT_CHRONOSHIFT_LORE": "lore"
+	}
+}

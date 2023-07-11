@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
+using SimpleJSON;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -291,15 +292,11 @@ namespace ExtradimensionalItems.Modules.Items
             return rules;
         }
 
-        public override string GetFormatedDiscription(string pickupString)
-        {
-            return string.Format(pickupString, (PercentBonusDamage.Value / 100).ToString("0.#%"), (PercentBonusDamagePerStack.Value / 100).ToString("0.#%"));
-        }
-
         public override void Init(ConfigFile config)
         {
             CreateConfig(config);
             LoadAssetBundle();
+            LoadLanguageFile();
             CreateItem(ref Content.Items.Atma);
             Hooks();
         }
@@ -315,6 +312,18 @@ namespace ExtradimensionalItems.Modules.Items
             if (GetCount(sender) > 0)
             {
                 args.baseDamageAdd += sender.maxHealth * (PercentBonusDamage.Value / 100) + sender.maxHealth * (PercentBonusDamagePerStack.Value / 100 * (GetCount(sender) - 1));
+            }
+        }
+
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
+        {
+            if (key.Contains("DESCRIPTION"))
+            {
+                base.AddLanguageString(key, string.Format(value, (PercentBonusDamage.Value / 100).ToString("0.#%"), (PercentBonusDamagePerStack.Value / 100).ToString("0.#%")), language, tokensNode);
+            }
+            else
+            {
+                base.AddLanguageString(key, value, language, tokensNode);
             }
         }
 

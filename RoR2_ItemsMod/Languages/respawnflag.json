@@ -1,0 +1,24 @@
+{
+	"strings": {
+		"EQUIPMENT_RESPAWN_FLAG_NAME": "Checkpoint",
+		"EQUIPMENT_RESPAWN_FLAG_PICKUP": "It keeps you safe.",
+		"EQUIPMENT_RESPAWN_FLAG_DESCRIPTION": "Place a <style=cIsUtility>checkpoint</style> on the ground. <style=cIsUtility>Upon death</style> <style=cIsHealing>respawn</style> at checkpoint's location, <style=cIsUtility>destroying it</style> in the process. Unused checkpoint can be <style=cIsUtility>picked back up</style>. Only <style=cIsUtility>one</style> checkpoint can exist <style=cIsUtility>per player</style> at a time. Picking up <style=cIsDamage>different equipment</style> results in <style=cIsUtility>checkpoint being disabled and transformed back into equipment</style>.{0}",
+		"EQUIPMENT_RESPAWN_FLAG_LORE": "Go play Super Cloudbuilt you fucks.",
+		"EQUIPMENT_RESPAWN_FLAG_FUEL_CELL": "\r\nIf <style=cIsHealing>Fuel Cells</style> are present, one will be <style=cIsUtility>consumed</style> in place of <style=cIsUtility>checkpoint</style>.",
+		"INTERACTABLE_RESPAWN_FLAG_CONTEXT": "Pick up Checkpoint?",
+		"INTERACTABLE_RESPAWN_FLAG_NAME": "Checkpoint",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN": "{0} got saved by their trusty flag.",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN_2P": "You got saved by your trusty flag."
+	},
+	"RU": {
+		"EQUIPMENT_RESPAWN_FLAG_NAME": "Контрольный флаг",
+		"EQUIPMENT_RESPAWN_FLAG_PICKUP": "Ты в безопасности.",
+		"EQUIPMENT_RESPAWN_FLAG_DESCRIPTION": "Устанавливает <style=cIsUtility>флаг</style> на земле. <style=cIsUtility>После смерти</style> <style=cIsHealing>возрождает</style> на координатах флага, <style=cIsUtility>уничтожая его</style>. Неиспользованный флаг можно <style=cIsUtility>подобрать</style>. Одновременно только <style=cIsUtility>один</style> флаг может существовать <style=cIsUtility>на каждого игрока</style>. Подбор <style=cIsDamage>любого другого снаряжения</style> приведет к <style=cIsUtility>отключению флага и превращению его обратно в снаряжение.</style>{0}",
+		"EQUIPMENT_RESPAWN_FLAG_LORE": "Пошел и начал играть в Super Cloudbuilt.",
+		"EQUIPMENT_RESPAWN_FLAG_FUEL_CELL": "\r\nЕсли в инвентаре есть <style=cIsHealing>Топливные батареи</style>, одна будет <style=cIsUtility>использована</style> вместо <style=cIsUtility>флага</style>.",
+		"INTERACTABLE_RESPAWN_FLAG_CONTEXT": "Поднять флаг?",
+		"INTERACTABLE_RESPAWN_FLAG_NAME": "Контрольный флаг",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN": "{0} был спасен своим верным флагом.",
+		"INTERACTABLE_RESPAWN_FLAG_RESPAWN_2P": "Ты был спасен своим верным флагом."
+	}
+}

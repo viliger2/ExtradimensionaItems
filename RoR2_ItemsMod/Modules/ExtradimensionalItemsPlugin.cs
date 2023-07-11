@@ -29,6 +29,7 @@ namespace ExtradimensionalItems.Modules
 
         public const string BundleFolder = "Assets";
         public const string SoundBanksFolder = "Soundbanks";
+        public const string LanguageFolder = "Languages";
 
         // thanks KomradeSpectre
         public static Dictionary<string, string> ShaderLookup = new Dictionary<string, string>()
@@ -54,9 +55,6 @@ namespace ExtradimensionalItems.Modules
 #if DEBUG == true
             On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
 #endif
-
-            new ExtradimensionalItemsLanguages().Init(PInfo);
-
             var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(ItemBase)));
             foreach (var itemType in ItemTypes)
             {

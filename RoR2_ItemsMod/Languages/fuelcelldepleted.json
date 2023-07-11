@@ -1,0 +1,14 @@
+{
+	"strings": {
+		"ITEM_FUEL_CELL_DEPLETED_NAME": "Fuel Cell (Depleted)",
+		"ITEM_FUEL_CELL_DEPLETED_PICKUP": "It saved your life, be grateful.",
+		"ITEM_FUEL_CELL_DEPLETED_DESCRIPTION": "Fuel Cell that got depleted of its power.",
+		"ITEM_FUEL_CELL_DEPLETED_LORE": "You know how I made fun of Hopoo for making breakable items? Yeah. Also how do you disable lore lmao"
+	},
+	"RU": {
+		"ITEM_FUEL_CELL_DEPLETED_NAME": "Топливная батарея (потрачена)",
+		"ITEM_FUEL_CELL_DEPLETED_PICKUP": "Она спасла тебе жизнь.",
+		"ITEM_FUEL_CELL_DEPLETED_DESCRIPTION": "Пустая топливная батарея",
+		"ITEM_FUEL_CELL_DEPLETED_LORE": "Как отключить лор у предмета лмао"
+	}
+}

@@ -2,6 +2,7 @@
 using ExtradimensionalItems.Modules.Items.ItemBehaviors;
 using R2API;
 using RoR2;
+using SimpleJSON;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -287,6 +288,7 @@ namespace ExtradimensionalItems.Modules.Items
             LoadAssetBundle();
             CreateBuffs();
             CreateItem(ref Content.Items.Sheen);
+            LoadLanguageFile();
             Hooks();
             CreateVisualEffects();
         }
@@ -310,9 +312,16 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        public override string GetFormatedDiscription(string pickupString)
+        protected override void AddLanguageString(string key, string value, string language, JSONNode tokensNode)
         {
-            return string.Format(pickupString, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? BuffStackPerItem.Value : 1, CanStack.Value ? BuffStackPerItem.Value : 0);
+            if (key.Contains("DESCRIPTION"))
+            {
+                base.AddLanguageString(key, string.Format(value, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? BuffStackPerItem.Value : 1, CanStack.Value ? BuffStackPerItem.Value : 0), language, tokensNode);
+            }
+            else
+            {
+                base.AddLanguageString(key, value, language, tokensNode);
+            }
         }
 
         public void CreateBuffs()

@@ -20,7 +20,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "damageonping";
 
-        public override GameObject ItemModel => null; // TODO
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("DamageOnPing"); // TODO
 
         public override Sprite ItemIcon => null; // TODO
 
@@ -31,15 +31,11 @@ namespace ExtradimensionalItems.Modules.Items
             return new ItemDisplayRuleDict();
         }
 
-        public override string GetFormatedDiscription(string pickupString)
-        {
-            return pickupString;
-        }
-
         public override void Init(ConfigFile config)
         {
             CreateConfig(config);
-            //LoadAssetBundle();
+            LoadAssetBundle();
+            LoadLanguageFile();
             CreateBuffs();
             CreateItem(ref Content.Items.DamageOnPing);
             Hooks();
