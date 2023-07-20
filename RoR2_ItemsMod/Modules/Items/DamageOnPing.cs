@@ -21,11 +21,16 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string BundleName => "damageonping";
 
-        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("DamageOnPing"); // TODO
+        // basically, game does some funky scaling so all item displays are roughly the same size
+        // by using model's bounding box and comparing to "ideal model" which is just a cube of Vector3.one
+        // changing size in blender doesn't matter that much (or it matters sometimes, because it did before this item)
+        // as much as your bouncing box being as close to square as possible AND scale in unity
+        // for some reason, for this item at least, lowering scale in unity makes the item larger
+        // I guess it make sense since the code upscales the model, but I feel like it is just an error in the code
+        // rather than intentional feature, since it doesn't make sense
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("DamageOnPing");
 
-        public override Sprite ItemIcon => null; // TODO
-
-        public override bool AIBlacklisted => true;
+        public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texWitchHunterTools");
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
@@ -52,11 +57,11 @@ namespace ExtradimensionalItems.Modules.Items
         {
             var DamageBuff = ScriptableObject.CreateInstance<BuffDef>();
             DamageBuff.name = "Ping Damage Bonus";
-            DamageBuff.buffColor = Color.yellow;
+            DamageBuff.buffColor = Color.blue;
             DamageBuff.canStack = true;
             DamageBuff.isDebuff = true;
             DamageBuff.isHidden = false; // TODO: replace with true when done
-            DamageBuff.iconSprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Achievements/texBandit2StackSuperBleedIcon.png").WaitForCompletion(); // TODO
+            DamageBuff.iconSprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/CritOnUse/texBuffFullCritIcon.tif").WaitForCompletion();
 
             ContentAddition.AddBuffDef(DamageBuff);
 
@@ -103,40 +108,22 @@ namespace ExtradimensionalItems.Modules.Items
             orig(self);
         }
 
-        //private void PingIndicator_RebuildPing(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
-        //{
-        //    RemoveBuffsIfPresent(self);
-        //    orig(self);
-        //    MyLogger.LogMessage("pinging something");
-        //    if(self.pingType == RoR2.UI.PingIndicator.PingType.Enemy && self.pingTarget && self.pingOwner)
-        //    {
-        //        var targetBody = self.pingTarget.GetComponent<CharacterBody>();
-        //        var ownerController = self.pingOwner.GetComponent<PlayerCharacterMasterController>();
-        //        if(targetBody && ownerController)
-        //        {
-        //            var ownerBody = ownerController.body;
-        //            if (ownerBody)
-        //            {
-        //                var count = GetCount(ownerBody);
-        //                for (int i = 0; i < count; i++)
-        //                {
-        //                    targetBody.AddTimedBuff(Content.Buffs.DamageOnPing, 30); // by default is equal to ping duration
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
         private void RemoveBuffsIfPresent(RoR2.UI.PingIndicator pingIndicator)
         {
             if (pingIndicator && NetworkServer.active)
             {
                 if (pingIndicator.pingType == RoR2.UI.PingIndicator.PingType.Enemy && pingIndicator.pingTarget && pingIndicator.pingOwner)
                 {
+                    var ownerController = pingIndicator.pingOwner.GetComponent<PlayerCharacterMasterController>();
                     var targetBody = pingIndicator.pingTarget.GetComponent<CharacterBody>();
-                    if (targetBody)
+                    if (targetBody && ownerController)
                     {
-                        var count = targetBody.GetBuffCount(Content.Buffs.DamageOnPing);
+                        var count = GetCount(ownerController.master?.GetBody());
+                        var countBuffs = targetBody.GetBuffCount(Content.Buffs.DamageOnPing);
+                        if(countBuffs < count)
+                        {
+                            count = countBuffs;
+                        }
                         for (int i = 0; i < count; i++)
                         {
                             targetBody.RemoveOldestTimedBuff(Content.Buffs.DamageOnPing);
