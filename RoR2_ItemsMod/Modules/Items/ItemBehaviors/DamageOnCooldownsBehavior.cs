@@ -34,10 +34,12 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                 {
                     if (!NetworkServer.active)
                     {
+                        MyLogger.LogMessage("Number of buffs for DamageOnCooldown changed for Player {0}({1}) to {2}, sending message to server.", body.GetUserName(), body.name, newBuffCount.ToString());
                         new DamageOnCooldownsSendNumberBuffs(netId, newBuffCount).Send(R2API.Networking.NetworkDestination.Server);
                     }
                     else
                     {
+                        MyLogger.LogMessage("Number of buffs for DamageOnCooldown changed for Player {0}({1}) to {2}, we are on server, applying buffs.", body.GetUserName(), body.name, newBuffCount.ToString());
                         ApplyBuffs(body, newBuffCount);
                     }
                 }

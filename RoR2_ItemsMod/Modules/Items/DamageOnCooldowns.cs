@@ -11,7 +11,6 @@ namespace ExtradimensionalItems.Modules.Items
 {
     public class DamageOnCooldowns : ItemBase<DamageOnCooldowns>
     {
-
         public class DamageOnCooldownsSendNumberBuffs : INetMessage
         {
             private NetworkInstanceId netId;

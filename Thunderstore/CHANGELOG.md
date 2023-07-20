@@ -5,7 +5,11 @@
 * Rewrote how text strings are filled. Now also dynamically updates with in-game config changes (this feature requires RiskOfOptions version 2.6.0 or higher, will probably throw errors if below).
 	* _Thanks to Faby for telling me that my current implementation is shit, new implementation should lead to better performance overall._
 * Adrenaline Core
-	* Fixed pick up not rotating
+	* Fixed pick up not rotating.
+* Fueling Bellows
+	* Added some additional logging, can be disabled in the config as usual.
+* Skull of Impending Doom
+	* Fixed damage (but not speed) buff appearing sometimes on clients when using different equipment.
 </details>
 <details>
 <summary>0.5.4 </summary>

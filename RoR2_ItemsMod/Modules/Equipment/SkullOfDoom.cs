@@ -15,13 +15,21 @@ namespace ExtradimensionalItems.Modules.Equipment
 {
     public class SkullOfDoom : EquipmentBase<SkullOfDoom>
     {
-        // TODO: rewrite to maybe DoT component? make it so buff itself deals DoT damage
-        // and not component that checks for buff and deals damage if buff is present
-        public class SkullOfDoomBehavior : ItemBehavior
+        // using DotController is kinda pointless since it seems we are limited to dots that the game has
+        // and we have to write our own controller that will inflict DoT AND at the end of the day
+        // it is still just HealthComponent.TakeDamage
+        public class SkullOfDoomBehavior : MonoBehaviour
         {
+            public CharacterBody body;
+
             private float stopwatch;
 
             public float damageTimer = DamageFrequency.Value;
+
+            public void Awake()
+            {
+                this.enabled = false;
+            }
 
             public void FixedUpdate()
             {
@@ -356,20 +364,31 @@ namespace ExtradimensionalItems.Modules.Equipment
             base.Hooks();
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
             RoR2.CharacterBody.onBodyInventoryChangedGlobal += CharacterBody_onBodyInventoryChangedGlobal;
-            //On.RoR2.CharacterBody.OnEquipmentGained += CharacterBody_OnEquipmentGained;
         }
 
         private void CharacterBody_onBodyInventoryChangedGlobal(CharacterBody body)
         {
-            if (body)
+            if (NetworkServer.active)
             {
-                if (EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) != Content.Equipment.SkullOfDoom)
+                if (body)
                 {
-                    if (body.HasBuff(Content.Buffs.SkullOfDoom))
+                    bool hasSkullOfDoom = EquipmentCatalog.GetEquipmentDef(body.inventory.currentEquipmentIndex) == Content.Equipment.SkullOfDoom;
+                    if (hasSkullOfDoom && !body.gameObject.TryGetComponent<SkullOfDoomBehavior>(out _))
                     {
-                        MyLogger.LogMessage("Player {0}({1}) picked up another equipment while having {2} buff, removing the buff.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name);
-                        body.RemoveBuff(Content.Buffs.SkullOfDoom);
-                        body.AddItemBehavior<SkullOfDoomBehavior>(0);
+                        var component = body.gameObject.AddComponent<SkullOfDoomBehavior>();
+                        component.body = body;
+                    }
+                    if (!hasSkullOfDoom)
+                    {
+                        if (body.gameObject.TryGetComponent<SkullOfDoomBehavior>(out var component))
+                        {
+                            UnityEngine.Object.Destroy(component);
+                        }
+                        if (body.HasBuff(Content.Buffs.SkullOfDoom))
+                        {
+                            MyLogger.LogMessage("Player {0}({1}) picked up another equipment while having {2} buff, removing the buff.", body.GetUserName(), body.name, Content.Buffs.SkullOfDoom.name);
+                            body.RemoveBuff(Content.Buffs.SkullOfDoom);
+                        }
                     }
                 }
             }
@@ -377,15 +396,9 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody body, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (body.inventory)
+            if (body.inventory && body.HasBuff(Content.Buffs.SkullOfDoom))
             {
-                if (body.inventory.currentEquipmentIndex == Content.Equipment.SkullOfDoom.equipmentIndex)
-                {
-                    if (body.HasBuff(Content.Buffs.SkullOfDoom))
-                    {
-                        args.moveSpeedMultAdd += (SpeedBuff.Value / 100) + ((FuelCellSpeedBuff.Value / 100) * (EnableFuelCellInteraction.Value ? body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) : 0));
-                    }
-                }
+                args.moveSpeedMultAdd += (SpeedBuff.Value / 100) + ((FuelCellSpeedBuff.Value / 100) * (EnableFuelCellInteraction.Value ? body.inventory.GetItemCount(RoR2Content.Items.EquipmentMagazine) : 0));
             }
         }
 
@@ -399,22 +412,25 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             var body = slot.characterBody;
 
-            if (body.HasBuff(Content.Buffs.SkullOfDoom))
+            if (body.TryGetComponent<SkullOfDoomBehavior>(out var behavior))
             {
-                MyLogger.LogMessage("Player {0}({1}) used {2}, removing damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName);
-                body.RemoveBuff(Content.Buffs.SkullOfDoom);
-                body.AddItemBehavior<SkullOfDoomBehavior>(0);
-            }
-            else
-            {
-                MyLogger.LogMessage("Player {0}({1}) used {2}, applying damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName);
-                DealDamage(body);
-                body.AddBuff(Content.Buffs.SkullOfDoom);
-                body.AddItemBehavior<SkullOfDoomBehavior>(1);
-                //Util.PlaySound("EI_SkullOfDoom_Use", body.gameObject);
-                EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_SkullOfDoom_Use", body.gameObject);
-            }
-            return true;
+                if (body.HasBuff(Content.Buffs.SkullOfDoom))
+                {
+                    MyLogger.LogMessage("Player {0}({1}) used {2}, removing damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName);
+                    body.RemoveBuff(Content.Buffs.SkullOfDoom);
+                    behavior.enabled = false;
+                }
+                else
+                {
+                    MyLogger.LogMessage("Player {0}({1}) used {2}, applying damage DoT and movement speed buff.", body.GetUserName(), body.name, EquipmentName);
+                    DealDamage(body);
+                    body.AddBuff(Content.Buffs.SkullOfDoom);
+                    behavior.enabled = true;
+                    EntitySoundManager.EmitSoundServer((AkEventIdArg)"EI_SkullOfDoom_Use", body.gameObject);
+                }
+                return true;
+            } else { return false; }
+
         }
 
         private static void DealDamage(CharacterBody body)
