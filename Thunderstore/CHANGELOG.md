@@ -2,8 +2,10 @@
 <summary>0.5.5 </summary>
 
 * Fixed error on start up if BetterUI was not present, for real this time.
-* Rewrote how text strings are made. Now also dynamically updates with in-game config changes (this feature requires RiskOfOptions version 2.6.0 or higher).
-	* _Thanks to Faby for telling me that my current implementation is shit, hopefully this one is less shit._
+* Rewrote how text strings are filled. Now also dynamically updates with in-game config changes (this feature requires RiskOfOptions version 2.6.0 or higher, will probably throw errors if below).
+	* _Thanks to Faby for telling me that my current implementation is shit, new implementation should lead to better performance overall._
+* Adrenaline Core
+	* Fixed pick up not rotating
 </details>
 <details>
 <summary>0.5.4 </summary>

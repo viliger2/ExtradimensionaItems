@@ -54,7 +54,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override bool AIBlacklisted => true;
 
-        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("ReturnalAdrenaline");
+        public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("ReturnalAdrenalinePickUp");
 
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texReturnalAdrenalineIcon");
 
