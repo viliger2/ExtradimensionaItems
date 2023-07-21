@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using ExtradimensionalItems.Modules.Items;
 using RewiredConsts;
 using RiskOfOptions;
 using RiskOfOptions.OptionConfigs;
@@ -47,27 +48,32 @@ namespace ExtradimensionalItems.Modules
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void CreateNewOption(ConfigEntry<float> entry)
+        public static void CreateNewOption(ConfigEntry<float> entry, bool restartRequired = false)
         {
-            ModSettingsManager.AddOption(new StepSliderOption(entry, new StepSliderConfig()));
+            ModSettingsManager.AddOption(new StepSliderOption(entry, new StepSliderConfig() { restartRequired = restartRequired}));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void CreateNewOption(ConfigEntry<float> entry, float min, float max, float increment = 1f)
+        public static void CreateNewOption(ConfigEntry<float> entry, float min, float max, float increment = 1f, bool restartRequired = false)
         {
-            ModSettingsManager.AddOption(new StepSliderOption(entry, new StepSliderConfig() { min = min, max = max, increment = increment }));
+            ModSettingsManager.AddOption(new StepSliderOption(entry, new StepSliderConfig() { min = min, max = max, increment = increment, restartRequired = restartRequired }));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void CreateNewOption(ConfigEntry<bool> entry)
+        public static void CreateNewOption(ConfigEntry<bool> entry, bool restartRequired = false)
         {
-            ModSettingsManager.AddOption(new CheckBoxOption(entry));
+            ModSettingsManager.AddOption(new CheckBoxOption(entry, new CheckBoxConfig() { restartRequired = restartRequired}));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void CreateNewOption(ConfigEntry<int> entry, int min = 0, int max = 200)
+        public static void CreateNewOption(ConfigEntry<int> entry, int min = 0, int max = 200, bool restartRequired = false)
         {
-            ModSettingsManager.AddOption(new IntSliderOption(entry, new IntSliderConfig() { min = min, max = max }));
+            ModSettingsManager.AddOption(new IntSliderOption(entry, new IntSliderConfig() { min = min, max = max, restartRequired = restartRequired }));
+        }
+
+        public static void CreateNewOption(ConfigEntry<RoyalGuard.ItemType> entry, bool restartRequired = false)
+        {
+            ModSettingsManager.AddOption(new ChoiceOption(entry, new ChoiceConfig() { restartRequired = restartRequired }));
         }
 
     }

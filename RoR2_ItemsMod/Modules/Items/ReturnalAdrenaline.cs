@@ -60,7 +60,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            // we don't actually need an animation controller, not sure why aetherium adds it
+            // we don't actually need an animation controller, not sure why Aetherium adds it
             // but we need to make sure that the animated mesh is not at the top of hierarchy
             // otherwise the animation breaks item displays 
             var itemModel = AssetBundle.LoadAsset<GameObject>("ReturnalAdrenaline");

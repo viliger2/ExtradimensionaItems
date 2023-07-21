@@ -4,6 +4,7 @@
 * Fixed error on start up if BetterUI was not present, for real this time.
 * Rewrote how text strings are filled. Now also dynamically updates with in-game config changes (this feature requires RiskOfOptions version 2.6.0 or higher, will probably throw errors if below).
 	* _Thanks to Faby for telling me that my current implementation is shit, new implementation should lead to better performance overall._
+* Added missing "restartRequired" flag to some options in RiskOfOptions, mainly those that are used in catalog initialization.
 * Adrenaline Core
 	* Fixed pick up not rotating.
 * Fueling Bellows

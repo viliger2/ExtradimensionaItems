@@ -627,7 +627,7 @@ namespace ExtradimensionalItems.Modules.Items
             BaseDuration = config.Bind("Item: " + ItemName, "Base Parry State Duration", 0.5f, "How long, in seconds, is base Parry skill duration.");
             PerStackDuration = config.Bind("Item: " + ItemName, "Additional Duration Per Stack", 0.1f, "How much, in seconds, each stack (after first one) of item adds to Parry skill duration.");
             DamageRadius = config.Bind("Item: " + ItemName, "Release Damage Radius", 15f, "What is the damage radius of Release skill, in meters.");
-            ItemTier = config.Bind("Item: " + ItemName, "Item Tier", ItemType.Lunar, "Determines the type of the item.");
+            ItemTier = config.Bind("Item: " + ItemName, "Item Tier", ItemType.Lunar, "Determines the type of the item. Requires game restart to take effect.");
             if (RiskOfOptionsCompat.enabled)
             {
                 RiskOfOptionsCompat.CreateNewOption(DamageModifier, 100f, 10000f, 10f);
@@ -635,6 +635,7 @@ namespace ExtradimensionalItems.Modules.Items
                 RiskOfOptionsCompat.CreateNewOption(BaseDuration, 0.01f, 1f, 0.01f);
                 RiskOfOptionsCompat.CreateNewOption(PerStackDuration, 0.01f, 1f, 0.01f);
                 RiskOfOptionsCompat.CreateNewOption(DamageRadius, 1f, 50f, 1f);
+                RiskOfOptionsCompat.CreateNewOption(ItemTier, true);
                 RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }

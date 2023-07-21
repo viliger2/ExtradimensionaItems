@@ -12,7 +12,6 @@ namespace ExtradimensionalItems.Modules.Items
 {
     public class VoidCooldownReduction : ItemBase<VoidCooldownReduction>
     {
-        // TODO: add first stack and per stack config
         public static ConfigEntry<float> CooldownReduction;
 
         public override string ItemName => "CooldownReductionVoid";
@@ -33,7 +32,6 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            // TODO: maybe someday but not today
             var ItemBodyModelPrefab = AssetBundle.LoadAsset<GameObject>("DisplayPillsBottle");
 
             ItemBodyModelPrefab.AddComponent<RoR2.ItemDisplay>();

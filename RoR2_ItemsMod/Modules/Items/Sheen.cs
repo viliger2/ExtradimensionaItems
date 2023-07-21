@@ -366,11 +366,11 @@ namespace ExtradimensionalItems.Modules.Items
             CanStack = config.Bind("Item: " + ItemName, "Can Buff Stack", true, "Determines whether the buff that indicates damage bonus can stack or not.");
             DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 250f, "What damage modifier (per stack) the item should use.");
             BuffDuration = config.Bind("Item: " + ItemName, "Buff Duration", 10f, "How long the buff should remain active after using non-primary ability.");
-            BuffStackPerItem = config.Bind("Item: " + ItemName, "Buff Stacks Per Item", 2, "How much stacks of a buff you get per item.");
+            BuffStackPerItem = config.Bind("Item: " + ItemName, "Buff Stacks Per Item", 2, "How much stacks of a buff you get per item. Requires game restart to take effect.");
             //MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
             if (RiskOfOptionsCompat.enabled)
             {
-                RiskOfOptionsCompat.CreateNewOption(CanStack);
+                RiskOfOptionsCompat.CreateNewOption(CanStack, true);
                 RiskOfOptionsCompat.CreateNewOption(DamageModifier, 100f, 500f, 10f);
                 RiskOfOptionsCompat.CreateNewOption(BuffDuration, 1f, 30f, 1f);
                 RiskOfOptionsCompat.CreateNewOption(BuffStackPerItem, 1, 10);
