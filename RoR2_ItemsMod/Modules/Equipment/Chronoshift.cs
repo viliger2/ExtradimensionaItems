@@ -477,6 +477,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string BundleName => "chronoshift";
 
+        public override bool EnigmaCompatible => false;
+
         public override float Cooldown => CooldownConfig.Value;
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()

@@ -28,6 +28,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override Sprite EquipmentIcon => AssetBundle.LoadAsset<Sprite>("texRespawnFlagIcon");
 
+        public override bool EnigmaCompatible => false;
+
         public override float Cooldown => 0.1f;
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()

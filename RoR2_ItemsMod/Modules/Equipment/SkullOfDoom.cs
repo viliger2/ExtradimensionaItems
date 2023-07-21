@@ -64,6 +64,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public override string BundleName => "skullofdoom";
 
+        public override bool EnigmaCompatible => false;
+
         public override float Cooldown => 1f;
 
         public override bool IsLunar => true;
