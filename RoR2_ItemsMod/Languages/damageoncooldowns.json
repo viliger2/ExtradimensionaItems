@@ -12,7 +12,7 @@
 	"RU": {
 		"ITEM_DAMAGE_ON_COOLDOWNS_NAME": "Разжигающие меха",
 		"ITEM_DAMAGE_ON_COOLDOWNS_PICKUP": "Огонь горячий.",
-		"ITEM_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "За <style=cIsUtility>каждую способность и каждое снаряжение</style> на восстановлении накладывает эффект, который увеличивает <style=cIsDamage>урон</style> на <style=cIsDamage>{0}<style=cStack>(+{1} за штуку).",
+		"ITEM_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "За <style=cIsUtility>каждую способность и каждое снаряжение</style> на восстановлении накладывает эффект, который увеличивает <style=cIsDamage>урон на {0}</style><style=cStack>(+{1} за штуку)</style>.",
 		"ITEM_DAMAGE_ON_COOLDOWNS_LORE": "lore",
 		"BUFF_DAMAGE_ON_COOLDOWNS_NAME": "Разжигающие меха",
 		"BUFF_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "Весь урон увеличен.",
