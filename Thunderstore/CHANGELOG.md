@@ -12,7 +12,7 @@
 * Fueling Bellows
 	* Added some additional logging, can be disabled in the config as usual.
 * Skull of Impending Doom
-	* Fixed damage (but not speed) buff appearing sometimes on clients when using different equipment.
+	* Fixed damage, but not speed, buff appearing sometimes on clients when using different equipment.
 </details>
 <details>
 <summary>0.5.4 </summary>

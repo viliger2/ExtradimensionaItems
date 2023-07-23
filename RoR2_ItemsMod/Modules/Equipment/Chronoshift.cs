@@ -16,7 +16,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 {
     public class Chronoshift : EquipmentBase<Chronoshift>
     {
-        // TODO: maybe rewrite this entire shitshow to use EntityStateMachine and NetworkStateMachine
+        // TODO: maybe rewrite this entire shitshow to use NetworkBodyAttachment
+        // vargant item uses it, can be used as an example
         private class ChronoshiftBehavior : CharacterBody.ItemBehavior
         {
             public enum ChronoshiftState
