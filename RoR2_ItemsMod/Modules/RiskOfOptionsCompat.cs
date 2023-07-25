@@ -71,6 +71,7 @@ namespace ExtradimensionalItems.Modules
             ModSettingsManager.AddOption(new IntSliderOption(entry, new IntSliderConfig() { min = min, max = max, restartRequired = restartRequired }));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void CreateNewOption(ConfigEntry<RoyalGuard.ItemType> entry, bool restartRequired = false)
         {
             ModSettingsManager.AddOption(new ChoiceOption(entry, new ChoiceConfig() { restartRequired = restartRequired }));

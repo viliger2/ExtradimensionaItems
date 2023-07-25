@@ -4,9 +4,9 @@
 * Witch Hunter's Tools
 	* New item
 * Fixed error on start up if BetterUI was not present, for real this time.
+* Fixed error on start up if ShrineOfRepair was not present.
 * Rewrote how text strings are filled. Now also dynamically updates with in-game config changes (this feature requires RiskOfOptions version 2.6.0 or higher, will probably throw errors if below).
-	* Known issue - BetterUI doesn't update item's stack values after changing config in-game without restart. This is due to how BetterUI stores values, it stores them on initializaion and you can't really change it.
-		* _Thanks to Faby for telling me that my current implementation is shit, new implementation should lead to better performance overall._
+	* _Thanks to Faby for telling me that my current implementation is shit, new implementation should lead to better performance overall._
 * Added missing "restartRequired" flag to some options in RiskOfOptions, mainly those that are used in catalog initialization.
 * Made all equipment Enigma incompatable.
 	* _I've finally played with Enigma, for the first time in 200 hours, and as it turns out none of my equipment are Enigma-compatable. Skull instantly stops working, dealing damage once, Chronoshift does nothing (while potentially throwing errors in network play) and Checkpoint instantly transforms back into equipment. This is all due to how I made them and how there are checks for what equipment player has. While I can fix it, I honestly don't want to, especially with Chronoshift, maybe on code rewrite._

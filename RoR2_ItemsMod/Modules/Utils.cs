@@ -104,6 +104,43 @@ namespace ExtradimensionalItems.Modules
             }
         }
 
+        [ConCommand(commandName = "give_ed_items", flags = ConVarFlags.ExecuteOnServer, helpText = "Gives all Extradimensional Items. Can have additional argument that specifies the ammount of stacks for each item.")]
+        private static void CCGiveAllEDItems(ConCommandArgs args)
+        {
+            int stackCount = 1;
+            if(args.Count >= 1)
+            {
+                stackCount = int.TryParse(args[0], out stackCount) ? stackCount : 1;
+            }
+
+            var target = args.senderMaster;
+            
+            if(target == null)
+            {
+                Debug.Log("Couldn't find target to add items to.");
+            }
+
+            var inventory = target.inventory;
+
+            if(inventory == null)
+            {
+                Debug.Log("Target has no inventory.");
+            }
+
+            inventory.GiveItem(Content.Items.Atma, stackCount);
+            inventory.GiveItem(Content.Items.DamageOnPing, stackCount);
+            inventory.GiveItem(Content.Items.DamageOnCooldowns, stackCount);
+            inventory.GiveItem(Content.Items.RoyalGuard, stackCount);
+            inventory.GiveItem(Content.Items.FuelCellDepleted, stackCount);
+            inventory.GiveItem(Content.Items.ReturnalAdrenaline, stackCount);
+            inventory.GiveItem(Content.Items.Sheen, stackCount);
+            inventory.GiveItem(Content.Items.VoidCooldownReduction, stackCount);
+
+            Debug.Log(string.Format("Gave {0} of all Extradimensional items.", stackCount));
+
+        }
+
+
         private static ItemIndex GetItemFromPartial(string name)
         {
             string langInvar;

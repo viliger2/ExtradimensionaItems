@@ -248,6 +248,18 @@ namespace ExtradimensionalItems.Modules
             BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, formula, formatter, tag);
         }
 
-
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        public static void ModifyBetterUIStat(ItemDef itemDef, string nameToken, float value, float stackValue)
+        {
+            var itemStats = BetterUI.ItemStats.GetItemStats(itemDef);
+            foreach(var itemStatsItem in itemStats)
+            {
+                if (itemStatsItem.nameToken.Equals(nameToken))
+                {
+                    itemStatsItem.value = value;
+                    itemStatsItem.stackValue = stackValue;
+                }
+            }
+        }
     }
 }

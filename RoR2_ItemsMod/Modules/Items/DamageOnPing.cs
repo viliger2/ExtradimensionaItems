@@ -478,6 +478,16 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
+        public override void AddBetterUIStats(ItemDef item)
+        {
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageIncrease.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent);
+        }
+
+        protected override void ModifyBetterUIStats()
+        {
+            BetterUICompat.ModifyBetterUIStat(ItemDef, "BETTERUICOMPAT_DESC_DAMAGE", DamageIncrease.Value / 100, DamageIncrease.Value / 100);
+        }
+
         public override void CreateConfig(ConfigFile config)
         {
             DamageIncrease = config.Bind("Item: " + ItemName, "Damage Increase Per Buff Stack", 5f, "By how much each stack of item increases damage to pinged enemy.");

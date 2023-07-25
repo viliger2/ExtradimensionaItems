@@ -318,8 +318,12 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override void AddBetterUIStats(ItemDef item)
         {
-            base.AddBetterUIStats(item);
             BetterUICompat.RegisterStat(item, "BETTERUICOPMAT_COOLDOWN_REDUCTUION", CooldownReduction.Value, BetterUICompat.StackingFormula.ProbablyExponential, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTag.CooldownReduction);
+        }
+
+        protected override void ModifyBetterUIStats()
+        {
+            BetterUICompat.ModifyBetterUIStat(ItemDef, "BETTERUICOPMAT_COOLDOWN_REDUCTUION", CooldownReduction.Value, CooldownReduction.Value);
         }
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)

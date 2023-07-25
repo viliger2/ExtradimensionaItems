@@ -166,8 +166,14 @@ namespace ExtradimensionalItems.Modules.Items
                         GetOverlayDescription(tokensNode["ITEM_" + ItemLangTokenName + "_DESCRIPTION"].Value, tokensNode),
                         languageKey == "strings" ? "generic" : languageKey)); 
             }
+            if (BetterUICompat.enabled)
+            {
+                ModifyBetterUIStats();
+            }
 
         }
+
+        protected virtual void ModifyBetterUIStats() { }
 
         public abstract string GetOverlayDescription(string value, JSONNode tokensNode);
 
