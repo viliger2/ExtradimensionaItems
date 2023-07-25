@@ -11,7 +11,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texWitchHunterTools.png" alt="Witch Hunter's Tools"></td>
     <td>Witch Hunter's Tools</td>
-    <td>Pinged targets take additional <b>5%</b>(<b>+5%</b> per stack) damage. <b>You can disable chat messaged for enemy pinging in the config.</b></td>
+    <td>Pinged targets take additional <b>5%</b>(<b>+5%</b> per stack) damage. <b>You can disable chat messages for enemy pinging in the config.</b></td>
     <td>Common</td>
   </tr>
   <tr>
