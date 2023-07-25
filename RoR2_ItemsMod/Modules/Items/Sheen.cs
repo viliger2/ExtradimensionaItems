@@ -321,7 +321,8 @@ namespace ExtradimensionalItems.Modules.Items
                 (DamageModifier.Value / 100).ToString("###%"), 
                 (DamageModifierPerStack.Value / 100).ToString("###%"),
                 CanStack.Value ? BuffStackPerItem.Value : 1, 
-                CanStack.Value ? BuffStackPerItemPerStack.Value : 0);
+                CanStack.Value ? BuffStackPerItemPerStack.Value : 0,
+                BuffApplicationCooldown.Value);
         }
 
         public void CreateBuffs()

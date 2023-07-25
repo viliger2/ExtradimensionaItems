@@ -2,7 +2,7 @@
 	"strings": {
 		"ITEM_SHEEN_NAME": "Sheen",
 		"ITEM_SHEEN_PICKUP": "Go get 'em champ",
-		"ITEM_SHEEN_DESCRIPTION": "After using <style=cIsUtility>non-primary ability</style> gain one stack of <style=cIsDamage>buff</style>. Dealing <style=cIsDamage>damage</style> with <style=cIsUtility>primary ability</style> while having said buff will cause target take additional <style=cIsDamage>{0} base damage</style> <style=cStack>(+{1} per stack)</style> and consume one stack of buff. Buff can be stacked up to <style=cIsUtility>{2}</style> <style=cStack>(+{3} per stack)</style> times.",
+		"ITEM_SHEEN_DESCRIPTION": "After using <style=cIsUtility>non-primary ability</style> gain one stack of <style=cIsDamage>buff</style>. Dealing <style=cIsDamage>damage</style> with <style=cIsUtility>primary ability</style> while having said buff will cause target take additional <style=cIsDamage>{0} base damage</style> <style=cStack>(+{1} per stack)</style> and consume one stack of buff. Buff can be stacked up to <style=cIsUtility>{2}</style> <style=cStack>(+{3} per stack)</style> times. Buff application has {4} second(s) cooldown.",
 		"ITEM_SHEEN_LORE": "lore",
 		"BUFF_SHEEN_NAME": "Sheen",
 		"BUFF_SHEEN_DESCRIPTION": "Deal additional damage on next primary attack. Tons of damage.",
@@ -13,7 +13,7 @@
 	"RU": {
 		"ITEM_SHEEN_NAME": "Сияние",
 		"ITEM_SHEEN_PICKUP": "Тонны тунельного урона",
-		"ITEM_SHEEN_DESCRIPTION": "После использования <style=cIsUtility>не основной способности</style> накладывается одна единица <style=cIsDamage>эффекта</style>. Нанесение <style=cIsDamage>урона</style> <style=cIsUtility>основной способностью</style> находясь под этим эффектом нанесет дополнительные <style=cIsDamage>{0} базового урона</style> <style=cStack>(+{1} за штуку)</style> и уберет одну единицу эффекта. Эффект можно наложить до <style=cIsUtility>{2}</style> <style=cStack>(+{3} за штуку)</style> раз.",
+		"ITEM_SHEEN_DESCRIPTION": "После использования <style=cIsUtility>не основной способности</style> накладывается одна единица <style=cIsDamage>эффекта</style>. Нанесение <style=cIsDamage>урона</style> <style=cIsUtility>основной способностью</style> находясь под этим эффектом нанесет дополнительные <style=cIsDamage>{0} базового урона</style> <style=cStack>(+{1} за штуку)</style> и уберет одну единицу эффекта. Эффект можно наложить до <style=cIsUtility>{2}</style> <style=cStack>(+{3} за штуку)</style> раз. Эффект может накладыватся не чаще чем раз в {4} секунд(ы).",
 		"ITEM_SHEEN_LORE": "haha funni",
 		"BUFF_SHEEN_NAME": "Сияние",
 		"BUFF_SHEEN_DESCRIPTION": "Использование основной способности нанесет дополнительный урон. Тонны урона",
