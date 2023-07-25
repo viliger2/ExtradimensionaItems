@@ -8,6 +8,13 @@
 * Added missing "restartRequired" flag to some options in RiskOfOptions, mainly those that are used in catalog initialization.
 * Made all equipment Enigma incompatable.
 	* _I've finally played with Enigma, for the first time in 200 hours, and as it turns out none of my equipment are Enigma-compatable. Skull instantly stops working, dealing damage once, Chronoshift does nothing (while potentially throwing errors in network play) and Flag instantly transforms back into equipment. This is all due to how I made them and how there are checks for what equipment player has. While I can fix it, I honestly don't want to, especially with Chronoshift, maybe on code rewrite._
+* Sheen
+	* Lowered per stack scaling to 150% (was 250%).
+	* Proc coefficient is now 0 (was 1.0).
+	* Buff application now has 1.5 second cooldown (can be adjusted in the config).
+	* Max buff stacks for the first item is now 3 (was 2).
+		* _Original intent for Sheen was to give caster type of character (Loader, Artificer, Acrid to some extend) something to do while their main damaging ability is recharging. However, due to how game is designed, characters that benefit the most from Sheen are those that actively spam abilities together with using primaries, so Huntress, Mercenary and the likes. And those lads obviously don't need more damage. Buff application is now also on a short cooldown and now stacks up to 3 by default, so the intent of stacking the buff and then discharging it after you did your primary "rotation" is there._
+	* Added config entries for per stack damage and per stack buff ammount.
 * Atma's Impaler
 	* Changed how item works. Now instead of giving percentage of health as damage, now it gives one level worth of base damage per 250HP (-25% per stack, stacks hyperbolically). Always gives at least one level worth of base damage.
 		* _Base damage is a tricky thing to balance to be honest, there is a reason why base game doesn't really do that outside of a single, very rare item. Original Atma had very bad scaling, post loop you would be lucky to get 10 base damage out of it which is nothing. I'll play a bit more with new version to see if it needs additional balancing._

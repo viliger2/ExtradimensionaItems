@@ -1,9 +1,7 @@
 ﻿using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static RoR2.HurtBox;
 using static ExtradimensionalItems.Modules.Items.Sheen;
+using UnityEngine.Networking;
+using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 {
@@ -12,6 +10,10 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
     public class SheenBehavior : CharacterBody.ItemBehavior, IOnDamageDealtServerReceiver
     {
         private bool usedPrimary;
+
+        private float stopwatch;
+
+        private float buffTimer = Sheen.BuffApplicationCooldown.Value;
 
         public void Awake()
         {
@@ -34,17 +36,37 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
             }
         }
 
+        public void FixedUpdate()
+        {
+            if (!NetworkServer.active)
+            {
+                return;
+            }
+
+            stopwatch += Time.fixedDeltaTime;
+            if(stopwatch > buffTimer)
+            {
+                stopwatch = buffTimer + 1f;
+            }
+        }
+
         private void Body_onSkillActivatedServer(GenericSkill skill)
         {
             int itemCount = body?.inventory?.GetItemCount(Content.Items.Sheen) ?? 0;
-            if (itemCount > 0)
+            var primarySkill = body?.skillLocator?.primary ?? null;
+            if (itemCount > 0 && primarySkill)
             {
-                if (body.skillLocator.primary != skill && body.GetBuffCount(Content.Buffs.Sheen) < BuffStackPerItem.Value * itemCount)
+                if (primarySkill != skill && stopwatch > buffTimer)
                 {
+                    if (body.GetBuffCount(Content.Buffs.Sheen) >= BuffStackPerItem.Value * itemCount)
+                    {
+                        body.RemoveOldestTimedBuff(Content.Buffs.Sheen);
+                    }
                     MyLogger.LogMessage("Player {0}({1}) used non-primary skill, adding buff {2}.", body.GetUserName(), body.name, Content.Buffs.Sheen.name);
                     body.AddTimedBuff(Content.Buffs.Sheen, BuffDuration.Value);
+                    stopwatch = 0f;
                 }
-                else if (body.skillLocator.primary == skill && body.HasBuff(Content.Buffs.Sheen))
+                else if (primarySkill == skill && body.HasBuff(Content.Buffs.Sheen))
                 {
                     this.usedPrimary = true;
                 }
@@ -65,12 +87,13 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                         if (!damageInfo.rejected && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
                         {
                             DamageInfo damageInfo2 = new DamageInfo();
-                            damageInfo2.damage = body.damage * body.inventory.GetItemCount(Content.Items.Sheen) * (Sheen.DamageModifier.Value / 100);
+                            damageInfo2.damage = body.damage * (Sheen.DamageModifier.Value / 100) + body.damage * (body.inventory.GetItemCount(Content.Items.Sheen) - 1) * (Sheen.DamageModifierPerStack.Value / 100);
                             damageInfo2.attacker = damageReport.attacker;
                             damageInfo2.crit = false;
                             damageInfo2.position = damageInfo.position;
                             damageInfo2.damageColorIndex = DamageColorIndex.Item;
                             damageInfo2.damageType = DamageType.Generic;
+                            damageInfo2.procCoefficient = 0f;
 
                             MyLogger.LogMessage("Body {0}({1}) had buff {2}, dealing {3} damage to {4} and removing buff from the body.", body.GetUserName(), body.name, Content.Buffs.Sheen.name, damageInfo2.damage.ToString(), victim.name);
 

@@ -10,10 +10,13 @@ namespace ExtradimensionalItems.Modules.Items
     public class Sheen : ItemBase<Sheen>
     {
         public static ConfigEntry<float> DamageModifier;
+        public static ConfigEntry<float> DamageModifierPerStack;
         public static ConfigEntry<bool> CanStack;
         public static ConfigEntry<float> BuffDuration;
         //public static ConfigEntry<int> MaxBuffStacks;
         public static ConfigEntry<int> BuffStackPerItem;
+        public static ConfigEntry<int> BuffStackPerItemPerStack;
+        public static ConfigEntry<float> BuffApplicationCooldown;
 
         public override string ItemName => "Sheen";
 
@@ -314,7 +317,11 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
-            return string.Format(value, (DamageModifier.Value / 100).ToString("###%"), CanStack.Value ? BuffStackPerItem.Value : 1, CanStack.Value ? BuffStackPerItem.Value : 0);
+            return string.Format(value, 
+                (DamageModifier.Value / 100).ToString("###%"), 
+                (DamageModifierPerStack.Value / 100).ToString("###%"),
+                CanStack.Value ? BuffStackPerItem.Value : 1, 
+                CanStack.Value ? BuffStackPerItemPerStack.Value : 0);
         }
 
         public void CreateBuffs()
@@ -357,23 +364,29 @@ namespace ExtradimensionalItems.Modules.Items
         public override void AddBetterUIStats(ItemDef item)
         {
             base.AddBetterUIStats(item);
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageModifier.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTag.Damage);
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_STACKS", BuffStackPerItem.Value, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Charges);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageModifier.Value / 100, DamageModifierPerStack.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTag.Damage);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_STACKS", BuffStackPerItem.Value, BuffStackPerItemPerStack.Value, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Charges);
         }
 
         public override void CreateConfig(ConfigFile config)
         {
-            CanStack = config.Bind("Item: " + ItemName, "Can Buff Stack", true, "Determines whether the buff that indicates damage bonus can stack or not.");
-            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 250f, "What damage modifier (per stack) the item should use.");
+            CanStack = config.Bind("Item: " + ItemName, "Can Buff Stack", true, "Determines whether the buff that indicates damage bonus can stack or not. Requires game restart to take effect.");
+            DamageModifier = config.Bind("Item: " + ItemName, "Damage Modifier", 250f, "What damage modifier the item should use.");
+            DamageModifierPerStack = config.Bind("Item: " + ItemName, "Damage Modifier Per Stack", 150f, "What damage modifier (per stack) the item should use.");
             BuffDuration = config.Bind("Item: " + ItemName, "Buff Duration", 10f, "How long the buff should remain active after using non-primary ability.");
-            BuffStackPerItem = config.Bind("Item: " + ItemName, "Buff Stacks Per Item", 2, "How much stacks of a buff you get per item. Requires game restart to take effect.");
+            BuffStackPerItem = config.Bind("Item: " + ItemName, "Buff Stacks Per Item", 3, "How much stacks of a buff you get per item.");
+            BuffStackPerItemPerStack = config.Bind("Item: " + ItemName, "Buff Stacks Per Item Per Stack", 2, "How much stacks of a buff you get per item per stack.");
+            BuffApplicationCooldown = config.Bind("Item: " + ItemName, "Buff Application Cooldown", 1.5f, "Cooldown of buff application.");
             //MaxBuffStacks = config.Bind("Item: " + ItemName, "Maximum Buff Stacks", 8, "How many times the buff can stack.");
             if (RiskOfOptionsCompat.enabled)
             {
                 RiskOfOptionsCompat.CreateNewOption(CanStack, true);
                 RiskOfOptionsCompat.CreateNewOption(DamageModifier, 100f, 500f, 10f);
+                RiskOfOptionsCompat.CreateNewOption(DamageModifierPerStack, 100f, 500f, 10f);
                 RiskOfOptionsCompat.CreateNewOption(BuffDuration, 1f, 30f, 1f);
                 RiskOfOptionsCompat.CreateNewOption(BuffStackPerItem, 1, 10);
+                RiskOfOptionsCompat.CreateNewOption(BuffStackPerItemPerStack, 1, 10);
+                RiskOfOptionsCompat.CreateNewOption(BuffApplicationCooldown, 0.1f, 5f, 0.1f);
                 RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
