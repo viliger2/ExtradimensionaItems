@@ -11,8 +11,8 @@ namespace ExtradimensionalItems.Modules.Items
 {
     public class Atma : ItemBase<Atma>
     {
-        public static ConfigEntry<float> PercentBonusDamage;
-        public static ConfigEntry<float> PercentBonusDamagePerStack;
+        public static ConfigEntry<float> HealthPerLevel;
+        public static ConfigEntry<float> PerStackScaling;
 
         public override string ItemName => "AtmasImpaler";
 
@@ -312,33 +312,41 @@ namespace ExtradimensionalItems.Modules.Items
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (GetCount(sender) > 0)
+            var count = GetCount(sender);
+            if (count > 0)
             {
-                args.baseDamageAdd += sender.maxHealth * (PercentBonusDamage.Value / 100) + sender.maxHealth * (PercentBonusDamagePerStack.Value / 100 * (GetCount(sender) - 1));
+                var damageLevelsToAdd = sender.maxHealth / (HealthPerLevel.Value * ((100f - Util.ConvertAmplificationPercentageIntoReductionPercentage(PerStackScaling.Value * (count - 1))) / 100f));
+                if(damageLevelsToAdd < 1f)
+                {
+                    damageLevelsToAdd = 1f;
+                }
+
+                args.baseDamageAdd += damageLevelsToAdd * sender.levelDamage;
             }
         }
         public override string GetOverlayDescription(string value, JSONNode tokensNode)
         {
             return string.Format(
                      value,
-                     (PercentBonusDamage.Value / 100).ToString("0.#%"),
-                     (PercentBonusDamagePerStack.Value / 100).ToString("0.#%"));
+                     HealthPerLevel.Value,
+                     (PerStackScaling.Value / 100).ToString("0.#%"));
         }
 
         public override void AddBetterUIStats(ItemDef item) 
         {
             base.AddBetterUIStats(item);
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", PercentBonusDamage.Value / 100, PercentBonusDamagePerStack.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.DamageFromHealth);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", HealthPerLevel.Value, PerStackScaling.Value / 100, BetterUICompat.StackingFormula.NegativeExponential, BetterUICompat.StatFormatter.DamageFromHealth);
         }
 
         public override void CreateConfig(ConfigFile config)
         {
-            PercentBonusDamage = config.Bind("Item: " + ItemName, "Percent Bonus Damage From Health", 0.5f, "How much bonus damage, in percentage, you get from health.");
-            PercentBonusDamagePerStack = config.Bind("Item: " + ItemName, "Percent Bonus Damage From Health Per Item", 0.5f, "How much bonus damage, in percentage, per stack (above first), you get from health.");
+            HealthPerLevel = config.Bind("Item: " + ItemName, "Health Per Level", 250.0f, "How much health item requires to grand additional level of damage.");
+            PerStackScaling = config.Bind("Item: " + ItemName, "Per Stack Scaling", 25.0f, "By how much, in percent, health requirement lowers per stack.");
+
             if (RiskOfOptionsCompat.enabled)
             {
-                RiskOfOptionsCompat.CreateNewOption(PercentBonusDamage, 0.1f, 5f, 0.1f);
-                RiskOfOptionsCompat.CreateNewOption(PercentBonusDamagePerStack, 0.1f, 5f, 0.1f);
+                RiskOfOptionsCompat.CreateNewOption(HealthPerLevel, 10f, 500f, 1f);
+                RiskOfOptionsCompat.CreateNewOption(PerStackScaling, 1f, 100f, 0.5f);
                 RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }

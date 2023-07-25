@@ -8,6 +8,9 @@
 * Added missing "restartRequired" flag to some options in RiskOfOptions, mainly those that are used in catalog initialization.
 * Made all equipment Enigma incompatable.
 	* _I've finally played with Enigma, for the first time in 200 hours, and as it turns out none of my equipment are Enigma-compatable. Skull instantly stops working, dealing damage once, Chronoshift does nothing (while potentially throwing errors in network play) and Flag instantly transforms back into equipment. This is all due to how I made them and how there are checks for what equipment player has. While I can fix it, I honestly don't want to, especially with Chronoshift, maybe on code rewrite._
+* Atma's Impaler
+	* Changed how item works. Now instead of giving percentage of health as damage, now it gives one level worth of base damage per 250HP (-25% per stack, stacks hyperbolically). Always gives at least one level worth of base damage.
+		* _Base damage is a tricky thing to balance to be honest, there is a reason why base game doesn't really do that outside of a single, very rare item. Original Atma had very bad scaling, post loop you would be lucky to get 10 base damage out of it which is nothing. I'll play a bit more with new version to see if it needs additional balancing._
 * Adrenaline Core
 	* Fixed pick up not rotating.
 * Fueling Bellows
