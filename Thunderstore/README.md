@@ -23,7 +23,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texSheenIcon.png" alt="Sheen"></td>
     <td>Sheen</td>
-    <td>After using non-primary ability gain one stack of buff. Dealing damage with primary ability while having said buff will cause target take additional <b>250%</b> base damage (<b>+250%</b> per stack) and consume one stack of buff. Buff can be stacked up to <b>2</b> (<b>+2</b> per stack) times.</td>
+    <td>After using non-primary ability gain one stack of buff. Dealing damage with primary ability while having said buff will cause target take additional <b>250%</b> base damage (<b>+150%</b> per stack) and consume one stack of buff. Buff can be stacked up to <b>3</b> (<b>+2</b> per stack) times. Buff application has <b>1.5</b> second cooldown.</td>
     <td>Uncommon</td>
   </tr>
   <tr>
@@ -35,7 +35,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texAtmaIcon.png" alt="Atma's Impaler"></td>
     <td>Atma's Impaler</td>
-    <td>Gain additional base damage equal to <b>0.5%</b> (<b>+0.5%</b> per stack) maximum health.</td>
+    <td>Gain additional levels of base damage per each <b>250HP</b> (<b>-25%</b> per stack, stacks hyperbolically). Always gives at least one level worth of base damage.</td>
     <td>Uncommon</td>
   </tr>   
   </tr>    
@@ -117,7 +117,8 @@ If you find any bugs send me a message on discord at **viliger#9877** or submit 
 ## TODO\Future things
 <details>
 
-  * Implement item displays for modded characters.
+  * Current list of modded characters that I want to have displays on: CHEF, Teslaboys, VideogameMod2 characters.
+  * Redo icons. Outlines are inconsistent.
   * Fix logbook item displays. Only Chronoshift currently has "display", as in it follows what I put in the code, but it needs a lot of fixing to look good.
   * Majority of items lack lore, you are free to submit a pull request or message me directly if you want to write it.
   * New model and icon for Atma, it looks terrible

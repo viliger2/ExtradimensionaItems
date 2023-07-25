@@ -1,10 +1,7 @@
 ﻿using BepInEx.Configuration;
-using Newtonsoft.Json.Linq;
 using R2API;
 using RoR2;
 using SimpleJSON;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 namespace ExtradimensionalItems.Modules.Items
@@ -26,6 +23,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override GameObject ItemModel => AssetBundle.LoadAsset<GameObject>("atma");
 
+        // to fix small icon when printing set "Pixel Per Unit" for sprite to 25 in Unity
         public override Sprite ItemIcon => AssetBundle.LoadAsset<Sprite>("texAtmaIcon");
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
