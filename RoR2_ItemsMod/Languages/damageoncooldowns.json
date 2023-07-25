@@ -1,10 +1,10 @@
 {
 	"strings": {
-		"ITEM_DAMAGE_ON_COOLDOWNS_NAME": "Fueling Bellows",
+		"ITEM_DAMAGE_ON_COOLDOWNS_NAME": "Fuelling Bellows",
 		"ITEM_DAMAGE_ON_COOLDOWNS_PICKUP": "It is a firestarter.",
 		"ITEM_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "For each <style=cIsUtility>ability and equipment</style> on cooldown gain <style=cIsDamage>{0}<style=cStack>(+{1} per stack)</style> bonus damage.</style>",
 		"ITEM_DAMAGE_ON_COOLDOWNS_LORE": "lore",
-		"BUFF_DAMAGE_ON_COOLDOWNS_NAME": "Fueling Bellows",
+		"BUFF_DAMAGE_ON_COOLDOWNS_NAME": "Fuelling Bellows",
 		"BUFF_DAMAGE_ON_COOLDOWNS_DESCRIPTION": "All damage in increased.",
 
 		"BETTERUICOMPAT_DESC_DAMAGE": "Damage"

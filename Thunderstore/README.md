@@ -5,7 +5,7 @@ A mod that aims to add ideas from another games, while extending the playstyles 
   <tr>
     <th>Icon (more text so icons are bigger)</th>
     <th>Name</th>
-    <th>Decription</th>
+    <th>Description</th>
     <th>Type</th>
   </tr>
   <tr>
@@ -27,8 +27,8 @@ A mod that aims to add ideas from another games, while extending the playstyles 
     <td>Uncommon</td>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texDamageOnCooldownIcon.png" alt="Fueling Bellows"></td>
-    <td>Fueling Bellows</td>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texDamageOnCooldownIcon.png" alt="Fuelling Bellows"></td>
+    <td>Fuelling Bellows</td>
     <td>For each ability and equipment on cooldown gain <b>10%</b> (<b>+5%</b> per stack) bonus damage.</td>
     <td>Uncommon</td>
   </tr>    
