@@ -1,5 +1,5 @@
 # Extradimensional Items
-A mod that aims to add ideas from another games, while extending the playstyles of existing characters\roles. Currently mod has 5 new items and 3 new equipment.
+A mod that aims to add ideas from another games, while extending the playstyles of existing characters\roles. Currently mod has 7 new items and 3 new equipment.
 
 <table>
   <tr>
@@ -9,35 +9,23 @@ A mod that aims to add ideas from another games, while extending the playstyles 
     <th>Type</th>
   </tr>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texSheenIcon.png" alt="Sheen"></td>
-    <td>Sheen</td>
-    <td>After using non-primary ability gain one stack of buff. Dealing damage with primary ability while having said buff will cause target take additional <b>250%</b> base damage (<b>+250%</b> per stack) and consume one stack of buff. Buff can be stacked up to <b>2</b> (<b>+2</b> per stack) times.</td>
-    <td>Uncommon</td>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texWitchHunterTools.png" alt="Witch Hunter's Tools"></td>
+    <td>Witch Hunter's Tools</td>
+    <td>Pinged targets take additional <b>5%</b>(<b>+5%</b> per stack) damage. <b>You can disable chat messaged for enemy pinging in the config.</b></td>
+    <td>Common</td>
   </tr>
-  <tr>
-    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texRespawnFlagIcon.png" alt="Checkpoint"></td>
-    <td>Checkpoint</td>
-    <td>Place a checkpoint on the ground. Upon death respawn at checkpoint's location, destroying it in the process. Unused checkpoint can be picked back up. Only one checkpoint can exist per player at a time. Picking up different equipment results in checkpoint being disabled and transformed back into equipment. <b>If Fuel Cells are present, one will be consumed in place of checkpoint.</b><br>No cooldown.</td>
-    <td>Equipment</td>
-  </tr>
-  <tr>
-    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texSkullOfDoomIcon.png" alt="Skull of Impending Doom"></td>
-    <td>Skull of Impending Doom</td>
-    <td>Gain <b>100%</b> movement speed, while taking <b>10%</b> max health as damage every <b>3</b> seconds. Use again to disable the effect. <b>If Fuel Cells are present, gain additional <i>15%</i> movement speed and reduce damage by <i>15%</i> per stack.</b><br> No cooldown.</td>
-    <td>Lunar Equipment</td>
-  </tr>  
-  <tr>
-    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texRoyalGuardItemIconLunar.png" alt="Pizza Box"></td>
-    <td>Pizza Box</td>
-    <td>Replace your Utility Skill with Block. Block allows you to enter a defensive stance for <b>0.5</b> (<b>+0.1</b> per stack) seconds, deflecting first non-periodic hit. Depending for how long you were in the stance gain 3 to 1 damage buff(s). If you have damage buffs when using Block, your Primary Skill gets replaced with Release. Using Release will consume all damage buffs and deal <b>1000%</b> (<b>+1000%</b> per stack) base damage per buff stack to everyone in <b>15m</b> radius. Release has increased proc coefficient. You can have up to <b>8</b> stacks of damage buff.</td>
-    <td><b>Lunar/Legendary</b></td>
-  </tr>  
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texCooldownReductionIcon.png" alt="Sorcerer's Pills"></td>
     <td>Sorcerer's Pills</td>
     <td>Gain <b>10%</b> (<b>+10%</b> per stack) cooldown reduction. Stacks hyperbolically, like Haste in WoW or Ability Haste in LoL, as in 100% will reduce cooldown by half, 200% by 3/4, etc. Corrupts all Soldier's Syringes.</td>
     <td>Void Common</td>
-  </tr>  
+  </tr> 
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texSheenIcon.png" alt="Sheen"></td>
+    <td>Sheen</td>
+    <td>After using non-primary ability gain one stack of buff. Dealing damage with primary ability while having said buff will cause target take additional <b>250%</b> base damage (<b>+250%</b> per stack) and consume one stack of buff. Buff can be stacked up to <b>2</b> (<b>+2</b> per stack) times.</td>
+    <td>Uncommon</td>
+  </tr>
   <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texDamageOnCooldownIcon.png" alt="Fueling Bellows"></td>
     <td>Fueling Bellows</td>
@@ -45,17 +33,12 @@ A mod that aims to add ideas from another games, while extending the playstyles 
     <td>Uncommon</td>
   </tr>    
   <tr>
-    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texChronoshiftIcon.png" alt="Chronoshift"></td>
-    <td>Chronoshift</td>
-    <td>Move <b>10</b> seconds back in time. Restores position, money, items, health, barrier, shield and skill cooldowns to the state they were. Snapshots are taken every <b>0.25</b> seconds.<br> <b>120</b> second cooldown.</td> 
-    <td>Equipment</td>
-  </tr>  
-  <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texAtmaIcon.png" alt="Atma's Impaler"></td>
     <td>Atma's Impaler</td>
     <td>Gain additional base damage equal to <b>0.5%</b> (<b>+0.5%</b> per stack) maximum health.</td>
     <td>Uncommon</td>
   </tr>   
+  </tr>    
     <tr>
     <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texReturnalAdrenalineIcon.png" alt="Adrenaline Core"></td>
     <td>Adrenaline Core</td>
@@ -68,6 +51,30 @@ A mod that aims to add ideas from another games, while extending the playstyles 
       Each Adrenaline level takes <b>15</b>(<b>-10%</b> per stack, stacks hyperbolically) points to reach, normal enemy rewards <b>1</b> point(s), elite - <b>3</b>, boss - <b>5</b>. Losing more than <b>10%</b> health over <b>0.1</b> seconds will result in losing all levels of Adrenaline. <b>Levels are displayed on their own bar under HP bar.</b><br>
       <b>At max level of Adrenaline gain protective shield that will save your Adrenaline levels upon taking threshold damage, but it will not prevent the damage itself.</b></td>
     <td>Legendary</td>
+  </tr>   
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texRoyalGuardItemIconLunar.png" alt="Pizza Box"></td>
+    <td>Pizza Box</td>
+    <td>Replace your Utility Skill with Block. Block allows you to enter a defensive stance for <b>0.5</b> (<b>+0.1</b> per stack) seconds, deflecting first non-periodic hit. Depending for how long you were in the stance gain 3 to 1 damage buff(s). If you have damage buffs when using Block, your Primary Skill gets replaced with Release. Using Release will consume all damage buffs and deal <b>1000%</b> (<b>+1000%</b> per stack) base damage per buff stack to everyone in <b>15m</b> radius. Release has increased proc coefficient. You can have up to <b>8</b> stacks of damage buff.</td>
+    <td><b>Lunar/Legendary</b></td>
+  </tr>  
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texRespawnFlagIcon.png" alt="Checkpoint"></td>
+    <td>Checkpoint</td>
+    <td>Place a checkpoint on the ground. Upon death respawn at checkpoint's location, destroying it in the process. Unused checkpoint can be picked back up. Only one checkpoint can exist per player at a time. Picking up different equipment results in checkpoint being disabled and transformed back into equipment. <b>If Fuel Cells are present, one will be consumed in place of checkpoint.</b><br>No cooldown.</td>
+    <td>Equipment</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texChronoshiftIcon.png" alt="Chronoshift"></td>
+    <td>Chronoshift</td>
+    <td>Move <b>10</b> seconds back in time. Restores position, money, items, health, barrier, shield and skill cooldowns to the state they were. Snapshots are taken every <b>0.25</b> seconds.<br> <b>120</b> second cooldown.</td> 
+    <td>Equipment</td>
+  </tr>  
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/viliger2/ExtradimensionaItems/master/Thunderstore/texSkullOfDoomIcon.png" alt="Skull of Impending Doom"></td>
+    <td>Skull of Impending Doom</td>
+    <td>Gain <b>100%</b> movement speed, while taking <b>10%</b> max health as damage every <b>3</b> seconds. Use again to disable the effect. <b>If Fuel Cells are present, gain additional <i>15%</i> movement speed and reduce damage by <i>15%</i> per stack.</b><br> No cooldown.</td>
+    <td>Lunar Equipment</td>
   </tr>  
 </table>
 
@@ -104,6 +111,7 @@ If you find any bugs send me a message on discord at **viliger#9877** or submit 
   * Chronoshift - cut out from Ekko model from League of Legends, property of Riot Games
   * Skull of Doom - model from Tales of Monkey Island, property of Telltale Games, sounds come from World of Warcraft, property of Blizzard
   * Adrenaline Core - model, textures and sounds from Returnal, property of Housemarque and Sony Entertainment
+  * Witch Hunter's Tools - model and textures from Vermintide 2, property of Fatshark
 </details>
 
 ## TODO\Future things

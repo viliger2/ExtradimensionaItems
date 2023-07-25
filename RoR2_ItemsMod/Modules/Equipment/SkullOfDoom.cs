@@ -24,7 +24,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             private float stopwatch;
 
-            public float damageTimer = DamageFrequency.Value;
+            private float damageTimer = DamageFrequency.Value;
 
             public void Awake()
             {

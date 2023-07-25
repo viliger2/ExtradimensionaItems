@@ -23,17 +23,20 @@ namespace ExtradimensionalItems.Modules
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void AddListenerToFillDictionary()
         {
-            ShrineOfRepair.Modules.ModExtension.AddListener(AddFuelCellDepletedToRepairList);
+            ShrineOfRepair.Modules.ModExtension.AddItemsListener(AddFuelCellDepletedToRepairList);
+            //ShrineOfRepair.Modules.ModExtension.AddEquipmentListener(AddWhateverDebugCrap);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void AddFuelCellDepletedToRepairList(ref List<ShrineOfRepair.Modules.ModExtension.RepairableItems> list)
+        public static void AddFuelCellDepletedToRepairList()
         {
-            list.Add(new ShrineOfRepair.Modules.ModExtension.RepairableItems
-            {
-                brokenItem = Content.Items.FuelCellDepleted.itemIndex,
-                repairedItem = RoR2Content.Items.EquipmentMagazine.itemIndex
-            });
+            ShrineOfRepair.Modules.ModExtension.AddItemsToList(Content.Items.FuelCellDepleted.itemIndex, RoR2Content.Items.EquipmentMagazine.itemIndex, "ExtradimensionalItems");
         }
+
+        //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        //public static void AddWhateverDebugCrap()
+        //{
+        //    ShrineOfRepair.Modules.ModExtension.AddEquipmentToList(RoR2Content.Equipment.Recycle.equipmentIndex, RoR2Content.Equipment.AffixHaunted.equipmentIndex, "ExtradimensionalItems");
+        //}
     }
 }
