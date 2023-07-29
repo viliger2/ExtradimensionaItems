@@ -1,4 +1,11 @@
 <details>
+<summary>0.5.6 </summary>
+
+* Witch Hunter's Tools
+	* Removed unneeded SphereCollider so it should no longer have collision.
+* Fixed sound attenuation for all items and equipment, it should now be 100m for everything instead of being 30m for some and infinite for others.
+</details>
+<details>
 <summary>0.5.5 (Also known as "Guess who came back to the game instead of using it as a way to study Unity")</summary>
 
 * Witch Hunter's Tools
