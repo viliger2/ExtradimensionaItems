@@ -426,7 +426,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override void AddBetterUIStats(ItemDef item)
         {
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageBonus.Value / 100, DamageBonusPerStack.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTag.Damage);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageBonus.Value / 100, DamageBonusPerStack.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent);
         }
 
         protected override void ModifyBetterUIStats()

@@ -615,7 +615,7 @@ namespace ExtradimensionalItems.Modules.Items
 
         public override void AddBetterUIStats(ItemDef item)
         {
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageModifier.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent, BetterUICompat.ItemTag.Damage);
+            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageModifier.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent);
             BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW", BaseDuration.Value, PerStackDuration.Value, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Seconds);
         }
 

@@ -195,60 +195,6 @@ namespace ExtradimensionalItems.Modules
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void RegisterStat(ItemDef itemDef, string nameToken, float value, float stackValue, StackingFormula stackingFormula, StatFormatter statFormatter, ItemTag itemTag)
-        {
-            BetterUI.ItemStats.StackingFormula formula;
-            switch (stackingFormula)
-            {
-                case StackingFormula.Linear:
-                default:
-                    formula = BetterUI.ItemStats.LinearStacking;
-                    break;
-                case StackingFormula.NegativeExponential:
-                    formula = BetterUI.ItemStats.NegativeExponentialStacking;
-                    break;
-                case StackingFormula.ProbablyExponential:
-                    formula = NotSureWhatExponentialStacking;
-                    break;
-            }
-
-            BetterUI.ItemStats.StatFormatter formatter;
-            switch (statFormatter)
-            {
-                case StatFormatter.Seconds:
-                    formatter = BetterUI.ItemStats.StatFormatter.Seconds;
-                    break;
-                case StatFormatter.DamageFromHealth:
-                    formatter = new BetterUI.ItemStats.StatFormatter()
-                    {
-                        style = BetterUI.ItemStats.Styles.Damage,
-                        statFormatter = (sb, valuef, master) => { sb.Append((master.GetBody().maxHealth * valuef).ToString()); }
-                    };
-                    break;
-                case StatFormatter.Percent:
-                    formatter = BetterUI.ItemStats.StatFormatter.Percent;
-                    break;
-                case StatFormatter.Charges:
-                default:
-                    formatter = BetterUI.ItemStats.StatFormatter.Charges;
-                    break;
-            }
-            BetterUI.ItemStats.ItemTag tag;
-            switch (itemTag)
-            {
-                case ItemTag.CooldownReduction:
-                    tag = BetterUI.ItemStats.ItemTag.SkillCooldown;
-                    break;
-                case ItemTag.Damage:
-                default:
-                    tag = BetterUI.ItemStats.ItemTag.Damage;
-                    break;
-            }
-
-            BetterUI.ItemStats.RegisterStat(itemDef, nameToken, value, stackValue, formula, formatter, tag);
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public static void ModifyBetterUIStat(ItemDef itemDef, string nameToken, float value, float stackValue)
         {
             var itemStats = BetterUI.ItemStats.GetItemStats(itemDef);

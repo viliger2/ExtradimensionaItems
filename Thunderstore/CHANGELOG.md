@@ -4,6 +4,8 @@
 * Witch Hunter's Tools
 	* Removed unneeded SphereCollider so it should no longer have collision.
 * Fixed sound attenuation for all items and equipment, it should now be 100m for everything instead of being 30m for some and infinite for others.
+* Removed some BetterUI tags from items so they no longer "stack" stats with other items.
+* Added missing R2API Language and Prefab dependency.
 </details>
 <details>
 <summary>0.5.5 (Also known as "Guess who came back to the game instead of using it as a way to study Unity")</summary>
