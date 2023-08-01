@@ -20,6 +20,8 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
         public int itemCount;
 
+        public int transendanceCount = 0;
+
         public CharacterMaster master;
 
         private CharacterBody body;
@@ -70,6 +72,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
             adrenalineLevel = 0;
             currentLevel = 0; // so if the player picks it up again sound doesn't play
             itemCount = 0; // so when we pick it up again checks actually work
+            transendanceCount = 0; // just to be safe
         }
 
         public void OnDestroy()
@@ -99,7 +102,22 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
             if (body)
             {
-                if ((previousHp - body.healthComponent.health) > body.healthComponent.fullHealth * (ReturnalAdrenaline.CriticalDamage.Value / 100f))
+                bool useShieldCheck = transendanceCount > 0 && ReturnalAdrenaline.TranscendenceBehavior.Value;
+
+                // checking that previous health value is more than current max value and lowering it to
+                // potential max value so when player loses, for example, 10 stacks of steak the damage threshold won't trigger
+                if (useShieldCheck)
+                {
+                    previousHp = previousHp > body.healthComponent.fullShield ? body.healthComponent.fullShield : previousHp;
+                } else
+                {
+                    previousHp = previousHp > body.healthComponent.fullHealth ? body.healthComponent.fullHealth : previousHp;
+                }
+
+                bool hpCheck = useShieldCheck
+                                ? (previousHp - body.healthComponent.shield) > body.healthComponent.fullShield * (ReturnalAdrenaline.CriticalDamage.Value / 100f)
+                                : (previousHp - body.healthComponent.health) > body.healthComponent.fullHealth * (ReturnalAdrenaline.CriticalDamage.Value / 100f);
+                if (hpCheck)
                 {
                     if (body.HasBuff(Content.Buffs.ReturnalMaxLevelProtection))
                     {
@@ -116,7 +134,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                     }
                 }
 
-                previousHp = body.healthComponent.health;
+                previousHp = useShieldCheck ? body.healthComponent.shield : body.healthComponent.health;
             }
         }
 

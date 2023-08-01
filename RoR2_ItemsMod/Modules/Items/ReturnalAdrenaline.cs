@@ -42,6 +42,8 @@ namespace ExtradimensionalItems.Modules.Items
 
         public static ConfigEntry<bool> DisableHUD;
 
+        public static ConfigEntry<bool> TranscendenceBehavior;
+
         public override string ItemName => "ReturnalAdrenaline";
 
         public override string ItemLangTokenName => "RETURNAL_ADRENALINE";
@@ -395,24 +397,45 @@ namespace ExtradimensionalItems.Modules.Items
         {
             if (body)
             {
-                if (GetCount(body) > 0)
+                int count = GetCount(body);
+                if (count > 0)
                 {
-                    if (body.master.gameObject.TryGetComponent<ReturnalAdrenalineItemBehavior>(out var component) && component.itemCount != GetCount(body))
+                    if (body.master.gameObject.TryGetComponent<ReturnalAdrenalineItemBehavior>(out var component))
                     {
-                        component.enabled = true;
-                        component.itemCount = GetCount(body);
-                        component.RecalculatePerLevelValue(GetCount(body));
-
-                        if (!ReturnalAdrenaline.DisableHUD.Value)
+                        if (component.itemCount != count)
                         {
-                            var adrenalineHUD = ReturnalAdrenalineUI.FindInstance(body.master);
-                            if (adrenalineHUD)
+                            component.enabled = true;
+                            component.itemCount = count;
+                            component.RecalculatePerLevelValue(count);
+
+                            if (!ReturnalAdrenaline.DisableHUD.Value)
                             {
-                                adrenalineHUD.Enable();
+                                var adrenalineHUD = ReturnalAdrenalineUI.FindInstance(body.master);
+                                if (adrenalineHUD)
+                                {
+                                    adrenalineHUD.Enable();
+                                }
                             }
+
+                            MyLogger.LogMessage("Player {0}({1}) picked up ReturnalAdrenaline, activating master component, current stack count {2}.", body.GetUserName(), body.name, count.ToString());
                         }
 
-                        MyLogger.LogMessage("Player {0}({1}) picked up ReturnalAdrenaline, activating master component, current stack count {2}.", body.GetUserName(), body.name, GetCount(body).ToString());
+                        if (TranscendenceBehavior.Value)
+                        {
+                            int trCount = body.inventory.GetItemCount(RoR2.RoR2Content.Items.ShieldOnly);
+                            if (trCount != component.transendanceCount)
+                            {
+                                if (component.transendanceCount == 0)
+                                {
+                                    MyLogger.LogMessage("Player {0}({1}) picked up ShieldOnly while having ReturnalAdrenaline, swapping health checks for shield checks.", body.GetUserName(), body.name);
+                                }
+                                else if (trCount == 0)
+                                {
+                                    MyLogger.LogMessage("Player {0}({1}) lost ShieldOnly while having ReturnalAdrenaline, swapping shield checks back to health checks.", body.GetUserName(), body.name);
+                                }
+                                component.transendanceCount = trCount;
+                            }
+                        }
                     }
                 }
                 else if (body.master.gameObject.TryGetComponent<ReturnalAdrenalineItemBehavior>(out var component) && component.enabled)
@@ -491,6 +514,8 @@ namespace ExtradimensionalItems.Modules.Items
             MaxLevelProtection = config.Bind("Item: " + ItemName, "Max Level Protection", true, "Enables Max level protection. At level 5 you will get a buff that will save you a single time from losing item's levels.");
 
             DisableHUD = config.Bind("Item: " + ItemName, "Disable Adrenaline HUD", false, "Disables in-game Adrenaline HUD (level progress bar and level value text).");
+
+            TranscendenceBehavior = config.Bind("Item: " + ItemName, "Transcendence Support", true, "Uses shield instead of HP for health checks when player has Transcendence.");
             if (RiskOfOptionsCompat.enabled)
             {
                 RiskOfOptionsCompat.CreateNewOption(KillsPerLevel);
@@ -512,6 +537,7 @@ namespace ExtradimensionalItems.Modules.Items
                 RiskOfOptionsCompat.CreateNewOption(CritBonusPerStack);
                 RiskOfOptionsCompat.CreateNewOption(MaxLevelProtection);
                 RiskOfOptionsCompat.CreateNewOption(DisableHUD);
+                RiskOfOptionsCompat.CreateNewOption(TranscendenceBehavior);
                 RiskOfOptionsCompat.AddDelegateOnModOptionsExit(OnModOptionsExit);
             }
         }
