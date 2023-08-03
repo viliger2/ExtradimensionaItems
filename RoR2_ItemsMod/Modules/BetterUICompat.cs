@@ -81,7 +81,7 @@ namespace ExtradimensionalItems.Modules
                     formatter = new BetterUI.ItemStats.StatFormatter()
                     {
                         style = BetterUI.ItemStats.Styles.Damage,
-                        statFormatter = (sb, valuef, master) => { sb.Append((master.GetBody().maxHealth * valuef).ToString()); }
+                        statFormatter = (sb, valuef, master) => { if (master) { sb.Append((master.GetBody().maxHealth * valuef).ToString()); }; }
                     };
                     break;
                 case StatFormatter.Percent:
