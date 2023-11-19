@@ -52,13 +52,12 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
 
         private void Body_onSkillActivatedServer(GenericSkill skill)
         {
-            int itemCount = body?.inventory?.GetItemCount(Content.Items.Sheen) ?? 0;
             var primarySkill = body?.skillLocator?.primary ?? null;
-            if (itemCount > 0 && primarySkill)
+            if (stack > 0 && primarySkill)
             {
                 if (primarySkill != skill && stopwatch > buffTimer)
                 {
-                    if (body.GetBuffCount(Content.Buffs.Sheen) >= BuffStackPerItem.Value * itemCount)
+                    if (body.GetBuffCount(Content.Buffs.Sheen) >= BuffStackPerItem.Value * stack)
                     {
                         body.RemoveOldestTimedBuff(Content.Buffs.Sheen);
                     }
@@ -87,7 +86,7 @@ namespace ExtradimensionalItems.Modules.Items.ItemBehaviors
                         if (!damageInfo.rejected && (damageInfo.damageType & DamageType.DoT) != DamageType.DoT)
                         {
                             DamageInfo damageInfo2 = new DamageInfo();
-                            damageInfo2.damage = body.damage * (Sheen.DamageModifier.Value / 100) + body.damage * (body.inventory.GetItemCount(Content.Items.Sheen) - 1) * (Sheen.DamageModifierPerStack.Value / 100);
+                            damageInfo2.damage = body.damage * (Sheen.DamageModifier.Value / 100) + body.damage * (stack - 1) * (Sheen.DamageModifierPerStack.Value / 100);
                             damageInfo2.attacker = damageReport.attacker;
                             damageInfo2.crit = false;
                             damageInfo2.position = damageInfo.position;
