@@ -3,16 +3,23 @@ using BepInEx.Configuration;
 using ExtradimensionalItems.Modules.Equipment;
 using ExtradimensionalItems.Modules.Items;
 using R2API.Networking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine.Events;
+using UnityEngine;
 using static ExtradimensionalItems.Modules.Equipment.Chronoshift;
+using static UnityEngine.UI.Button;
+using static RoR2.Console;
+using RoR2.UI;
+using R2API;
 
 [assembly: HG.Reflection.SearchableAttribute.OptInAttribute]
 
 namespace ExtradimensionalItems.Modules
 {
-    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.5")]
+    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.8")]
     [BepInDependency(R2API.ItemAPI.PluginGUID)]
     [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
     [BepInDependency(R2API.Networking.NetworkingAPI.PluginGUID)]
@@ -20,6 +27,7 @@ namespace ExtradimensionalItems.Modules
     [BepInDependency(R2API.SoundAPI.PluginGUID)]
     [BepInDependency(R2API.LanguageAPI.PluginGUID)]
     [BepInDependency(R2API.PrefabAPI.PluginGUID)]
+    [BepInDependency(R2API.DirectorAPI.PluginGUID)]
     [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.xoxfaby.BetterUI", BepInDependency.DependencyFlags.SoftDependency)]
@@ -57,6 +65,7 @@ namespace ExtradimensionalItems.Modules
 #if DEBUG == true
             On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
 #endif
+
             var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(ItemBase)));
             foreach (var itemType in ItemTypes)
             {

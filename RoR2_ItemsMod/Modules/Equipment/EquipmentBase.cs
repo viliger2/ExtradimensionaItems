@@ -46,6 +46,8 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         public virtual bool IsLunar { get; } = false;
 
+        public virtual bool CanBeRandomlyTriggered { get; } = false;
+
         public virtual ExpansionDef Expansion { get; } = null;
 
         public EquipmentDef EquipmentDef;
@@ -95,6 +97,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             EquipmentDef.isBoss = IsBoss;
             EquipmentDef.isLunar = IsLunar;
             EquipmentDef.requiredExpansion = Expansion;
+            EquipmentDef.canBeRandomlyTriggered = CanBeRandomlyTriggered;
 
             ItemAPI.Add(new CustomEquipment(EquipmentDef, CreateItemDisplayRules()));
             staticEquipmentDef = EquipmentDef;

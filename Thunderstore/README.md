@@ -124,8 +124,8 @@ If you find any bugs send me a message on discord at **viliger#9877** or submit 
   * New model and icon for Atma, it looks terrible
   * Proper skill icons for Pizza Box
   * Code rewrite to Chronoshift at the very least, it is very janky at the moment
-  * Quest system, where you pick quests in the lobby, for a price of course (0.6.0)
+  * <s>Quest system, where you pick quests in the lobby, for a price of course (0.6.0)</s> Never ever
   * New Survivor (0.7.0)
-  * New Stage (0.8.0)
+  * <s>New Stage (0.8.0)</s> You can check Catacombs [here](https://thunderstore.io/package/viliger/Catacombs/).
 
 </details>

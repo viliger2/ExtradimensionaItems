@@ -1,15 +1,28 @@
 <details>
-<summary>0.5.6 </summary>
+<summary>0.5.8</summary>
 
+* Made all equipment no longer being triggered by Bottled Chaos.
+	* _You would think that it would be the same trigger as Enigma, but no, it's actually a separate flag._
+
+</details>
+<details>
+<summary>0.5.7</summary>
+
+* Joke has been joked.
+
+</details>
+<details>
+<summary>0.5.6 (a.k.a. Give me all your money)</summary>
+
+* **Added donate button that you should totally click and give me money.**
 * Witch Hunter's Tools
 	* Removed unneeded SphereCollider so it should no longer have collision.
 * Adrenaline Core
 	* Added Transcendence check so if player has it, item checks for shield damage instead of health damage. This can be disabled in the config.
 	* Added additional checks to health, so when player loses health from scrapping items and other things that modify max health, delevel won't trigger.
 * Fixed sound attenuation for all items and equipment, it should now be 100m for everything instead of being 30m for some and infinite for others.
-* Removed some BetterUI tags from items so they no longer "stack" stats with other items.
 * Added missing R2API Language and Prefab dependency.
-* Fixed occasional NullReferenceException with BetterUI and Atma's damage information.
+
 </details>
 <details>
 <summary>0.5.5 (Also known as "Guess who came back to the game instead of using it as a way to study Unity")</summary>
