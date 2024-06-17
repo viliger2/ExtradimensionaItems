@@ -164,5 +164,9 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="call &quot;$(ProjectDir)weave.bat&quot;" />
+	</Target>
 </Project>
 
