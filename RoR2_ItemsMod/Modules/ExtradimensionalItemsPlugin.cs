@@ -19,7 +19,7 @@ using R2API;
 
 namespace ExtradimensionalItems.Modules
 {
-    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.8")]
+    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.9")]
     [BepInDependency(R2API.ItemAPI.PluginGUID)]
     [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
     [BepInDependency(R2API.Networking.NetworkingAPI.PluginGUID)]
@@ -30,7 +30,6 @@ namespace ExtradimensionalItems.Modules
     [BepInDependency(R2API.DirectorAPI.PluginGUID)]
     [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInDependency("com.xoxfaby.BetterUI", BepInDependency.DependencyFlags.SoftDependency)]
     public class ExtradimensionalItemsPlugin : BaseUnityPlugin
     {
         public static ConfigEntry<bool> ExtensiveLogging;
@@ -56,7 +55,7 @@ namespace ExtradimensionalItems.Modules
 
         private void Awake()
         {
-            ExtensiveLogging = Config.Bind("Logging", "Enable extensive logging?", true, "Enables extensive logging, logs every major event related to new content. Might result in worse performance because it logs a lot.");
+            ExtensiveLogging = Config.Bind("Logging", "Enable extensive logging?", false, "Enables extensive logging, logs every major event related to new content. Might result in worse performance because it logs a lot.");
 
             MyLogger.Init(Logger);
             //MyLogger = Logger;

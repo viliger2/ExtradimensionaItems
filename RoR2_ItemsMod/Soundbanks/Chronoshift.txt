@@ -1,0 +1,11 @@
+Event	ID	Name			Wwise Object Path	Notes
+	397007052	EI_Chronoshift_Start			\Default Work Unit\Chronoshift\EI_Chronoshift_Start	
+	1190329199	EI_Chronoshift_End			\Default Work Unit\Chronoshift\EI_Chronoshift_End	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	3673881719	Volume_SFX			\Default Work Unit\Volume_SFX	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	811880443	ChronoshiftStart	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\Chronoshift\ChronoshiftStart_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\Chronoshift\ChronoshiftStart		13536
+	1002768357	ChronoshiftEnd	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\Chronoshift\ChronoshiftEnd_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\Chronoshift\ChronoshiftEnd		24990
+

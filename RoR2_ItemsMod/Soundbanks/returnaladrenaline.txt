@@ -1,0 +1,13 @@
+Event	ID	Name			Wwise Object Path	Notes
+	402169995	EI_Returnal_LevelUp			\Default Work Unit\Returnal\EI_Returnal_LevelUp	
+	3483491016	EI_Returnal_LevelDown			\Default Work Unit\Returnal\EI_Returnal_LevelDown	
+	4202712583	EI_Returnal_Break			\Default Work Unit\Returnal\EI_Returnal_Break	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	3673881719	Volume_SFX			\Default Work Unit\Volume_SFX	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	60587151	ReturnalAdrenaline_LevelUp	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\Returnal\level_up_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\ReturnalAdrenaline\ReturnalAdrenaline_LevelUp		45156
+	109958154	ReturnalAdrenaline_Break	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\Returnal\break_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\ReturnalAdrenaline\ReturnalAdrenaline_Break		73199
+	879291586	ReturnalAdrenaline_LevelDown	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\Returnal\level_down_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\ReturnalAdrenaline\ReturnalAdrenaline_LevelDown		39300
+

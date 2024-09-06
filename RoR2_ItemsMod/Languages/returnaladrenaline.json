@@ -7,9 +7,7 @@
 		"ITEM_RETURNAL_ADRENALINE_LEVEL": "Lv.{0}",
 		"ITEM_RETURNAL_ADRENALINE_LORE": "lore",
 		"BUFF_ADRENALINE_PROTECTION_NAME": "Adrenaline Protection",
-		"BUFF_ADRENALINE_PROTECTION_DESCRIPTION": "Will save your Adrenaline levels upon taking threshold damage.",
-
-		"BETTERUICOMPAT_DESC_KILLS_PER_LEVEL": "Kills Per Level"
+		"BUFF_ADRENALINE_PROTECTION_DESCRIPTION": "Will save your Adrenaline levels upon taking threshold damage."
 	},
 	"RU": {
 		"ITEM_RETURNAL_ADRENALINE_NAME": "Ядро Адреналина",
@@ -19,9 +17,6 @@
 		"ITEM_RETURNAL_ADRENALINE_LEVEL": "Ур.{0}",
 		"ITEM_RETURNAL_ADRENALINE_LORE": "lore",
 		"BUFF_ADRENALINE_PROTECTION_NAME": "Защита Адреналина",
-		"BUFF_ADRENALINE_PROTECTION_DESCRIPTION": "Сохранит твой уровень Адреналина при получении порогового урона.",
-
-		"BETTERUICOMPAT_DESC_KILLS_PER_LEVEL": "Убийств на уровень"
-
+		"BUFF_ADRENALINE_PROTECTION_DESCRIPTION": "Сохранит твой уровень Адреналина при получении порогового урона."
 	}
 }

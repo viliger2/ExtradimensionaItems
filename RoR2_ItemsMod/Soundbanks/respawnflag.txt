@@ -1,0 +1,9 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2529560852	EI_Checkpoint_Use			\Default Work Unit\Checkpoint\EI_Checkpoint_Use	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	3673881719	Volume_SFX			\Default Work Unit\Volume_SFX	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	42951879	Checkpoint_OnUse	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\Checkpoint\FT_CHECKPOINT_SET_END_01_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\Checkpoint\Checkpoint_OnUse		26994
+

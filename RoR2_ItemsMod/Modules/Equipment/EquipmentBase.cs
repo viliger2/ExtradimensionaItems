@@ -121,6 +121,18 @@ namespace ExtradimensionalItems.Modules.Equipment
 
         protected virtual void Hooks() { }
        
+        protected virtual void SetLogbookCameraPosition()
+        {
+            var modelParameters = EquipmentModel.AddComponent<ModelPanelParameters>();
+
+            modelParameters.focusPointTransform = EquipmentModel.transform.Find("FocusPoint");
+            modelParameters.cameraPositionTransform = EquipmentModel.transform.Find("CameraPosition");
+            modelParameters.modelRotation = new Quaternion(0f, 0f, 0f, 1f);
+
+            modelParameters.minDistance = 1;
+            modelParameters.maxDistance = 3;
+        }
+
         protected void LoadLanguageFile()
         {
             string jsonText = File.ReadAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.LanguageFolder, $"{BundleName}.json"));

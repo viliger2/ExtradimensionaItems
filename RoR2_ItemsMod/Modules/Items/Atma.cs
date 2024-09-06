@@ -297,6 +297,7 @@ namespace ExtradimensionalItems.Modules.Items
         {
             CreateConfig(config);
             LoadAssetBundle();
+            SetLogbookCameraPosition();
             LoadLanguageFile();
             CreateItem(ref Content.Items.Atma);
             Hooks();
@@ -328,16 +329,6 @@ namespace ExtradimensionalItems.Modules.Items
                      value,
                      HealthPerLevel.Value,
                      (PerStackScaling.Value / 100).ToString("0.#%"));
-        }
-
-        public override void AddBetterUIStats(ItemDef item) 
-        {
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", HealthPerLevel.Value, PerStackScaling.Value / 100, BetterUICompat.StackingFormula.NegativeExponential, BetterUICompat.StatFormatter.DamageFromHealth);
-        }
-
-        protected override void ModifyBetterUIStats()
-        {
-            BetterUICompat.ModifyBetterUIStat(ItemDef, "BETTERUICOMPAT_DESC_DAMAGE", HealthPerLevel.Value, PerStackScaling.Value / 100);
         }
 
         public override void CreateConfig(ConfigFile config)

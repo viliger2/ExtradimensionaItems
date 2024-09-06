@@ -3,16 +3,12 @@
 		"ITEM_COOLDOWN_REDUCTION_VOID_NAME": "Sorcerer's Pills",
 		"ITEM_COOLDOWN_REDUCTION_VOID_PICKUP": "Grabbin' pills. <style=cIsVoid>Corrupts all Soldier's Syringes.</style>",
 		"ITEM_COOLDOWN_REDUCTION_VOID_DESCRIPTION": "Gain <style=cIsUtility>{0} <style=cStack>(+{0} per stack)</style> cooldown reduction</style>. Stacks <style=cIsUtility>hyperbolically</style>. <style=cIsVoid>Corrupts all Soldier's Syringes.</style>",
-		"ITEM_COOLDOWN_REDUCTION_VOID_LORE": "\"I don’t like those syringes.\"\r\n\r\n\"Why?\"\r\n\r\n\"They contain yellow liquid, they glow in the dark and I am afraid of shots.\"\r\n\r\n\"So what do you want me to do about it?\"\r\n\r\n\"Can I have something else?\"\r\n\r\n\"We have these pills...\"\r\n\r\n\"I’ll take them!\"\r\n\r\n\"You are not even gonna ask about them?\"\r\n\r\n\"Should I?\"\r\n\r\n\"They are purple, also glow in the dark and...\"\r\n\r\n\"But you don’t have to inject them, right?\"\r\n\r\n\"...Yes.\"",
-
-		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Cooldown Reduction"
+		"ITEM_COOLDOWN_REDUCTION_VOID_LORE": "\"I don’t like those syringes.\"\r\n\r\n\"Why?\"\r\n\r\n\"They contain yellow liquid, they glow in the dark and I am afraid of shots.\"\r\n\r\n\"So what do you want me to do about it?\"\r\n\r\n\"Can I have something else?\"\r\n\r\n\"We have these pills...\"\r\n\r\n\"I’ll take them!\"\r\n\r\n\"You are not even gonna ask about them?\"\r\n\r\n\"Should I?\"\r\n\r\n\"They are purple, also glow in the dark and...\"\r\n\r\n\"But you don’t have to inject them, right?\"\r\n\r\n\"...Yes.\""
 	},
 	"RU": {
 		"ITEM_COOLDOWN_REDUCTION_VOID_NAME": "Пилюли чародея",
 		"ITEM_COOLDOWN_REDUCTION_VOID_PICKUP": "Поднимаю пилюли. <style=cIsVoid>Оскверняет все Шприцы солдата.</style>",
 		"ITEM_COOLDOWN_REDUCTION_VOID_DESCRIPTION": "Уменьшает <style=cIsUtility>время восстановления навыков</style> на {0} <style=cStack>(+{0} за штуку)</style>. Складывается <style=cIsUtility>гиперболически</style>. <style=cIsVoid>Оскверняет все Шприцы солдата.</style>",
-		"ITEM_COOLDOWN_REDUCTION_VOID_LORE": "\"Мне не нравятся эти шприцы.\"\r\n\r\n\"Что не так?\"\r\n\r\n\"В них желтая жидкость, они светятся в темноте и я боюсь уколов.\"\r\n\r\n\"Ну и что ты хочешь чтобы я сделал?\"\r\n\r\n\"Можно что-нибудь другое?\"\r\n\r\n\"Ну есть таблетки...\"\r\n\r\n\"Беру!\"\r\n\r\n\"Прямо так? Не узнав даже что за таблетки такие?\"\r\n\r\n\"А надо?\"\r\n\r\n\"Ну они фиолетовые и тоже светятся в темноте, а также...\"\r\n\r\n\"Но мне не нужно их вкалывать, так?\"\r\n\r\n\"...Да.\"",
-
-		"BETTERUICOPMAT_COOLDOWN_REDUCTUION": "Процент уменьшения восстановления навыков"
+		"ITEM_COOLDOWN_REDUCTION_VOID_LORE": "\"Мне не нравятся эти шприцы.\"\r\n\r\n\"Что не так?\"\r\n\r\n\"В них желтая жидкость, они светятся в темноте и я боюсь уколов.\"\r\n\r\n\"Ну и что ты хочешь чтобы я сделал?\"\r\n\r\n\"Можно что-нибудь другое?\"\r\n\r\n\"Ну есть таблетки...\"\r\n\r\n\"Беру!\"\r\n\r\n\"Прямо так? Не узнав даже что за таблетки такие?\"\r\n\r\n\"А надо?\"\r\n\r\n\"Ну они фиолетовые и тоже светятся в темноте, а также...\"\r\n\r\n\"Но мне не нужно их вкалывать, так?\"\r\n\r\n\"...Да.\""
 	}
 }

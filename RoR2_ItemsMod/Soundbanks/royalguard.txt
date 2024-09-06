@@ -1,0 +1,16 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2221064016	EI_RoyalGuard_Release			\Default Work Unit\RoyalGuard\EI_RoyalGuard_Release	
+	2769365620	EI_RoyalGuard_Block			\Default Work Unit\RoyalGuard\EI_RoyalGuard_Block	
+	3616455886	EI_RoyalGuard_JustBlock			\Default Work Unit\RoyalGuard\EI_RoyalGuard_JustBlock	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	3673881719	Volume_SFX			\Default Work Unit\Volume_SFX	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	174416127	JustBlock_DMC5	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\RoyalGuard\JustBlock_DMC5_6073608A.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\RoyalGuard\JustBlock\JustBlock_DMC5		111786
+	224899777	Release_DMC5	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\RoyalGuard\Release_DMC5_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\RoyalGuard\Release\Release_DMC5		17125
+	396080910	Block_DMC5	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\RoyalGuard\Block_DMC5_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\RoyalGuard\Block\Block_DMC5		7712
+	923112279	JustBlock_DMC4_pcm	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\RoyalGuard\JustBlock_DMC3_pcm_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\RoyalGuard\JustBlock\JustBlock_DMC4_pcm		11774
+	963131978	Release_DMC4	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\RoyalGuard\Release_DMC4_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\RoyalGuard\Release\Release_DMC4		9155
+	1004296274	Block_DMC4_pcm	F:\Projects\RoR2\RoR2_ItemsMod\RoR2_ItemsModWwise\RoR2_ItemsModWwise\.cache\Windows\SFX\RoyalGuard\Block_DMC3_pcm_B5E6C086.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixxer\Sfx mixxer\RoyalGuard\Block\Block_DMC4_pcm		6980
+

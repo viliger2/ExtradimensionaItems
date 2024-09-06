@@ -335,6 +335,7 @@ namespace ExtradimensionalItems.Modules.Items
         public override void Init(ConfigFile config)
         {
             LoadAssetBundle();
+            SetLogbookCameraPosition();
             LoadSoundBank();
             CreateConfig(config);
             CreateSkills();
@@ -492,6 +493,7 @@ namespace ExtradimensionalItems.Modules.Items
         private void CreateSkills()
         {
             var RoyalGuardSkillParryDef = ScriptableObject.CreateInstance<SkillDef>();
+            (RoyalGuardSkillParryDef as ScriptableObject).name = "RoyalGuardSkillParry";
 
             RoyalGuardSkillParryDef.activationState = new SerializableEntityStateType(typeof(Parry));
             RoyalGuardSkillParryDef.activationStateMachineName = "Body";
@@ -520,6 +522,7 @@ namespace ExtradimensionalItems.Modules.Items
 
             var RoyalGuardSkillExplodeDef = ScriptableObject.CreateInstance<SkillDef>();
 
+            (RoyalGuardSkillExplodeDef as ScriptableObject).name = "RoyalGuardSkillExplode";
             RoyalGuardSkillExplodeDef.activationState = new SerializableEntityStateType(typeof(Explode));
             RoyalGuardSkillExplodeDef.activationStateMachineName = "Body";
             RoyalGuardSkillExplodeDef.baseMaxStock = 1;
@@ -574,12 +577,6 @@ namespace ExtradimensionalItems.Modules.Items
             ContentAddition.AddBuffDef(RoyalGuardDamageBuff);
 
             Content.Buffs.RoyalGuardDamage = RoyalGuardDamageBuff;
-
-            if (BetterUICompat.enabled)
-            {
-                BetterUICompat.AddBuffInfo(RoyalGuardDamageBuff, "BUFF_ROYALGUARD_DAMAGE_NAME", "BUFF_ROYALGUARD_DAMAGE_DESCRIPTION");
-                BetterUICompat.AddBuffInfo(RoyalGuardParryStateBuff, "BUFF_ROYALGUARD_PARRY_NAME", "BUFF_ROYALGUARD_PARRY_DESCRIPTION");
-            }
         }
 
         private void CreateVisualEffects()
@@ -611,18 +608,6 @@ namespace ExtradimensionalItems.Modules.Items
             destroyOnTimer.duration = 0.6f;
 
             R2API.ContentAddition.AddEffect(RoyalGuardExplodeEffectInstance);
-        }
-
-        public override void AddBetterUIStats(ItemDef item)
-        {
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageModifier.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent);
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW", BaseDuration.Value, PerStackDuration.Value, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Seconds);
-        }
-
-        protected override void ModifyBetterUIStats()
-        {
-            BetterUICompat.ModifyBetterUIStat(ItemDef, "BETTERUICOMPAT_DESC_DAMAGE", DamageModifier.Value / 100, DamageModifier.Value / 100);
-            BetterUICompat.ModifyBetterUIStat(ItemDef, "BETTERUICOMPAT_DESC_ROYALGUARD_PARRY_WINDOW", BaseDuration.Value, PerStackDuration.Value);
         }
 
         public override void CreateConfig(ConfigFile config)

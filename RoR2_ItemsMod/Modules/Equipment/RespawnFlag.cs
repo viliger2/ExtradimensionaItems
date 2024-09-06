@@ -304,6 +304,7 @@ namespace ExtradimensionalItems.Modules.Equipment
         {
             LoadAssetBundle();
             LoadSoundBank();
+            SetLogbookCameraPosition();
             LoadInteractable();
             CreateConfig(config);
             LoadLanguageFile();

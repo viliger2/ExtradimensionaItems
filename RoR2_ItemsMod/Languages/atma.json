@@ -3,16 +3,12 @@
 		"ITEM_ATMAS_IMPALER_NAME": "Atma's Impaler",
 		"ITEM_ATMAS_IMPALER_PICKUP": "Metagolem lives!",
 		"ITEM_ATMAS_IMPALER_DESCRIPTION": "Gain additional levels of <style=cIsDamage>base damage</style> per <style=cIsHealth>{0}HP</style><style=cStack>(-{1} per stack, stacks hyperbolically)</style>. Always gives at least one level worth of base damage.",
-		"ITEM_ATMAS_IMPALER_LORE": "lore",
-
-		"BETTERUICOMPAT_DESC_DAMAGE": "Damage"
+		"ITEM_ATMAS_IMPALER_LORE": "lore"
 	},
 	"RU": {
 		"ITEM_ATMAS_IMPALER_NAME": "Пронзатель Атмы",
 		"ITEM_ATMAS_IMPALER_PICKUP": "Метаголем жив!",
 		"ITEM_ATMAS_IMPALER_DESCRIPTION": "Увеличивает <style=cIsDamage>базовый урон</style> на один уровень за каждые <style=cIsHealth>{0} <style=cStack>(-{1} за штуку, гиперболически)</style> здоровья</style>. Всегда дает как минимум один уровень базового урона.",
-		"ITEM_ATMAS_IMPALER_LORE": "lore",
-		
-		"BETTERUICOMPAT_DESC_DAMAGE": "Урон"
+		"ITEM_ATMAS_IMPALER_LORE": "lore"
 	}
 }

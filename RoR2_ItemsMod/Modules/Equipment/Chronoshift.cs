@@ -66,6 +66,7 @@ namespace ExtradimensionalItems.Modules.Equipment
 
             private KinematicCharacterMotor characterMotor;
             private NetworkInstanceId netId;
+            private Rigidbody rigidbody;
 
             public void Awake()
             {
@@ -84,6 +85,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                     trailRenderer.enabled = body.equipmentSlot.stock > 0;
 
                     characterMotor = body.GetComponent<KinematicCharacterMotor>();
+                    rigidbody = body.GetComponent<Rigidbody>();
                     netId = body.GetComponent<NetworkIdentity>().netId;
                 }
             }
@@ -116,11 +118,11 @@ namespace ExtradimensionalItems.Modules.Equipment
                     {
                         CharacterState state = states[currentState];
 
-                        Vector3 position = characterMotor.Rigidbody.position;
+                        Vector3 position = rigidbody.position;
                         Vector3 target = state.position;
                         if (speed == 0f) speed = Vector3.Distance(position, target) / teleportTimer;
                         characterMotor.SetPosition(Vector3.MoveTowards(position, target, speed * Time.fixedDeltaTime));
-                        if (Vector3.Distance(characterMotor.Rigidbody.position, target) < 0.001f)
+                        if (Vector3.Distance(rigidbody.position, target) < 0.001f)
                         {
                             currentState++;
                             if (currentState >= states.Count)
@@ -145,7 +147,7 @@ namespace ExtradimensionalItems.Modules.Equipment
                                 }
                                 return;
                             }
-                            speed = Vector3.Distance(characterMotor.Rigidbody.position, states[currentState].position) / teleportTimer;
+                            speed = Vector3.Distance(rigidbody.position, states[currentState].position) / teleportTimer;
                         }
                     }
                 }
@@ -773,7 +775,7 @@ namespace ExtradimensionalItems.Modules.Equipment
             Utils.RegisterNetworkSound("EI_Chronoshift_End");
         }
 
-        private void SetLogbookCameraPosition()
+        protected override void SetLogbookCameraPosition()
         {
             var modelParameters = EquipmentModel.AddComponent<ModelPanelParameters>();
 

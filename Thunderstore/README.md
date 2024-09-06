@@ -91,6 +91,7 @@ If you find any bugs send me a message on discord at **viliger#9877** or submit 
   * Respawn Flag:
     * If MUL-T picks flag as first item, places it and then picks up item without using Retool flag converts back into the item, like if another equipment was picked up. It can be resolved by using Retool once with any equipment, at the start MUL-T has one equipment slot, until MUL-T uses Retool at least once with any equipment.
   * Chronoshift:
+	* SoTS\Unity version check broke something and trail is no longer visible.
     * Oddly-shaped Opal doesn't reset.
     * Doesn't reset states, MUL-T won't swap back, Void Fiend won't get his energy\state, Railgunner will be scoped if she was scoped or still be overheated, etc.
     * Capitan does get his beacons back but he is hard capped to two beacons at the time in vanilla. Maybe with other mods it works I dunno.

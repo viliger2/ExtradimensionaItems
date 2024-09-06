@@ -1,4 +1,11 @@
 <details>
+<summary>0.5.9</summary>
+
+* SoTS update.
+* Removed BetterUI compatibility.
+
+</details>
+<details>
 <summary>0.5.8</summary>
 
 * Made all equipment no longer being triggered by Bottled Chaos.

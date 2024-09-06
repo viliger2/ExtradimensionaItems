@@ -172,6 +172,10 @@ namespace ExtradimensionalItems.Modules.Interactables
             return false;
         }
 
+        public bool ShouldProximityHighlight()
+        {
+            return true;
+        }
     }
 
 }

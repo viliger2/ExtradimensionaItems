@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<RootPaths>
+		<ProjectRoot>../..</ProjectRoot>
+		<SourceFilesRoot>../../.cache/Windows</SourceFilesRoot>
+		<SoundBanksRoot>.</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>.</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{7F3A15DD-340D-EF22-59CE-AC32EA50B08A}">
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<Plugins>
+				<AudioDevices>
+					<Plugin Id="2317455096" Name="No_Output" LibName="No Output" LibId="11862023"/>
+					<Plugin Id="3859886410" Name="System" LibName="System" LibId="11403271"/>
+				</AudioDevices>
+			</Plugins>
+			<Busses>
+				<Bus Id="3803692087" Name="Master Audio Bus"/>
+			</Busses>
+			<GameParameters>
+				<GameParameter Id="3673881719" Name="Volume_SFX"/>
+			</GameParameters>
+		</SoundBank>
+		<SoundBank Id="1444223325" Type="User" Language="SFX" Hash="{C8F855B2-1504-6237-5ECC-9C687C41F8BF}">
+			<ShortName>respawnflag</ShortName>
+			<Path>respawnflag.bnk</Path>
+			<Media>
+				<File Id="42951879" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Checkpoint\FT_CHECKPOINT_SET_END_01.wav</ShortName>
+					<CachePath>SFX/Checkpoint/FT_CHECKPOINT_SET_END_01_B5E6C086.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="2529560852" Name="EI_Checkpoint_Use" DurationType="OneShot" DurationMin="2.7106667" DurationMax="2.7106667">
+					<MediaRefs>
+						<MediaRef Id="42951879"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+			<GameParameters>
+				<GameParameter Id="3673881719" Name="Volume_SFX"/>
+			</GameParameters>
+		</SoundBank>
+		<SoundBank Id="1790647297" Type="User" Language="SFX" Hash="{D7FAAEC5-798F-1BA6-5715-9DB68870BE7A}">
+			<ShortName>ReturnalAdrenaline</ShortName>
+			<Path>ReturnalAdrenaline.bnk</Path>
+			<Media>
+				<File Id="60587151" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Returnal\level_up.wav</ShortName>
+					<CachePath>SFX/Returnal/level_up_B5E6C086.wem</CachePath>
+				</File>
+				<File Id="109958154" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Returnal\break.wav</ShortName>
+					<CachePath>SFX/Returnal/break_B5E6C086.wem</CachePath>
+				</File>
+				<File Id="879291586" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Returnal\level_down.wav</ShortName>
+					<CachePath>SFX/Returnal/level_down_B5E6C086.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="4202712583" Name="EI_Returnal_Break" DurationType="OneShot" DurationMin="4.142667" DurationMax="4.142667">
+					<MediaRefs>
+						<MediaRef Id="109958154"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3483491016" Name="EI_Returnal_LevelDown" DurationType="OneShot" DurationMin="2.3133333" DurationMax="2.3133333">
+					<MediaRefs>
+						<MediaRef Id="879291586"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="402169995" Name="EI_Returnal_LevelUp" DurationType="OneShot" DurationMin="2.8706667" DurationMax="2.8706667">
+					<MediaRefs>
+						<MediaRef Id="60587151"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+			<GameParameters>
+				<GameParameter Id="3673881719" Name="Volume_SFX"/>
+			</GameParameters>
+		</SoundBank>
+		<SoundBank Id="2063739088" Type="User" Language="SFX" Hash="{9A3A7398-9F81-361F-79B7-9945891C7DC5}">
+			<ShortName>SkullOfDoom</ShortName>
+			<Path>SkullOfDoom.bnk</Path>
+			<Media>
+				<File Id="686486661" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SkullOfDoom\onUse.wav</ShortName>
+					<CachePath>SFX/SkullOfDoom/onUse_B5E6C086.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1528804373" Name="EI_SkullOfDoom_Use" DurationType="OneShot" DurationMin="2.3858504" DurationMax="2.3858504">
+					<MediaRefs>
+						<MediaRef Id="686486661"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+			<GameParameters>
+				<GameParameter Id="3673881719" Name="Volume_SFX"/>
+			</GameParameters>
+		</SoundBank>
+		<SoundBank Id="2617863197" Type="User" Language="SFX" Hash="{77A2F4C8-F639-29B0-1A47-030241C5748E}">
+			<ShortName>RoyalGuard</ShortName>
+			<Path>RoyalGuard.bnk</Path>
+			<Media>
+				<File Id="174416127" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>RoyalGuard\JustBlock_DMC5.wav</ShortName>
+					<CachePath>SFX/RoyalGuard/JustBlock_DMC5_6073608A.wem</CachePath>
+				</File>
+				<File Id="224899777" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>RoyalGuard\Release_DMC5.wav</ShortName>
+					<CachePath>SFX/RoyalGuard/Release_DMC5_B5E6C086.wem</CachePath>
+				</File>
+				<File Id="396080910" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>RoyalGuard\Block_DMC5.wav</ShortName>
+					<CachePath>SFX/RoyalGuard/Block_DMC5_B5E6C086.wem</CachePath>
+				</File>
+				<File Id="923112279" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>RoyalGuard\JustBlock_DMC3_pcm.wav</ShortName>
+					<CachePath>SFX/RoyalGuard/JustBlock_DMC3_pcm_B5E6C086.wem</CachePath>
+				</File>
+				<File Id="963131978" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>RoyalGuard\Release_DMC4.wav</ShortName>
+					<CachePath>SFX/RoyalGuard/Release_DMC4_B5E6C086.wem</CachePath>
+				</File>
+				<File Id="1004296274" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>RoyalGuard\Block_DMC3_pcm.wav</ShortName>
+					<CachePath>SFX/RoyalGuard/Block_DMC3_pcm_B5E6C086.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="2769365620" Name="EI_RoyalGuard_Block" DurationType="OneShot" DurationMin="0.49527836" DurationMax="0.77303535">
+					<MediaRefs>
+						<MediaRef Id="396080910"/>
+						<MediaRef Id="1004296274"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3616455886" Name="EI_RoyalGuard_JustBlock" DurationType="OneShot" DurationMin="1.0979813" DurationMax="1.4437252">
+					<MediaRefs>
+						<MediaRef Id="174416127"/>
+						<MediaRef Id="923112279"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2221064016" Name="EI_RoyalGuard_Release" DurationType="OneShot" DurationMin="0.87184393" DurationMax="1.383725">
+					<MediaRefs>
+						<MediaRef Id="224899777"/>
+						<MediaRef Id="963131978"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+			<GameParameters>
+				<GameParameter Id="3673881719" Name="Volume_SFX"/>
+			</GameParameters>
+		</SoundBank>
+		<SoundBank Id="3871977080" Type="User" Language="SFX" Hash="{756BCA24-6A86-ACD2-06C1-7AA01D5DBFF4}">
+			<ShortName>Chronoshift</ShortName>
+			<Path>Chronoshift.bnk</Path>
+			<Media>
+				<File Id="811880443" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Chronoshift\ChronoshiftStart.wav</ShortName>
+					<CachePath>SFX/Chronoshift/ChronoshiftStart_B5E6C086.wem</CachePath>
+				</File>
+				<File Id="1002768357" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Chronoshift\ChronoshiftEnd.wav</ShortName>
+					<CachePath>SFX/Chronoshift/ChronoshiftEnd_B5E6C086.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1190329199" Name="EI_Chronoshift_End" DurationType="OneShot" DurationMin="1.7613542" DurationMax="1.7613542">
+					<MediaRefs>
+						<MediaRef Id="1002768357"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="397007052" Name="EI_Chronoshift_Start" DurationType="OneShot" DurationMin="0.84077084" DurationMax="0.84077084">
+					<MediaRefs>
+						<MediaRef Id="811880443"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+			<GameParameters>
+				<GameParameter Id="3673881719" Name="Volume_SFX"/>
+			</GameParameters>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{58011691-73CB-17C4-8F48-6C6547D73057}</FileHash>
+</SoundBanksInfo>

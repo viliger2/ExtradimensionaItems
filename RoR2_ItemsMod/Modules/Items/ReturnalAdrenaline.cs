@@ -345,6 +345,7 @@ namespace ExtradimensionalItems.Modules.Items
             CreateConfig(config);
             Hooks();
             LoadAssetBundle();
+            SetLogbookCameraPosition();
             LoadSoundBank();
             LoadLanguageFile();
             CreateBuffs();
@@ -468,21 +469,6 @@ namespace ExtradimensionalItems.Modules.Items
             ContentAddition.AddBuffDef(ReturnalBuffProtection);
 
             Content.Buffs.ReturnalMaxLevelProtection = ReturnalBuffProtection;
-
-            if (BetterUICompat.enabled)
-            {
-                BetterUICompat.AddBuffInfo(ReturnalBuffProtection, "BUFF_ADRENALINE_PROTECTION_NAME", "BUFF_ADRENALINE_PROTECTION_DESCRIPTION");
-            }
-        }
-
-        public override void AddBetterUIStats(ItemDef item)
-        {
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_KILLS_PER_LEVEL", KillsPerLevel.Value, KillsPerLevelPerStack.Value / 100, BetterUICompat.StackingFormula.NegativeExponential, BetterUICompat.StatFormatter.Charges);
-        }
-
-        protected override void ModifyBetterUIStats()
-        {
-            BetterUICompat.ModifyBetterUIStat(ItemDef, "BETTERUICOMPAT_DESC_KILLS_PER_LEVEL", KillsPerLevel.Value, KillsPerLevelPerStack.Value / 100);
         }
 
         public override void CreateConfig(ConfigFile config)

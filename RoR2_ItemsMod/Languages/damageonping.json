@@ -5,9 +5,7 @@
 		"ITEM_DAMAGE_ON_PING_DESCRIPTION": "<style=cIsUtility>Pinged targets</style> take additional <style=cIsDamage>{0}<style=cStack>(+{1} per stack)</style> damage.</style>",
 		"ITEM_DAMAGE_ON_PING_LORE": "lore",
 		"BUFF_DAMAGE_ON_PING_NAME": "Marked by Witch Hunter",
-		"BUFF_DAMAGE_ON_PING_DESCRIPTION": "All incoming damage in increased. Why do you have it?",
-
-		"BETTERUICOMPAT_DESC_DAMAGE": "Damage"
+		"BUFF_DAMAGE_ON_PING_DESCRIPTION": "All incoming damage in increased. Why do you have it?"
 	},
 	"RU": {
 		"ITEM_DAMAGE_ON_PING_NAME": "Инструменты охотника на ведьм",
@@ -15,8 +13,6 @@
 		"ITEM_DAMAGE_ON_PING_DESCRIPTION": "Урон, получаемый <style=cIsUtility>отмеченными целями</style> увеличеватся на <style=cIsDamage>{0}<style=cStack>(+{1} за штуку)</style>.",
 		"ITEM_DAMAGE_ON_PING_LORE": "lore",
 		"BUFF_DAMAGE_ON_PING_NAME": "Помечен охотником на ведьм",
-		"BUFF_DAMAGE_ON_PING_DESCRIPTION": "Весь входящий урон увеличен. Почему она на тебе?",
-
-		"BETTERUICOMPAT_DESC_DAMAGE": "Урон"
+		"BUFF_DAMAGE_ON_PING_DESCRIPTION": "Весь входящий урон увеличен. Почему она на тебе?"
 	}
 }

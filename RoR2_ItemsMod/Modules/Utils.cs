@@ -16,6 +16,7 @@ namespace ExtradimensionalItems.Modules
         public static bool RegisterNetworkSound(string eventName)
         {
             RoR2.NetworkSoundEventDef networkSoundEventDef = ScriptableObject.CreateInstance<RoR2.NetworkSoundEventDef>();
+            (networkSoundEventDef as ScriptableObject).name = eventName;
             networkSoundEventDef.eventName = eventName;
 
             return R2API.ContentAddition.AddNetworkSoundEventDef(networkSoundEventDef);

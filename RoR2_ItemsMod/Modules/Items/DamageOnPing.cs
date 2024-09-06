@@ -310,6 +310,7 @@ namespace ExtradimensionalItems.Modules.Items
             CreateConfig(config);
             LoadAssetBundle();
             LoadLanguageFile();
+            SetLogbookCameraPosition();
             CreateBuffs();
             CreateItem(ref Content.Items.DamageOnPing);
             Hooks();
@@ -328,11 +329,6 @@ namespace ExtradimensionalItems.Modules.Items
             ContentAddition.AddBuffDef(DamageBuff);
 
             Content.Buffs.DamageOnPing = DamageBuff;
-
-            if (BetterUICompat.enabled)
-            {
-                BetterUICompat.AddBuffInfo(DamageBuff, "BUFF_DAMAGE_ON_PING_NAME", "BUFF_DAMAGE_ON_PING_DESCRIPTION");
-            }
         }
 
         protected override void Hooks()
@@ -478,20 +474,10 @@ namespace ExtradimensionalItems.Modules.Items
             }
         }
 
-        public override void AddBetterUIStats(ItemDef item)
-        {
-            BetterUICompat.RegisterStat(item, "BETTERUICOMPAT_DESC_DAMAGE", DamageIncrease.Value / 100, BetterUICompat.StackingFormula.Linear, BetterUICompat.StatFormatter.Percent);
-        }
-
-        protected override void ModifyBetterUIStats()
-        {
-            BetterUICompat.ModifyBetterUIStat(ItemDef, "BETTERUICOMPAT_DESC_DAMAGE", DamageIncrease.Value / 100, DamageIncrease.Value / 100);
-        }
-
         public override void CreateConfig(ConfigFile config)
         {
             DamageIncrease = config.Bind("Item: " + ItemName, "Damage Increase Per Buff Stack", 5f, "By how much each stack of item increases damage to pinged enemy.");
-            IsHidden = config.Bind("Item: " + ItemName, "Is Damage Debuff Hidden", true, "Item works by applying invisible debuff. This setting determines if it shows above enemy healthbar or now.");
+            IsHidden = config.Bind("Item: " + ItemName, "Is Damage Debuff Hidden", true, "Item works by applying invisible debuff. This setting determines if it shows above enemy healthbar or not.");
             IsDebuff = config.Bind("Item: " + ItemName, "Does Damage Debuff Count to Death Mark", false, "Determines value of isDebuff in BuffDef. It is mainly used for Death Mark, whether buff counts towards it or not. Requires game restart to take effect.");
             DebuffDuration = config.Bind("Item: " + ItemName, "Debuff Duration", 30f, "How long debuff lasts. By default it is equal to the duration of ping. Has no effect on whether debuff is removed or not when ping is removed from an enemy. Requires game restart to take effect.");
             DisablePingEnemyChatMessages = config.Bind("Item: " + ItemName, "Disable Enemy Ping Chat Messages", false, "Disables chat messages on pinging enemy. Setting is client-side. Requires game restart to take effect.");

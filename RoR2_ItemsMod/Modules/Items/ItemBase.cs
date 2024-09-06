@@ -59,8 +59,6 @@ namespace ExtradimensionalItems.Modules.Items
 
         public virtual void CreateConfig(ConfigFile config) { }
 
-        public virtual void AddBetterUIStats(ItemDef item) { }
-
         protected virtual void LoadAssetBundle()
         {
             AssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(ExtradimensionalItemsPlugin.PInfo.Location), ExtradimensionalItemsPlugin.BundleFolder, BundleName));
@@ -95,10 +93,6 @@ namespace ExtradimensionalItems.Modules.Items
             ItemAPI.Add(new CustomItem(ItemDef, CreateItemDisplayRules()));
 
             staticItemDef = ItemDef;
-            if (BetterUICompat.enabled)
-            {
-                AddBetterUIStats(ItemDef);
-            }
         }
 
         protected virtual void Hooks() { }
@@ -126,6 +120,17 @@ namespace ExtradimensionalItems.Modules.Items
                     LoadDescription(key, tokensNode[key], languageKey == "strings" ? "generic" : languageKey, tokensNode);
                 }
             }
+        }
+        protected virtual void SetLogbookCameraPosition()
+        {
+            var modelParameters = ItemModel.AddComponent<ModelPanelParameters>();
+
+            modelParameters.focusPointTransform = ItemModel.transform.Find("FocusPoint");
+            modelParameters.cameraPositionTransform = ItemModel.transform.Find("CameraPosition");
+            modelParameters.modelRotation = new Quaternion(0f, 0f, 0f, 1f);
+
+            modelParameters.minDistance = 1;
+            modelParameters.maxDistance = 3;
         }
 
         protected virtual void LoadDescription(string key, string value, string languageKey, JSONNode tokensNode)
@@ -166,14 +171,7 @@ namespace ExtradimensionalItems.Modules.Items
                         GetOverlayDescription(tokensNode["ITEM_" + ItemLangTokenName + "_DESCRIPTION"].Value, tokensNode),
                         languageKey == "strings" ? "generic" : languageKey)); 
             }
-            if (BetterUICompat.enabled)
-            {
-                ModifyBetterUIStats();
-            }
-
         }
-
-        protected virtual void ModifyBetterUIStats() { }
 
         public abstract string GetOverlayDescription(string value, JSONNode tokensNode);
 
