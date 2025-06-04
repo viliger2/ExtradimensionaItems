@@ -106,7 +106,7 @@ namespace ExtradimensionalItems.Modules
             }
         }
 
-        [ConCommand(commandName = "give_ed_items", flags = ConVarFlags.ExecuteOnServer, helpText = "Gives all Extradimensional Items. Can have additional argument that specifies the ammount of stacks for each item.")]
+        [ConCommand(commandName = "ei_give_all_items", flags = ConVarFlags.ExecuteOnServer, helpText = "Gives all Extradimensional Items. Can have additional argument that specifies the ammount of stacks for each item.")]
         private static void CCGiveAllEDItems(ConCommandArgs args)
         {
             int stackCount = 1;
@@ -152,7 +152,9 @@ namespace ExtradimensionalItems.Modules
                 return foundItem;
             }
 
-            foreach (var item in typeof(ItemCatalog).GetFieldValue<ItemDef[]>("itemDefs"))
+            
+
+            foreach (var item in ItemCatalog.allItemDefs)
             {
                 langInvar = GetLangInvar(item.nameToken.ToUpper());
                 if (item.name.ToUpper().Contains(name.ToUpper()) || langInvar.ToUpper().Contains(name.ToUpper()) || langInvar.ToUpper().Contains(RemoveSpacesAndAlike(name.ToUpper())))

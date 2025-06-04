@@ -86,6 +86,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.02715F, 0.18238F, 0.15865F),
                     localAngles = new Vector3(2.73252F, 60.14296F, 14.28624F),
@@ -97,6 +98,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.01113F, 0.13826F, 0.06382F),
                     localAngles = new Vector3(9.13171F, 51.33527F, 0.9676F),
@@ -109,6 +111,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.36527F, 2.75581F, -0.84396F),
                     localAngles = new Vector3(324.9764F, 234.7332F, 322.1666F),
@@ -121,6 +124,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "HeadCenter",
                     localPos = new Vector3(0.0172F, -0.07028F, 0.10839F),
                     localAngles = new Vector3(6.51912F, 74.05727F, 37.17924F),
@@ -133,6 +137,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(-0.00106F, 0.03093F, 0.10397F),
                     localAngles = new Vector3(11.59603F, 75.39549F, 39.31316F),
@@ -142,6 +147,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(-0.02296F, 0.03086F, 0.10394F),
                     localAngles = new Vector3(12.19386F, 10.67853F, 39.16569F),
@@ -154,6 +160,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.02443F, 0.14028F, 0.12232F),
                     localAngles = new Vector3(16.40738F, 88.47655F, 26.14862F),
@@ -166,6 +173,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "HeadCenter",
                     localPos = new Vector3(-0.03829F, -0.10831F, -0.02607F),
                     localAngles = new Vector3(325.4811F, 2.24852F, 276.3369F),
@@ -178,6 +186,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.01946F, 0.02703F, 0.05995F),
                     localAngles = new Vector3(5.61702F, 67.77467F, 2.19447F),
@@ -190,6 +199,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(-0.83391F, 2.02289F, -0.39576F),
                     localAngles = new Vector3(35.81323F, 254.9808F, 268.5984F),
@@ -202,6 +212,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.0129F, 0.06471F, 0.08647F),
                     localAngles = new Vector3(20.18252F, 60.38128F, 34.15415F),
@@ -214,6 +225,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.00791F, 0.0124F, 0.06362F),
                     localAngles = new Vector3(1.39284F, 85.91791F, 23.26068F),
@@ -226,6 +238,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.0922F, 0.47721F, 0.00613F),
                     localAngles = new Vector3(14.10536F, 197.0358F, 271.5122F),
@@ -238,6 +251,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.01986F, 0.0315F, 0.03501F),
                     localAngles = new Vector3(14.7867F, 77.28765F, 0.6841F),
@@ -250,6 +264,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.05226F, 0.10878F, 0.05614F),
                     localAngles = new Vector3(342.865F, 86.90682F, 346.8902F),
@@ -262,6 +277,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(-0.00024F, 0.00058F, -0.00088F),
                     localAngles = new Vector3(14.90673F, 247.266F, 16.77556F),
@@ -274,6 +290,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(-0.00128F, 0.00258F, 0.00066F),
                     localAngles = new Vector3(19.73685F, 0.00529F, 17.98487F),
@@ -286,6 +303,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(-0.09655F, 0.00908F, 0.02423F),
                     localAngles = new Vector3(14.28483F, 328.6286F, 11.06765F),
@@ -298,6 +316,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(0.00402F, 0.13529F, 0.13018F),
                     localAngles = new Vector3(15.12866F, 61.26857F, 19.59844F),
@@ -310,6 +329,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "head",
                     localPos = new Vector3(0.08138F, 0.03718F, -0.02032F),
                     localAngles = new Vector3(30.98787F, 114.3583F, 13.91004F),
@@ -322,6 +342,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Head",
                     localPos = new Vector3(-0.02635F, 0.1534F, -0.06885F),
                     localAngles = new Vector3(308.8667F, 65.8711F, 304.9602F),

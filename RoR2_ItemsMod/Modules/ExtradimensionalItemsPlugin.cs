@@ -19,7 +19,7 @@ using R2API;
 
 namespace ExtradimensionalItems.Modules
 {
-    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.9")]
+    [BepInPlugin("com.Viliger.ExtradimensionalItems", "ExtradimensionalItems", "0.5.10")]
     [BepInDependency(R2API.ItemAPI.PluginGUID)]
     [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
     [BepInDependency(R2API.Networking.NetworkingAPI.PluginGUID)]

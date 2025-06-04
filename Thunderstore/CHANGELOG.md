@@ -1,4 +1,10 @@
 <details>
+<summary>0.5.10</summary>
+
+* 1.3.9 update.
+
+</details>
+<details>
 <summary>0.5.9</summary>
 
 * SoTS update.

@@ -46,6 +46,7 @@ namespace ExtradimensionalItems.Modules.Items
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
+                    followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(-0.07516F, -0.05492F, 0.13553F),
                     localAngles = new Vector3(2.26426F, 89.86844F, 174.589F),
@@ -57,7 +58,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(-0.0528F, -0.06858F, 0.12351F),
                     localAngles = new Vector3(353.1088F, 79.621F, 206.8312F),
@@ -69,7 +70,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Chest",
                     localPos = new Vector3(-1.77809F, 2.90239F, 2.14708F),
                     localAngles = new Vector3(357.69F, 258.8555F, 0.58918F),
@@ -81,7 +82,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(0.16073F, 0.09931F, 0.15727F),
                     localAngles = new Vector3(2.57822F, 133.2514F, 188.1384F),
@@ -93,7 +94,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(0.16923F, 0.00545F, -0.03211F),
                     localAngles = new Vector3(343.071F, 197.5598F, 188.7807F),
@@ -105,7 +106,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(0.06109F, 0.09777F, 0.08159F),
                     localAngles = new Vector3(2.20926F, 100.1557F, 185.1497F),
@@ -117,7 +118,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "PlatformBase",
                     localPos = new Vector3(0.48713F, 0.32312F, 0.23833F),
                     localAngles = new Vector3(359.9178F, 193.3508F, 2.948F),
@@ -129,7 +130,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "MechBase",
                     localPos = new Vector3(-0.25907F, -0.1483F, -0.08383F),
                     localAngles = new Vector3(358.5586F, 163.9021F, 1.01637F),
@@ -141,7 +142,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Chest",
                     localPos = new Vector3(-1.34077F, -3.03465F, 6.31578F),
                     localAngles = new Vector3(6.2976F, 297.0038F, 21.09479F),
@@ -153,7 +154,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Stomach",
                     localPos = new Vector3(-0.1288F, 0.11963F, 0.15499F),
                     localAngles = new Vector3(349.8305F, 271.7673F, 350.0329F),
@@ -165,7 +166,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Stomach",
                     localPos = new Vector3(0.12719F, 0.02023F, -0.11143F),
                     localAngles = new Vector3(5.86676F, 359.7406F, 355.5642F),
@@ -177,7 +178,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(-0.38342F, -0.2962F, -0.24457F),
                     localAngles = new Vector3(304.962F, 154.6794F, 293.6269F),
@@ -189,7 +190,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Stomach",
                     localPos = new Vector3(0.09116F, -0.01619F, 0.09544F),
                     localAngles = new Vector3(346.0011F, 356.7881F, 2.01989F),
@@ -201,7 +202,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Stomach",
                     localPos = new Vector3(-0.16357F, -0.05884F, -0.03179F),
                     localAngles = new Vector3(9.30161F, 80.09175F, 340.7841F),
@@ -213,7 +214,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(0.00186F, 0.00078F, 0.00006F),
                     localAngles = new Vector3(25.9635F, 10.36156F, 10.50625F),
@@ -225,7 +226,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(-0.00009F, -0.00037F, 0.0079F),
                     localAngles = new Vector3(3.47628F, 92.63393F, 168.4496F),
@@ -237,7 +238,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(-0.16468F, 0.08046F, 0.20869F),
                     localAngles = new Vector3(0.85266F, 121.4579F, 171.9462F),
@@ -249,7 +250,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(0.2588F, 0.18911F, 0.24445F),
                     localAngles = new Vector3(349.7556F, 0.85367F, 1.82916F),
@@ -261,7 +262,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "thigh.R",
                     localPos = new Vector3(0.09489F, 0.00461F, 0.09076F),
                     localAngles = new Vector3(351.1149F, 165.2264F, 177.6239F),
@@ -273,7 +274,7 @@ namespace ExtradimensionalItems.Modules.Items
                 new RoR2.ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemBodyModelPrefab,
+                    followerPrefab = ItemBodyModelPrefab, followerPrefabAddress = new UnityEngine.AddressableAssets.AssetReferenceGameObject(""),
                     childName = "Pelvis",
                     localPos = new Vector3(-0.23019F, 0.14104F, -0.01109F),
                     localAngles = new Vector3(11.31845F, 150.9209F, 8.90904F),
